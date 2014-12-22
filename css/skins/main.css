@@ -21,7 +21,7 @@
 /* 0. Bootstrap Fixes
 -------------------------------------------------------	*/
 body {
-  background: #f7f7f7;
+  background: #fff;
 }
 .container {
   margin: auto;
@@ -715,6 +715,9 @@ h1.page-title {
     margin-top: 30px;
   }
 }
+.home #primary {
+    margin-top: 30px;
+}
 #primary-home article {
   padding: 0px;
 }
@@ -781,6 +784,7 @@ h1.page-title {
 #secondary,
 #footer-sidebar {
   padding: 20px 10px;
+  background-color: #333;
 }
 #secondary ul,
 #footer-sidebar ul {
@@ -867,15 +871,18 @@ h1.page-title {
 }
 #secondary h1.widget-title,
 #footer-sidebar h1.widget-title {
-  font-size: 25px;
+  font-size: 18px;
   font-weight: normal;
-  border-bottom: solid 4px #d9d9d9;
+  /* border-bottom: solid 4px #d9d9d9; */
   padding: 5px;
   margin-top: 0px;
-  color: #00bac4;
+  color: #fff;
   font-family: "Open Sans", Arial, Helvetica, sans-serif;
-  font-size: 24px;
-  padding-bottom: 20px;
+  /* padding-bottom: 20px; */
+}
+#footer-sidebar .textwidget {
+  font-size: 14px;
+  color: #fff;
 }
 #secondary .widget_search label,
 #footer-sidebar .widget_search label {
@@ -903,11 +910,11 @@ h1.page-title {
 }
 #secondary .widget,
 #footer-sidebar .widget {
-  background: #fff;
+  /* background: #fff; */
   margin-top: 15px;
   padding-top: 0px;
   padding: 10px;
-  border: solid 1px #eee;
+  /* border: solid 1px #eee; */
 }
 #secondary .widget a,
 #footer-sidebar .widget a {

@@ -10,6 +10,9 @@
 	</div>
 	</div><!-- #content -->
 
+    <?php get_sidebar('footer'); ?>
+
+
 	<footer id="colophon" class="site-footer row" role="contentinfo">
 	<div class="container">
 		<div id="footertext" class="col-xs-12">
