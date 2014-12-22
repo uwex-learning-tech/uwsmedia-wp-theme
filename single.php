@@ -10,6 +10,21 @@ get_header(); ?>
 	<div id="primary" class="content-area col-md-8">
 		<main id="main" class="site-main" role="main">
 
+        <?php
+
+            if ( !is_front_page() ) {
+
+                if ( function_exists(simple_breadcrumb) ) {
+                    echo '<div class="row"><div class="col-xs-12">';
+                    simple_breadcrumb();
+                    echo '</div></div>';
+                }
+
+            }
+
+
+        ?>
+
 		<?php while ( have_posts() ) : the_post(); ?>
 
 			<?php get_template_part( 'content', 'single' ); ?>

@@ -12,6 +12,21 @@ get_header(); ?>
 	<div id="primary" class="full-width content-area col-md-12">
 		<main id="main" class="site-main" role="main">
 
+		    <?php
+
+                if ( !is_front_page() ) {
+
+                    if ( function_exists(simple_breadcrumb) ) {
+
+                        simple_breadcrumb();
+
+                    }
+
+                }
+
+
+            ?>
+
 			<?php while ( have_posts() ) : the_post(); ?>
 
 				<?php get_template_part( 'content', 'page' ); ?>

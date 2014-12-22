@@ -12,13 +12,30 @@
  */
 
 get_header(); ?>
+	<div id="primary-home" class="full-width content-area col-md-12">
+		<main id="main" class="site-main" role="main">
 
-	<div id="primary-home" class="content-area col-md-12">
-		<main id="main" class="site-main row container" role="main">
+        <?php
+
+            if ( !is_front_page() ) {
+
+                if ( function_exists(simple_breadcrumb) ) {
+
+                    simple_breadcrumb();
+
+                }
+        ?>
+            <div class="row">
+                <header class="entry-header col-md-12">
+                	<h1 class="entry-title"><?php echo get_the_title( get_option( 'page_for_posts' ) ); ?></h1>
+                </header><!-- .entry-header -->
+		    </div>
+
+        <?php } ?>
 
 		<?php if ( have_posts() ) : ?>
 
-			<?php /* Start the Loop */ $ink_count = 0; $ink_row_count=0 ?>
+			<?php /* Start the Loop */ $ink_count = 0; $ink_row_count=0; ?>
 			<?php while ( have_posts() ) : the_post();
 				if ($ink_count == 0 ) {echo "<div class='row-".$ink_row_count." row'>";}
 			?>

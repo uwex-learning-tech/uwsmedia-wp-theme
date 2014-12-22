@@ -36,6 +36,11 @@ code {
 .navbar-default .navbar-nav > li > a:hover {
   color: none;
 }
+.breadcrumb {
+    margin-left: 0;
+    margin-bottom: 0;
+    border-radius: 4px;
+}
 /* 1. Less Variables & Mixins
 -------------------------------------------------------	*/
 .font {
@@ -61,10 +66,6 @@ body {
 #page {
   position: relative;
   z-index: 888;
-}
-#page ::selection {
-  background: #0340a4;
-  color: white;
 }
 /* 2. Header-top
 ------------------------------------------------------- */
@@ -316,7 +317,9 @@ padding-bottom: 25px;
   font-weight: lighter;
 }
 #site-navigation .current_page_item > a:first-child,
-#site-navigation .current_page_ancestor > a:first-child {
+#site-navigation .current_page_ancestor > a:first-child,
+#site-navigation .current-page-item > a:first-child,
+#site-navigation .current-page-ancestor > a:first-child {
     background: #0340a4;
     color: #fff;
 }
@@ -504,6 +507,10 @@ div.slide-description {
 }
 #primary-home {
     margin-top: 20px;
+}
+#primary-home .row {
+    margin-left: 0;
+    margin-right: 0;
 }
 .byline {
   display: inline;
@@ -758,7 +765,12 @@ h1.page-title {
   line-height: 1.7em;
 }
 #primary-home h1.entry-title {
-  margin-bottom: 0px;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  color: #333;
+  line-height: 1em;
+  font-size: 36px;
+  font-weight: 500;
+  margin-bottom: 20px;
 }
 #primary-home h1.entry-title:after {
   content: none;
