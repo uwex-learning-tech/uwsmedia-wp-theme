@@ -37,6 +37,7 @@ code {
   color: none;
 }
 .breadcrumb {
+    color: #ccc;
     margin-left: 0;
     margin-bottom: 0;
     border-radius: 4px;
@@ -793,10 +794,19 @@ h1.page-title {
 }
 /* 7.2 Secondary
 ------------------------------------------------------- */
-#secondary,
+#secondary {
+    background-color: #f5f5f5;
+}
+#footer-sidebar {
+  background-color: #333;
+}
+#secondary {
+    margin-top: 20px;
+    padding: 0 10px 20px;
+    min-height: 675px;
+}
 #footer-sidebar {
   padding: 20px 10px;
-  background-color: #333;
 }
 #secondary ul,
 #footer-sidebar ul {
@@ -835,7 +845,7 @@ h1.page-title {
 }
 #secondary .widget_recent_entries li,
 #footer-sidebar .widget_recent_entries li {
-  border-bottom: solid 1px #ffffff;
+  /* border-bottom: solid 1px #ffffff; */
   padding: 5px 0px;
 }
 #secondary .widget_recent_comments li:before,
@@ -881,7 +891,14 @@ h1.page-title {
 #footer-sidebar .widget_calendar #next {
   text-align: right;
 }
-#secondary h1.widget-title,
+#secondary h1.widget-title {
+  font-size: 18px;
+  font-weight: normal;
+  padding: 5px;
+  margin-top: 0px;
+  color: #333;
+  font-family: "Open Sans", Arial, Helvetica, sans-serif;
+}
 #footer-sidebar h1.widget-title {
   font-size: 18px;
   font-weight: normal;
