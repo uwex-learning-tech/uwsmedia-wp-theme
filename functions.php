@@ -138,7 +138,7 @@ function uwex_media_scripts() {
 		wp_enqueue_script( 'uwex-media-keyboard-image-navigation', get_template_directory_uri() . '/js/keyboard-image-navigation.js', array( 'jquery' ), '20120202' );
 	}
 }
-add_action( 'wp_enqueue_scripts', 'uwex-media_scripts' );
+add_action( 'wp_enqueue_scripts', 'uwex_media_scripts' );
 function uwex_media_custom_head_codes() {
  if ( (function_exists( 'of_get_option' )) && (of_get_option('style2', true) != 1) ) {
 	echo "<style>".of_get_option('style2', true)."</style>";

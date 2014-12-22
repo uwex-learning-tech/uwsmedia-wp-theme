@@ -27,11 +27,11 @@
 
     		<div class="row">
 
-        		<div class="site-branding col-sm-6 col-xs-12">
+        		<div class="site-branding col-xs-12 col-sm-5 col-md-3">
     			<?php if((of_get_option('logo', true) != "") && (of_get_option('logo', true) != 1) ) { ?>
     				<h1 class="site-title logo-container"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home">
     				<?php
-    				echo "<img class='main_logo' src='".of_get_option('logo', true)."' width=\"80px\" height=\"80px\" title='".esc_attr(get_bloginfo( 'name','display' ) )."'></a></h1>";
+    				echo "<img class='main_logo' src='".of_get_option('logo', true)."' width=\"246px\" height=\"80px\" title='".esc_attr(get_bloginfo( 'name','display' ) )."'></a></h1>";
     				}
     			else { ?>
     				<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
@@ -40,7 +40,11 @@
     			?>
     			</div>
 
-                <div class="default-nav-wrapper col-sm-6 col-xs-12">
+                <div class="site-title-text col-xs-12 col-sm-7 col-md-3">
+                    <h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php echo get_bloginfo( 'name', 'display' ); ?></a></h1>
+                </div>
+
+                <div class="default-nav-wrapper col-xs-12 col-sm-12 col-md-6">
         			<nav id="site-navigation" class="main-navigation" role="navigation">
         	         <div id="nav-container">
         				<h1 class="menu-toggle"></h1>

@@ -5,14 +5,9 @@ Template Name: Full Width With Slider
 
 get_header(); ?>
 	</div>
-	<?php
-	if ( (function_exists( 'of_get_option' )) && (of_get_option('slidetitle5',true) !=1) ) {
 
-	    if ( of_get_option('slider_enabled') != 0 ) {
-    		putRevSlider("homepage");
-        }
-    }
-	?>
+	<?php putRevSlider("homepage"); ?>
+
 	<div class="container col-md-12">
 	<div id="primary" class="full-width content-area col-md-12">
 		<main id="main" class="site-main" role="main">
@@ -32,4 +27,5 @@ get_header(); ?>
 		</main><!-- #main -->
 	</div><!-- #primary -->
 
+<?php get_sidebar('footer'); ?>
 <?php get_footer(); ?>

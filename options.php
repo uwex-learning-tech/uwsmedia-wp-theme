@@ -152,9 +152,5 @@ function optionsframework_options() {
 		'class' => 'mini',
 		'type' => 'text');
 
-	$options[] = array(
-	'name' => __('Support', 'uwex-media'),
-	'type' => 'heading');
-
 	return $options;
 }

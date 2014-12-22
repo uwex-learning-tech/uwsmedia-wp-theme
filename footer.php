@@ -14,8 +14,21 @@
 	<div class="container">
 		<div id="footertext" class="col-xs-12">
         	<?php
-			if ( (function_exists( 'of_get_option' ) && (of_get_option('footertext2', true) != 1) ) ) {
-			 	echo of_get_option('footertext2', true); } ?>
+			if ( (function_exists( 'of_get_option' )
+			 && (of_get_option('footertext2', true) != 1) ) ) {
+
+			 	echo of_get_option('footertext2', true);
+
+            }
+
+			if ( is_user_logged_in() === true ) {
+    			echo ' <a href="' . wp_logout_url() . '">Logout</a>';
+			} else {
+    			echo ' <a href="' . wp_login_url() . '">Login</a>';
+			}
+
+            ?>
+
         </div>
 	</div>
 	</footer><!-- #colophon -->
