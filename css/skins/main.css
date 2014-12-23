@@ -1,4 +1,13 @@
-@import "../fonts/font-awesome/css/font-awesome.min.css";
+@font-face {
+
+    font-family: "Glyphicons Halfings";
+    src: url('../fonts/glyphicons-halflings-regular.eot');
+    src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/glyphicons-halflings-regular.woff') format('woff'), /* Pretty Modern Browsers */
+       url('../fonts/glyphicons-halflings-regular.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/glyphicons-halflings-regular.svg#svgFontName') format('svg'); /* Legacy iOS */
+
+}
 /* Table of Contents
 ------------------------------------------------------- *
 
@@ -675,7 +684,8 @@ footer.entry-meta {
 }
 .single article.post,
 .page article.post {
-  padding-bottom: 20px;
+  /* padding-bottom: 20px; */
+  padding: 0 20px 20px;
   border-bottom: 1px solid #e5e5e5;
 }
 .single .entry-meta,
@@ -691,6 +701,7 @@ footer.entry-meta {
 #nav-below {
   margin-top: 30px;
   margin-bottom: 20px;
+  padding: 0 20px;
 }
 #nav-below a {
   font-family: "Open Sans", Arial, Helvetica, sans-serif;
@@ -816,8 +827,8 @@ h1.page-title {
 #secondary ul li:before,
 #footer-sidebar ul li:before {
   margin-right: 5px;
-  content: "\f0da";
-  font-family: "FontAwesome";
+  content: "\e080";
+  font-family: "Glyphicons Halfings";
   color: #999999;
 }
 #secondary ul li,
@@ -830,7 +841,8 @@ h1.page-title {
 }
 #secondary ul ul li:before,
 #footer-sidebar ul ul li:before {
-  content: "\f111";
+  content: "\2212";
+  font-family: "Glyphicons Halfings";
   font-size: 5px;
   position: relative;
   top: -3px;
@@ -841,7 +853,8 @@ h1.page-title {
 }
 #secondary .widget_recent_entries li:before,
 #footer-sidebar .widget_recent_entries li:before {
-  content: "\f0f6";
+  content: "\e005";
+  font-family: "Glyphicons Halfings";
 }
 #secondary .widget_recent_entries li,
 #footer-sidebar .widget_recent_entries li {
@@ -850,10 +863,11 @@ h1.page-title {
 }
 #secondary .widget_recent_comments li:before,
 #footer-sidebar .widget_recent_comments li:before {
-  content: "\f075";
+  content: "\e111";
+  font-family: "Glyphicons Halfings";
   font-size: 12px;
   position: relative;
-  top: -2px;
+  /* top: -2px; */
 }
 #secondary .widget_calendar caption,
 #footer-sidebar .widget_calendar caption {
@@ -1095,6 +1109,9 @@ article code {
 ---------------------------------------------------------- */
 #respond input[type=text] {
   max-width: 450px;
+}
+#comments {
+    padding: 0 20px;
 }
 #comments ol.comment-list {
   list-style: none;
