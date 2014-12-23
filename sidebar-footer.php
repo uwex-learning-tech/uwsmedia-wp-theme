@@ -5,8 +5,9 @@
  * @package UWEX-Media
  */
 ?>
-	<div id="footer-sidebar" class="widget-area col-md-12" role="complementary">
+	<div id="footer-sidebar" class="widget-area" role="complementary">
     	<div class="container">
+        	<div class="row">
 		<?php do_action( 'before_sidebar' ); ?>
 		<?php if ( is_active_sidebar( 'sidebar-2' ) ) { ?>
 		<div class="footer-column col-md-4"> <?php
@@ -26,5 +27,6 @@
 		?> </div> <?php
 		}
 		?>
+        	</div>
 		</div>
 	</div><!-- #secondary -->

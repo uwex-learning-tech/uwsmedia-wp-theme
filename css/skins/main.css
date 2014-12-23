@@ -499,7 +499,7 @@ div.slide-description {
 /* 7.1 Primary
 ------------------------------------------------------- */
 #primary {
-  padding: 20px 15px;
+  padding: 20px 0;
   background: #fff;
   padding-top: 0;
   /* margin-top: 35px; */

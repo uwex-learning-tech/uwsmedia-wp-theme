@@ -63,4 +63,4 @@
 	</div>
 
 		<div id="content" class="site-content row clearfix clear">
-		<div class="container col-md-12">
+		<div class="container">

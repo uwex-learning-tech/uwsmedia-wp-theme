@@ -13,8 +13,9 @@
     <?php get_sidebar('footer'); ?>
 
 
-	<footer id="colophon" class="site-footer row" role="contentinfo">
+	<footer id="colophon" class="site-footer" role="contentinfo">
 	<div class="container">
+    	<div class="row">
 		<div id="footertext" class="col-xs-12">
         	<?php
 			if ( (function_exists( 'of_get_option' )
@@ -25,14 +26,15 @@
             }
 
 			if ( is_user_logged_in() === true ) {
-    			echo ' <a href="' . wp_logout_url() . '">Logout</a>';
+    			echo ' <a href="' . wp_logout_url( home_url() ) . '">Logout.</a>';
 			} else {
-    			echo ' <a href="' . wp_login_url() . '">Login</a>';
+    			echo ' <a href="' . wp_login_url() . '">Login.</a>';
 			}
 
             ?>
 
         </div>
+    	</div>
 	</div>
 	</footer><!-- #colophon -->
 

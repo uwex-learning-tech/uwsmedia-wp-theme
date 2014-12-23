@@ -12,7 +12,7 @@
  */
 
 get_header(); ?>
-	<div id="primary-home" class="full-width content-area col-md-12">
+	<div id="primary-home" class="full-width content-area">
 		<main id="main" class="site-main" role="main">
 
         <?php

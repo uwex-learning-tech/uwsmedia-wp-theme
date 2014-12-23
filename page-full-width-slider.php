@@ -8,7 +8,7 @@ get_header(); ?>
 
 	<?php putRevSlider("homepage"); ?>
 
-	<div class="container col-md-12">
+	<div class="container">
 	<div id="primary" class="full-width content-area col-md-12">
 		<main id="main" class="site-main" role="main">
 
