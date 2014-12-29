@@ -27,7 +27,7 @@
 
     		<div class="row">
 
-        		<div class="site-branding col-xs-12 col-sm-5 col-md-3">
+        		<div class="site-branding col-xs-12 col-sm-4">
     			<?php if((of_get_option('logo', true) != "") && (of_get_option('logo', true) != 1) ) { ?>
     				<h1 class="site-title logo-container"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home">
     				<?php
@@ -40,14 +40,16 @@
     			?>
     			</div>
 
-                <div class="site-title-text col-xs-12 col-sm-7 col-md-3">
-                    <h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php echo get_bloginfo( 'name', 'display' ); ?></a></h1>
-                </div>
-
-                <div class="default-nav-wrapper col-xs-12 col-sm-12 col-md-6">
+                <div class="default-nav-wrapper col-xs-12 col-sm-8">
         			<nav id="site-navigation" class="main-navigation" role="navigation">
         	         <div id="nav-container">
-        				<h1 class="menu-toggle"></h1>
+        				<h1 class="menu-toggle">MENU
+            				<div class="menu-toggle-btn">
+                				<span class="icon-bar"></span>
+                				<span class="icon-bar"></span>
+                				<span class="icon-bar"></span>
+            				</div>
+        				</h1>
         				<div class="screen-reader-text skip-link"><a href="#content" title="<?php esc_attr_e( 'Skip to content', 'uwex-media' ); ?>"><?php _e( 'Skip to content', 'uwex-media' ); ?></a></div>
 
         				<?php wp_nav_menu( array( 'theme_location' => 'primary' ) ); ?>

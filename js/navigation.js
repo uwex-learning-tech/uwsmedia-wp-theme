@@ -26,9 +26,16 @@
 		menu.className += ' nav-menu';
 
 	button.onclick = function() {
-		if ( -1 !== container.className.indexOf( 'toggled' ) )
-			container.className = container.className.replace( ' toggled', '' );
-		else
-			container.className += ' toggled';
+		if ( -1 !== container.className.indexOf( 'toggled' ) ) {
+
+    		//container.className = container.className.replace( ' toggled', '' );
+
+		} else {
+
+    		container.className += ' toggled';
+
+		}
+
 	};
+
 } )();

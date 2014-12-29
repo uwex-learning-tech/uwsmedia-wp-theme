@@ -249,7 +249,7 @@ a:active {
   border: none;
   /* margin-top: -15px; */
   text-align: center;
-  float: left;
+  float: right;
   /* font-family: "Open Sans", Arial, Helvetica, sans-serif; */
   font-weight: lighter;
   text-transform: uppercase;
@@ -361,12 +361,15 @@ padding-bottom: 25px;
   border-top: none;
 }
 @media screen and (max-width: 767px) {
+  .site-title-text .site-title a {
+      padding-top: 0;
+  }
   #site-navigation {
     width: 100%;
   }
   #site-navigation .active > a,
   #site-navigation .current_page_item > a {
-    border-top: solid 4px #ffffff;
+    /* border-top: solid 4px #ffffff; */
     background: none;
   }
   #site-navigation ul {
@@ -393,12 +396,14 @@ padding-bottom: 25px;
   .menu-toggle,
   .main-navigation.toggled .nav-menu {
     display: block;
-    color: #00bac4;
+    /*
+color: #00bac4;
     font-weight: bold;
+*/
     text-transform: uppercase;
-    padding: 10px;
+    /* padding: 10px; */
     font-size: 20px;
-    padding-bottom: 10px;
+    /* padding-bottom: 10px; */
     position: relative;
     top: -8px;
     width: 100%;
@@ -406,15 +411,34 @@ padding-bottom: 25px;
   }
   h1.menu-toggle {
     width: 100%;
+    font-size: 12px;
+    color: #888;
   }
-  .menu-toggle:before {
-    content: "\f0ca";
-    font-family: "FontAwesome";
+  .menu-toggle .menu-toggle-btn {
+      margin: 0 auto;
+      width: 44px;
+      padding: 9px 10px;
+  }
+  .menu-toggle .menu-toggle-btn .icon-bar {
+      display: block;
+      width: 22px;
+      height: 2px;
+      border-radius: 1px;
+      background-color: #888;
+  }
+  .menu-toggle .menu-toggle-btn .icon-bar+.icon-bar {
+      margin-top: 4px;
+  }
+  /*
+.menu-toggle:before {
+    content: "\e012";
+    font-family: "Glyphicons Halfings";
     height: 0;
     width: 0px;
-    /* margin-right: 20px; */
+    margin-right: 20px;
     position: relative;
   }
+*/
 }
 /* Small menu */
 .menu-toggle {
