@@ -35,7 +35,28 @@ jQuery(document).ready(function() {
 		       //  jQuery('#primary-home article').css( 'height', jQuery(this).parent('.row').height() );
 		       //  jQuery('#primary-home article').css( 'height', jQuery(this).parent('.row').height() );
 	       }
+
 });
+
+jQuery(window).resize( function() {
+
+    var menu = jQuery( '#site-navigation ul.menu' );
+
+    if ( jQuery(this).width() >= 767 ) {
+
+        menu.show();
+
+    } else {
+
+        if ( !jQuery( "#site-navigation" ).hasClass( 'toggled' ) ) {
+            menu.hide();
+        }
+
+
+    }
+
+} );
+
 function hefct() {
 	var scrollPosition = jQuery(window).scrollTop();
 	jQuery('#parallax-bg').css('top', (0 - (scrollPosition * .2)) + 'px');
