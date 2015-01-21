@@ -4,7 +4,7 @@
  */
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class("homa archive col-md-4"); ?>>
+<article id="post-<?php the_ID(); ?>" <?php post_class("home archive col-xs-12"); ?>>
 <div class="article-wrapper">
 	<?php if (has_post_thumbnail()) : ?>
 	<div class="featured-thumb col-md-12 col-xs-12">

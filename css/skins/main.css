@@ -117,6 +117,7 @@ body {
 }
 .main_logo {
   max-width: 590px;
+  height: 80px;
 }
 @media screen and (max-width: 400px) {
   .main_logo {
@@ -541,11 +542,13 @@ div.slide-description {
   /* border: solid 1px #eee; */
 }
 #primary-home {
-    margin-top: 20px;
+    margin-top: 30px;
 }
 #primary-home .row {
-    margin-left: 0;
+    /*
+margin-left: 0;
     margin-right: 0;
+*/
 }
 .byline {
   display: inline;
@@ -616,7 +619,7 @@ article.archive .article-rest {
   height: auto;
 }
 .archive .entry-title a {
-  display: block;
+  /* display: block; */
   font-size: 26px;
   color: #000000;
   color: #00bac4;
@@ -769,13 +772,19 @@ h1.page-title {
     padding: 0;
 }
 #primary-home article {
+    border-left: 1px gray solid;
   padding: 0px;
 }
+#primary-home .sticky {
+  border-left-color: red;
+}
 #primary-home .article-wrapper {
-  border: solid 1px #eee;
+  /*
+border: solid 1px #eee;
   width: 94%;
   background: #fff;
   height: 100%;
+*/
 }
 #primary-home .featured-thumb {
   margin-top: 0px;
@@ -783,14 +792,16 @@ h1.page-title {
 }
 #primary-home .entry-title a {
   /* font-family: "Open Sans", Arial, Helvetica, sans-serif; */
-  font-size: 15px;
+  /*
+font-size: 15px;
   font-weight: bold;
-  color: #333;
+*/
+  color: #0340a4;
   transition: 0.4s all ease;
   line-height: 1.5em;
 }
 #primary-home .entry-title a:hover {
-  text-decoration: none;
+  text-decoration: underline;
   color: #0340a4;
 }
 #primary-home .entry-meta {
@@ -798,13 +809,14 @@ h1.page-title {
   font-size: 12px;
   color: #999999;
   display: block;
-  border-bottom: solid 1px #ccc;
+  /* border-bottom: solid 1px #ccc; */
   padding-bottom: 6px;
 }
 #primary-home .entry-meta a {
   color: #999999;
 }
 #primary-home .entry-content {
+    margin-top: 6px;
   line-height: 1.7em;
 }
 #primary-home h1.entry-title {
@@ -813,7 +825,8 @@ h1.page-title {
   line-height: 1em;
   font-size: 36px;
   font-weight: 500;
-  margin-bottom: 20px;
+  margin: 0;
+  /* margin-bottom: 20px; */
 }
 #primary-home h1.entry-title:after {
   content: none;
@@ -821,7 +834,7 @@ h1.page-title {
 #primary-home .entry-meta {
   font-size: small;
   color: #00bac4;
-  border-bottom: solid 1px #d9d9d9;
+  /* border-bottom: solid 1px #d9d9d9; */
   color: #999999;
 }
 #primary-home .entry-meta a {
