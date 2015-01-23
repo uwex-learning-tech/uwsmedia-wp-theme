@@ -174,6 +174,23 @@ function uwex_media_pagination() {
 	 }
 }
 
+/**
+ * Include breadcrumb
+ */
+ include_once 'breadcrumb.php';
+
+/**
+ * Custom private page
+ */
+ function title_format( $content ) {
+     return ' <span class="glyphicon glyphicon-lock"></span> ' . '%s';
+ }
+add_filter('private_title_format', 'title_format');
+add_filter('protected_title_format', 'title_format');
+
+/**
+ * Custom read more link
+ */
 function new_excerpt_more( $more ) {
 	return '... <a class="read-more" href="'. get_permalink( get_the_ID() ) . '">' . __('Read more', 'uwex-media') . '</a>';
 }
