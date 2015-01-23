@@ -23,5 +23,7 @@
 			) );
 		?>
 	</div><!-- .entry-content -->
-	<?php edit_post_link( __( 'Edit', 'uwex-media' ), '<footer class="entry-meta"><span class="edit-link">', '</span></footer>' ); ?>
+	<?php edit_post_link( __( '<span class="glyphicon glyphicon-pencil"></span> Edit', 'uwex-media' ), '<footer class="entry-meta"><span class="edit-link">', '</span></footer>' ); ?>
+	<p><em><small><?php echo 'Last modified on ' . get_the_modified_time( 'F d, Y' ) . ' at ' . get_the_modified_time( 'g:i:s a T' ) . '.'; ?></small></em></p>
+
 </article><!-- #post-## -->

@@ -1,16 +1,14 @@
 <?php
 /*
-Template Name: Full Width With Slider
+ * Template Name: Page with Sidebar
 */
 
 get_header(); ?>
-	</div>
 
-	<div class="container">
-	<div id="primary" class="full-width content-area col-md-12">
+	<div id="primary" class="content-area col-md-8">
 		<main id="main" class="site-main" role="main">
 
-		    <?php
+            <?php
 
                 if ( !is_front_page() ) {
 
@@ -39,4 +37,8 @@ get_header(); ?>
 
 		</main><!-- #main -->
 	</div><!-- #primary -->
+
+<?php get_sidebar(); ?>
 <?php get_footer(); ?>
+
+

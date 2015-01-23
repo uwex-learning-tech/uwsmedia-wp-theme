@@ -63,6 +63,6 @@
 			);
 		?>
 
-		<?php edit_post_link( __( 'Edit', 'uwex-media' ), '<span class="edit-link">', '</span>' ); ?>
+		<?php edit_post_link( __( '<span class="glyphicon glyphicon-pencil"></span> Edit', 'uwex-media' ), '<span class="edit-link">', '</span>' ); ?>
 	</footer><!-- .entry-meta -->
 </article><!-- #post-## -->

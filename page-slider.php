@@ -6,7 +6,7 @@
  * Please note that this is the WordPress construct of pages
  * and that other 'pages' on your WordPress site will use a
  * different template.
- * Template Name: Default Template with Slider
+ * Template Name: Full Width with Slider
  *
  * @package UWEX-Media
  */
@@ -59,5 +59,4 @@ get_header(); ?>
 		</main><!-- #main -->
 	</div><!-- #primary -->
 
-<?php get_sidebar(); ?>
 <?php get_footer(); ?>
