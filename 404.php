@@ -12,20 +12,16 @@ get_header(); ?>
 
 			<section class="error-404 not-found">
 				<header class="entry-header">
-					<h1 class="entry-title"><?php _e( '404 - Page Not Found.', 'uwex-media' ); ?></h1>
+					<h1 class="entry-title"><?php _e( 'Error 404 - Page Not Found', 'uwex-media' ); ?></h1>
 				</header><!-- .entry-header -->
 
 				<div class="entry-content">
 
-                    <p class="lead"><?php _e( 'The page is not found or not available at the moment. Please double check the URL and try again.', 'uwex-media' ); ?></p>
+                    <p class="lead"><?php _e( 'The requested page is not found or not available at the moment. Please double check the URL and try again.', 'uwex-media' ); ?></p>
 
-					<div class="panel panel-danger">
-    					<div class="panel-heading"><?php _e( 'Server Maintenance In Progress!', 'uwex-media' ); ?></div>
-    					<div class="panel-body">
-    					    <p><?php _e( 'As of January 2nd, 2015, the server is under live maintenance. If you are getting the "404 - page not found" error message, please double check the URL, change the URL to lowercase if applicable, or try again later. If you need immediate assistance, please contact Technical Support at <a href="mailto:techsupport@uwex.edu">techsupport@uwex.edu</a> or 1-877-724-7883.', 'uwex-media' ); ?></p>
-    					    <p><?php _e( 'We apologize for any inconveniences. Thank you!', 'uwex-media' ); ?></p>
-    					</div>
-    				</div>
+                    <div class="alert alert-info">
+                        <?php _e( 'Some pages are protected or private. If you have login credentials, please log in and try again. For assistance related to course materials or contents, please contact Technical Support at <a href="mailto:techsupport@uwex.edu">techsupport@uwex.edu</a> or 1-877-724-7883.', 'uwex-media' ); ?>
+                    </div>
 
 				</div><!-- .entry-content -->
 			</section><!-- .error-404 -->
