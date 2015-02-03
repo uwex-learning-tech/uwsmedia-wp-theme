@@ -183,6 +183,7 @@ function uwex_media_posted_on() {
 
 	printf( __( '<span class="posted-on"><span class="glyphicon glyphicon-calendar"></span> %1$s</span> <span class="byline"> <span class="glyphicon glyphicon-user"></span> %2$s</span>', 'uwex-media' ), $time_string, esc_html( get_the_author() )
 	);
+
 }
 endif;
 

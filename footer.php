@@ -25,12 +25,6 @@
 
             }
 
-			if ( is_user_logged_in() === true ) {
-    			echo ' <a href="' . wp_logout_url( home_url() ) . '">Logout.</a>';
-			} else {
-    			echo ' <a href="' . wp_login_url() . '">Login.</a>';
-			}
-
             ?>
 
         </div>

@@ -26,7 +26,6 @@
 		<header id="masthead" class="site-header container" role="banner">
 
     		<div class="row">
-
         		<div class="site-branding col-xs-12 col-sm-4">
     			<?php if((of_get_option('logo', true) != "") && (of_get_option('logo', true) != 1) ) { ?>
     				<h1 class="site-title logo-container"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home">
@@ -40,21 +39,62 @@
     			?>
     			</div>
 
-                <div class="default-nav-wrapper col-xs-12 col-sm-8">
-        			<nav id="site-navigation" class="main-navigation" role="navigation">
-        	         <div id="nav-container">
-        				<h1 class="menu-toggle">MENU
-            				<div class="menu-toggle-btn">
-                				<span class="icon-bar"></span>
-                				<span class="icon-bar"></span>
-                				<span class="icon-bar"></span>
-            				</div>
-        				</h1>
-        				<div class="screen-reader-text skip-link"><a href="#content" title="<?php esc_attr_e( 'Skip to content', 'uwex-media' ); ?>"><?php _e( 'Skip to content', 'uwex-media' ); ?></a></div>
+                <div class="default-nav-wrapper col-xs-12 col-sm-8" role="navigation">
 
-        				<?php wp_nav_menu( array( 'theme_location' => 'primary' ) ); ?>
-        	          </div>
-        			</nav><!-- #site-navigation -->
+                    <div class="row">
+
+                        <?php
+
+                            if ( !is_user_logged_in() ) {
+
+                                echo '<div id="site-secondary-nav">';
+                                echo ' <a class="login-btn" href="' . wp_login_url() . '">LOGIN</a>';
+                                echo '</div>';
+
+                            }
+
+                        ?>
+
+                        <div class="col-xs-12">
+
+                            <nav id="site-navigation" class="main-navigation <?php
+                                    echo ( is_user_logged_in() ) ? 'loggedin' : '';
+                                    echo ( !current_user_can('read_private_pages') ) ? ' lower' :'';
+                                ?>" role="navigation">
+                	         <div id="nav-container">
+                				<h1 class="menu-toggle">MENU
+                    				<div class="menu-toggle-btn">
+                        				<span class="icon-bar"></span>
+                        				<span class="icon-bar"></span>
+                        				<span class="icon-bar"></span>
+                    				</div>
+                				</h1>
+                				<div class="screen-reader-text skip-link"><a href="#content" title="<?php esc_attr_e( 'Skip to content', 'uwex-media' ); ?>"><?php _e( 'Skip to content', 'uwex-media' ); ?></a></div>
+
+                				<?php
+
+                    				wp_nav_menu( array( 'theme_location' => 'primary' ) );
+
+                    				if ( is_user_logged_in() && current_user_can('read_private_pages') ) {
+
+                        				wp_nav_menu( array(
+                                                'theme_location' => 'secondary',
+                                                'menu_class' => 'pull-right',
+                                                'fallback_cb' => false
+                                                ) );
+
+                    				}
+
+                                ?>
+
+                	          </div>
+                			</nav><!-- #site-navigation -->
+
+                        </div>
+
+                    </div>
+
+
                 </div>
 
     			<!-- <?php get_template_part('social', 'fa'); ?> -->

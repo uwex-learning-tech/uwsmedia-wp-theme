@@ -26,12 +26,14 @@ function uwex_media_setup() {
 
 	register_nav_menus( array(
 		'primary' => __( 'Primary Menu', 'uwex-media' ),
+		'secondary' => __( 'Secondary Menu', 'uwex-media' ),
 	) );
 
 	add_theme_support( 'custom-background', apply_filters( 'uwex_media_custom_background_args', array(
 		'default-color' => 'f7f7f7',
 		'default-image' => '',
 	) ) );
+
 	/**
 	 * Set the content width based on the theme's design and stylesheet.
 	 */
@@ -41,7 +43,9 @@ function uwex_media_setup() {
 
 	add_editor_style();
 }
+
 endif; // uwex_media_setup
+
 add_action( 'after_setup_theme', 'uwex_media_setup' );
 
 function uwex_media_widgets_init() {
