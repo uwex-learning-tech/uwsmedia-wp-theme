@@ -20,7 +20,7 @@ get_header(); ?>
                     <p class="lead"><?php _e( 'The requested page is not found or not available at the moment. Please double check the URL and try again.', 'uwex-media' ); ?></p>
 
                     <div class="alert alert-info">
-                        <?php _e( 'Some pages are protected or private. If you have login credentials, please log in and try again. For assistance related to course materials or contents, please contact Technical Support at <a href="mailto:techsupport@uwex.edu">techsupport@uwex.edu</a> or 1-877-724-7883.', 'uwex-media' ); ?>
+                        <?php _e( 'For assistance related to course materials or contents, please contact Technical Support at <a href="mailto:techsupport@uwex.edu">techsupport@uwex.edu</a> or 1-877-724-7883.', 'uwex-media' ); ?>
                     </div>
 
 				</div><!-- .entry-content -->
