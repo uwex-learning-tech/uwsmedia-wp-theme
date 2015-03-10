@@ -639,14 +639,8 @@ article.archive .article-rest {
 .featured-thumb:hover .img-meta {
   background: rgba(0, 210, 222, 0.65);
 }
-.featured-thumb:hover img {
-  -webkit-transform: scale(1.05);
-  opacity: 0.98;
-}
 .featured-thumb img {
-  box-shadow: 0px 1px 2px #444;
   margin-bottom: 0px;
-  transition: 0.4s all ease;
   min-width: 100%;
   height: auto;
 }
@@ -805,14 +799,17 @@ h1.page-title {
     padding: 0;
 }
 #primary-home .site-main {
-    display: -webkit-flex;
-    display: flex;
+    display: -ms-flexbox;
+    -ms-flex-wrap: wrap;
     -webkit-flex-wrap: wrap;
+    display: flex;
     flex-wrap: wrap;
 }
 #primary-home article {
     display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
+    max-height: 302px;
     padding: 0px;
 }
 
@@ -825,6 +822,19 @@ h1.page-title {
 #primary-home .featured-thumb {
   margin-top: 0px;
   width: 100%;
+  min-height: 100px;
+}
+#primary-home .featured-thumb a {
+  display: block;
+  position: relative;
+  height: 100px;
+  max-height: 100px;
+  overflow: hidden;
+}
+#primary-home .featured-thumb a img {
+  position: absolute;
+  top: -25%;
+  left: 0;
 }
 #primary-home .entry-title a {
   /* font-family: "Open Sans", Arial, Helvetica, sans-serif; */
@@ -841,11 +851,10 @@ font-size: 20px;
   color: #0340a4;
 }
 #primary-home .entry-meta {
-  margin-top: 8px;
+  margin-top: 5px;
   font-size: 12px;
-  color: #999999;
+  color: #999;
   display: block;
-  /* border-bottom: solid 1px #ccc; */
   padding-bottom: 6px;
 }
 #primary-home .entry-meta a {
@@ -858,7 +867,7 @@ font-size: 20px;
 #primary-home h1.entry-title {
   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
   color: #333;
-  line-height: 1.3em;
+  line-height: 1.2em;
   font-size: 20px;
   margin: 0;
 }
@@ -866,19 +875,17 @@ font-size: 20px;
   content: none;
 }
 #primary-home .entry-meta {
-  font-size: small;
-  color: #00bac4;
-  /* border-bottom: solid 1px #d9d9d9; */
-  color: #999999;
+  font-size: 11px;
+  color: #999;
 }
 #primary-home .entry-meta a {
-  color: #999999;
+  color: #999;
 }
 #primary-home .entry-meta .posted-on {
   margin-right: 6px;
 }
 #primary-home .entry-header {
-  padding: 3px 0 0;
+  padding: 0;
   margin-bottom: 0;
   border-top: 5px #ccc solid;
 }
@@ -1075,7 +1082,7 @@ font-size: 20px;
 /* 8. Pagination
 -----------------------------------------------*/
 .pagination {
-  margin: 20px 0;
+  margin: 0 0 20px 0;
   width: 100%;
   margin-left: -20px;
   text-align: center;

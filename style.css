@@ -534,13 +534,13 @@ object {
 
 @media screen and (min-width: 1200px) {
 	.featured-thumb {
-		min-height: 207px !important;
+		min-height: 207px;
 		overflow: hidden;
 	}
 }
 @media screen and (min-width: 992px) and (max-width: 1199px) {
 	.featured-thumb {
-		min-height: 170px !important;
+		min-height: 170px;
 		overflow: hidden;
 	}
 }
