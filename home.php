@@ -13,7 +13,15 @@
 
 get_header(); ?>
 
-    <?php putRevSlider("homepage"); ?>
+    <?php
+
+        if ( function_exists(putRevSlider) ) {
+
+            putRevSlider("homepage");
+
+        }
+
+    ?>
 
 	<div id="primary-home" class="content-area col-md-8">
 		<main id="main" class="site-main" role="main">
@@ -64,5 +72,4 @@ get_header(); ?>
 		</main><!-- #main -->
 	</div><!-- #primary -->
 
-<?php get_sidebar(); ?>
 <?php get_footer(); ?>
