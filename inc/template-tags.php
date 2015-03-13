@@ -30,16 +30,14 @@ function uwex_media_content_nav( $nav_id ) {
 	$nav_class = ( is_single() ) ? 'post-navigation' : 'paging-navigation';
 
 	?>
-	<nav role="navigation" id="<?php echo esc_attr( $nav_id ); ?>" class="<?php echo $nav_class; ?>">
-    	<hr />
+
+	<hr />
+
+	<?php if ( $wp_query->max_num_pages > 1 && ( is_home() || is_archive() || is_search() ) ) : // navigation links for home, archive, and search pages ?>
+
+	    <nav role="navigation" id="<?php echo esc_attr( $nav_id ); ?>" class="<?php echo $nav_class; ?>">
+
 		<h1 class="screen-reader-text"><?php _e( 'Post navigation', 'uwex-media' ); ?></h1>
-
-	<?php if ( is_single() ) : // navigation links for single posts ?>
-
-		<?php previous_post_link( '<div class="nav-previous">%link</div>', '<span class="meta-nav">' . _x( '<span class="glyphicon glyphicon-arrow-left"></span>', 'Previous post link', 'uwex-media' ) . '</span> %title' ); ?>
-		<?php next_post_link( '<div class="nav-next">%link</div>', '%title <span class="meta-nav">' . _x( '<span class="glyphicon glyphicon-arrow-right"></span>', 'Next post link', 'uwex-media' ) . '</span>' ); ?>
-
-	<?php elseif ( $wp_query->max_num_pages > 1 && ( is_home() || is_archive() || is_search() ) ) : // navigation links for home, archive, and search pages ?>
 
 		<?php if ( get_next_posts_link() ) : ?>
 		<div class="nav-previous"><?php next_posts_link( __( '<span class="meta-nav"><span class="glyphicon glyphicon-arrow-left"></span></span> Older posts', 'uwex-media' ) ); ?></div>
@@ -49,9 +47,11 @@ function uwex_media_content_nav( $nav_id ) {
 		<div class="nav-next"><?php previous_posts_link( __( 'Newer posts <span class="meta-nav"><span class="glyphicon glyphicon-arrow-right"></span></span>', 'uwex-media' ) ); ?></div>
 		<?php endif; ?>
 
+		</nav><!-- #<?php echo esc_html( $nav_id ); ?> -->
+
 	<?php endif; ?>
 
-	</nav><!-- #<?php echo esc_html( $nav_id ); ?> -->
+
 	<?php
 }
 endif; // uwex_media_content_nav

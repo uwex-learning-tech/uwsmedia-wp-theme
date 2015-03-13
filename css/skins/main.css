@@ -575,8 +575,9 @@ div.slide-description {
   margin-top: 20px;
   /* border: solid 1px #eee; */
 }
+
 #primary-home {
-    margin-top: 30px;
+    margin-top: 40px;
 }
 #primary-home .row {
     margin-left: 0;
@@ -714,7 +715,7 @@ body.archive .entry-title {
 .single .entry-title,
 .page .entry-title {
   color: #333;
-  line-height: 1em;
+  line-height: 1.5em;
   margin-bottom: 20px;
 }
 .entry-content {
@@ -811,6 +812,7 @@ h1.page-title {
     display: flex;
     max-height: 302px;
     padding: 0px;
+    margin-bottom: 1em;
 }
 
 #primary-home .article-wrapper {
@@ -1105,11 +1107,12 @@ font-size: 20px;
   float: right;
 }
 .pagination ul > li > a:hover {
-  color: #00bac4;
+  color: #5d91e2;
   background: #eee;
 }
 .pagination .current {
-  background: #00d2de;
+  background: #5d91e2;
+  color: #fff;
 }
 .pagination ul  > li  > a,
 .pagination ul  > li  > span {
@@ -1121,7 +1124,7 @@ font-size: 20px;
   border: solid 1px #f1f1f1;
   border-left-width: 0;
   display: inline-block;
-  color: #27979d;
+  color: #808080;
 }
 .pagination ul  > li:first-child  > a,
 .pagination ul  > li:first-child  > span {
