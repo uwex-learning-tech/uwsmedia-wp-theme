@@ -800,17 +800,15 @@ h1.page-title {
     padding: 0;
 }
 #primary-home .site-main {
-    display: -ms-flexbox;
-    -ms-flex-wrap: wrap;
-    -webkit-flex-wrap: wrap;
-    display: flex;
-    flex-wrap: wrap;
-}
-#primary-home article {
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
-    max-height: 302px;
+    -ms-flex-wrap: wrap;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+#primary-home article {
+    display: block;
     padding: 0px;
     margin-bottom: 1em;
 }
@@ -902,6 +900,11 @@ font-size: 20px;
 #primary-home .sticky .entry-title a:hover {
   color: #0340a4;
 }
+
+.narrow-width-no-side article.hentry {
+    width: 66.66666667%;
+}
+
 /* 7.2 Secondary
 ------------------------------------------------------- */
 #secondary {
@@ -1356,6 +1359,31 @@ article code {
     border: 1px solid #CCC;
     border-radius: 4px;
     box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset;
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    #primary-home article {
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        min-height: 280px;
+    }
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+    #primary-home article {
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+/*         min-height: 200px; */
+    }
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+
 }
 
 

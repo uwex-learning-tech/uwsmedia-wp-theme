@@ -45,5 +45,39 @@ get_header(); ?>
 		</main><!-- #main -->
 	</div><!-- #primary -->
 
-<?php get_sidebar(); ?>
+<?php
+
+    /* Get the current user object. */
+	$current_user = wp_get_current_user();
+
+	/* Get the roles selected by the user. */
+    $roles = get_post_meta( get_the_ID(), '_members_access_role', false );
+
+    // if the roles are not empty,
+    // loop through each permitted role and see if user can view
+    if ( !empty( $roles ) ) {
+
+        foreach ( $roles as $role ) {
+
+    		if ( user_can( $current_user->ID, $role ) )
+    			$can_view = true;
+
+    	}
+
+    }
+
+    if ( empty( $role ) ) {
+
+        $can_view = true;
+
+    }
+
+    // if user can view, get the side bar
+    if ( $can_view ) {
+
+        get_sidebar();
+
+    }
+
+?>
 <?php get_footer(); ?>
