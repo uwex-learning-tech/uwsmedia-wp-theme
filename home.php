@@ -12,23 +12,12 @@
  */
 
 get_header(); ?>
-
-    <?php
-
-        if ( function_exists(putRevSlider) ) {
-
-            putRevSlider("homepage");
-
-        }
-
-    ?>
-
-	<div id="primary-home" class="content-area col-md-8">
+	<div id="primary-home" class="content-area">
 		<main id="main" class="site-main" role="main">
 
         <?php
 
-            if ( !is_front_page() ) {
+            if ( !is_front_page() && !is_home() ) {
 
                 if ( function_exists(simple_breadcrumb) ) {
 
@@ -47,7 +36,7 @@ get_header(); ?>
 		<?php if ( have_posts() ) : ?>
 
 			<?php while ( have_posts() ) : the_post();
-				echo "<div class='row'>";
+
 
 				/* Include the Post-Format-specific template for the content.
 				 * If you want to override this in a child theme, then include a file
@@ -55,7 +44,7 @@ get_header(); ?>
 				 */
 				get_template_part( 'content', 'home' );
 
-				echo "</div>";
+				;
 
             ?>
 
