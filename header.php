@@ -19,7 +19,6 @@
 </head>
 
 <body <?php body_class(); ?>>
-<div id="parallax-bg"></div>
 <div id="page" class="hfeed site">
 	<?php do_action( 'uwex_media_before' ); ?>
 	<div id="header-top">

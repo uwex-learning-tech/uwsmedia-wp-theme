@@ -29,10 +29,6 @@ jQuery(document).ready(function() {
 		jQuery('#site-navigation div.menu').hide();
 	});
 
-	jQuery(window).bind('scroll', function(e) {
-		hefct();
-	});
-
 	if (jQuery(window).width() > 992 ) {
 		       //  jQuery('#primary-home article').css( 'height', jQuery(this).parent('.row').height() );
 		       //  jQuery('#primary-home article').css( 'height', jQuery(this).parent('.row').height() );
@@ -67,8 +63,3 @@ jQuery(window).resize( function() {
     }
 
 } );
-
-function hefct() {
-	var scrollPosition = jQuery(window).scrollTop();
-	jQuery('#parallax-bg').css('top', (0 - (scrollPosition * .2)) + 'px');
-}
