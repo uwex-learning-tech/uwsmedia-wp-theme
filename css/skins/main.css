@@ -456,7 +456,6 @@ color: #00bac4;
 }
 
 /* Secondary menu */
-#site-secondary-nav .login-btn,
 #site-secondary-nav .faculty-btn {
     display: block;
     padding: 3px 10px 5px;
@@ -478,22 +477,8 @@ color: #00bac4;
     background-color: #4cc775;
 
 }
-#site-secondary-nav .login-btn:hover,
 #site-secondary-nav .faculty-btn:hover {
     text-decoration: none;
-}
-
-@media screen and (max-width: 767px) {
-
-    #site-secondary-nav .login-btn {
-        display: none;
-    }
-
-    #site-navigation.loggedin,
-    #site-navigation.loggedin.lower {
-        margin-top: 0;
-    }
-
 }
 
 #menu-admin-menu {
@@ -1187,6 +1172,19 @@ font-size: 20px;
   padding: 0 5px;
   color: #999999;
 }
+
+#colophon a {
+    
+    color: #333;
+    
+}
+
+#colophon a:hover {
+    
+    text-decoration: underline;
+    
+}
+
 /* 9. HTML Markup & Formatting
 --------------------------------------------------- */
 article table {

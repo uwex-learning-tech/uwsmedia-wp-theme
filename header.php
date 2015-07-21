@@ -47,12 +47,6 @@
 
                             echo '<div id="site-secondary-nav" class="col-xs-12">';
 
-                            if ( !is_user_logged_in() ) {
-
-                                echo '<a class="login-btn" href="' . wp_login_url() . '">LOGIN</a>';
-
-                            }
-
                             echo '<a class="faculty-btn" href="/faculty">FACULTY</a>';
 
                             echo '</div>';

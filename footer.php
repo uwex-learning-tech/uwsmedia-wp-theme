@@ -24,6 +24,16 @@
 			 	echo of_get_option('footertext2', true);
 
             }
+            
+            if ( !is_user_logged_in() ) {
+
+                echo ' <a href="' . wp_login_url() . '">Login</a>';
+
+            } else {
+                
+                
+                echo ' <a href="' . wp_logout_url() . '">Logout</a>';
+            }
 
             ?>
 
