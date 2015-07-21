@@ -27,12 +27,12 @@
             
             if ( !is_user_logged_in() ) {
 
-                echo ' <a href="' . wp_login_url() . '">Login</a>';
+                echo ' <a href="' . wp_login_url() . '">login</a>';
 
             } else {
                 
                 
-                echo ' <a href="' . wp_logout_url() . '">Logout</a>';
+                echo ' <a href="' . wp_logout_url() . '">logout</a>';
             }
 
             ?>

@@ -47,7 +47,7 @@
 
                             echo '<div id="site-secondary-nav" class="col-xs-12">';
 
-                            echo '<a class="faculty-btn" href="/faculty">FACULTY</a>';
+                            echo '<a class="faculty-btn" href="/faculty"><span class="glyphicon glyphicon-apple" aria-hidden="true"></span> FACULTY <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>';
 
                             echo '</div>';
 
@@ -55,10 +55,7 @@
 
                         <div class="col-xs-12">
 
-                            <nav id="site-navigation" class="main-navigation <?php
-                                    echo ( is_user_logged_in() ) ? 'loggedin' : '';
-                                    echo ( !current_user_can('read_private_pages') ) ? ' lower' :'';
-                                ?>" role="navigation">
+                            <nav id="site-navigation" class="main-navigation" role="navigation">
                 	         <div id="nav-container">
                 				<h1 class="menu-toggle">MENU
                     				<div class="menu-toggle-btn">
