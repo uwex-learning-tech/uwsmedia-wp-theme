@@ -39,6 +39,9 @@ code {
   white-space: pre-wrap !important;
   background: #f7f7f7;
 }
+.nav-tabs {
+    margin: 0;
+}
 .navbar-default .navbar-nav > li > a {
   color: none;
 }
