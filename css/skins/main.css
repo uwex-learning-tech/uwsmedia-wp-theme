@@ -264,14 +264,12 @@ a:active {
   display: none;
   float: left;
   position: absolute;
-  /* top: 5.0em; */
   left: 0;
   z-index: 99999;
   background: #eeeeee;
   text-align: left;
   border: none;
-  border-top: solid 3px #EFEFEF;
-  padding-top: 0px;
+  padding-top: 0;
   box-shadow: 0px 5px 4px -4px #4a4a4a;
 }
 #site-navigation ul ul ul {
@@ -309,7 +307,6 @@ a:active {
   display: block;
   color: #333;
   text-decoration: none;
-  /* padding: 16px 10px; */
   padding-left: 10px;
   padding-right: 10px;
   font-weight: normal;
@@ -323,36 +320,31 @@ a:active {
     border-bottom: 3px solid #0340a4;
     color: #0340a4;
     font-weight: bold;
-/*
-    background: #0340a4;
+}
+
+#site-navigation .sub-menu .current_page_item > a,
+#site-navigation .sub-menu .current_page_ancestor > a,
+#site-navigation .sub-menu .current_page_parent > a,
+#site-navigation .sub-menu .current-page-item > a,
+#site-navigation .sub-menu .current-page-ancestor > a {
+    border-bottom: none;
+    font-weight: normal;
+    background: #1a5cc6;
     color: #fff;
-*/
 }
 #site-navigation a:hover {
-  /* border-bottom: #00bac4 solid 2px; */
-  /* background: #0340a4; */
-  /* color: #333; */
+    border-bottom: 3px solid #1a5cc6;
+    color: #1a5cc6;
 }
-#site-navigation ul ul a {
-  border-bottom: none;
-}
+
 #site-navigation ul ul a:hover {
-  border-bottom: none;
   background: none;
 }
-/*
-#site-navigation li:hover > a {
-  border-bottom: #00bac4 solid 2px;
-  padding-bottom: 23px;
-  color: #00bac4;
-}
-*/
+
 #site-navigation ul ul li:hover > a {
-  background: #ffffff;
-  border-bottom: none;
+  background: #1a5cc6;
+  color: #fff;
   padding: 8px 20px;
-  color: black;
-  border-top: none;
 }
 @media screen and (max-width: 767px) {
   .site-title-text .site-title a {
@@ -363,7 +355,6 @@ a:active {
   }
   #site-navigation .active > a,
   #site-navigation .current_page_item > a {
-    /* border-top: solid 4px #ffffff; */
     background: none;
   }
   #site-navigation ul {
@@ -388,14 +379,8 @@ a:active {
   .menu-toggle,
   .main-navigation.toggled .nav-menu {
     display: block;
-    /*
-color: #00bac4;
-    font-weight: bold;
-*/
     text-transform: uppercase;
-    /* padding: 10px; */
     font-size: 20px;
-    /* padding-bottom: 10px; */
     position: relative;
     top: -8px;
     width: 100%;
@@ -421,16 +406,7 @@ color: #00bac4;
   .menu-toggle .menu-toggle-btn .icon-bar+.icon-bar {
       margin-top: 4px;
   }
-  /*
-.menu-toggle:before {
-    content: "\e012";
-    font-family: "Glyphicons Halfings";
-    height: 0;
-    width: 0px;
-    margin-right: 20px;
-    position: relative;
-  }
-*/
+
 }
 /* Small menu */
 .menu-toggle {
