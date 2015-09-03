@@ -82,8 +82,8 @@ body {
 .site-branding {
   float: left;
   /* margin-top: 0px; */
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 20px;
+  padding-bottom: 20px;
   /* margin-top: -24px; */
 }
 .site-title {
@@ -202,12 +202,12 @@ a:hover .social-icon {
 /* 4. Links
 ------------------------------------------------------- */
 a {
-  color: #0340a4;
+/*   color: #0340a4; */
 }
 a:hover,
 a:focus,
 a:active {
-  color: #0340a4;
+  color: #337ab7;
 }
 /* 5. Carousel Wrapper
 ------------------------------------------------------- */
@@ -1065,7 +1065,7 @@ font-size: 20px;
 }
 #secondary .widget a,
 #footer-sidebar .widget a {
-  color: #999999;
+/*   color: #5895f7; */
 }
 #secondary .widget > div,
 #footer-sidebar .widget > div {

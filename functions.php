@@ -203,7 +203,7 @@ add_filter( 'excerpt_more', 'new_excerpt_more' );
 function new_excerpt_length( $length ) {
 	return 26;
 }
-add_filter( 'excerpt_length', 'new_excerpt_length', 999 );
+add_filter( 'excerpt_length', 'new_excerpt_length', 998 );
 
 /**
  * Custom template tags for this theme.
