@@ -42,7 +42,7 @@
                         </button>
             			
                         <div id="primaryHeaderNav" class="collapse navbar-collapse">
-            			<?php html5blank_nav(); ?>
+            			<?php uwsmedia_nav(); ?>
                         </div>
                         
                     </nav>
