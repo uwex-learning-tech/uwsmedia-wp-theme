@@ -1,0 +1,10 @@
+.image-preview {
+    object-fit:cover;
+    width: 100px;
+    height: auto;
+}
+
+#homepage-sections .section {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 12px;
+}

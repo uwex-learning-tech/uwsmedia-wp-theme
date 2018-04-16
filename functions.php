@@ -62,7 +62,7 @@ if (function_exists('add_theme_support'))
 	Functions
 \*------------------------------------*/
 
-// uwsmedia Blank navigation
+// uwsmedia navigation
 function uwsmedia_nav()
 {
 	wp_nav_menu(
@@ -87,7 +87,7 @@ function uwsmedia_nav()
 	);
 }
 
-// Load uwsmedia Blank scripts (header.php)
+// Load uwsmedia scripts (header.php)
 function uwsmedia_header_scripts()
 {
     if ($GLOBALS['pagenow'] != 'wp-login.php' && !is_admin()) {
@@ -106,7 +106,7 @@ function uwsmedia_header_scripts()
     }
 }
 
-// Load uwsmedia Blank conditional scripts
+// Load uwsmedia conditional scripts
 function uwsmedia_conditional_scripts()
 {
     if (is_page('pagenamehere')) {
@@ -115,7 +115,7 @@ function uwsmedia_conditional_scripts()
     }
 }
 
-// Load uwsmedia Blank styles
+// Load uwsmedia styles
 function uwsmedia_styles()
 {
     wp_register_style('bootstrap', get_template_directory_uri() . '/css/bootstrap.min.css', array(), '4.0.0', 'all');
@@ -127,7 +127,7 @@ function uwsmedia_styles()
     wp_enqueue_style('uwsmedia'); // Enqueue it!
 }
 
-// Register uwsmedia Blank Navigation
+// Register uwsmedia Navigation
 function register_uwsmedia_menu()
 {
     register_nav_menus(array( // Using array to specify more menus if needed
@@ -253,7 +253,7 @@ function uwsmediawp_excerpt($length_callback = '', $more_callback = '')
 }
 
 // Custom View Article link to Post
-function uwsmedia_blank_view_article($more)
+function uwsmedia_view_article($more)
 {
     global $post;
     return '... <a class="view-article" href="' . get_permalink($post->ID) . '">' . __('View Article', 'uwsmedia') . '</a>';
@@ -341,6 +341,141 @@ function uwsmediacomments($comment, $args, $depth)
 <?php }
 
 /*------------------------------------*\
+	UWS Theme Settings Page
+\*------------------------------------*/
+
+function uwsmedia_admin_theme_settings() {
+    add_theme_page( 'UWS Media Settings', 'UWS Media Settings', 'edit_theme_options', 'uwsmedia-theme-settings', 'uwsmedia_theme_settings_page' );
+}
+
+function uwsmedia_theme_settings_page() { ?>
+<div class="wrap">
+<h1>UWS Media Theme Settings</h1>
+<form method="post" action="options.php">
+<?php
+    
+    settings_fields('uwsmedia-theme-options-grp');
+    
+    // display all sections for theme-options page
+    do_settings_sections('uwsmedia_theme_settings');
+    submit_button();
+?>
+</form>
+</div>
+<?php
+}
+
+function homepage_section_description() {
+    
+    echo '<p>Specify the sections on the homepage including its text, buttons, and background.</p>';
+    
+}
+
+function Site_section_description() {
+
+    echo '<p>General settings that will be applied to all pages.</p>';
+    
+}
+
+function homepage_options_callback() {
+    
+    $sections = get_option( 'homepage_sections_option' );
+    
+    if (empty($sections)) {
+        
+         $sectionHtmls = '<div id="homepage-sections"><div class="section" data-count="1"><input type="url" class="regular-text code" value="" /><input id="section" data-rel="" type="button" class="button" value="Select" /><textarea class="large-text" placeholder="Section Description"></textarea><input type="text" class="regular-text" value="" placeholder="Button 1 Name" /><input type="text" class="regular-text" value="" placeholder="Button 1 Link" /><input type="text" class="regular-text" value="" placeholder="Button 2 Name" /><input type="text" class="regular-text" value="" placeholder="Button 2 Link" /></div></div>';
+         
+    } else {
+        $sectionHtmls = '';
+    }
+    
+    $hiddenInput = '<input name="homepage_sections_option" id="homepage_sections_option" type="hidden" value="" />';
+
+    echo $sectionHtmls . $hiddenInput;
+    
+}
+
+function copyright_options_callback() {
+    
+    $copyright = get_option('copyright_option');
+    
+    echo '<textarea name="copyright_option" id="copyright_option" class="large-text">'.$copyright.'</textarea>';
+    
+}
+
+function footer_logo_options_callback() {
+    
+    $logo = get_option('footer_logo_option');
+    
+    $imgPreview = '<div class="image-preview-wrapper"><img class="image-preview" id="footer-logo-preview" src="'.$logo.'" /></div>';
+    $imgTxtField = '<input name="footer_logo_option" id="footer_logo_option" type="url" class="regular-text code" value="'.$logo.'" />';
+    $imgUploadBtn = '<input id="upload_footer_logo_button" data-rel="footer_logo_option" type="button" class="button" value="Select" />';
+    
+    echo $imgPreview . $imgTxtField . $imgUploadBtn;
+    
+}
+
+function site_logo_options_callback() {
+    
+    $logo = get_option('site_logo_option');
+    
+    $imgPreview = '<div class="image-preview-wrapper"><img class="image-preview" id="site-logo-preview" src="'.$logo.'" /></div>';
+    $imgTxtField = '<input name="site_logo_option" id="site_logo_option" type="url" class="regular-text code" value="'.$logo.'" />';
+    $imgUploadBtn = '<input id="upload_site_logo_button" data-rel="site_logo_option" type="button" class="button" value="Select" />';
+    
+    echo $imgPreview . $imgTxtField . $imgUploadBtn;
+    
+}
+
+function uwsmedia_theme_settings(){
+    
+    wp_enqueue_media();
+    
+    // Site
+    
+    add_option('site_logo_option', get_template_directory_uri() . '/img/uwex_logo.svg');
+    add_option('footer_logo_option', get_template_directory_uri() . '/img/uws_logo.svg');
+    add_option('copyright_option', 'UWEX and University of Wisconsin Systems Academic Affairs. All rights reserved. No part of this website may be reproduced and or redistributed through any means without written permission.');
+    
+    add_settings_section('site_section', 'Site', 'site_section_description', 'uwsmedia_theme_settings');
+    add_settings_field('site_logo_option', 'Site Logo', 'site_logo_options_callback', 'uwsmedia_theme_settings', 'site_section');
+    add_settings_field('footer_logo_option', 'Footer Logo', 'footer_logo_options_callback', 'uwsmedia_theme_settings', 'site_section');
+    add_settings_field('copyright_option', 'Copyright', 'copyright_options_callback', 'uwsmedia_theme_settings', 'site_section');
+    
+    // homepage
+    
+    add_option('homepage_sections_option', '');
+    
+    add_settings_section( 'homepage_section', 'Home Page', 'homepage_section_description', 'uwsmedia_theme_settings');
+    add_settings_field('homepage_sections_option', 'Sections', 'homepage_options_callback', 'uwsmedia_theme_settings', 'homepage_section');
+    
+    register_setting('uwsmedia-theme-options-grp', 'homepage_sections_option');
+    register_setting('uwsmedia-theme-options-grp', 'site_logo_option');
+    register_setting('uwsmedia-theme-options-grp', 'footer_logo_option');
+    register_setting('uwsmedia-theme-options-grp', 'copyright_option');
+    
+}
+
+function uwsmedia_admin_scripts() {
+    
+    wp_register_script('uwsmedia_admin_script', get_template_directory_uri() . '/js/admin.js', array('jquery'), '1.0.0');
+    wp_enqueue_script('uwsmedia_admin_script');
+    
+    wp_register_style('uwsmedia_admin_css', get_template_directory_uri() . '/css/admin.css', array(), '1.0.0', 'all');
+    wp_enqueue_style('uwsmedia_admin_css'); // Enqueue it!
+
+}
+
+/*------------------------------------*\
+	UWS Theme SVG MIME SUPPORT
+\*------------------------------------*/
+
+function cc_mime_types($mimes) {
+     $mimes['svg'] = 'image/svg+xml';
+     return $mimes;
+}
+
+/*------------------------------------*\
 	Actions + Filters + ShortCodes
 \*------------------------------------*/
 
@@ -349,10 +484,13 @@ add_action('init', 'uwsmedia_header_scripts'); // Add Custom Scripts to wp_head
 add_action('wp_print_scripts', 'uwsmedia_conditional_scripts'); // Add Conditional Page Scripts
 add_action('get_header', 'enable_threaded_comments'); // Enable Threaded Comments
 add_action('wp_enqueue_scripts', 'uwsmedia_styles'); // Add Theme Stylesheet
-add_action('init', 'register_uwsmedia_menu'); // Add uwsmedia Blank Menu
-add_action('init', 'create_post_type_uwsmedia'); // Add our uwsmedia Blank Custom Post Type
+add_action('init', 'register_uwsmedia_menu'); // Add uwsmedia Menu
+/* add_action('init', 'create_post_type_uwsmedia'); */ // Add our uwsmedia Custom Post Type
 add_action('widgets_init', 'my_remove_recent_comments_style'); // Remove inline Recent Comment Styles from wp_head()
 add_action('init', 'uwsmediawp_pagination'); // Add our uwsmedia Pagination
+add_action('admin_menu', 'uwsmedia_admin_theme_settings'); // add uwsmedia theme settings
+add_action('admin_enqueue_scripts', 'uwsmedia_admin_scripts' ); // add admin script
+add_action('admin_init', 'uwsmedia_theme_settings'); // add uwsmedia theme settings
 
 // Remove Actions
 remove_action('wp_head', 'feed_links_extra', 3); // Display the links to the extra feeds such as category feeds
@@ -380,11 +518,12 @@ add_filter('wp_nav_menu_args', 'my_wp_nav_menu_args'); // Remove surrounding <di
 add_filter('the_category', 'remove_category_rel_from_category_list'); // Remove invalid rel attribute
 add_filter('the_excerpt', 'shortcode_unautop'); // Remove auto <p> tags in Excerpt (Manual Excerpts only)
 add_filter('the_excerpt', 'do_shortcode'); // Allows Shortcodes to be executed in Excerpt (Manual Excerpts only)
-add_filter('excerpt_more', 'uwsmedia_blank_view_article'); // Add 'View Article' button instead of [...] for Excerpts
+add_filter('excerpt_more', 'uwsmedia_view_article'); // Add 'View Article' button instead of [...] for Excerpts
 add_filter('show_admin_bar', 'remove_admin_bar'); // Remove Admin bar
 add_filter('style_loader_tag', 'uwsmedia_style_remove'); // Remove 'text/css' from enqueued stylesheet
 add_filter('post_thumbnail_html', 'remove_thumbnail_dimensions', 10); // Remove width and height dynamic attributes to thumbnails
 add_filter('image_send_to_editor', 'remove_thumbnail_dimensions', 10); // Remove width and height dynamic attributes to post images
+add_filter('upload_mimes', 'cc_mime_types'); // allow svg mime
 
 // Remove Filters
 remove_filter('the_excerpt', 'wpautop'); // Remove <p> tags from Excerpt altogether
@@ -400,18 +539,19 @@ add_shortcode('uwsmedia_shortcode_demo_2', 'uwsmedia_shortcode_demo_2'); // Plac
 	Custom Post Types
 \*------------------------------------*/
 
-// Create 1 Custom Post type for a Demo, called uwsmedia-Blank
+// Create 1 Custom Post type for a Demo, called uws-media
+/*
 function create_post_type_uwsmedia()
 {
-    register_taxonomy_for_object_type('category', 'uwsmedia-blank'); // Register Taxonomies for Category
-    register_taxonomy_for_object_type('post_tag', 'uwsmedia-blank');
-    register_post_type('uwsmedia-blank', // Register Custom Post Type
+    register_taxonomy_for_object_type('category', 'uws-media'); // Register Taxonomies for Category
+    register_taxonomy_for_object_type('post_tag', 'uws-media');
+    register_post_type('uws-media', // Register Custom Post Type
         array(
         'labels' => array(
-            'name' => __('uwsmedia Blank Custom Post', 'uwsmedia'), // Rename these to suit
-            'singular_name' => __('uwsmedia Blank Custom Post', 'uwsmedia'),
+            'name' => __('uwsmedia Custom Post', 'uwsmedia'), // Rename these to suit
+            'singular_name' => __('uwsmedia Custom Post', 'uwsmedia'),
             'add_new' => __('Add New', 'uwsmedia'),
-            'add_new_item' => __('Add New uwsmedia Blank Custom Post', 'uwsmedia'),
+            'add_new_item' => __('Add New uwsmedia Custom Post', 'uwsmedia'),
             'edit' => __('Edit', 'uwsmedia'),
             'edit_item' => __('Edit uwsmedia Blank Custom Post', 'uwsmedia'),
             'new_item' => __('New uwsmedia Blank Custom Post', 'uwsmedia'),
@@ -437,6 +577,7 @@ function create_post_type_uwsmedia()
         ) // Add Category and Post Tags support
     ));
 }
+*/
 
 /*------------------------------------*\
 	ShortCode Functions

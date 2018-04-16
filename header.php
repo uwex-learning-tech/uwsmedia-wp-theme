@@ -34,7 +34,7 @@
                         
                         <!-- logo -->
                         <a class="navbar-brand" href="<?php echo home_url(); ?>">
-            				<img class="logo-img" src="<?php echo get_template_directory_uri(); ?>/img/uwex_media_logo.svg" alt="UWEX Media Services" />
+            				<img class="logo-img" src="<?php echo get_option('site_logo_option'); ?>" alt="<?php bloginfo('name'); ?>" />
                         </a>
                         
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#primaryHeaderNav" aria-controls="primaryHeaderNav" aria-expanded="false" aria-label="Toggle navigation">
