@@ -1,83 +1,54 @@
-<?php
-/**
- * The template for displaying all pages.
- *
- * This is the template that displays all pages by default.
- * Please note that this is the WordPress construct of pages
- * and that other 'pages' on your WordPress site will use a
- * different template.
- *
- * @package UWEX-Media
- */
+<?php get_header(); ?>
+    	<main class="col-8" role="main">
+    		<!-- section -->
+    		<section>
+                
+                <div class="post-featured-image">
+                <?php the_post_thumbnail(); ?>
+                </div>
+                
+    			<h1><?php the_title(); ?></h1>
+    
+    		<?php if (have_posts()): while (have_posts()) : the_post(); ?>
+    
+    			<!-- article -->
+    			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+                    
+    				<?php the_content(); ?>
+    
+    				<?php
+                    	if ( !is_front_page() ) {
+                
+                    	    echo '<p class="published-date">';
+                        	echo 'Published on ' . get_the_date( 'F d, Y' ) . ' at ' . get_the_date( 'g:i:s a T' ) . '. ';
+                        	echo 'Last modified on ' . get_the_modified_time( 'F d, Y' ) . ' at ' . get_the_modified_time( 'g:i:s a T' ) . '.';
+                        	echo '</p>';
+                
+                    	}
+                    ?>
+    
+    			</article>
+    			<!-- /article -->
+    
+    		<?php endwhile; ?>
+    
+    		<?php else: ?>
+    
+    			<!-- article -->
+    			<article>
+    
+    				<h2><?php _e( 'Sorry, nothing to display.', 'html5blank' ); ?></h2>
+    
+    			</article>
+    			<!-- /article -->
+    
+    		<?php endif; ?>
+    
+    		</section>
+    		<!-- /section -->
+    	</main>
+	
 
-get_header(); ?>
+<?php get_sidebar(); ?>
 
-	<div id="primary" class="content-area col-md-8">
-		<main id="main" class="site-main" role="main">
-
-            <?php
-
-                if ( !is_front_page() ) {
-
-                    if ( function_exists(simple_breadcrumb) ) {
-
-                        simple_breadcrumb();
-
-                    }
-
-                }
-
-
-            ?>
-
-			<?php while ( have_posts() ) : the_post(); ?>
-
-				<?php get_template_part( 'content', 'page' ); ?>
-
-				<?php
-					// If comments are open or we have at least one comment, load up the comment template
-					if ( comments_open() || '0' != get_comments_number() )
-						comments_template();
-				?>
-
-			<?php endwhile; // end of the loop. ?>
-
-		</main><!-- #main -->
-	</div><!-- #primary -->
-
-<?php
-
-    /* Get the current user object. */
-	$current_user = wp_get_current_user();
-
-	/* Get the roles selected by the user. */
-    $roles = get_post_meta( get_the_ID(), '_members_access_role', false );
-
-    // if the roles are not empty,
-    // loop through each permitted role and see if user can view
-    if ( !empty( $roles ) ) {
-
-        foreach ( $roles as $role ) {
-
-    		if ( user_can( $current_user->ID, $role ) )
-    			$can_view = true;
-
-    	}
-
-    }
-
-    if ( empty( $role ) ) {
-
-        $can_view = true;
-
-    }
-
-    // if user can view, get the side bar
-    if ( $can_view ) {
-
-        get_sidebar();
-
-    }
-
-?>
 <?php get_footer(); ?>

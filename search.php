@@ -1,39 +1,19 @@
-<?php
-/**
- * The template for displaying Search Results pages.
- *
- * @package UWEX-Media
- */
+<?php get_header(); ?>
 
-get_header(); ?>
+	<main role="main">
+		<!-- section -->
+		<section>
 
-	<section id="primary" class="content-area col-md-8">
-		<main id="main" class="site-main" role="main">
+			<h1><?php echo sprintf( __( '%s Search Results for ', 'html5blank' ), $wp_query->found_posts ); echo get_search_query(); ?></h1>
 
-		<?php if ( have_posts() ) : ?>
+			<?php get_template_part('loop'); ?>
 
-			<header class="page-header">
-				<h1 class="page-title"><?php printf( __( 'Search Results for: %s', 'uwex-media' ), '<span>' . get_search_query() . '</span>' ); ?></h1>
-			</header><!-- .page-header -->
+			<?php get_template_part('pagination'); ?>
 
-			<?php /* Start the Loop */ ?>
-			<?php while ( have_posts() ) : the_post(); ?>
-
-				<?php get_template_part( 'content', 'search' ); ?>
-
-			<?php endwhile; ?>
-
-			<?php uwex_media_content_nav( 'nav-below' ); ?>
-
-		<?php else : ?>
-
-			<?php get_template_part( 'no-results', 'search' ); ?>
-
-		<?php endif; ?>
-
-		</main><!-- #main -->
-	</section><!-- #primary -->
+		</section>
+		<!-- /section -->
+	</main>
 
 <?php get_sidebar(); ?>
-<?php get_sidebar('footer'); ?>
+
 <?php get_footer(); ?>

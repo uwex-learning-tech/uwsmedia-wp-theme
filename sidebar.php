@@ -1,33 +1,15 @@
-<?php
-/**
- * The Sidebar containing the main widget areas.
- *
- * @package UWEX-Media
- */
-?>
-	<div id="secondary" class="widget-area col-md-4" role="complementary">
-		<?php do_action( 'before_sidebar' ); ?>
-		<?php if ( ! dynamic_sidebar( 'sidebar-1' ) ) : ?>
+<!-- sidebar -->
+<aside class="sidebar col-4" role="complementary">
 
-			<aside id="search" class="widget widget_search">
-				<?php get_search_form(); ?>
-			</aside>
+	<?php get_template_part('searchform'); ?>
 
-			<aside id="archives" class="widget">
-				<h1 class="widget-title"><?php _e( 'Archives', 'uwex-media' ); ?></h1>
-				<ul>
-					<?php wp_get_archives( array( 'type' => 'monthly' ) ); ?>
-				</ul>
-			</aside>
+	<div class="sidebar-widget">
+		<?php if(!function_exists('dynamic_sidebar') || !dynamic_sidebar('widget-area-1')) ?>
+	</div>
 
-			<aside id="meta" class="widget">
-				<h1 class="widget-title"><?php _e( 'Meta', 'uwex-media' ); ?></h1>
-				<ul>
-					<?php wp_register(); ?>
-					<li><?php wp_loginout(); ?></li>
-					<?php wp_meta(); ?>
-				</ul>
-			</aside>
+	<div class="sidebar-widget">
+		<?php if(!function_exists('dynamic_sidebar') || !dynamic_sidebar('widget-area-2')) ?>
+	</div>
 
-		<?php endif; // end sidebar widget area ?>
-	</div><!-- #secondary -->
+</aside>
+<!-- /sidebar -->

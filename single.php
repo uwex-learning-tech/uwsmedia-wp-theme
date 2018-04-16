@@ -1,46 +1,67 @@
-<?php
-/**
- * The Template for displaying all single posts.
- *
- * @package UWEX-Media
- */
+<?php get_header(); ?>
 
-get_header(); ?>
+	<main role="main">
+	<!-- section -->
+	<section>
 
-	<div id="primary" class="content-area col-md-8">
-		<main id="main" class="site-main" role="main">
+	<?php if (have_posts()): while (have_posts()) : the_post(); ?>
 
-        <?php
+		<!-- article -->
+		<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
-            if ( !is_front_page() ) {
+			<!-- post thumbnail -->
+			<?php if ( has_post_thumbnail()) : // Check if Thumbnail exists ?>
+				<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
+					<?php the_post_thumbnail(); // Fullsize image for the single post ?>
+				</a>
+			<?php endif; ?>
+			<!-- /post thumbnail -->
 
-                if ( function_exists(simple_breadcrumb) ) {
-                    echo '<div class="row"><div class="col-xs-12">';
-                    simple_breadcrumb();
-                    echo '</div></div>';
-                }
+			<!-- post title -->
+			<h1>
+				<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>"><?php the_title(); ?></a>
+			</h1>
+			<!-- /post title -->
 
-            }
+			<!-- post details -->
+			<span class="date"><?php the_time('F j, Y'); ?> <?php the_time('g:i a'); ?></span>
+			<span class="author"><?php _e( 'Published by', 'html5blank' ); ?> <?php the_author_posts_link(); ?></span>
+			<span class="comments"><?php if (comments_open( get_the_ID() ) ) comments_popup_link( __( 'Leave your thoughts', 'html5blank' ), __( '1 Comment', 'html5blank' ), __( '% Comments', 'html5blank' )); ?></span>
+			<!-- /post details -->
 
+			<?php the_content(); // Dynamic Content ?>
 
-        ?>
+			<?php the_tags( __( 'Tags: ', 'html5blank' ), ', ', '<br>'); // Separated by commas with a line break at the end ?>
 
-		<?php while ( have_posts() ) : the_post(); ?>
+			<p><?php _e( 'Categorised in: ', 'html5blank' ); the_category(', '); // Separated by commas ?></p>
 
-			<?php get_template_part( 'content', 'single' ); ?>
+			<p><?php _e( 'This post was written by ', 'html5blank' ); the_author(); ?></p>
 
-			<?php uwex_media_content_nav( 'nav-below' ); ?>
+			<?php edit_post_link(); // Always handy to have Edit Post Links available ?>
 
-			<?php
-				// If comments are open or we have at least one comment, load up the comment template
-				if ( comments_open() || '0' != get_comments_number() )
-					comments_template();
-			?>
+			<?php comments_template(); ?>
 
-		<?php endwhile; // end of the loop. ?>
+		</article>
+		<!-- /article -->
 
-		</main><!-- #main -->
-	</div><!-- #primary -->
+	<?php endwhile; ?>
+
+	<?php else: ?>
+
+		<!-- article -->
+		<article>
+
+			<h1><?php _e( 'Sorry, nothing to display.', 'html5blank' ); ?></h1>
+
+		</article>
+		<!-- /article -->
+
+	<?php endif; ?>
+
+	</section>
+	<!-- /section -->
+	</main>
 
 <?php get_sidebar(); ?>
+
 <?php get_footer(); ?>

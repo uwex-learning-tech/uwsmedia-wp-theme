@@ -1,102 +1,67 @@
-<?php
-/**
- * The Header for our theme.
- *
- * Displays all of the <head> section and everything up till <div id="content">
- *
- * @package UWEX-Media
- */
-?><!DOCTYPE html>
-<html <?php language_attributes(); ?>>
-<head>
-<meta charset="<?php bloginfo( 'charset' ); ?>">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title><?php wp_title( '|', true, 'right' ); ?></title>
-<link rel="profile" href="http://gmpg.org/xfn/11">
-<link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>">
+<!doctype html>
+<html <?php language_attributes(); ?> class="no-js">
+	<head>
+		<meta charset="<?php bloginfo('charset'); ?>">
+		<title><?php wp_title(''); ?><?php if(wp_title('', false)) { echo ' :'; } ?> <?php bloginfo('name'); ?></title>
 
-<?php wp_head(); ?>
-</head>
+        <link href="<?php echo get_template_directory_uri(); ?>/img/icons/favicon.ico" rel="shortcut icon">
+        <link href="<?php echo get_template_directory_uri(); ?>/img/icons/touch.png" rel="apple-touch-icon-precomposed">
 
-<body <?php body_class(); ?>>
-<div id="page" class="hfeed site">
-	<?php do_action( 'uwex_media_before' ); ?>
-	<div id="header-top">
-		<header id="masthead" class="site-header container" role="banner">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="<?php bloginfo('description'); ?>">
 
-    		<div class="row">
-        		<div class="site-branding col-xs-12 col-sm-4">
-    			<?php if((of_get_option('logo', true) != "") && (of_get_option('logo', true) != 1) ) { ?>
-    				<h1 class="site-title logo-container"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home">
-    				<?php
-    				echo "<img class='main_logo img-responsive' src='".of_get_option('logo', true)."' title='".esc_attr(get_bloginfo( 'name','display' ) )."'></a></h1>";
-    				}
-    			else { ?>
-    				<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
-    			<?php
-    			}
-    			?>
-    			</div>
+		<?php wp_head(); ?>
+		<script>
+        // conditionizr.com
+        // configure environment tests
+        conditionizr.config({
+            assets: '<?php echo get_template_directory_uri(); ?>',
+            tests: {}
+        });
+        </script>
 
-                <div class="default-nav-wrapper col-xs-12 col-sm-8" role="navigation">
+	</head>
+	<body <?php strpos(get_page(get_post_ancestors($post)[0])->post_name, 'faculty') !== false ? body_class('faculty') : body_class(); ?>>
 
-                    <div class="row">
-
-                        <?php
-
-                            echo '<div id="site-secondary-nav" class="col-xs-12">';
-
-                            echo '<a class="faculty-btn" href="/faculty"><span class="glyphicon glyphicon-apple" aria-hidden="true"></span> FACULTY <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>';
-
-                            echo '</div>';
-
-                        ?>
-
-                        <div class="col-xs-12">
-
-                            <nav id="site-navigation" class="main-navigation" role="navigation">
-                	         <div id="nav-container">
-                				<h1 class="menu-toggle">MENU
-                    				<div class="menu-toggle-btn">
-                        				<span class="icon-bar"></span>
-                        				<span class="icon-bar"></span>
-                        				<span class="icon-bar"></span>
-                    				</div>
-                				</h1>
-                				<div class="screen-reader-text skip-link"><a href="#content" title="<?php esc_attr_e( 'Skip to content', 'uwex-media' ); ?>"><?php _e( 'Skip to content', 'uwex-media' ); ?></a></div>
-
-                				<?php
-
-                    				wp_nav_menu( array( 'theme_location' => 'primary' ) );
-
-                    				if ( is_user_logged_in() && current_user_can('read_private_pages') ) {
-
-                        				wp_nav_menu( array(
-                                                'theme_location' => 'secondary',
-                                                'menu_class' => 'pull-right',
-                                                'fallback_cb' => false
-                                                ) );
-
-                    				}
-
-                                ?>
-
-                	          </div>
-                			</nav><!-- #site-navigation -->
-
+		<!-- wrapper -->
+		<div class="wrapper">
+            
+            <!-- header -->
+            <header class="header" role="banner">
+                <div class="container">
+                    <nav class="navbar navbar-expand-lg navbar-light" role="navigation">
+                        
+                        <!-- logo -->
+                        <a class="navbar-brand" href="<?php echo home_url(); ?>">
+            				<img class="logo-img" src="<?php echo get_template_directory_uri(); ?>/img/uwex_media_logo.svg" alt="UWEX Media Services" />
+                        </a>
+                        
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#primaryHeaderNav" aria-controls="primaryHeaderNav" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+            			
+                        <div id="primaryHeaderNav" class="collapse navbar-collapse">
+            			<?php html5blank_nav(); ?>
                         </div>
-
-                    </div>
-
-
+                        
+                    </nav>
                 </div>
-
-    			<!-- <?php get_template_part('social', 'fa'); ?> -->
-
-    		</div>
-
-		</header><!-- #masthead -->
-	</div>
-
-		<div id="content" class="site-content row clearfix clear">
-		<div class="container">
+            </header>
+            
+            <?php if ( !is_front_page() ) { ?>
+            
+            <div class="breadcrumb-nav">
+                <div class="container">
+                <?php breadcrumb_nav(); ?>
+                </div>
+            </div> <!-- /header -->
+            
+            <!-- body content container -->
+			<div class="container">
+                <div class="row">
+            
+            <?php } ?>
+			
+			
+			

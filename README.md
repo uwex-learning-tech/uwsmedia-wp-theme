@@ -1,4 +1,3 @@
-UWEX Media Team WP Theme
-===================
+# UWS Media
 
-WordPress theme used for the UWEX CEOEL Media Team website.
+Information coming soon...
