@@ -11,7 +11,7 @@
 	License URI: http://opensource.org/licenses/mit-license.php
 */
 
-@import url('https://fonts.googleapis.com/css?family=Quicksand|Raleway:800');
+@import url('https://fonts.googleapis.com/css?family=Quicksand:300,400,700|Raleway:300,700');
 
 /*------------------------------------*\
     MAIN
@@ -312,6 +312,82 @@ main .post-featured-image img {
 .footer .login-btn a:hover {
     border-color: #990033;
     background-color: #990033;
+}
+
+/*------------------------------------*\
+    FRONT PAGE
+\*------------------------------------*/
+
+.section-wrapper {
+    background-repeat: no-repeat;
+    background-position: center bottom;
+}
+
+.section-wrapper.dark {
+    color: #fff;
+    background-color: #1E252B;
+}
+
+.section-wrapper.gray {
+    color: #000;
+    background-color: #CBCBCB;
+}
+
+.section-wrapper.light {
+    color: #000;
+    background-color: #F0F0F0;
+}
+
+.section-wrapper .section-banner {
+    max-width: 940px;
+    padding-top: 40px;
+    margin: 0 auto;
+}
+
+.section-wrapper .section-banner .title,
+.section-wrapper .section-banner .description,
+.section-wrapper .section-banner .buttons {
+    text-align: center;
+}
+
+.section-wrapper .section-banner .title {
+    font-weight: 300;
+    font-size: 48px;
+    text-transform: uppercase;
+}
+
+.section-wrapper .section-banner .description {
+    font-size: 21px;
+    font-weight: 300;
+}
+
+.section-wrapper .section-banner .buttons {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+
+.section-wrapper .section-banner .buttons .btn {
+    display: block;
+    width: 200px;
+    border: 1px solid #000;
+    text-transform: uppercase;
+    color: #000;
+    font-weight: 700;
+    margin-right: 12px;
+}
+
+.section-wrapper.dark .section-banner .buttons .btn {
+    color: #fff;
+    border-color: #fff;
+}
+
+.section-wrapper .section-bg img {
+    display: block;
+    margin: 0 auto;
+    max-width: 940px;
+    height: auto;
+    object-fit: cover;
 }
 
 /*------------------------------------*\

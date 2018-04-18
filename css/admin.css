@@ -5,6 +5,13 @@
 }
 
 #homepage-sections .section {
-    border-bottom: 1px solid #ccc;
-    padding-bottom: 12px;
+    padding: 12px 0;
+    margin-bottom: 12px;
 }
+
+#homepage-sections .section .image-preview {
+    object-fit:cover;
+    width: 250px;
+    height: auto;
+}
+

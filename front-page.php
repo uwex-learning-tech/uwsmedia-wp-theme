@@ -14,41 +14,36 @@
 	</section>
 	<!-- /section -->
 	
-	<!-- section -->
-	<section style="background-color: aqua; min-height: 250px;">
-        
-        <div class="container">
-        
-            <div id="tagBanner">tagBanner</div>
-        
-        </div>
-
-	</section>
-	<!-- /section -->
-	
-	<!-- section -->
-	<section style="background-color: green; min-height: 250px;">
-        
-        <div class="container">
+	<?php
+    	
+    	$sectionsArray = json_decode( get_option( 'homepage_sections_option' ) );
+    	
+    	foreach ($sectionsArray as $section) {
             
-            <div id="facultyBanner">Faculty Banner</div>
+            $sectionHtmls = '<section class="section-wrapper '.$section->{'accent'}.'">';
+            $sectionHtmls .= '<div class="container"><div class="section-banner">';
             
-        </div>
-
-	</section>
-	<!-- /section -->
-	
-	<!-- section -->
-	<section style="background-color: yellow; min-height: 250px;">
-        
-        <div class="container">
+            $sectionHtmls .= '<h2 class="title">'.$section->{'title'}.'</h2>';
             
-            <div id="aboutUsBanner">About Us Banner</div>
+            $sectionHtmls .= '<p class="description">'.$section->{'text'}.'</p><div class="buttons">';
             
-        </div>
-
-	</section>
-	<!-- /section -->
+            foreach ( $section->{'buttons'} as $button ) {
+                
+                if ( !empty($button->{'name'}) ) {
+                    
+                    $sectionHtmls .= '<a class="btn" href="'.$button->{'link'}.'">'.$button->{'name'}.'</a>';
+                    
+                }
+                
+            }
+            
+            $sectionHtmls .= '</div><div class="section-bg"><img src="'.$section->{'img'}.'" alt="" role="presentation" /></div></div></div></section>';
+            
+            echo $sectionHtmls;
+            
+        }
+    	
+    ?>
 	
 </main>
 

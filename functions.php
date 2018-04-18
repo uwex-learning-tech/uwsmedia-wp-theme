@@ -353,9 +353,7 @@ function uwsmedia_theme_settings_page() { ?>
 <h1>UWS Media Theme Settings</h1>
 <form method="post" action="options.php">
 <?php
-    
     settings_fields('uwsmedia-theme-options-grp');
-    
     // display all sections for theme-options page
     do_settings_sections('uwsmedia_theme_settings');
     submit_button();
@@ -383,10 +381,50 @@ function homepage_options_callback() {
     
     if (empty($sections)) {
         
-         $sectionHtmls = '<div id="homepage-sections"><div class="section" data-count="1"><input type="url" class="regular-text code" value="" /><input id="section" data-rel="" type="button" class="button" value="Select" /><textarea class="large-text" placeholder="Section Description"></textarea><input type="text" class="regular-text" value="" placeholder="Button 1 Name" /><input type="text" class="regular-text" value="" placeholder="Button 1 Link" /><input type="text" class="regular-text" value="" placeholder="Button 2 Name" /><input type="text" class="regular-text" value="" placeholder="Button 2 Link" /></div></div>';
+         $sectionHtmls = '<div id="homepage-sections"><div class="section"><div class="image-preview-wrapper"><img class="image-preview" id="section-one-preview" src="" /></div><input type="url" id="section-one-url" class="regular-text code uwsimgurl" value="" /><input id="section-one-img" data-rel="section-one-url" data-preview="section-one-preview" type="button" class="button" value="Select" /><br /><input type="text" class="regular-text uwstitle" value="" placeholder="Title" /><textarea class="large-text uwstextarea" placeholder="Description..." rows="10"></textarea><input type="text" class="regular-text uwsbtn" value="" placeholder="Button 1 Name" /><input type="text" class="regular-text uwsbtnlink" value="" placeholder="Button 1 Link" /><input type="text" class="regular-text uwsbtn" value="" placeholder="Button 2 Name" /><input type="text" class="regular-text uwsbtnlink" value="" placeholder="Button 2 Link" /><br /><label><input name="section-one-accent" type="radio" checked="checked" value="light" />Light</label> <input name="section-one-accent" type="radio" checked="checked" value="gray" />Gray</label> <label><input name="section-one-accent" type="radio" value="dark" />Dark</label><p class="description">Choose a color accent for this section.</p></div><div class="section"><div class="image-preview-wrapper"><img class="image-preview" id="section-two-preview" src="" /></div><input type="url" id="section-two-url" class="regular-text code uwsimgurl" value="" /><input id="section-two-img" data-rel="section-two-url" data-preview="section-two-preview" type="button" class="button" value="Select" /><br /><input type="text" class="regular-text uwstitle" value="" placeholder="Title" /><textarea class="large-text uwstextarea" placeholder="Description..." rows="10"></textarea><input type="text" class="regular-text uwsbtn" value="" placeholder="Button 1 Name" /><input type="text" class="regular-text uwsbtnlink" value="" placeholder="Button 1 Link" /><input type="text" class="regular-text uwsbtn" value="" placeholder="Button 2 Name" /><input type="text" class="regular-text uwsbtnlink" value="" placeholder="Button 2 Link" /><br /><label><input name="section-two-accent" type="radio" checked="checked" value="light" />Light</label> <input name="section-two-accent" type="radio" checked="checked" value="gray" />Gray</label> <label><input name="section-two-accent" type="radio" value="dark" />Dark</label><p class="description">Choose a color accent for this section.</p></div><div class="section"><div class="image-preview-wrapper"><img class="image-preview" id="section-three-preview" src="" /></div><input type="url" id="section-three-url" class="regular-text code uwsimgurl" value="" /><input id="section-three-img" data-rel="section-three-url" data-preview="section-three-preview" type="button" class="button" value="Select" /><br /><input type="text" class="regular-text uwstitle" value="" placeholder="Title" /><textarea class="large-text uwstextarea" placeholder="Description..." rows="10"></textarea><input type="text" class="regular-text uwsbtn" value="" placeholder="Button 1 Name" /><input type="text" class="regular-text uwsbtnlink" value="" placeholder="Button 1 Link" /><input type="text" class="regular-text uwsbtn" value="" placeholder="Button 2 Name" /><input type="text" class="regular-text uwsbtnlink" value="" placeholder="Button 2 Link" /><br /><label><input name="section-three-accent" type="radio" checked="checked" value="light" />Light</label> <input name="section-three-accent" type="radio" checked="checked" value="gray" />Gray</label> <label><input name="section-three-accent" type="radio" value="dark" />Dark</label><p class="description">Choose a color accent for this section.</p></div><input class="button" id="save-section-button" type="button" value="Save Sections" /><p class="description">Do not forget to <strong>Save Sections</strong> first!</p></div>';
          
     } else {
-        $sectionHtmls = '';
+        
+        $sectionsArray = json_decode($sections);
+        $sectionsIds = ['section-one-url', 'section-two-url', 'section-three-url'];
+        $sectionsPreviews = ['section-one-preview', 'section-two-preview', 'section-three-preview'];
+        $sectionsAccest = ['section-one-accent', 'section-two-accent', 'section-three-accent'];
+        $count = 0;
+        $buttonCount = 0;
+        
+        $sectionHtmls = '<div id="homepage-sections">';
+        
+        foreach ($sectionsArray as $value) {
+            
+            $sectionHtmls .= '<div class="section">';
+            
+            $sectionHtmls .= '<div class="image-preview-wrapper"><img class="image-preview" id="'.$sectionsPreviews[$count].'" src="'.$value->{'img'}.'" /></div>';
+            
+            $sectionHtmls .= '<input type="url" id="'.$sectionsIds[$count].'" class="regular-text code uwsimgurl" value="'.$value->{'img'}.'" /><input id="section-one-img" data-rel="'.$sectionsIds[$count].'" data-preview="'.$sectionsPreviews[$count].'" type="button" class="button" value="Select" /><br /><input type="text" class="regular-text uwstitle" value="'.$value->{'title'}.'" placeholder="Title" /><textarea class="large-text uwstextarea" placeholder="Section description..." rows="10">'.$value->{'text'}.'</textarea>';
+            
+            foreach ( $value->{'buttons'} as $button ) {
+                
+                $sectionHtmls .= '<input type="text" class="regular-text uwsbtn" value="'.$button->{'name'}.'" placeholder="Button Name" /><input type="text" class="regular-text uwsbtnlink" value="'.$button->{'link'}.'" placeholder="Button Link" />';
+                
+                if ($buttonCount != count($value) ) {
+                    $sectionHtmls .= '<br />';
+                    $buttonCount += 1;
+                } else {
+                    $buttonCount = 0;
+                }
+                
+            }
+
+            $sectionHtmls .= '<br /><label><input name="'.$sectionsAccest[$count].'" type="radio" ' . ( $value->{'accent'} == 'light' ? 'checked="checked"' : '' ) . ' value="light" />Light</label> <label><input name="'.$sectionsAccest[$count].'" type="radio" ' . ( $value->{'accent'} == 'gray' ? 'checked="checked"' : '' ) . ' value="gray" />Gray</label> <label><input name="'.$sectionsAccest[$count].'" type="radio" ' . ( $value->{'accent'} == 'dark' ? 'checked="checked"' : '' ) . ' value="dark" />Dark</label><p class="description">Choose a color accent for this section.</p>';
+            
+            $sectionHtmls .= '</div>';
+            
+            $count += 1;
+            
+        }
+        
+        $sectionHtmls .= '<input class="button" id="save-section-button" type="button" value="Save Sections" /><p class="description">Do not forget to <strong>Save Sections</strong> first!</p></div>';
+
     }
     
     $hiddenInput = '<input name="homepage_sections_option" id="homepage_sections_option" type="hidden" value="" />';
@@ -409,7 +447,7 @@ function footer_logo_options_callback() {
     
     $imgPreview = '<div class="image-preview-wrapper"><img class="image-preview" id="footer-logo-preview" src="'.$logo.'" /></div>';
     $imgTxtField = '<input name="footer_logo_option" id="footer_logo_option" type="url" class="regular-text code" value="'.$logo.'" />';
-    $imgUploadBtn = '<input id="upload_footer_logo_button" data-rel="footer_logo_option" type="button" class="button" value="Select" />';
+    $imgUploadBtn = '<input id="upload_footer_logo_button" data-rel="footer_logo_option" data-preview="footer-logo-preview" type="button" class="button" value="Select" />';
     
     echo $imgPreview . $imgTxtField . $imgUploadBtn;
     
@@ -421,7 +459,7 @@ function site_logo_options_callback() {
     
     $imgPreview = '<div class="image-preview-wrapper"><img class="image-preview" id="site-logo-preview" src="'.$logo.'" /></div>';
     $imgTxtField = '<input name="site_logo_option" id="site_logo_option" type="url" class="regular-text code" value="'.$logo.'" />';
-    $imgUploadBtn = '<input id="upload_site_logo_button" data-rel="site_logo_option" type="button" class="button" value="Select" />';
+    $imgUploadBtn = '<input id="upload_site_logo_button" data-rel="site_logo_option" data-preview="site-logo-preview" type="button" class="button" value="Select" />';
     
     echo $imgPreview . $imgTxtField . $imgUploadBtn;
     
