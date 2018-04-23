@@ -6,56 +6,33 @@
  */
 
 /*------------------------------------*\
-	External Modules/Files
-\*------------------------------------*/
-
-// Load any external files you have here
-
-/*------------------------------------*\
 	Theme Support
 \*------------------------------------*/
 
-if (!isset($content_width))
-{
+if ( !isset( $content_width ) ) {
+    
     $content_width = 900;
+    
 }
 
-if (function_exists('add_theme_support'))
-{
+if ( function_exists( 'add_theme_support' ) ) {
+    
     // Add Menu Support
-    add_theme_support('menus');
+    add_theme_support( 'menus' );
 
     // Add Thumbnail Theme Support
-    add_theme_support('post-thumbnails');
-    add_image_size('large', 700, '', true); // Large Thumbnail
-    add_image_size('medium', 250, '', true); // Medium Thumbnail
-    add_image_size('small', 120, '', true); // Small Thumbnail
-    add_image_size('custom-size', 700, 200, true); // Custom Thumbnail Size call using the_post_thumbnail('custom-size');
-
-    // Add Support for Custom Backgrounds - Uncomment below if you're going to use
-    /*add_theme_support('custom-background', array(
-	'default-color' => 'FFF',
-	'default-image' => get_template_directory_uri() . '/img/bg.jpg'
-    ));*/
-
-    // Add Support for Custom Header - Uncomment below if you're going to use
-    /*add_theme_support('custom-header', array(
-	'default-image'			=> get_template_directory_uri() . '/img/headers/default.jpg',
-	'header-text'			=> false,
-	'default-text-color'		=> '000',
-	'width'				=> 1000,
-	'height'			=> 198,
-	'random-default'		=> false,
-	'wp-head-callback'		=> $wphead_cb,
-	'admin-head-callback'		=> $adminhead_cb,
-	'admin-preview-callback'	=> $adminpreview_cb
-    ));*/
+    add_theme_support( 'post-thumbnails');
+    add_image_size( 'large', 700, '', true );
+    add_image_size( 'medium', 250, '', true );
+    add_image_size( 'small', 120, '', true );
+    add_image_size( 'custom-size', 700, 200, true );
 
     // Enables post and comment RSS feed links to head
-    add_theme_support('automatic-feed-links');
+    add_theme_support( 'automatic-feed-links' );
 
     // Localisation Support
-    load_theme_textdomain('uwsmedia', get_template_directory() . '/languages');
+    load_theme_textdomain( 'uwsmedia', get_template_directory() . '/languages' );
+    
 }
 
 /*------------------------------------*\
@@ -63,271 +40,303 @@ if (function_exists('add_theme_support'))
 \*------------------------------------*/
 
 // uwsmedia navigation
-function uwsmedia_nav()
-{
+function uwsmedia_nav() {
+    
 	wp_nav_menu(
-	array(
-		'theme_location'  => 'header-menu',
-		'menu'            => '',
-		'container'       => 'div',
-		'container_class' => 'menu-{menu slug}-container',
-		'container_id'    => '',
-		'menu_class'      => 'navbar-nav ml-auto',
-		'menu_id'         => '',
-		'echo'            => true,
-		'fallback_cb'     => 'wp_page_menu',
-		'before'          => '',
-		'after'           => '',
-		'link_before'     => '',
-		'link_after'      => '',
-		'items_wrap'      => '<ul class="%2$s">%3$s</ul>',
-		'depth'           => 0,
-		'walker'          => new Bootstrap_Nav_Walker()
-		)
+    	array(
+    		'theme_location'  => 'header-menu',
+    		'menu'            => '',
+    		'container'       => 'div',
+    		'container_class' => 'menu-{menu slug}-container',
+    		'container_id'    => '',
+    		'menu_class'      => 'navbar-nav ml-auto',
+    		'menu_id'         => '',
+    		'echo'            => true,
+    		'fallback_cb'     => 'wp_page_menu',
+    		'before'          => '',
+    		'after'           => '',
+    		'link_before'     => '',
+    		'link_after'      => '',
+    		'items_wrap'      => '<ul class="%2$s">%3$s</ul>',
+    		'depth'           => 0,
+    		'walker'          => new Bootstrap_Nav_Walker()
+        )
 	);
+	
 }
 
 // Load uwsmedia scripts (header.php)
-function uwsmedia_header_scripts()
-{
-    if ($GLOBALS['pagenow'] != 'wp-login.php' && !is_admin()) {
-
-    	wp_register_script('conditionizr', get_template_directory_uri() . '/js/lib/conditionizr-4.3.0.min.js', array(), '4.3.0'); // Conditionizr
-        wp_enqueue_script('conditionizr'); // Enqueue it!
-
-        wp_register_script('modernizr', get_template_directory_uri() . '/js/lib/modernizr-2.7.1.min.js', array(), '2.7.1'); // Modernizr
-        wp_enqueue_script('modernizr'); // Enqueue it!
+function uwsmedia_header_scripts() {
+    
+    if ( $GLOBALS['pagenow'] != 'wp-login.php' && !is_admin() ) {
         
-        wp_register_script('bootstrap', get_template_directory_uri() . '/js/lib/bootstrap.min.js', array('jquery'), '4.0.0'); // Modernizr
-        wp_enqueue_script('bootstrap'); // Enqueue it!
-
-        wp_register_script('uwsmediascripts', get_template_directory_uri() . '/js/scripts.js', array('jquery'), '1.0.0'); // Custom scripts
-        wp_enqueue_script('uwsmediascripts'); // Enqueue it!
+        // Modernizr
+        wp_register_script( 'modernizr', get_template_directory_uri() . '/js/lib/modernizr-2.7.1.min.js', array(), '2.7.1' ); 
+        wp_enqueue_script( 'modernizr' );
+        
+        // Bootstrap
+        wp_register_script( 'bootstrap', get_template_directory_uri() . '/js/lib/bootstrap.min.js', array( 'jquery' ), '4.0.0' ); 
+        wp_enqueue_script( 'bootstrap' );
+        
+        // UWS Media scripts
+        wp_register_script( 'uwsmediascripts', get_template_directory_uri() . '/js/scripts.js', array( 'jquery' ), '1.0.0' ); 
+        wp_enqueue_script( 'uwsmediascripts' );
+        
     }
-}
-
-// Load uwsmedia conditional scripts
-function uwsmedia_conditional_scripts()
-{
-    if (is_page('pagenamehere')) {
-        wp_register_script('scriptname', get_template_directory_uri() . '/js/scriptname.js', array('jquery'), '1.0.0'); // Conditional script(s)
-        wp_enqueue_script('scriptname'); // Enqueue it!
-    }
+    
 }
 
 // Load uwsmedia styles
-function uwsmedia_styles()
-{
-    wp_register_style('bootstrap', get_template_directory_uri() . '/css/bootstrap.min.css', array(), '4.0.0', 'all');
-    wp_enqueue_style('bootstrap'); // Enqueue it!
+function uwsmedia_styles() {
     
+    // Bootstrap
+    wp_register_style( 'bootstrap', get_template_directory_uri() . '/css/bootstrap.min.css', array(), '4.0.0', 'all' );
+    wp_enqueue_style( 'bootstrap' );
+    
+    // Dashicons
     wp_enqueue_style( 'dashicons' );
     
-    wp_register_style('uwsmedia', get_template_directory_uri() . '/style.css', array(), '1.0', 'all');
-    wp_enqueue_style('uwsmedia'); // Enqueue it!
+    // UWS Media CSS
+    wp_register_style( 'uwsmedia', get_template_directory_uri() . '/style.css', array(), '1.0', 'all' );
+    wp_enqueue_style( 'uwsmedia' );
+    
 }
 
 // Register uwsmedia Navigation
-function register_uwsmedia_menu()
-{
-    register_nav_menus(array( // Using array to specify more menus if needed
-        'header-menu' => __('Header Menu', 'uwsmedia'), // Main Navigation
-        'sidebar-menu' => __('Sidebar Menu', 'uwsmedia'), // Sidebar Navigation
-        'extra-menu' => __('Extra Menu', 'uwsmedia') // Extra Navigation if needed (duplicate as many as you need!)
-    ));
+function register_uwsmedia_menu() {
+    
+    // Using array to specify more menus if needed
+    register_nav_menus( array( 
+        'header-menu' => __( 'Header Menu', 'uwsmedia' ), // Main Navigation
+    ) );
+    
 }
 
 // Remove the <div> surrounding the dynamic navigation to cleanup markup
-function my_wp_nav_menu_args($args = '')
-{
+function my_wp_nav_menu_args( $args = '' ) {
+    
     $args['container'] = false;
     return $args;
+    
 }
 
 // Remove Injected classes, ID's and Page ID's from Navigation <li> items
-function my_css_attributes_filter($var)
-{
-    return is_array($var) ? array() : '';
+function my_css_attributes_filter( $var ) {
+    
+    return is_array( $var ) ? array() : '';
+    
 }
 
 // Remove invalid rel attribute values in the categorylist
-function remove_category_rel_from_category_list($thelist)
-{
-    return str_replace('rel="category tag"', 'rel="tag"', $thelist);
+function remove_category_rel_from_category_list( $thelist ) {
+    
+    return str_replace( 'rel="category tag"', 'rel="tag"', $thelist );
+    
 }
 
 // Add page slug to body class, love this - Credit: Starkers Wordpress Theme
-function add_slug_to_body_class($classes)
-{
+function add_slug_to_body_class( $classes ) {
+    
     global $post;
-    if (is_home()) {
-        $key = array_search('blog', $classes);
-        if ($key > -1) {
-            unset($classes[$key]);
+    
+    if ( is_home() ) {
+        
+        $key = array_search( 'blog', $classes );
+        
+        if ( $key > -1 ) {
+            
+            unset( $classes[$key] );
+            
         }
-    } elseif (is_page()) {
-        $classes[] = sanitize_html_class($post->post_name);
-    } elseif (is_singular()) {
-        $classes[] = sanitize_html_class($post->post_name);
+        
+    } elseif ( is_page() ) {
+        
+        $classes[] = sanitize_html_class( $post->post_name );
+        
+    } elseif ( is_singular() ) {
+        
+        $classes[] = sanitize_html_class( $post->post_name );
+        
     }
-
+    
     return $classes;
+    
 }
 
 // If Dynamic Sidebar Exists
-if (function_exists('register_sidebar'))
-{
+if ( function_exists( 'register_sidebar' ) ) {
+    
     // Define Sidebar Widget Area 1
-    register_sidebar(array(
-        'name' => __('Widget Area 1', 'uwsmedia'),
-        'description' => __('Description for this widget-area...', 'uwsmedia'),
-        'id' => 'widget-area-1',
+    register_sidebar( array(
+        'name'          => __( 'Widget Area 1', 'uwsmedia' ),
+        'description'   => __( 'Description for this widget-area...', 'uwsmedia' ),
+        'id'            => 'widget-area-1',
         'before_widget' => '<div id="%1$s" class="%2$s">',
-        'after_widget' => '</div>',
-        'before_title' => '<h3>',
-        'after_title' => '</h3>'
-    ));
-
-    // Define Sidebar Widget Area 2
-    register_sidebar(array(
-        'name' => __('Widget Area 2', 'uwsmedia'),
-        'description' => __('Description for this widget-area...', 'uwsmedia'),
-        'id' => 'widget-area-2',
-        'before_widget' => '<div id="%1$s" class="%2$s">',
-        'after_widget' => '</div>',
-        'before_title' => '<h3>',
-        'after_title' => '</h3>'
-    ));
+        'after_widget'  => '</div>',
+        'before_title'  => '<h3>',
+        'after_title'   => '</h3>'
+    ) );
+    
 }
 
 // Remove wp_head() injected Recent Comment styles
-function my_remove_recent_comments_style()
-{
+function my_remove_recent_comments_style() {
+    
     global $wp_widget_factory;
-    remove_action('wp_head', array(
+    
+    remove_action( 'wp_head', array(
         $wp_widget_factory->widgets['WP_Widget_Recent_Comments'],
         'recent_comments_style'
-    ));
+    ) );
+    
 }
 
 // Pagination for paged posts, Page 1, Page 2, Page 3, with Next and Previous Links, No plugin
-function uwsmediawp_pagination()
-{
+function uwsmediawp_pagination() {
+    
     global $wp_query;
     $big = 999999999;
+    
     echo paginate_links(array(
-        'base' => str_replace($big, '%#%', get_pagenum_link($big)),
-        'format' => '?paged=%#%',
-        'current' => max(1, get_query_var('paged')),
-        'total' => $wp_query->max_num_pages
-    ));
+        'base'    => str_replace( $big, '%#%', get_pagenum_link( $big ) ),
+        'format'  => '?paged=%#%',
+        'current' => max( 1, get_query_var( 'paged' ) ),
+        'total'   => $wp_query->max_num_pages
+    ) );
+    
 }
 
-// Custom Excerpts
-function uwsmediawp_index($length) // Create 20 Word Callback for Index page Excerpts, call using uwsmediawp_excerpt('uwsmediawp_index');
-{
+// Custom Excerpts - Create 20 Word Callback for Index page Excerpts, call using uwsmediawp_excerpt('uwsmediawp_index');
+function uwsmediawp_index( $length )  {
+    
     return 20;
+    
 }
 
 // Create 40 Word Callback for Custom Post Excerpts, call using uwsmediawp_excerpt('uwsmediawp_custom_post');
-function uwsmediawp_custom_post($length)
-{
+function uwsmediawp_custom_post( $length ) {
+    
     return 40;
+    
 }
 
 // Create the Custom Excerpts callback
-function uwsmediawp_excerpt($length_callback = '', $more_callback = '')
-{
+function uwsmediawp_excerpt( $length_callback = '', $more_callback = '' ) {
+    
     global $post;
-    if (function_exists($length_callback)) {
-        add_filter('excerpt_length', $length_callback);
+    
+    if ( function_exists( $length_callback ) ) {
+        
+        add_filter( 'excerpt_length', $length_callback );
+        
     }
-    if (function_exists($more_callback)) {
-        add_filter('excerpt_more', $more_callback);
+    
+    if ( function_exists( $more_callback ) ) {
+        
+        add_filter( 'excerpt_more', $more_callback );
+        
     }
+    
     $output = get_the_excerpt();
-    $output = apply_filters('wptexturize', $output);
-    $output = apply_filters('convert_chars', $output);
+    $output = apply_filters( 'wptexturize', $output );
+    $output = apply_filters( 'convert_chars', $output );
     $output = '<p>' . $output . '</p>';
+    
     echo $output;
+    
 }
 
 // Custom View Article link to Post
-function uwsmedia_view_article($more)
-{
+function uwsmedia_view_article($more) {
+    
     global $post;
-    return '... <a class="view-article" href="' . get_permalink($post->ID) . '">' . __('View Article', 'uwsmedia') . '</a>';
+    return '... <a class="view-article" href="' . get_permalink( $post->ID ) . '">' . __( 'View Article', 'uwsmedia' ) . '</a>';
+    
 }
 
 // Remove 'text/css' from our enqueued stylesheet
-function uwsmedia_style_remove($tag)
-{
-    return preg_replace('~\s+type=["\'][^"\']++["\']~', '', $tag);
+function uwsmedia_style_remove( $tag ) {
+    
+    return preg_replace( '~\s+type=["\'][^"\']++["\']~', '', $tag );
+    
 }
 
 // Remove thumbnail width and height dimensions that prevent fluid images in the_thumbnail
-function remove_thumbnail_dimensions( $html )
-{
-    $html = preg_replace('/(width|height)=\"\d*\"\s/', "", $html);
+function remove_thumbnail_dimensions( $html ) {
+    
+    $html = preg_replace( '/(width|height)=\"\d*\"\s/', "", $html );
     return $html;
+    
 }
 
 // Custom Gravatar in Settings > Discussion
-function uwsmediagravatar ($avatar_defaults)
-{
+function uwsmediagravatar ( $avatar_defaults ) {
+    
     $myavatar = get_template_directory_uri() . '/img/gravatar.jpg';
     $avatar_defaults[$myavatar] = "Custom Gravatar";
+    
     return $avatar_defaults;
+    
 }
 
 // Threaded Comments
-function enable_threaded_comments()
-{
-    if (!is_admin()) {
-        if (is_singular() AND comments_open() AND (get_option('thread_comments') == 1)) {
+function enable_threaded_comments() {
+    
+    if ( !is_admin() ) {
+        
+        if ( is_singular() AND comments_open()
+        AND ( get_option( 'thread_comments' ) == 1 ) ) {
+               
             wp_enqueue_script('comment-reply');
+            
         }
+        
     }
+    
 }
 
 // Custom Comments Callback
-function uwsmediacomments($comment, $args, $depth)
-{
+function uwsmediacomments( $comment, $args, $depth ) {
+    
 	$GLOBALS['comment'] = $comment;
-	extract($args, EXTR_SKIP);
+	extract( $args, EXTR_SKIP );
 
 	if ( 'div' == $args['style'] ) {
+    	
 		$tag = 'div';
 		$add_below = 'comment';
+		
 	} else {
+    	
 		$tag = 'li';
 		$add_below = 'div-comment';
+		
 	}
 ?>
     <!-- heads up: starting < for the html tag (li or div) in the next line: -->
-    <<?php echo $tag ?> <?php comment_class(empty( $args['has_children'] ) ? '' : 'parent') ?> id="comment-<?php comment_ID() ?>">
+    <<?php echo $tag ?> <?php comment_class( empty( $args['has_children'] ) ? '' : 'parent' ) ?> id="comment-<?php comment_ID() ?>">
 	<?php if ( 'div' != $args['style'] ) : ?>
 	<div id="div-comment-<?php comment_ID() ?>" class="comment-body">
 	<?php endif; ?>
 	<div class="comment-author vcard">
-	<?php if ($args['avatar_size'] != 0) echo get_avatar( $comment, $args['180'] ); ?>
-	<?php printf(__('<cite class="fn">%s</cite> <span class="says">says:</span>'), get_comment_author_link()) ?>
+	<?php if ( $args['avatar_size'] != 0 ) echo get_avatar( $comment, $args['180'] ); ?>
+	<?php printf( __( '<cite class="fn">%s</cite> <span class="says">says:</span>' ), get_comment_author_link() ) ?>
 	</div>
-<?php if ($comment->comment_approved == '0') : ?>
+<?php if ( $comment->comment_approved == '0') : ?>
 	<em class="comment-awaiting-moderation"><?php _e('Your comment is awaiting moderation.') ?></em>
 	<br />
 <?php endif; ?>
 
 	<div class="comment-meta commentmetadata"><a href="<?php echo htmlspecialchars( get_comment_link( $comment->comment_ID ) ) ?>">
 		<?php
-			printf( __('%1$s at %2$s'), get_comment_date(),  get_comment_time()) ?></a><?php edit_comment_link(__('(Edit)'),'  ','' );
+			printf( __( '%1$s at %2$s' ), get_comment_date(),  get_comment_time()) ?></a><?php edit_comment_link( __( '(Edit)' ),'  ','' );
 		?>
 	</div>
 
 	<?php comment_text() ?>
 
 	<div class="reply">
-	<?php comment_reply_link(array_merge( $args, array('add_below' => $add_below, 'depth' => $depth, 'max_depth' => $args['max_depth']))) ?>
+	<?php comment_reply_link( array_merge( $args, array( 'add_below' => $add_below, 'depth' => $depth, 'max_depth' => $args['max_depth'] ) ) ) ?>
 	</div>
 	<?php if ( 'div' != $args['style'] ) : ?>
 	</div>
@@ -339,7 +348,9 @@ function uwsmediacomments($comment, $args, $depth)
 \*------------------------------------*/
 
 function uwsmedia_admin_theme_settings() {
+    
     add_theme_page( 'UWS Media Settings', 'UWS Media Settings', 'edit_theme_options', 'uwsmedia-theme-settings', 'uwsmedia_theme_settings_page' );
+    
 }
 
 function uwsmedia_theme_settings_page() { ?>
@@ -347,9 +358,8 @@ function uwsmedia_theme_settings_page() { ?>
 <h1>UWS Media Theme Settings</h1>
 <form method="post" action="options.php">
 <?php
-    settings_fields('uwsmedia-theme-options-grp');
-    // display all sections for theme-options page
-    do_settings_sections('uwsmedia_theme_settings');
+    settings_fields( 'uwsmedia-theme-options-grp' );
+    do_settings_sections( 'uwsmedia_theme_settings' );
     submit_button();
 ?>
 </form>
@@ -373,13 +383,13 @@ function homepage_options_callback() {
     
     $sections = get_option( 'homepage_sections_option' );
     
-    if (empty($sections)) {
+    if ( empty( $sections ) ) {
         
          $sectionHtmls = '<div id="homepage-sections"><div class="section"><div class="image-preview-wrapper"><img class="image-preview" id="section-one-preview" src="" /></div><input type="url" id="section-one-url" class="regular-text code uwsimgurl" value="" /><input id="section-one-img" data-rel="section-one-url" data-preview="section-one-preview" type="button" class="button" value="Select" /><br /><input type="text" class="regular-text uwstitle" value="" placeholder="Title" /><textarea class="large-text uwstextarea" placeholder="Description..." rows="10"></textarea><input type="text" class="regular-text uwsbtn" value="" placeholder="Button 1 Name" /><input type="text" class="regular-text uwsbtnlink" value="" placeholder="Button 1 Link" /><input type="text" class="regular-text uwsbtn" value="" placeholder="Button 2 Name" /><input type="text" class="regular-text uwsbtnlink" value="" placeholder="Button 2 Link" /><br /><label><input name="section-one-accent" type="radio" checked="checked" value="light" />Light</label> <input name="section-one-accent" type="radio" checked="checked" value="gray" />Gray</label> <label><input name="section-one-accent" type="radio" value="dark" />Dark</label><p class="description">Choose a color accent for this section.</p></div><div class="section"><div class="image-preview-wrapper"><img class="image-preview" id="section-two-preview" src="" /></div><input type="url" id="section-two-url" class="regular-text code uwsimgurl" value="" /><input id="section-two-img" data-rel="section-two-url" data-preview="section-two-preview" type="button" class="button" value="Select" /><br /><input type="text" class="regular-text uwstitle" value="" placeholder="Title" /><textarea class="large-text uwstextarea" placeholder="Description..." rows="10"></textarea><input type="text" class="regular-text uwsbtn" value="" placeholder="Button 1 Name" /><input type="text" class="regular-text uwsbtnlink" value="" placeholder="Button 1 Link" /><input type="text" class="regular-text uwsbtn" value="" placeholder="Button 2 Name" /><input type="text" class="regular-text uwsbtnlink" value="" placeholder="Button 2 Link" /><br /><label><input name="section-two-accent" type="radio" checked="checked" value="light" />Light</label> <input name="section-two-accent" type="radio" checked="checked" value="gray" />Gray</label> <label><input name="section-two-accent" type="radio" value="dark" />Dark</label><p class="description">Choose a color accent for this section.</p></div><div class="section"><div class="image-preview-wrapper"><img class="image-preview" id="section-three-preview" src="" /></div><input type="url" id="section-three-url" class="regular-text code uwsimgurl" value="" /><input id="section-three-img" data-rel="section-three-url" data-preview="section-three-preview" type="button" class="button" value="Select" /><br /><input type="text" class="regular-text uwstitle" value="" placeholder="Title" /><textarea class="large-text uwstextarea" placeholder="Description..." rows="10"></textarea><input type="text" class="regular-text uwsbtn" value="" placeholder="Button 1 Name" /><input type="text" class="regular-text uwsbtnlink" value="" placeholder="Button 1 Link" /><input type="text" class="regular-text uwsbtn" value="" placeholder="Button 2 Name" /><input type="text" class="regular-text uwsbtnlink" value="" placeholder="Button 2 Link" /><br /><label><input name="section-three-accent" type="radio" checked="checked" value="light" />Light</label> <input name="section-three-accent" type="radio" checked="checked" value="gray" />Gray</label> <label><input name="section-three-accent" type="radio" value="dark" />Dark</label><p class="description">Choose a color accent for this section.</p></div><input class="button" id="save-section-button" type="button" value="Save Sections" /><p class="description">Do not forget to <strong>Save Sections</strong> first!</p></div>';
          
     } else {
         
-        $sectionsArray = json_decode($sections);
+        $sectionsArray = json_decode( $sections );
         $sectionsIds = ['section-one-url', 'section-two-url', 'section-three-url'];
         $sectionsPreviews = ['section-one-preview', 'section-two-preview', 'section-three-preview'];
         $sectionsAccest = ['section-one-accent', 'section-two-accent', 'section-three-accent'];
@@ -388,28 +398,32 @@ function homepage_options_callback() {
         
         $sectionHtmls = '<div id="homepage-sections">';
         
-        foreach ($sectionsArray as $value) {
+        foreach ( $sectionsArray as $value ) {
             
             $sectionHtmls .= '<div class="section">';
             
-            $sectionHtmls .= '<div class="image-preview-wrapper"><img class="image-preview" id="'.$sectionsPreviews[$count].'" src="'.$value->{'img'}.'" /></div>';
+            $sectionHtmls .= '<div class="image-preview-wrapper"><img class="image-preview" id="'.$sectionsPreviews[$count].'" src="' . $value->{'img'} . '" /></div>';
             
-            $sectionHtmls .= '<input type="url" id="'.$sectionsIds[$count].'" class="regular-text code uwsimgurl" value="'.$value->{'img'}.'" /><input id="section-one-img" data-rel="'.$sectionsIds[$count].'" data-preview="'.$sectionsPreviews[$count].'" type="button" class="button" value="Select" /><br /><input type="text" class="regular-text uwstitle" value="'.$value->{'title'}.'" placeholder="Title" /><textarea class="large-text uwstextarea" placeholder="Section description..." rows="10">'.$value->{'text'}.'</textarea>';
+            $sectionHtmls .= '<input type="url" id="' . $sectionsIds[$count] . '" class="regular-text code uwsimgurl" value="' . $value->{'img'} . '" /><input id="section-one-img" data-rel="' . $sectionsIds[$count] . '" data-preview="'.$sectionsPreviews[$count] . '" type="button" class="button" value="Select" /><br /><input type="text" class="regular-text uwstitle" value="' . $value->{'title'} . '" placeholder="Title" /><textarea class="large-text uwstextarea" placeholder="Section description..." rows="10">'. $value->{'text'} . '</textarea>';
             
             foreach ( $value->{'buttons'} as $button ) {
                 
                 $sectionHtmls .= '<input type="text" class="regular-text uwsbtn" value="'.$button->{'name'}.'" placeholder="Button Name" /><input type="text" class="regular-text uwsbtnlink" value="'.$button->{'link'}.'" placeholder="Button Link" />';
                 
-                if ($buttonCount != count($value) ) {
+                if ( $buttonCount != count( $value ) ) {
+                    
                     $sectionHtmls .= '<br />';
                     $buttonCount += 1;
+                    
                 } else {
+                    
                     $buttonCount = 0;
+                    
                 }
                 
             }
 
-            $sectionHtmls .= '<br /><label><input name="'.$sectionsAccest[$count].'" type="radio" ' . ( $value->{'accent'} == 'light' ? 'checked="checked"' : '' ) . ' value="light" />Light</label> <label><input name="'.$sectionsAccest[$count].'" type="radio" ' . ( $value->{'accent'} == 'gray' ? 'checked="checked"' : '' ) . ' value="gray" />Gray</label> <label><input name="'.$sectionsAccest[$count].'" type="radio" ' . ( $value->{'accent'} == 'dark' ? 'checked="checked"' : '' ) . ' value="dark" />Dark</label><p class="description">Choose a color accent for this section.</p>';
+            $sectionHtmls .= '<br /><label><input name="' . $sectionsAccest[$count] . '" type="radio" ' . ( $value->{'accent'} == 'light' ? 'checked="checked"' : '' ) . ' value="light" />Light</label> <label><input name="'.$sectionsAccest[$count].'" type="radio" ' . ( $value->{'accent'} == 'gray' ? 'checked="checked"' : '' ) . ' value="gray" />Gray</label> <label><input name="' . $sectionsAccest[$count] . '" type="radio" ' . ( $value->{'accent'} == 'dark' ? 'checked="checked"' : '' ) . ' value="dark" />Dark</label><p class="description">Choose a color accent for this section.</p>';
             
             $sectionHtmls .= '</div>';
             
@@ -429,7 +443,7 @@ function homepage_options_callback() {
 
 function copyright_options_callback() {
     
-    $copyright = get_option('copyright_option');
+    $copyright = get_option( 'copyright_option' );
     
     echo '<textarea name="copyright_option" id="copyright_option" class="large-text">'.$copyright.'</textarea>';
     
@@ -437,10 +451,10 @@ function copyright_options_callback() {
 
 function footer_logo_options_callback() {
     
-    $logo = get_option('footer_logo_option');
+    $logo = get_option( 'footer_logo_option' );
     
-    $imgPreview = '<div class="image-preview-wrapper"><img class="image-preview" id="footer-logo-preview" src="'.$logo.'" /></div>';
-    $imgTxtField = '<input name="footer_logo_option" id="footer_logo_option" type="url" class="regular-text code" value="'.$logo.'" />';
+    $imgPreview = '<div class="image-preview-wrapper"><img class="image-preview" id="footer-logo-preview" src="' . $logo . '" /></div>';
+    $imgTxtField = '<input name="footer_logo_option" id="footer_logo_option" type="url" class="regular-text code" value="' . $logo .'" />';
     $imgUploadBtn = '<input id="upload_footer_logo_button" data-rel="footer_logo_option" data-preview="footer-logo-preview" type="button" class="button" value="Select" />';
     
     echo $imgPreview . $imgTxtField . $imgUploadBtn;
@@ -449,10 +463,10 @@ function footer_logo_options_callback() {
 
 function site_logo_options_callback() {
     
-    $logo = get_option('site_logo_option');
+    $logo = get_option( 'site_logo_option' );
     
-    $imgPreview = '<div class="image-preview-wrapper"><img class="image-preview" id="site-logo-preview" src="'.$logo.'" /></div>';
-    $imgTxtField = '<input name="site_logo_option" id="site_logo_option" type="url" class="regular-text code" value="'.$logo.'" />';
+    $imgPreview = '<div class="image-preview-wrapper"><img class="image-preview" id="site-logo-preview" src="' . $logo . '" /></div>';
+    $imgTxtField = '<input name="site_logo_option" id="site_logo_option" type="url" class="regular-text code" value="' . $logo . '" />';
     $imgUploadBtn = '<input id="upload_site_logo_button" data-rel="site_logo_option" data-preview="site-logo-preview" type="button" class="button" value="Select" />';
     
     echo $imgPreview . $imgTxtField . $imgUploadBtn;
@@ -465,36 +479,37 @@ function uwsmedia_theme_settings(){
     
     // Site
     
-    add_option('site_logo_option', get_template_directory_uri() . '/img/uwex_logo.svg');
-    add_option('footer_logo_option', get_template_directory_uri() . '/img/uws_logo.svg');
-    add_option('copyright_option', 'UWEX and University of Wisconsin Systems Academic Affairs. All rights reserved. No part of this website may be reproduced and or redistributed through any means without written permission.');
+    add_option( 'site_logo_option', get_template_directory_uri() . '/img/uwex_logo.svg');
+    add_option( 'footer_logo_option', get_template_directory_uri() . '/img/uws_logo.svg');
+    add_option( 'copyright_option', 'UWEX and University of Wisconsin Systems Academic Affairs. All rights reserved. No part of this website may be reproduced and or redistributed through any means without written permission.' );
     
-    add_settings_section('site_section', 'Site', 'site_section_description', 'uwsmedia_theme_settings');
-    add_settings_field('site_logo_option', 'Site Logo', 'site_logo_options_callback', 'uwsmedia_theme_settings', 'site_section');
-    add_settings_field('footer_logo_option', 'Footer Logo', 'footer_logo_options_callback', 'uwsmedia_theme_settings', 'site_section');
-    add_settings_field('copyright_option', 'Copyright', 'copyright_options_callback', 'uwsmedia_theme_settings', 'site_section');
+    add_settings_section( 'site_section', 'Site', 'site_section_description', 'uwsmedia_theme_settings' );
+    add_settings_field( 'site_logo_option', 'Site Logo', 'site_logo_options_callback', 'uwsmedia_theme_settings', 'site_section' );
+    add_settings_field( 'footer_logo_option', 'Footer Logo', 'footer_logo_options_callback', 'uwsmedia_theme_settings', 'site_section' );
+    add_settings_field( 'copyright_option', 'Copyright', 'copyright_options_callback', 'uwsmedia_theme_settings', 'site_section' );
     
     // homepage
     
-    add_option('homepage_sections_option', '');
+    add_option( 'homepage_sections_option', '' );
     
-    add_settings_section( 'homepage_section', 'Home Page', 'homepage_section_description', 'uwsmedia_theme_settings');
-    add_settings_field('homepage_sections_option', 'Sections', 'homepage_options_callback', 'uwsmedia_theme_settings', 'homepage_section');
+    add_settings_section( 'homepage_section', 'Home Page', 'homepage_section_description', 'uwsmedia_theme_settings' );
+    add_settings_field( 'homepage_sections_option', 'Sections', 'homepage_options_callback', 'uwsmedia_theme_settings', 'homepage_section' );
     
-    register_setting('uwsmedia-theme-options-grp', 'homepage_sections_option');
-    register_setting('uwsmedia-theme-options-grp', 'site_logo_option');
-    register_setting('uwsmedia-theme-options-grp', 'footer_logo_option');
-    register_setting('uwsmedia-theme-options-grp', 'copyright_option');
+    // Register all settings
+    register_setting( 'uwsmedia-theme-options-grp', 'homepage_sections_option' );
+    register_setting( 'uwsmedia-theme-options-grp', 'site_logo_option' );
+    register_setting( 'uwsmedia-theme-options-grp', 'footer_logo_option' );
+    register_setting( 'uwsmedia-theme-options-grp', 'copyright_option' );
     
 }
 
 function uwsmedia_admin_scripts() {
     
-    wp_register_script('uwsmedia_admin_script', get_template_directory_uri() . '/js/admin.js', array('jquery'), '1.0.0');
+    wp_register_script( 'uwsmedia_admin_script', get_template_directory_uri() . '/js/admin.js', array('jquery'), '1.0.0' );
     wp_enqueue_script('uwsmedia_admin_script');
     
-    wp_register_style('uwsmedia_admin_css', get_template_directory_uri() . '/css/admin.css', array(), '1.0.0', 'all');
-    wp_enqueue_style('uwsmedia_admin_css'); // Enqueue it!
+    wp_register_style( 'uwsmedia_admin_css', get_template_directory_uri() . '/css/admin.css', array(), '1.0.0', 'all' );
+    wp_enqueue_style( 'uwsmedia_admin_css' );
 
 }
 
@@ -502,105 +517,12 @@ function uwsmedia_admin_scripts() {
 	UWS Theme SVG MIME SUPPORT
 \*------------------------------------*/
 
-function cc_mime_types($mimes) {
+function cc_mime_types( $mimes ) {
+    
      $mimes['svg'] = 'image/svg+xml';
      return $mimes;
+     
 }
-
-/*------------------------------------*\
-	Actions + Filters + ShortCodes
-\*------------------------------------*/
-
-// Add Actions
-add_action('init', 'uwsmedia_header_scripts'); // Add Custom Scripts to wp_head
-add_action('wp_print_scripts', 'uwsmedia_conditional_scripts'); // Add Conditional Page Scripts
-add_action('get_header', 'enable_threaded_comments'); // Enable Threaded Comments
-add_action('wp_enqueue_scripts', 'uwsmedia_styles'); // Add Theme Stylesheet
-add_action('init', 'register_uwsmedia_menu'); // Add uwsmedia Menu
-add_action('widgets_init', 'my_remove_recent_comments_style'); // Remove inline Recent Comment Styles from wp_head()
-add_action('init', 'uwsmediawp_pagination'); // Add our uwsmedia Pagination
-add_action('admin_menu', 'uwsmedia_admin_theme_settings'); // add uwsmedia theme settings
-add_action('admin_enqueue_scripts', 'uwsmedia_admin_scripts' ); // add admin script
-add_action('admin_init', 'uwsmedia_theme_settings'); // add uwsmedia theme settings
-
-// add showcase custom post actions
-add_action('init', 'create_post_groups');
-add_action('init', 'create_projects_post');
-add_action('manage_posts_custom_column', 'add_project_group_column_value', 10, 2);
-add_action('admin_menu', function() { 
-   remove_meta_box('pageparentdiv', 'uws-projects', 'normal');
-} );
-add_action('add_meta_boxes', function() { 
-    
-    $post_types = get_post_types( array( 'public' => true , '_builtin' => false ) );
-    array_push($post_types,'post','page');
-    
-    foreach( $post_types as $type ) {
-      add_meta_box('post-Group', 'Group', 'post_group_attributes_meta_box', $type, 'side', 'high');
-    }
-    
-});
-
-// save metadata on save post
-add_action( 'save_post', 'save_post_group_meta', 10, 2 );
-
-/* Hide unused page from Dashboard Admin Menu */
-add_action( 'admin_menu', 'hide_menu_page');
-
-// Remove Admin +New items
-add_action( 'admin_bar_menu', 'remove_new_items', 999 );
-
-/* Flush rewrite rules for custom post types. */
-add_action( 'after_switch_theme', 'flush_rewrite_rules' );
-
-// Remove Actions
-remove_action('wp_head', 'feed_links_extra', 3); // Display the links to the extra feeds such as category feeds
-remove_action('wp_head', 'feed_links', 2); // Display the links to the general feeds: Post and Comment Feed
-remove_action('wp_head', 'rsd_link'); // Display the link to the Really Simple Discovery service endpoint, EditURI link
-remove_action('wp_head', 'wlwmanifest_link'); // Display the link to the Windows Live Writer manifest file.
-remove_action('wp_head', 'index_rel_link'); // Index link
-remove_action('wp_head', 'parent_post_rel_link', 10, 0); // Prev link
-remove_action('wp_head', 'start_post_rel_link', 10, 0); // Start link
-remove_action('wp_head', 'adjacent_posts_rel_link', 10, 0); // Display relational links for the posts adjacent to the current post.
-remove_action('wp_head', 'wp_generator'); // Display the XHTML generator that is generated on the wp_head hook, WP version
-remove_action('wp_head', 'adjacent_posts_rel_link_wp_head', 10, 0);
-remove_action('wp_head', 'rel_canonical');
-remove_action('wp_head', 'wp_shortlink_wp_head', 10, 0);
-
-// Add Filters
-add_filter('avatar_defaults', 'uwsmediagravatar'); // Custom Gravatar in Settings > Discussion
-add_filter('body_class', 'add_slug_to_body_class'); // Add slug to body class (Starkers build)
-add_filter('widget_text', 'do_shortcode'); // Allow shortcodes in Dynamic Sidebar
-add_filter('widget_text', 'shortcode_unautop'); // Remove <p> tags in Dynamic Sidebars (better!)
-add_filter('wp_nav_menu_args', 'my_wp_nav_menu_args'); // Remove surrounding <div> from WP Navigation
-// add_filter('nav_menu_css_class', 'my_css_attributes_filter', 100, 1); // Remove Navigation <li> injected classes (Commented out by default)
-// add_filter('nav_menu_item_id', 'my_css_attributes_filter', 100, 1); // Remove Navigation <li> injected ID (Commented out by default)
-// add_filter('page_css_class', 'my_css_attributes_filter', 100, 1); // Remove Navigation <li> Page ID's (Commented out by default)
-add_filter('the_category', 'remove_category_rel_from_category_list'); // Remove invalid rel attribute
-add_filter('the_excerpt', 'shortcode_unautop'); // Remove auto <p> tags in Excerpt (Manual Excerpts only)
-add_filter('the_excerpt', 'do_shortcode'); // Allows Shortcodes to be executed in Excerpt (Manual Excerpts only)
-add_filter('excerpt_more', 'uwsmedia_view_article'); // Add 'View Article' button instead of [...] for Excerpts
-add_filter('style_loader_tag', 'uwsmedia_style_remove'); // Remove 'text/css' from enqueued stylesheet
-add_filter('post_thumbnail_html', 'remove_thumbnail_dimensions', 10); // Remove width and height dynamic attributes to thumbnails
-add_filter('image_send_to_editor', 'remove_thumbnail_dimensions', 10); // Remove width and height dynamic attributes to post images
-add_filter('upload_mimes', 'cc_mime_types'); // allow svg mime
-
-// Reorder Admin Menu
-add_filter( 'custom_menu_order', 'reorder_admin_menu' );
-add_filter( 'menu_order', 'reorder_admin_menu' );
-
-// Remove Filters
-remove_filter('the_excerpt', 'wpautop'); // Remove <p> tags from Excerpt altogether
-
-// add group column to UWS Project custom post type
-add_filter( 'manage_uws-projects_posts_columns', 'add_project_group_column' );
-
-// Shortcodes
-add_shortcode('uwsmedia_shortcode_demo', 'uwsmedia_shortcode_demo'); // You can place [uwsmedia_shortcode_demo] in Pages, Posts now.
-add_shortcode('uwsmedia_shortcode_demo_2', 'uwsmedia_shortcode_demo_2'); // Place [uwsmedia_shortcode_demo_2] in Pages, Posts now.
-
-// Shortcodes above would be nested like this -
-// [uwsmedia_shortcode_demo] [uwsmedia_shortcode_demo_2] Here's the page title! [/uwsmedia_shortcode_demo_2] [/uwsmedia_shortcode_demo]
 
 /*------------------------------------------*\
 	REORDRING ADMIN MENU + ADMIN BAR MENU
@@ -626,90 +548,187 @@ function reorder_admin_menu( $__return_true ) {
 }
 
 function remove_new_items() {
+    
     global $wp_admin_bar;   
     $wp_admin_bar->remove_node( 'new-post' );
     $wp_admin_bar->remove_node( 'wp-logo' );
     $wp_admin_bar->remove_node( 'comments' );
+    
 }
 
 function hide_menu_page()  {
     
-    if (!current_user_can( 'administrator' )) {
+    if ( !current_user_can( 'administrator' ) ) {
+        
         remove_menu_page( 'edit-comments.php' ); //Comments
         remove_menu_page( 'edit.php' ); //Posts
         remove_menu_page( 'tools.php' ); //Tools
+        
     }
     
 }
 
 /*------------------------------------*\
-	Custom Post Types
+	ADD Actions
 \*------------------------------------*/
 
-// Create 1 Custom Post type for a Demo, called uws-media
-/*
-function create_post_type_uwsmedia()
-{
-    register_taxonomy_for_object_type('category', 'uws-media'); // Register Taxonomies for Category
-    register_taxonomy_for_object_type('post_tag', 'uws-media');
-    register_post_type('uws-media', // Register Custom Post Type
-        array(
-        'labels' => array(
-            'name' => __('uwsmedia Custom Post', 'uwsmedia'), // Rename these to suit
-            'singular_name' => __('uwsmedia Custom Post', 'uwsmedia'),
-            'add_new' => __('Add New', 'uwsmedia'),
-            'add_new_item' => __('Add New uwsmedia Custom Post', 'uwsmedia'),
-            'edit' => __('Edit', 'uwsmedia'),
-            'edit_item' => __('Edit uwsmedia Blank Custom Post', 'uwsmedia'),
-            'new_item' => __('New uwsmedia Blank Custom Post', 'uwsmedia'),
-            'view' => __('View uwsmedia Blank Custom Post', 'uwsmedia'),
-            'view_item' => __('View uwsmedia Blank Custom Post', 'uwsmedia'),
-            'search_items' => __('Search uwsmedia Blank Custom Post', 'uwsmedia'),
-            'not_found' => __('No uwsmedia Blank Custom Posts found', 'uwsmedia'),
-            'not_found_in_trash' => __('No uwsmedia Blank Custom Posts found in Trash', 'uwsmedia')
-        ),
-        'public' => true,
-        'hierarchical' => true, // Allows your posts to behave like Hierarchy Pages
-        'has_archive' => true,
-        'supports' => array(
-            'title',
-            'editor',
-            'excerpt',
-            'thumbnail'
-        ), // Go to Dashboard Custom uwsmedia Blank post for supports
-        'can_export' => true, // Allows export in Tools > Export
-        'taxonomies' => array(
-            'post_tag',
-            'category'
-        ) // Add Category and Post Tags support
-    ));
-}
-*/
+// Add Custom Scripts to wp_head
+add_action( 'init', 'uwsmedia_header_scripts' );
+
+// Enable Threaded Comments
+add_action( 'get_header', 'enable_threaded_comments' );
+
+// Add Theme Stylesheet
+add_action( 'wp_enqueue_scripts', 'uwsmedia_styles' );
+
+// Add uwsmedia Menu
+add_action( 'init', 'register_uwsmedia_menu' );
+
+// Remove inline Recent Comment Styles from wp_head()
+add_action( 'widgets_init', 'my_remove_recent_comments_style' );
+
+// Add our uwsmedia Pagination
+add_action( 'init', 'uwsmediawp_pagination' );
+
+// Add uwsmedia theme settings
+add_action( 'admin_menu', 'uwsmedia_admin_theme_settings' );
+add_action( 'admin_enqueue_scripts', 'uwsmedia_admin_scripts' );
+add_action( 'admin_init', 'uwsmedia_theme_settings' );
+
+// Add UWS Media custom post (Groups and Projects/Showcases)
+add_action( 'init', 'create_post_groups' );
+add_action( 'init', 'create_projects_post' );
+add_action( 'manage_posts_custom_column', 'add_project_group_column_value', 10, 2 );
+add_action( 'admin_menu', 'remove_projects_pageparentdiv_metabox' );
+add_action( 'add_meta_boxes', 'add_groups_metabox' );
+
+// save group metadata on save post
+add_action( 'save_post', 'save_post_group_meta', 10, 2 );
+
+/* Hide unused page from Dashboard Admin Menu */
+add_action( 'admin_menu', 'hide_menu_page');
+
+// Remove Admin +New items
+add_action( 'admin_bar_menu', 'remove_new_items', 999 );
+
+/* Flush rewrite rules for custom post types. */
+add_action( 'after_switch_theme', 'flush_rewrite_rules' );
 
 /*------------------------------------*\
-	Faculty Showcase Post Type
+	REMOVE Actions
+\*------------------------------------*/
+
+// Display the links to the extra feeds such as category feeds
+remove_action( 'wp_head', 'feed_links_extra', 3 );
+
+// Display the links to the general feeds: Post and Comment Feed
+remove_action( 'wp_head', 'feed_links', 2 );
+
+// Display the link to the Really Simple Discovery service endpoint, EditURI link
+remove_action( 'wp_head', 'rsd_link' );
+
+// Display the link to the Windows Live Writer manifest file.
+remove_action( 'wp_head', 'wlwmanifest_link' );
+
+// Index link
+remove_action( 'wp_head', 'index_rel_link' );
+
+// Prev link
+remove_action( 'wp_head', 'parent_post_rel_link', 10, 0 );
+
+// Start link
+remove_action( 'wp_head', 'start_post_rel_link', 10, 0 );
+
+// Display relational links for the posts adjacent to the current post.
+remove_action( 'wp_head', 'adjacent_posts_rel_link', 10, 0 );
+
+// Display the XHTML generator that is generated on the wp_head hook, WP version
+remove_action( 'wp_head', 'wp_generator' ); 
+remove_action( 'wp_head', 'adjacent_posts_rel_link_wp_head', 10, 0 );
+remove_action( 'wp_head', 'rel_canonical' );
+remove_action( 'wp_head', 'wp_shortlink_wp_head', 10, 0 );
+
+/*------------------------------------*\
+	ADD Filters
+\*------------------------------------*/
+
+// Custom Gravatar in Settings > Discussion
+add_filter( 'avatar_defaults', 'uwsmediagravatar' );
+
+// Add slug to body class (Starkers build)
+add_filter( 'body_class', 'add_slug_to_body_class' );
+
+// Allow shortcodes in Dynamic Sidebar
+add_filter( 'widget_text', 'do_shortcode' );
+
+// Remove <p> tags in Dynamic Sidebars (better!)
+add_filter( 'widget_text', 'shortcode_unautop' );
+
+// Remove surrounding <div> from WP Navigation
+add_filter( 'wp_nav_menu_args', 'my_wp_nav_menu_args' );
+
+// Remove invalid rel attribute
+add_filter( 'the_category', 'remove_category_rel_from_category_list' );
+
+ // Remove auto <p> tags in Excerpt (Manual Excerpts only)
+add_filter( 'the_excerpt', 'shortcode_unautop'  );
+
+// Allows Shortcodes to be executed in Excerpt (Manual Excerpts only)
+add_filter( 'the_excerpt', 'do_shortcode' );
+
+// Add 'View Article' button instead of [...] for Excerpts
+add_filter( 'excerpt_more', 'uwsmedia_view_article' );
+
+// Remove 'text/css' from enqueued stylesheet
+add_filter( 'style_loader_tag', 'uwsmedia_style_remove' );
+
+// Remove width and height dynamic attributes to thumbnails
+add_filter( 'post_thumbnail_html', 'remove_thumbnail_dimensions', 10 );
+
+// Remove width and height dynamic attributes to post images
+add_filter( 'image_send_to_editor', 'remove_thumbnail_dimensions', 10 );
+
+// Allow SVG MIME uplaod to Media
+add_filter( 'upload_mimes', 'cc_mime_types' ); 
+
+// Reorder Admin Menu
+add_filter( 'custom_menu_order', 'reorder_admin_menu' );
+add_filter( 'menu_order', 'reorder_admin_menu' );
+
+// Add Group column to UWS Project custom post type
+add_filter( 'manage_uws-projects_posts_columns', 'add_project_group_column' );
+
+/*------------------------------------*\
+	ADD Filters
+\*------------------------------------*/
+
+// Remove <p> tags from Excerpt altogether
+remove_filter( 'the_excerpt', 'wpautop' ); 
+
+/*------------------------------------*\
+	CUSTOM POST TYPE: GROUPS
 \*------------------------------------*/
 
 function create_post_groups() {
     
-    // Register Custom Post Type
-    register_post_type('uws-groups', 
+    // Register Custom Post Type: Groups
+    register_post_type( 'uws-groups', 
         array(
         'label' => 'Groups',
         'menu_icon' => 'dashicons-groups',
         'labels' => array(
-            'name' => __('Groups', 'uwsmedia'), // Rename these to suit
-            'singular_name' => __('Group', 'uwsmedia'),
-            'menu_name' => __('Groups', 'uwsmedia'),
-            'name_admin_bar' => __('Group', 'uwsmedia'),
-            'add_new' => __('Add New', 'uwsmedia'),
-            'add_new_item' => __('Add New Group', 'uwsmedia'),
-            'new_item' => __('New Group', 'uwsmedia'),
-            'view_item' => __('View Group', 'uwsmedia'),
-            'view_items' => __('View Groups', 'uwsmedia'),
-            'search_items' => __('Search Groups', 'uwsmedia'),
-            'not_found' => __('No group found.', 'uwsmedia'),
-            'not_found_in_trash' => __('No group found in Trash', 'uwsmedia')
+            'name' => __( 'Groups', 'uwsmedia' ),
+            'singular_name' => __( 'Group', 'uwsmedia' ),
+            'menu_name' => __( 'Groups', 'uwsmedia' ),
+            'name_admin_bar' => __( 'Group', 'uwsmedia' ),
+            'add_new' => __( 'Add New', 'uwsmedia' ),
+            'add_new_item' => __( 'Add New Group', 'uwsmedia' ),
+            'new_item' => __( 'New Group', 'uwsmedia' ),
+            'view_item' => __( 'View Group', 'uwsmedia' ),
+            'view_items' => __( 'View Groups', 'uwsmedia' ),
+            'search_items' => __( 'Search Groups', 'uwsmedia' ),
+            'not_found' => __( 'No group found.', 'uwsmedia' ),
+            'not_found_in_trash' => __( 'No group found in Trash', 'uwsmedia' )
         ),
         'supports' => array(),
         'taxonomies' => array(),
@@ -726,82 +745,43 @@ function create_post_groups() {
         'capability_type' => 'page',
         'delete_with_user' => false
     ) );
-}
-
-function create_projects_post() {
     
-    // Register Custom Post Type
-    register_post_type('uws-projects', 
-        array(
-        'label' => 'Showcase projects',
-        'menu_icon' => 'dashicons-portfolio',
-        'labels' => array(
-            'name' => __('Showcase Projects', 'uwsmedia'),
-            'singular_name' => __('Project', 'uwsmedia'),
-            'menu_name' => __('Showcases', 'uwsmedia'),
-            'name_admin_bar' => __('Project', 'uwsmedia'),
-            'add_new' => __('Add New', 'uwsmedia'),
-            'add_new_item' => __('Add New Project', 'uwsmedia'),
-            'edit' => __('Edit', 'uwsmedia'),
-            'edit_item' => __('Edit Project', 'uwsmedia'),
-            'new_item' => __('New Project', 'uwsmedia'),
-            'view' => __('View Project', 'uwsmedia'),
-            'view_item' => __('View Project', 'uwsmedia'),
-            'view_items' => __('View Projects', 'uwsmedia'),
-            'search_items' => __('Search projects', 'uwsmedia'),
-            'not_found' => __('No projects found.', 'uwsmedia'),
-            'not_found_in_trash' => __('No projects found in Trash', 'uwsmedia')
-        ),
-        'supports' => array( 'title', 'editor', 'excerpt','thumbnail' ),
-        'taxonomies' => array( 'category', 'post_tag' ),
-        'hierarchical' => false,
-        'public' => true,
-        'show_ui' => true,
-        'show_in_menu' => true,
-        'show_in_admin_bar' => true,
-        'show_in_nav_menus' => true,
-        'can_export' => true,
-        'has_archive' => true,		
-        'exclude_from_search' => false,
-        'publicly_queryable' => true,
-        'capability_type' => 'page',
-        'rewrite' => array('slug' => 'showcases'),
-        'delete_with_user' => false
-    ) );
 }
 
-function add_project_group_column($columns) {
-    return array_merge($columns, array( 'group' => __('Group')));
-}
-
-function add_project_group_column_value($column, $post_id) {
+function add_groups_metabox() {
     
-    switch ( $column ) {
-        case 'group':
-    	    echo get_post_meta( $post_id, 'post_group_id', true ); 
-    	break;
-	}
+    $post_types = get_post_types( array( 'public' => true , '_builtin' => false ) );
+    array_push( $post_types, 'page' );
+    
+    foreach( $post_types as $type ) {
+    
+        add_meta_box( 'post-Group', 'Group', 'post_group_attributes_meta_box', $type, 'side', 'high' );
+    
+    }
+    
 }
 
 function post_group_attributes_meta_box( $post ) {
     
-    $post_type_object = get_post_type_object('uws-groups');
+    $post_type_object = get_post_type_object( 'uws-groups' );
     
     if ( $post_type_object->hierarchical ) {
         
-        $pages = wp_dropdown_pages(array(
-                'post_type' => 'uws-groups', 
-                'selected' => get_post_meta( $post->ID, 'post_group_id', true ),
-                'name' => 'post_group_id',
+        $pages = wp_dropdown_pages( array(
+                'post_type'   => 'uws-groups', 
+                'selected'    => get_post_meta( $post->ID, 'post_group_id', true ),
+                'name'        => 'post_group_id',
                 'sort_column' => 'menu_order, post_title',
-                'echo' => 0
+                'echo'        => 0
             )
         );
         
-        if ( ! empty($pages) ) {
+        if ( ! empty( $pages ) ) {
+            
             $howTo = '<p class="howto">Select the group that for this post or page. Group are used to identify or categorize the context of the content.</p>';
             
             echo  $pages . $howTo;
+            
         }
         
     }
@@ -825,23 +805,82 @@ function save_post_group_meta( $post_id, $post ) {
 }
 
 /*------------------------------------*\
-	ShortCode Functions
+	CUSTOM POST TYPE: PROJECTS
 \*------------------------------------*/
 
-// Shortcode Demo with Nested Capability
-function uwsmedia_shortcode_demo($atts, $content = null)
-{
-    return '<div class="shortcode-demo">' . do_shortcode($content) . '</div>'; // do_shortcode allows for nested Shortcodes
+function create_projects_post() {
+    
+    // Register Taxonomies for Category
+    register_taxonomy_for_object_type( 'category', 'uws-media' );
+    register_taxonomy_for_object_type( 'post_tag', 'uws-media' );
+    
+    // Register Custom Post Type
+    register_post_type( 'uws-projects', 
+        array(
+        'label' => 'Showcase projects',
+        'menu_icon' => 'dashicons-portfolio',
+        'labels' => array(
+            'name' => __( 'Showcase Projects', 'uwsmedia' ),
+            'singular_name' => __( 'Project', 'uwsmedia' ),
+            'menu_name' => __( 'Showcases', 'uwsmedia' ),
+            'name_admin_bar' => __('Project', 'uwsmedia' ),
+            'add_new' => __( 'Add New', 'uwsmedia' ),
+            'add_new_item' => __( 'Add New Project', 'uwsmedia' ),
+            'edit' => __( 'Edit', 'uwsmedia' ),
+            'edit_item' => __( 'Edit Project', 'uwsmedia' ),
+            'new_item' => __( 'New Project', 'uwsmedia' ),
+            'view' => __( 'View Project', 'uwsmedia' ),
+            'view_item' => __( 'View Project', 'uwsmedia' ),
+            'view_items' => __( 'View Projects', 'uwsmedia' ),
+            'search_items' => __( 'Search projects', 'uwsmedia' ),
+            'not_found' => __( 'No projects found.', 'uwsmedia' ),
+            'not_found_in_trash' => __( 'No projects found in Trash', 'uwsmedia' )
+        ),
+        'supports' => array( 'title', 'editor', 'excerpt','thumbnail' ),
+        'taxonomies' => array( 'category', 'post_tag' ),
+        'hierarchical' => false,
+        'public' => true,
+        'show_ui' => true,
+        'show_in_menu' => true,
+        'show_in_admin_bar' => true,
+        'show_in_nav_menus' => true,
+        'can_export' => true,
+        'has_archive' => true,		
+        'exclude_from_search' => false,
+        'publicly_queryable' => true,
+        'capability_type' => 'page',
+        'rewrite' => array('slug' => 'showcases'),
+        'delete_with_user' => false
+    ) );
 }
 
-// Shortcode Demo with simple <h2> tag
-function uwsmedia_shortcode_demo_2($atts, $content = null) // Demo Heading H2 shortcode, allows for nesting within above element. Fully expandable.
-{
-    return '<h2>' . $content . '</h2>';
+function remove_projects_pageparentdiv_metabox() {
+    
+    remove_meta_box('pageparentdiv', 'uws-projects', 'normal');
+    
 }
+
+function add_project_group_column( $columns ) {
+    
+    return array_merge( $columns, array( 'group' => __( 'Group' ) ) );
+    
+}
+
+function add_project_group_column_value( $column, $post_id ) {
+    
+    switch ( $column ) {
+        
+        case 'group':
+    	    echo get_post_meta( $post_id, 'post_group_id', true ); 
+    	break;
+    	
+	}
+	
+}
+
 
 /*------------------------------------*\
-	Custom Menu Walker
+	Custom Menu Walker Class
 \*------------------------------------*/
 
 class Bootstrap_Nav_Walker extends Walker_Nav_Menu {
