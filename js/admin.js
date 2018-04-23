@@ -77,6 +77,32 @@ jQuery( document ).ready( function( $ ) {
     	$( '#homepage_sections_option' ).val(JSON.stringify(sectionObjArray));
     	
 	}
+	
+	
+	// check if the group box has faculty checked
+	var groupSelect = '#poststuff select#post_group_id';
+	
+	if ( $( groupSelect + ' option:selected' ).text().toLowerCase() === 'faculty' ) {
+    	
+    	$( '#toPortfolio' ).show();
+    	
+	}
+	
+	jQuery( groupSelect ).change( function() {
+    	
+    	var target = $(this).find('option:selected').text().toLowerCase();
+    	
+    	if ( target === 'faculty' ) {
+        	
+        	$( '#toPortfolio' ).show();
+        	
+    	} else {
+        	
+        	$( '#toPortfolio' ).hide();
+        	$( '#promote_to_porfolio' ).prop( 'checked', false );
+    	}
+    	
+	} );
 
 });
 

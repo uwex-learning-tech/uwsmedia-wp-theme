@@ -599,6 +599,7 @@ add_action( 'admin_init', 'uwsmedia_theme_settings' );
 add_action( 'init', 'create_post_groups' );
 add_action( 'init', 'create_projects_post' );
 add_action( 'manage_posts_custom_column', 'add_project_group_column_value', 10, 2 );
+add_action( 'manage_posts_custom_column', 'add_project_featured_column_value', 10, 2 );
 add_action( 'manage_pages_custom_column', 'add_project_group_column_value', 10, 2 );
 add_action( 'admin_menu', 'remove_projects_pageparentdiv_metabox' );
 add_action( 'add_meta_boxes', 'add_groups_metabox' );
@@ -706,6 +707,9 @@ add_filter( 'manage_edit-uws-projects_sortable_columns', 'sortable_group_column'
 add_filter( 'manage_edit-page_sortable_columns', 'sortable_group_column' );
 add_filter( 'parse_query', 'filter_group_query' , 10);
 
+// Add Featured column to UWS Project custom post type
+
+
 /*------------------------------------*\
 	ADD Filters
 \*------------------------------------*/
@@ -788,9 +792,21 @@ function post_group_attributes_meta_box( $post ) {
         
         if ( ! empty( $pages ) ) {
             
-            $howTo = '<p class="howto">Select the group that for this post or page. Group are used to identify or categorize the context of the content.</p>';
+            $groupInstruction = '<p>Select a group.</p>';
+            $groupHowTo = '<p class="howto">Group is used to target the audience.</p>';
             
-            echo  $pages . $howTo;
+            if ( $post->post_type == 'uws-projects' ) {
+                
+                $featuredValue = get_post_meta( $post->ID, 'feature_on_home' , true );
+                $toPortfolioValue = get_post_meta( $post->ID, 'promote_to_porfolio' , true );
+                
+                $featureOnHomepageCB = '<hr /><label for="feature_on_home"><input type="checkbox" id="feature_on_home" name="feature_on_home" value="1" '. checked( $featuredValue, true, false ) .' /> Feature on Homepage</label>';
+                
+                $promoteToPortfolioCB = '<br /><label id="toPortfolio" for="promote_to_porfolio"><input type="checkbox" id="promote_to_porfolio" name="promote_to_porfolio" value="1" '. checked( $toPortfolioValue, true, false ) .' /> Show in Portfolio</label>';
+                
+            }
+            
+            echo  $groupInstruction . $pages . $groupHowTo . $featureOnHomepageCB . $promoteToPortfolioCB;
             
         }
         
@@ -811,6 +827,22 @@ function save_post_group_meta( $post_id, $post ) {
     if ( isset( $_POST['post_group_id'] ) ) {
         update_post_meta( $post_id, 'post_group_id', sanitize_text_field( $_POST['post_group_id'] ) );
     }
+    
+    if ( $post->post_type == 'uws-projects' ) {
+        
+        if ( isset( $_POST['feature_on_home'] ) ) {
+            
+            update_post_meta( $post_id, 'feature_on_home', sanitize_text_field( $_POST['feature_on_home'] ) );
+            
+        }
+        
+        if ( isset( $_POST['promote_to_porfolio'] ) ) {
+            
+            update_post_meta( $post_id, 'promote_to_porfolio', sanitize_text_field( $_POST['promote_to_porfolio'] ) );
+            
+        }
+        
+    }
 
 }
 
@@ -818,10 +850,10 @@ function add_projects_group_column( $columns ) {
     
     $columns = array(
         'cb' => $columns['cb'],
+        'featured' => __( '<span class="screen-reader-text">Featured on Home Page</span>', 'uwsmedia' ),
         'title' => __( 'Title' ),
-        'group' => __( 'Group' ),
+        'group' => __( 'Group', 'uwsmedia' ),
         'categories' => __( 'Categories' ),
-        'tags' => __( 'Tags' ),
         'date' => __( 'Date' )
     );
     
@@ -834,7 +866,7 @@ function add_group_column( $columns ) {
     $columns = array(
         'cb' => $columns['cb'],
         'title' => __( 'Title' ),
-        'group' => __( 'Group' ),
+        'group' => __( 'Group', 'uwsmedia' ),
         'date' => __( 'Date' )
     );
     
@@ -855,12 +887,40 @@ function add_project_group_column_value( $column, $post_id ) {
     switch ( $column ) {
         
         case 'group':
+        
             $groupId = get_post_meta( $post_id, 'post_group_id', true );
-    	    echo getGroupTitle( $groupId );
+            $portfolioToo = get_post_meta( $post_id, 'promote_to_porfolio', true );
+            
+            if ( $portfolioToo == '1' ) {
+                
+                echo getGroupTitle( $groupId ) . ' <span class="dashicons dashicons-awards"></span> <span class="screen-reader-text">Promoted to Portfolio</span>';
+                
+            } else {
+                
+                echo getGroupTitle( $groupId );
+                
+            }
+            
     	break;
     	
 	}
 	
+}
+
+function add_project_featured_column_value ( $column, $post_id ) {
+    
+    switch ( $column ) {
+        case 'featured':
+            
+            $feature = get_post_meta( $post_id, 'feature_on_home', true );
+
+            if ( $feature == '1' ) {
+                echo '<span class="dashicons dashicons-star-filled"></span> <span class="screen-reader-text">Featured on Home Page</span>';
+            }
+    
+    	break;
+	}
+    
 }
 
 function getGroupTitle( $groupId ) {

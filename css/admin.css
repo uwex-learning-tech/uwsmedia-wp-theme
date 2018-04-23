@@ -16,8 +16,22 @@
 }
 
 /*------------------------------------*\
-    GROUPS CUSTOM POST TYPE
+    CUSTOM COLUMNS
 \*------------------------------------*/
 .manage-column.column-group {
     width: 15%;
+}
+
+.manage-column.column-featured {
+    width: 3%;
+}
+.column-featured {
+    text-align: center;
+}
+.column-featured .dashicons-star-filled::before {
+    color: #990033;
+}
+
+#toPortfolio {
+    display: none;
 }
