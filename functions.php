@@ -614,6 +614,9 @@ add_action( 'admin_bar_menu', 'remove_new_items', 999 );
 /* Flush rewrite rules for custom post types. */
 add_action( 'after_switch_theme', 'flush_rewrite_rules' );
 
+// Add dropdown filter for Groups Custom Post
+add_action( 'restrict_manage_posts', 'add_groups_filter_dropdown' );
+
 /*------------------------------------*\
 	REMOVE Actions
 \*------------------------------------*/
@@ -696,7 +699,9 @@ add_filter( 'custom_menu_order', 'reorder_admin_menu' );
 add_filter( 'menu_order', 'reorder_admin_menu' );
 
 // Add Group column to UWS Project custom post type
-add_filter( 'manage_uws-projects_posts_columns', 'add_project_group_column' );
+add_filter( 'manage_uws-projects_posts_columns', 'add_group_column' );
+add_filter( 'manage_edit-uws-projects_sortable_columns', 'sortable_group_column' );
+add_filter( 'parse_query', 'filter_group_query' , 10);
 
 /*------------------------------------*\
 	ADD Filters
@@ -772,6 +777,8 @@ function post_group_attributes_meta_box( $post ) {
                 'selected'    => get_post_meta( $post->ID, 'post_group_id', true ),
                 'name'        => 'post_group_id',
                 'sort_column' => 'menu_order, post_title',
+                'show_option_none'      => __( 'Select group', 'uwsmedia' ),
+                'option_none_value'     => '-1',
                 'echo'        => 0
             )
         );
@@ -803,6 +810,132 @@ function save_post_group_meta( $post_id, $post ) {
     }
 
 }
+
+function add_group_column( $columns ) {
+    
+    $columns = array(
+        'cb' => $columns['cb'],
+        'title' => __( 'Title' ),
+        'group' => __( 'Group' ),
+        'categories' => __( 'Categories' ),
+        'tags' => __( 'Tags' ),
+        'date' => __( 'Date' )
+    );
+    
+    return $columns;
+    
+}
+
+function sortable_group_column( $columns ) {
+    
+    $columns['group'] = 'group';
+    
+    return $columns;
+    
+}
+
+function add_project_group_column_value( $column, $post_id ) {
+    
+    switch ( $column ) {
+        
+        case 'group':
+            $groupId = get_post_meta( $post_id, 'post_group_id', true );
+    	    echo getGroupTitle( $groupId );
+    	break;
+    	
+	}
+	
+}
+
+function getGroupTitle( $groupId ) {
+    
+    if ( $groupId == '-1' ) {
+        return '<span aria-hidden="true">—</span>';
+    }
+    
+    $groupPost = get_post( $groupId );
+    
+    return $groupPost->post_title;
+    
+}
+
+function add_groups_filter_dropdown( $post_type ) {
+
+    /** Ensure this is the correct Post Type*/
+    if ( $post_type !== 'uws-projects' ) {
+        return;
+    }
+    
+    global $wpdb;
+    
+    $request_attr = 'post_group_id';
+    
+    if ( isset($_REQUEST[$request_attr]) ) {
+        $selected = $_REQUEST[$request_attr];
+    }
+    
+    /** Grab the results from the DB */
+    $query = $wpdb->prepare('
+        SELECT DISTINCT pm.meta_value FROM %1$s pm
+        LEFT JOIN %2$s p ON p.ID = pm.post_id
+        WHERE pm.meta_key = "%3$s" 
+        AND p.post_status = "%4$s"
+        AND p.post_type = "%5$s"
+        ORDER BY "%3$s"',
+        $wpdb->postmeta,
+        $wpdb->posts,
+        'post_group_id', // Your meta key - change as required
+        'publish',
+        $post_type
+    );
+    $results = $wpdb->get_col($query);
+    
+    /** Ensure there are options to show */
+    if ( empty( $results ) ) {
+        
+        return;
+        
+    }
+    
+    $options[] = sprintf( '<option value="0">%1$s</option>', __( 'All Groups', 'uwsmedia' ) );
+    
+    foreach( $results as $result ) {
+        
+        $select = ( $result == $selected ) ? ' selected="selected"' : '';
+        
+        if ( $result != '-1' ) {
+            
+            $options[] = sprintf('<option value="%1$s" ' . $select . '>%2$s</option>', esc_attr($result), getGroupTitle($result) );
+            
+        }
+
+    }
+
+    /** Output the dropdown menu */
+    echo '<select class="" id="post_group_id" name="post_group_id">';
+    echo join( "\n", $options );
+    echo '</select>';
+    
+}
+
+function filter_group_query( $query ) {
+    
+    global $pagenow;
+    $current_page = isset( $_GET['post_type'] ) ? $_GET['post_type'] : '';
+    
+    if ( is_admin() && 'uws-projects' == $current_page && 'edit.php' == $pagenow  
+    && isset( $_GET['post_group_id'] ) && $_GET['post_group_id'] != '' && $_GET['post_group_id'] != '0') {
+    
+        $group_id = $_GET['post_group_id'];
+        $query->query_vars['meta_key'] = 'post_group_id';
+        $query->query_vars['meta_value'] = $group_id;
+        $query->query_vars['meta_compare'] = '=';
+        
+    }
+    
+}
+
+
 
 /*------------------------------------*\
 	CUSTOM POST TYPE: PROJECTS
@@ -859,25 +992,6 @@ function remove_projects_pageparentdiv_metabox() {
     remove_meta_box('pageparentdiv', 'uws-projects', 'normal');
     
 }
-
-function add_project_group_column( $columns ) {
-    
-    return array_merge( $columns, array( 'group' => __( 'Group' ) ) );
-    
-}
-
-function add_project_group_column_value( $column, $post_id ) {
-    
-    switch ( $column ) {
-        
-        case 'group':
-    	    echo get_post_meta( $post_id, 'post_group_id', true ); 
-    	break;
-    	
-	}
-	
-}
-
 
 /*------------------------------------*\
 	Custom Menu Walker Class
