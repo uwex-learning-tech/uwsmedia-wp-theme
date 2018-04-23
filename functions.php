@@ -259,12 +259,6 @@ function uwsmedia_view_article($more)
     return '... <a class="view-article" href="' . get_permalink($post->ID) . '">' . __('View Article', 'uwsmedia') . '</a>';
 }
 
-// Remove Admin bar
-function remove_admin_bar()
-{
-    return false;
-}
-
 // Remove 'text/css' from our enqueued stylesheet
 function uwsmedia_style_remove($tag)
 {
@@ -523,12 +517,41 @@ add_action('wp_print_scripts', 'uwsmedia_conditional_scripts'); // Add Condition
 add_action('get_header', 'enable_threaded_comments'); // Enable Threaded Comments
 add_action('wp_enqueue_scripts', 'uwsmedia_styles'); // Add Theme Stylesheet
 add_action('init', 'register_uwsmedia_menu'); // Add uwsmedia Menu
-/* add_action('init', 'create_post_type_uwsmedia'); */ // Add our uwsmedia Custom Post Type
 add_action('widgets_init', 'my_remove_recent_comments_style'); // Remove inline Recent Comment Styles from wp_head()
 add_action('init', 'uwsmediawp_pagination'); // Add our uwsmedia Pagination
 add_action('admin_menu', 'uwsmedia_admin_theme_settings'); // add uwsmedia theme settings
 add_action('admin_enqueue_scripts', 'uwsmedia_admin_scripts' ); // add admin script
 add_action('admin_init', 'uwsmedia_theme_settings'); // add uwsmedia theme settings
+
+// add showcase custom post actions
+add_action('init', 'create_post_groups');
+add_action('init', 'create_projects_post');
+add_action('manage_posts_custom_column', 'add_project_group_column_value', 10, 2);
+add_action('admin_menu', function() { 
+   remove_meta_box('pageparentdiv', 'uws-projects', 'normal');
+} );
+add_action('add_meta_boxes', function() { 
+    
+    $post_types = get_post_types( array( 'public' => true , '_builtin' => false ) );
+    array_push($post_types,'post','page');
+    
+    foreach( $post_types as $type ) {
+      add_meta_box('post-Group', 'Group', 'post_group_attributes_meta_box', $type, 'side', 'high');
+    }
+    
+});
+
+// save metadata on save post
+add_action( 'save_post', 'save_post_group_meta', 10, 2 );
+
+/* Hide unused page from Dashboard Admin Menu */
+add_action( 'admin_menu', 'hide_menu_page');
+
+// Remove Admin +New items
+add_action( 'admin_bar_menu', 'remove_new_items', 999 );
+
+/* Flush rewrite rules for custom post types. */
+add_action( 'after_switch_theme', 'flush_rewrite_rules' );
 
 // Remove Actions
 remove_action('wp_head', 'feed_links_extra', 3); // Display the links to the extra feeds such as category feeds
@@ -557,14 +580,20 @@ add_filter('the_category', 'remove_category_rel_from_category_list'); // Remove 
 add_filter('the_excerpt', 'shortcode_unautop'); // Remove auto <p> tags in Excerpt (Manual Excerpts only)
 add_filter('the_excerpt', 'do_shortcode'); // Allows Shortcodes to be executed in Excerpt (Manual Excerpts only)
 add_filter('excerpt_more', 'uwsmedia_view_article'); // Add 'View Article' button instead of [...] for Excerpts
-add_filter('show_admin_bar', 'remove_admin_bar'); // Remove Admin bar
 add_filter('style_loader_tag', 'uwsmedia_style_remove'); // Remove 'text/css' from enqueued stylesheet
 add_filter('post_thumbnail_html', 'remove_thumbnail_dimensions', 10); // Remove width and height dynamic attributes to thumbnails
 add_filter('image_send_to_editor', 'remove_thumbnail_dimensions', 10); // Remove width and height dynamic attributes to post images
 add_filter('upload_mimes', 'cc_mime_types'); // allow svg mime
 
+// Reorder Admin Menu
+add_filter( 'custom_menu_order', 'reorder_admin_menu' );
+add_filter( 'menu_order', 'reorder_admin_menu' );
+
 // Remove Filters
 remove_filter('the_excerpt', 'wpautop'); // Remove <p> tags from Excerpt altogether
+
+// add group column to UWS Project custom post type
+add_filter( 'manage_uws-projects_posts_columns', 'add_project_group_column' );
 
 // Shortcodes
 add_shortcode('uwsmedia_shortcode_demo', 'uwsmedia_shortcode_demo'); // You can place [uwsmedia_shortcode_demo] in Pages, Posts now.
@@ -572,6 +601,46 @@ add_shortcode('uwsmedia_shortcode_demo_2', 'uwsmedia_shortcode_demo_2'); // Plac
 
 // Shortcodes above would be nested like this -
 // [uwsmedia_shortcode_demo] [uwsmedia_shortcode_demo_2] Here's the page title! [/uwsmedia_shortcode_demo_2] [/uwsmedia_shortcode_demo]
+
+/*------------------------------------------*\
+	REORDRING ADMIN MENU + ADMIN BAR MENU
+\*------------------------------------------*/
+
+function reorder_admin_menu( $__return_true ) {
+    return array(
+         'index.php', // Dashboard
+         'edit.php?post_type=page', // Pages 
+         'edit.php?post_type=uws-projects', // Showcase Projects
+         'upload.php', // Media
+         'edit.php?post_type=uws-groups', // Groups 
+         'separator1', // --Space--
+         'edit.php', // Posts
+         'edit-comments.php', // Comments
+         'themes.php', // Appearance
+         'plugins.php', // Plugins
+         'separator2', // --Space--
+         'users.php', // Users
+         'tools.php', // Tools
+         'options-general.php', // Settings
+   );
+}
+
+function remove_new_items() {
+    global $wp_admin_bar;   
+    $wp_admin_bar->remove_node( 'new-post' );
+    $wp_admin_bar->remove_node( 'wp-logo' );
+    $wp_admin_bar->remove_node( 'comments' );
+}
+
+function hide_menu_page()  {
+    
+    if (!current_user_can( 'administrator' )) {
+        remove_menu_page( 'edit-comments.php' ); //Comments
+        remove_menu_page( 'edit.php' ); //Posts
+        remove_menu_page( 'tools.php' ); //Tools
+    }
+    
+}
 
 /*------------------------------------*\
 	Custom Post Types
@@ -616,6 +685,144 @@ function create_post_type_uwsmedia()
     ));
 }
 */
+
+/*------------------------------------*\
+	Faculty Showcase Post Type
+\*------------------------------------*/
+
+function create_post_groups() {
+    
+    // Register Custom Post Type
+    register_post_type('uws-groups', 
+        array(
+        'label' => 'Groups',
+        'menu_icon' => 'dashicons-groups',
+        'labels' => array(
+            'name' => __('Groups', 'uwsmedia'), // Rename these to suit
+            'singular_name' => __('Group', 'uwsmedia'),
+            'menu_name' => __('Groups', 'uwsmedia'),
+            'name_admin_bar' => __('Group', 'uwsmedia'),
+            'add_new' => __('Add New', 'uwsmedia'),
+            'add_new_item' => __('Add New Group', 'uwsmedia'),
+            'new_item' => __('New Group', 'uwsmedia'),
+            'view_item' => __('View Group', 'uwsmedia'),
+            'view_items' => __('View Groups', 'uwsmedia'),
+            'search_items' => __('Search Groups', 'uwsmedia'),
+            'not_found' => __('No group found.', 'uwsmedia'),
+            'not_found_in_trash' => __('No group found in Trash', 'uwsmedia')
+        ),
+        'supports' => array(),
+        'taxonomies' => array(),
+        'hierarchical' => true,
+        'public' => false,
+        'show_ui' => true,
+        'show_in_menu' => true,
+        'show_in_admin_bar' => false,
+        'show_in_nav_menus' => false,
+        'can_export' => true,
+        'has_archive' => false,	
+        'exclude_from_search' => true,
+        'publicly_queryable' => false,
+        'capability_type' => 'page',
+        'delete_with_user' => false
+    ) );
+}
+
+function create_projects_post() {
+    
+    // Register Custom Post Type
+    register_post_type('uws-projects', 
+        array(
+        'label' => 'Showcase projects',
+        'menu_icon' => 'dashicons-portfolio',
+        'labels' => array(
+            'name' => __('Showcase Projects', 'uwsmedia'),
+            'singular_name' => __('Project', 'uwsmedia'),
+            'menu_name' => __('Showcases', 'uwsmedia'),
+            'name_admin_bar' => __('Project', 'uwsmedia'),
+            'add_new' => __('Add New', 'uwsmedia'),
+            'add_new_item' => __('Add New Project', 'uwsmedia'),
+            'edit' => __('Edit', 'uwsmedia'),
+            'edit_item' => __('Edit Project', 'uwsmedia'),
+            'new_item' => __('New Project', 'uwsmedia'),
+            'view' => __('View Project', 'uwsmedia'),
+            'view_item' => __('View Project', 'uwsmedia'),
+            'view_items' => __('View Projects', 'uwsmedia'),
+            'search_items' => __('Search projects', 'uwsmedia'),
+            'not_found' => __('No projects found.', 'uwsmedia'),
+            'not_found_in_trash' => __('No projects found in Trash', 'uwsmedia')
+        ),
+        'supports' => array( 'title', 'editor', 'excerpt','thumbnail' ),
+        'taxonomies' => array( 'category', 'post_tag' ),
+        'hierarchical' => false,
+        'public' => true,
+        'show_ui' => true,
+        'show_in_menu' => true,
+        'show_in_admin_bar' => true,
+        'show_in_nav_menus' => true,
+        'can_export' => true,
+        'has_archive' => true,		
+        'exclude_from_search' => false,
+        'publicly_queryable' => true,
+        'capability_type' => 'page',
+        'rewrite' => array('slug' => 'showcases'),
+        'delete_with_user' => false
+    ) );
+}
+
+function add_project_group_column($columns) {
+    return array_merge($columns, array( 'group' => __('Group')));
+}
+
+function add_project_group_column_value($column, $post_id) {
+    
+    switch ( $column ) {
+        case 'group':
+    	    echo get_post_meta( $post_id, 'post_group_id', true ); 
+    	break;
+	}
+}
+
+function post_group_attributes_meta_box( $post ) {
+    
+    $post_type_object = get_post_type_object('uws-groups');
+    
+    if ( $post_type_object->hierarchical ) {
+        
+        $pages = wp_dropdown_pages(array(
+                'post_type' => 'uws-groups', 
+                'selected' => get_post_meta( $post->ID, 'post_group_id', true ),
+                'name' => 'post_group_id',
+                'sort_column' => 'menu_order, post_title',
+                'echo' => 0
+            )
+        );
+        
+        if ( ! empty($pages) ) {
+            $howTo = '<p class="howto">Select the group that for this post or page. Group are used to identify or categorize the context of the content.</p>';
+            
+            echo  $pages . $howTo;
+        }
+        
+    }
+
+}
+
+function save_post_group_meta( $post_id, $post ) {
+    
+    /* Get the post type object. */
+    $post_type = get_post_type_object( $post->post_type );
+    
+    /* Check if the current user has permission to edit the post. */
+    if ( !current_user_can( $post_type->cap->edit_post, $post_id ) ) {
+        return $post_id;
+    }
+    
+    if ( isset( $_POST['post_group_id'] ) ) {
+        update_post_meta( $post_id, 'post_group_id', sanitize_text_field( $_POST['post_group_id'] ) );
+    }
+
+}
 
 /*------------------------------------*\
 	ShortCode Functions
