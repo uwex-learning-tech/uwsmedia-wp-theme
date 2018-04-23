@@ -599,6 +599,7 @@ add_action( 'admin_init', 'uwsmedia_theme_settings' );
 add_action( 'init', 'create_post_groups' );
 add_action( 'init', 'create_projects_post' );
 add_action( 'manage_posts_custom_column', 'add_project_group_column_value', 10, 2 );
+add_action( 'manage_pages_custom_column', 'add_project_group_column_value', 10, 2 );
 add_action( 'admin_menu', 'remove_projects_pageparentdiv_metabox' );
 add_action( 'add_meta_boxes', 'add_groups_metabox' );
 
@@ -698,9 +699,11 @@ add_filter( 'upload_mimes', 'cc_mime_types' );
 add_filter( 'custom_menu_order', 'reorder_admin_menu' );
 add_filter( 'menu_order', 'reorder_admin_menu' );
 
-// Add Group column to UWS Project custom post type
-add_filter( 'manage_uws-projects_posts_columns', 'add_group_column' );
+// Add Group column to UWS Project custom post type and Page
+add_filter( 'manage_uws-projects_posts_columns', 'add_projects_group_column' );
+add_filter( 'manage_page_posts_columns', 'add_group_column' );
 add_filter( 'manage_edit-uws-projects_sortable_columns', 'sortable_group_column' );
+add_filter( 'manage_edit-page_sortable_columns', 'sortable_group_column' );
 add_filter( 'parse_query', 'filter_group_query' , 10);
 
 /*------------------------------------*\
@@ -811,7 +814,7 @@ function save_post_group_meta( $post_id, $post ) {
 
 }
 
-function add_group_column( $columns ) {
+function add_projects_group_column( $columns ) {
     
     $columns = array(
         'cb' => $columns['cb'],
@@ -819,6 +822,19 @@ function add_group_column( $columns ) {
         'group' => __( 'Group' ),
         'categories' => __( 'Categories' ),
         'tags' => __( 'Tags' ),
+        'date' => __( 'Date' )
+    );
+    
+    return $columns;
+    
+}
+
+function add_group_column( $columns ) {
+    
+    $columns = array(
+        'cb' => $columns['cb'],
+        'title' => __( 'Title' ),
+        'group' => __( 'Group' ),
         'date' => __( 'Date' )
     );
     
@@ -862,59 +878,60 @@ function getGroupTitle( $groupId ) {
 function add_groups_filter_dropdown( $post_type ) {
 
     /** Ensure this is the correct Post Type*/
-    if ( $post_type !== 'uws-projects' ) {
-        return;
-    }
-    
-    global $wpdb;
-    
-    $request_attr = 'post_group_id';
-    
-    if ( isset($_REQUEST[$request_attr]) ) {
-        $selected = $_REQUEST[$request_attr];
-    }
-    
-    /** Grab the results from the DB */
-    $query = $wpdb->prepare('
-        SELECT DISTINCT pm.meta_value FROM %1$s pm
-        LEFT JOIN %2$s p ON p.ID = pm.post_id
-        WHERE pm.meta_key = "%3$s" 
-        AND p.post_status = "%4$s"
-        AND p.post_type = "%5$s"
-        ORDER BY "%3$s"',
-        $wpdb->postmeta,
-        $wpdb->posts,
-        'post_group_id', // Your meta key - change as required
-        'publish',
-        $post_type
-    );
-    $results = $wpdb->get_col($query);
-    
-    /** Ensure there are options to show */
-    if ( empty( $results ) ) {
+    if ( $post_type == 'uws-projects' || $post_type == 'page' ) {
+
+        global $wpdb;
         
-        return;
+        $request_attr = 'post_group_id';
         
-    }
-    
-    $options[] = sprintf( '<option value="0">%1$s</option>', __( 'All Groups', 'uwsmedia' ) );
-    
-    foreach( $results as $result ) {
+        if ( isset($_REQUEST[$request_attr]) ) {
+            $selected = $_REQUEST[$request_attr];
+        }
         
-        $select = ( $result == $selected ) ? ' selected="selected"' : '';
+        /** Grab the results from the DB */
+        $query = $wpdb->prepare('
+            SELECT DISTINCT pm.meta_value FROM %1$s pm
+            LEFT JOIN %2$s p ON p.ID = pm.post_id
+            WHERE pm.meta_key = "%3$s" 
+            AND p.post_status = "%4$s"
+            AND p.post_type = "%5$s"
+            ORDER BY "%3$s"',
+            $wpdb->postmeta,
+            $wpdb->posts,
+            'post_group_id', // Your meta key - change as required
+            'publish',
+            $post_type
+        );
+        $results = $wpdb->get_col($query);
         
-        if ( $result != '-1' ) {
+        /** Ensure there are options to show */
+        if ( empty( $results ) ) {
             
-            $options[] = sprintf('<option value="%1$s" ' . $select . '>%2$s</option>', esc_attr($result), getGroupTitle($result) );
+            return;
             
         }
-
+        
+        $options[] = sprintf( '<option value="0">%1$s</option>', __( 'All Groups', 'uwsmedia' ) );
+        
+        foreach( $results as $result ) {
+            
+            $select = ( $result == $selected ) ? ' selected="selected"' : '';
+            
+            if ( $result != '-1' ) {
+                
+                $options[] = sprintf('<option value="%1$s" ' . $select . '>%2$s</option>', esc_attr($result), getGroupTitle($result) );
+                
+            }
+    
+        }
+    
+        /** Output the dropdown menu */
+        echo '<select class="" id="post_group_id" name="post_group_id">';
+        echo join( "\n", $options );
+        echo '</select>';
     }
-
-    /** Output the dropdown menu */
-    echo '<select class="" id="post_group_id" name="post_group_id">';
-    echo join( "\n", $options );
-    echo '</select>';
+    
+    return;
     
 }
 
@@ -923,7 +940,7 @@ function filter_group_query( $query ) {
     global $pagenow;
     $current_page = isset( $_GET['post_type'] ) ? $_GET['post_type'] : '';
     
-    if ( is_admin() && 'uws-projects' == $current_page && 'edit.php' == $pagenow  
+    if ( is_admin() && ( 'uws-projects' == $current_page || 'page' == $current_page ) && 'edit.php' == $pagenow  
     && isset( $_GET['post_group_id'] ) && $_GET['post_group_id'] != '' && $_GET['post_group_id'] != '0') {
     
         $group_id = $_GET['post_group_id'];
