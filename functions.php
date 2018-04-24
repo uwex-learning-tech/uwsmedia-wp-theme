@@ -1097,7 +1097,26 @@ function fb_opengraph() {
     
     global $post;
  
-    if ( is_single() ) {
+    if ( is_single() || is_page() || is_front_page() ) {
+        
+        $title = '';
+        $link = '';
+        $type = '';
+        
+        if ( is_single() || is_page()) {
+            
+            $title = the_title( '', '', false );
+            $link = get_permalink();
+            $type = 'article';
+            
+        } else if ( is_front_page() ) {
+            
+            $title = get_bloginfo( 'name' );
+            $link = get_bloginfo( 'url' );
+            $type = 'website';
+        }
+        
+        
         
         if ( has_post_thumbnail( $post->ID ) ) {
             
@@ -1105,28 +1124,28 @@ function fb_opengraph() {
             
         } else {
             
-            $img_src = get_stylesheet_directory_uri() . '/img/uwex_log.svg';
+            $img_src = get_stylesheet_directory_uri() . '/img/uwex_logo.svg';
             
         }
 
         if ( $excerpt = $post->post_excerpt ) {
             
             $excerpt = strip_tags( $post->post_excerpt );
-            $excerpt = str_replace( '', '\'', $excerpt );
+            $excerpt = str_replace( "", "'", $excerpt );
             
         } else {
             
-            $excerpt = get_bloginfo('description');
+            $excerpt = get_bloginfo( 'description' );
             
         }
 ?>
  
-    <meta property="og:title" content="<?php echo the_title(); ?>"/>
+    <meta property="og:title" content="<?php echo $title; ?>"/>
     <meta property="og:description" content="<?php echo $excerpt; ?>"/>
-    <meta property="og:type" content="article"/>
-    <meta property="og:url" content="<?php echo the_permalink(); ?>"/>
-    <meta property="og:site_name" content="<?php echo get_bloginfo(); ?>"/>
-    <meta property="og:image" content="<?php echo $img_src[0]; ?>"/>
+    <meta property="og:type" content="<?php echo $type; ?>"/>
+    <meta property="og:url" content="<?php echo $link; ?>"/>
+    <meta property="og:site_name" content="<?php echo get_bloginfo( 'name' ); ?>"/>
+    <meta property="og:image" content="<?php echo $img_src; ?>"/>
  
 <?php
     } else {
