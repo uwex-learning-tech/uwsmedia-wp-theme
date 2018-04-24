@@ -12,7 +12,7 @@
             <main class="col-10 offset-1" role="main">
                 
                 <ul class="sharings">
-                    <li><a id="copy-share-link" href="javascript:void(0);" title="Copy Link"><span class="fa fa-link" aria-hidden="true" aria-hidden="true"></span><input class="hiddenShareLink" type="text" value="<?php the_permalink(); ?>" /></a></li><li class="separator"></li><li><a href="http://www.linkedin.com/shareArticle?mini=true&amp;title=<?php the_title(); ?>&amp;url=<?php the_permalink(); ?>" title="Share on LinkedIn" target="_blank"><span class="fa fa-linkedin-square" aria-hidden="true"></span></a></li>
+                    <li><a id="copy-share-link" href="javascript:void(0);" title="Copy Link"><span class="fa fa-link" aria-hidden="true" aria-hidden="true"></span><input class="hiddenShareLink" type="text" value="<?php the_permalink(); ?>" /></a></li><li class="separator"></li><li><a id="shareOnLinkedIn" href="javascript:void(0);" data-ref="http://www.linkedin.com/shareArticle?mini=true&amp;title=<?php echo urlencode(get_the_title()); ?>&amp;summary=<?php echo urlencode(get_the_excerpt()); ?>&amp;url=<?php the_permalink(); ?>&amp;source=<?php echo urlencode( get_blogInfo( 'name' ) ); ?>" title="Share on LinkedIn"><span class="fa fa-linkedin-square" aria-hidden="true"></span></a></li>
                     <li class="msg"></li>
                 </ul>
                 
@@ -22,7 +22,7 @@
                     <!-- article -->
                     <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
                         
-                        <p class="date"><?php the_time('F j, Y'); ?></p>
+                        <p class="date"><?php the_time('F j, Y'); ?> | Updated on <?php the_modified_date('F j, Y');?></p>
                         
                         <!-- post title -->
                         <h1><?php the_title(); ?></h1>
