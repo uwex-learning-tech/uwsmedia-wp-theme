@@ -185,12 +185,12 @@ h6 {
 }
 
 /* breadcrumbs */
-.faculty .breadcrumb-nav {
+.faculty-group .breadcrumb-nav {
     background-color: #2A8448;
     color: #fff;
 }
 
-.faculty .breadcrumb-nav .breadcrumbs li a {
+.faculty-group .breadcrumb-nav .breadcrumbs li a {
     color: #fff;
 }
 
@@ -240,16 +240,16 @@ main .published-date {
     margin-bottom: 0.3125rem;
 }
 
-main .post-featured-image img {
+main .page-featured-image img {
     width: 100%;
     padding-top: 1.25rem;
 }
 
-.faculty main .post-featured-image {
+.faculty-group main .page-featured-image {
     position: relative;
 }
 
-.faculty main .post-featured-image:before {
+.faculty-group main .page-featured-image:before {
     position: absolute;
     top: 40px;
     left: 20px;
@@ -388,6 +388,174 @@ main .post-featured-image img {
     max-width: 940px;
     height: auto;
     object-fit: cover;
+}
+
+
+/*------------------------------------*\
+    SINGLE
+\*------------------------------------*/
+
+.single.single-uws-projects main {
+    position: relative;
+}
+
+.single.single-uws-projects .post-featured-image img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    object-position: center center;
+}
+
+.single.single-uws-projects article {
+    font-size: 21px;
+    line-height: 29px;
+}
+
+.single.single-uws-projects .date {
+    margin: 16px 0;
+    font-size: 16px;
+    line-height: 1;
+}
+
+.single.single-uws-projects h1 {
+    padding: 0;
+    margin: 16px 0 4px;
+    font-size: 40px;
+    line-height: 48px;
+}
+
+.single.single-uws-projects h2 {
+    padding: 0;
+    margin: 16px 0;
+    font-size: 34px;
+    line-height: 42px;
+}
+
+.single.single-uws-projects h3 {
+    padding: 0;
+    margin: 16px 0;
+    font-size: 28px;
+    line-height: 36px;
+}
+
+.single.single-uws-projects h4 {
+    padding: 0;
+    margin: 16px 0;
+    font-size: 22px;
+    line-height: 28px;
+}
+
+.single.single-uws-projects h5 {
+    padding: 0;
+    margin: 16px 0;
+    font-size: 22px;
+    line-height: 28px;
+}
+
+.single.single-uws-projects h6 {
+    padding: 0;
+    margin: 16px 0;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.single.single-uws-projects .categories {
+    margin: 4px 0 0;
+    font-size: 16px;
+    line-height: 1;
+}
+
+.single.single-uws-projects .categories a {
+    color: #444;
+}
+
+.single.single-uws-projects .authors {
+    margin: 40px 0;
+    font-style: italic;
+}
+
+.single.single-uws-projects .authors a {
+    color: #444;
+    text-decoration: underline;
+}
+
+.single.single-uws-projects .authors a:hover {
+    text-decoration: none;
+}
+
+.single.single-uws-projects .post-edit-link {
+    font-size: 14px;
+    line-height: 1;
+}
+
+.single.single-uws-projects .tag-btns {
+    list-style: none;
+    padding: 0;
+    margin-top: 40px;
+    margin-left: 0;
+}
+
+.single.single-uws-projects .tag-btns li {
+    display: inline-block;
+    min-width: 75px;
+    padding: 8px;
+    color: #444;
+    font-size: 14px;
+    line-height: 1;
+    background-color: #f2f2f2;
+    text-align: center;
+}
+
+.single.single-uws-projects .sharings {
+    position: absolute;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    top: 0;
+    right: 0;
+    background-color: #f8f8f8;
+    box-shadow: 0 4px 3px rgba(0,0,0,0.16);
+    border-radius: 0px 0px 5px 5px;
+}
+
+.single.single-uws-projects .sharings li {
+    display: inline-block;
+}
+
+.single.single-uws-projects .sharings .separator {
+    background-color: #e0e0e0;
+    width: 1px;
+    height: 15px;
+    margin-top: 10px;
+}
+
+.single.single-uws-projects .sharings .msg {
+    display: none;
+    position: absolute;
+    font-size: 10px;
+    width: 100%;
+    background-color: rgba( 0,0,0,0.6);
+    color: #fff;
+    border-radius: 3px;
+    padding: 3px;
+    line-height: 1;
+    margin-top: 10px;
+}
+
+.single.single-uws-projects .sharings li a {
+   display: block;
+   padding: 8px;
+   color: #444;
+   font-size: 16px;
+   line-height: 1;
+}
+
+.single.single-uws-projects .sharings .hiddenShareLink {
+    width: 0px;
+    height: 0px;
+    padding: 0;
+    margin: 0;
+    border: none;
 }
 
 /*------------------------------------*\

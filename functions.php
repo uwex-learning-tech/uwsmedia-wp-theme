@@ -94,7 +94,11 @@ function uwsmedia_styles() {
     wp_enqueue_style( 'bootstrap' );
     
     // Dashicons
-    wp_enqueue_style( 'dashicons' );
+    //wp_enqueue_style( 'dashicons' );
+    
+    // Font Awesome
+    wp_register_style( 'font-awesome', get_template_directory_uri() . '/css/font-awesome.css', array(), '4.7.0' ); 
+    wp_enqueue_style( 'font-awesome' );
     
     // UWS Media CSS
     wp_register_style( 'uwsmedia', get_template_directory_uri() . '/style.css', array(), '1.0', 'all' );
@@ -410,7 +414,7 @@ function homepage_options_callback() {
                 
                 $sectionHtmls .= '<input type="text" class="regular-text uwsbtn" value="'.$button->{'name'}.'" placeholder="Button Name" /><input type="text" class="regular-text uwsbtnlink" value="'.$button->{'link'}.'" placeholder="Button Link" />';
                 
-                if ( $buttonCount != count( $value ) ) {
+                if ( $buttonCount != count( $value->{'buttons'} ) ) {
                     
                     $sectionHtmls .= '<br />';
                     $buttonCount += 1;
@@ -473,9 +477,7 @@ function site_logo_options_callback() {
     
 }
 
-function uwsmedia_theme_settings(){
-    
-    wp_enqueue_media();
+function uwsmedia_theme_settings() {
     
     // Site
     
@@ -510,6 +512,14 @@ function uwsmedia_admin_scripts() {
     
     wp_register_style( 'uwsmedia_admin_css', get_template_directory_uri() . '/css/admin.css', array(), '1.0.0', 'all' );
     wp_enqueue_style( 'uwsmedia_admin_css' );
+    
+    global $pagenow;
+    
+    if ($pagenow != 'themes.php') {
+        return;
+    }
+    
+    wp_enqueue_media();
 
 }
 
@@ -618,6 +628,9 @@ add_action( 'after_switch_theme', 'flush_rewrite_rules' );
 
 // Add dropdown filter for Groups Custom Post
 add_action( 'restrict_manage_posts', 'add_groups_filter_dropdown' );
+
+// add Open Graph meta data
+add_action('wp_head', 'fb_opengraph', 5);
 
 /*------------------------------------*\
 	REMOVE Actions
@@ -795,6 +808,10 @@ function post_group_attributes_meta_box( $post ) {
             $groupInstruction = '<p>Select a group.</p>';
             $groupHowTo = '<p class="howto">Group is used to target the audience.</p>';
             
+            
+            $featureOnHomepageCB = '';
+            $promoteToPortfolioCB = '';
+            
             if ( $post->post_type == 'uws-projects' ) {
                 
                 $featuredValue = get_post_meta( $post->ID, 'feature_on_home' , true );
@@ -944,6 +961,8 @@ function add_groups_filter_dropdown( $post_type ) {
         
         $request_attr = 'post_group_id';
         
+        $selected = null;
+        
         if ( isset($_REQUEST[$request_attr]) ) {
             $selected = $_REQUEST[$request_attr];
         }
@@ -1027,10 +1046,10 @@ function create_projects_post() {
     // Register Custom Post Type
     register_post_type( 'uws-projects', 
         array(
-        'label' => 'Showcase projects',
+        'label' => 'Projects',
         'menu_icon' => 'dashicons-portfolio',
         'labels' => array(
-            'name' => __( 'Showcase Projects', 'uwsmedia' ),
+            'name' => __( 'Projects', 'uwsmedia' ),
             'singular_name' => __( 'Project', 'uwsmedia' ),
             'menu_name' => __( 'Showcases', 'uwsmedia' ),
             'name_admin_bar' => __('Project', 'uwsmedia' ),
@@ -1046,7 +1065,7 @@ function create_projects_post() {
             'not_found' => __( 'No projects found.', 'uwsmedia' ),
             'not_found_in_trash' => __( 'No projects found in Trash', 'uwsmedia' )
         ),
-        'supports' => array( 'title', 'editor', 'excerpt','thumbnail' ),
+        'supports' => array( 'title', 'editor', 'excerpt', 'thumbnail' ),
         'taxonomies' => array( 'category', 'post_tag' ),
         'hierarchical' => false,
         'public' => true,
@@ -1059,8 +1078,8 @@ function create_projects_post() {
         'exclude_from_search' => false,
         'publicly_queryable' => true,
         'capability_type' => 'page',
-        'rewrite' => array('slug' => 'showcases'),
-        'delete_with_user' => false
+        'delete_with_user' => false,
+        'rewrite' => array('slug' => 'showcases')
     ) );
 }
 
@@ -1068,6 +1087,51 @@ function remove_projects_pageparentdiv_metabox() {
     
     remove_meta_box('pageparentdiv', 'uws-projects', 'normal');
     
+}
+
+/*------------------------------------*\
+	OPEN GRAPH META
+\*------------------------------------*/
+
+function fb_opengraph() {
+    
+    global $post;
+ 
+    if ( is_single() ) {
+        
+        if ( has_post_thumbnail( $post->ID ) ) {
+            
+            $img_src = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'thumbnail' );
+            
+        } else {
+            
+            $img_src = get_stylesheet_directory_uri() . '/img/uwex_log.svg';
+            
+        }
+
+        if ( $excerpt = $post->post_excerpt ) {
+            
+            $excerpt = strip_tags( $post->post_excerpt );
+            $excerpt = str_replace( '', '\'', $excerpt );
+            
+        } else {
+            
+            $excerpt = get_bloginfo('description');
+            
+        }
+?>
+ 
+    <meta property="og:title" content="<?php echo the_title(); ?>"/>
+    <meta property="og:description" content="<?php echo $excerpt; ?>"/>
+    <meta property="og:type" content="article"/>
+    <meta property="og:url" content="<?php echo the_permalink(); ?>"/>
+    <meta property="og:site_name" content="<?php echo get_bloginfo(); ?>"/>
+    <meta property="og:image" content="<?php echo $img_src[0]; ?>"/>
+ 
+<?php
+    } else {
+        return;
+    }
 }
 
 /*------------------------------------*\
@@ -1178,7 +1242,7 @@ function breadcrumb_nav() {
         } else if ( is_archive() && is_tax() && !is_category() && !is_tag() ) {
               
             // If post is a custom post type
-            $post_type = get_post_type();
+            //$post_type = get_post_type();
               
             // If it is a custom post type display name and link
             if($post_type != 'post') {
@@ -1191,75 +1255,14 @@ function breadcrumb_nav() {
               
             }
               
-            $custom_tax_name = get_queried_object()->name;
-            echo '<li class="item-current item-archive">' . $custom_tax_name . '</li>';
+            //$custom_tax_name = get_queried_object()->name;
+            //echo '<li class="item-current item-archive">' . $custom_tax_name . '</li>';
               
         } else if ( is_single() ) {
               
-            // If post is a custom post type
-            $post_type = get_post_type();
-              
-            // If it is a custom post type display name and link
-            if($post_type != 'post') {
                   
-                $post_type_object = get_post_type_object($post_type);
-                $post_type_archive = get_post_type_archive_link($post_type);
-              
-                echo '<li class="item-cat item-custom-post-type-' . $post_type . '"><a class="bread-cat bread-custom-post-type-' . $post_type . '" href="' . $post_type_archive . '" title="' . $post_type_object->labels->name . '">' . $post_type_object->labels->name . '</a></li>';
-                echo '<li class="separator"> ' . $separator . ' </li>';
-              
-            }
-              
-            // Get post category info
-            $category = get_the_category();
-             
-            if(!empty($category)) {
-              
-                // Get last category post is in
-                $last_category = end(array_values($category));
-                  
-                // Get parent any categories and create array
-                $get_cat_parents = rtrim(get_category_parents($last_category->term_id, true, ','),',');
-                $cat_parents = explode(',',$get_cat_parents);
-                  
-                // Loop through parent categories and store in variable $cat_display
-                $cat_display = '';
-                foreach($cat_parents as $parents) {
-                    $cat_display .= '<li class="item-cat">'.$parents.'</li>';
-                    $cat_display .= '<li class="separator"> ' . $separator . ' </li>';
-                }
-             
-            }
-              
-            // If it's a custom post type within a custom taxonomy
-            $taxonomy_exists = taxonomy_exists($custom_taxonomy);
-            if(empty($last_category) && !empty($custom_taxonomy) && $taxonomy_exists) {
-                   
-                $taxonomy_terms = get_the_terms( $post->ID, $custom_taxonomy );
-                $cat_id         = $taxonomy_terms[0]->term_id;
-                $cat_nicename   = $taxonomy_terms[0]->slug;
-                $cat_link       = get_term_link($taxonomy_terms[0]->term_id, $custom_taxonomy);
-                $cat_name       = $taxonomy_terms[0]->name;
-               
-            }
-              
-            // Check if the post is in a category
-            if(!empty($last_category)) {
-                echo $cat_display;
-                echo '<li class="item-current item-' . $post->ID . '">' . get_the_title() . '</li>';
-                  
-            // Else if post is in a custom taxonomy
-            } else if(!empty($cat_id)) {
-                  
-                echo '<li class="item-cat item-cat-' . $cat_id . ' item-cat-' . $cat_nicename . '"><a class="bread-cat bread-cat-' . $cat_id . ' bread-cat-' . $cat_nicename . '" href="' . $cat_link . '" title="' . $cat_name . '">' . $cat_name . '</a></li>';
-                echo '<li class="separator"> ' . $separator . ' </li>';
-                echo '<li class="item-current item-' . $post->ID . '">' . get_the_title() . '</li>';
-              
-            } else {
-                  
-                echo '<li class="item-current item-' . $post->ID . '">' . get_the_title() . '</li>';
-                  
-            }
+            echo '<li class="item-current item-' . $post->ID . '">' . get_the_title() . '</li>';
+
               
         } else if ( is_category() ) {
                
@@ -1346,7 +1349,7 @@ function breadcrumb_nav() {
                
         } else if ( is_author() ) {
                
-            // Auhor archive
+            // Author archive
                
             // Get the author information
             global $author;

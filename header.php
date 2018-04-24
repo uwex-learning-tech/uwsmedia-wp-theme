@@ -12,17 +12,10 @@
 		<meta name="description" content="<?php bloginfo('description'); ?>">
 
 		<?php wp_head(); ?>
-		<script>
-        // conditionizr.com
-        // configure environment tests
-        conditionizr.config({
-            assets: '<?php echo get_template_directory_uri(); ?>',
-            tests: {}
-        });
-        </script>
 
 	</head>
-	<body <?php strpos(get_page(get_post_ancestors($post)[0])->post_name, 'faculty') !== false ? body_class('faculty') : body_class(); ?>>
+	
+	<body <?php body_class(get_post(get_post_meta($post->ID, 'post_group_id', true))->post_name . '-group') ?>>
 
 		<!-- wrapper -->
 		<div class="wrapper">
@@ -57,9 +50,7 @@
                 </div>
             </div> <!-- /header -->
             
-            <!-- body content container -->
-			<div class="container">
-                <div class="row">
+            
             
             <?php } ?>
 			

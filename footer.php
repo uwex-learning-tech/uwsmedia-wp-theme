@@ -1,12 +1,4 @@
 
-			<?php if ( !is_front_page() ) { ?>
-			    
-			    </div>
-			    <!-- /body content container row -->
-			</div>
-			<!-- /body content container -->
-			
-			<?php } ?>
 			
 			<!-- footer -->
 			<footer class="footer d-flex flex-wrap" role="contentinfo">
