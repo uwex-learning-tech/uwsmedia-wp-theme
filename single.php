@@ -54,12 +54,12 @@
                         <p class="authors"><?php _e( 'By', 'uwsmedia' ); ?> <?php the_author_posts_link(); ?></p>
                         
                         <?php the_content(); // Dynamic Content ?>
-                            
+                        <ul class="tag-pills">
                         <?php 
 
-                        $tag_before = '<ul class="tag-btns"><li>';
-                        $tag_separator = '</li><li>';
-                        $tag_after = '</li></ul>';
+                        $tag_before = '<li>';
+                        $tag_separator = '';
+                        $tag_after = '</li>';
                         $tag_counter = count( get_the_terms( $post->ID, 'post_tag' ) );
                         $i=0; // counter
                         
@@ -77,6 +77,7 @@
                         echo $tag_before . $tags->name . $tag_after;
                         
                         ?>
+                        </ul>
                         
                         <?php edit_post_link( __( 'Edit Project', 'uwsmedia' ), '<p>', '</p>', null ); ?>
                     

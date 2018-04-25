@@ -488,14 +488,14 @@ main .page-featured-image img {
     line-height: 1;
 }
 
-.single.single-uws-projects .tag-btns {
+.single.single-uws-projects .tag-pills {
     list-style: none;
     padding: 0;
     margin-top: 40px;
     margin-left: 0;
 }
 
-.single.single-uws-projects .tag-btns li {
+.single.single-uws-projects .tag-pills li {
     display: inline-block;
     min-width: 75px;
     padding: 8px;
@@ -504,6 +504,7 @@ main .page-featured-image img {
     line-height: 1;
     background-color: #f2f2f2;
     text-align: center;
+    margin-right: 8px;
 }
 
 .single.single-uws-projects .sharings {
