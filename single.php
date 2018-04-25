@@ -21,8 +21,19 @@
                     
                     <!-- article -->
                     <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-                        
-                        <p class="date"><?php the_time('F j, Y'); ?> | Updated on <?php the_modified_date('F j, Y');?></p>
+
+                        <p class="date">
+                        <?php
+                            
+                            the_time('F j, Y');
+
+                            if ( strcmp( get_the_time( 'F j, Y' ), get_the_modified_date( 'F j, Y' ) ) !== 0 ) {
+                                
+                                echo ' | Updated on ' . get_the_modified_date( 'F j, Y' );
+                                
+                            }
+                            
+                        ?></p>
                         
                         <!-- post title -->
                         <h1><?php the_title(); ?></h1>
