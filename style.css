@@ -615,6 +615,37 @@ main .page-featured-image img {
     color: #990033;
 }
 
+.page-template-page-faculty-showcase .sidebar-filter {
+    margin-top: 16px;
+    background-color: #f2f2f2;
+    padding-bottom: 8px;
+}
+
+.page-template-page-faculty-showcase .sidebar-filter h3 {
+    font-family: 'Raleway', sans-serif;
+    font-size: 20px;
+    line-height: 1;
+    color: #fff;
+    background-color: #1E252B;
+    padding: 12px 8px;
+    border-radius: 3px 3px 0px 0px;
+}
+
+.page-template-page-faculty-showcase .sidebar-filter .filter-form {
+    padding: 0 8px;
+}
+
+.page-template-page-faculty-showcase .sidebar-filter h4 {
+    font-size: 18px;
+    margin: 8px 0;
+}
+
+.search .btn {
+    border-color: #1E252B;
+    background-color: #1E252B;
+}
+
+
 /*------------------------------------*\
     IMAGES
 \*------------------------------------*/
@@ -664,6 +695,37 @@ main .page-featured-image img {
 	background:#04A4CC;
 	color:#FFF;
 	text-shadow:none;
+}
+
+/* Text meant only for screen readers. */
+.screen-reader-text {
+  border: 0;
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute !important;
+  width: 1px;
+  word-wrap: normal !important;
+}
+
+.screen-reader-text:focus {
+  background-color: #eee;
+  clip: auto !important;
+  clip-path: none;
+  color: #444;
+  display: block;
+  font-size: 1em;
+  height: auto;
+  left: 5px;
+  line-height: normal;
+  padding: 15px 23px 14px;
+  text-decoration: none;
+  top: 5px;
+  width: auto;
+  z-index: 100000; /* Above WP toolbar. */
 }
 
 /*------------------------------------*\

@@ -18,7 +18,7 @@
                 
                 <!-- section -->
                 <section>
-                    
+<!--                     https://pippinsplugins.com/create-live-search-wordpress-jquery-ajax/ -->
                     <!-- article -->
                     <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
@@ -66,6 +66,7 @@
                         
                         <?php the_content(); // Dynamic Content ?>
                         <ul class="tag-pills">
+<!--
                         <?php 
 
                         $tag_before = '<li>';
@@ -88,6 +89,7 @@
                         echo $tag_before . $tags->name . $tag_after;
                         
                         ?>
+-->
                         </ul>
                         
                         <?php edit_post_link( __( 'Edit Project', 'uwsmedia' ), '<p>', '</p>', null ); ?>

@@ -98,7 +98,66 @@
             
             <!-- sidebar -->
             <aside class="sidebar col-3" role="complementary">
-            
+                
+                <!-- search -->
+                <form class="search" method="get" action="http://localhost/local-wp/uwex" role="search">
+                    
+                    <div class="input-group">
+                        <input class="search-input form-control" name="s" placeholder="Search Faculty Showcase" type="search">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary search-submit" type="submit"><span class="fa fa-search" aria-hidden="true"></span><span class="screen-reader-text">Search</span></button>
+                        </div>
+                    </div>
+                    
+                </form>
+                
+                <div class="sidebar-filter">
+                    <div class="filter">
+                        <h3>Filter</h3>			
+                        <form class="filter-form">
+                            
+                            <h4>Degree Programs</h4>
+                            <?php
+                                       
+                               $degreePrograms = get_terms(array( 'taxonomy' => 'degree_programs', 'hide_empty' => false ));
+                               
+                               foreach( $degreePrograms as $program ) {
+                                   
+                                   echo '<div class="form-check"><input type="checkbox" class="form-check-input" id="degree_program_' .$program->slug . '" value="' . $program->slug . '"><label class="form-check-label" for="degree_program_' . $program->slug . '">' . $program->name . '</label></div>';
+                                   
+                               }
+                               
+                            ?>
+                            
+                            <h4>Use Cases</h4>
+                            
+                            <?php
+                                       
+                               $useCases = get_terms(array( 'taxonomy' => 'use_cases', 'hide_empty' => false ));
+                               
+                               foreach( $useCases as $case ) {
+                                   
+                                   echo '<div class="form-check"><input type="checkbox" class="form-check-input" id="use_case_' .$case->slug . '" value="' . $case->slug . '"><label class="form-check-label" for="use_case_' . $case->slug . '">' . $case->name . '</label></div>';
+                                   
+                               }
+                               
+                            ?>
+                            
+                            <h4>Media Types</h4>
+                            <?php
+                                       
+                               $mediaTypes = get_terms(array( 'taxonomy' => 'media_types', 'hide_empty' => false ));
+                               
+                               foreach( $mediaTypes as $type ) {
+                                   
+                                   echo '<div class="form-check"><input type="checkbox" class="form-check-input" id="media_type_' .$type->slug . '" value="' . $type->slug . '"><label class="form-check-label" for="media_type_' . $type->slug . '">' . $type->name . '</label></div>';
+                                   
+                               }
+                               
+                            ?>
+                        </form>
+                    </div>
+                </div>
             
             </aside>
             <!-- /sidebar -->

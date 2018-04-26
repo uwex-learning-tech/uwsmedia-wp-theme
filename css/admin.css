@@ -35,3 +35,10 @@
 #toPortfolio {
     display: none;
 }
+
+/*------------------------------------*\
+    CUSTOM META BOX
+\*------------------------------------*/
+.post-type-uws-projects .postbox select {
+    width: 100%;
+}

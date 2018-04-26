@@ -608,6 +608,9 @@ add_action( 'admin_init', 'uwsmedia_theme_settings' );
 // Add UWS Media custom post (Groups and Projects/Showcases)
 add_action( 'init', 'create_post_groups' );
 add_action( 'init', 'create_projects_post' );
+add_action( 'init', 'create_degree_taxonomy' );
+add_action( 'init', 'create_use_case_taxonomy' );
+add_action( 'init', 'create_media_type_taxonomy' );
 add_action( 'manage_posts_custom_column', 'add_project_group_column_value', 10, 2 );
 add_action( 'manage_posts_custom_column', 'add_project_featured_column_value', 10, 2 );
 add_action( 'manage_pages_custom_column', 'add_project_group_column_value', 10, 2 );
@@ -870,7 +873,6 @@ function add_projects_group_column( $columns ) {
         'featured' => __( '<span class="screen-reader-text">Featured on Home Page</span>', 'uwsmedia' ),
         'title' => __( 'Title' ),
         'group' => __( 'Group', 'uwsmedia' ),
-        'categories' => __( 'Categories' ),
         'date' => __( 'Date' )
     );
     
@@ -1039,9 +1041,7 @@ function filter_group_query( $query ) {
 
 function create_projects_post() {
     
-    // Register Taxonomies for Category
-    register_taxonomy_for_object_type( 'category', 'uws-media' );
-    register_taxonomy_for_object_type( 'post_tag', 'uws-media' );
+    unregister_post_type( 'uws-projects' );
     
     // Register Custom Post Type
     register_post_type( 'uws-projects', 
@@ -1051,6 +1051,7 @@ function create_projects_post() {
         'labels' => array(
             'name' => __( 'Projects', 'uwsmedia' ),
             'singular_name' => __( 'Project', 'uwsmedia' ),
+            'all_items' => __( 'All Projects', 'uwsmedia' ),
             'menu_name' => __( 'Showcases', 'uwsmedia' ),
             'name_admin_bar' => __('Project', 'uwsmedia' ),
             'add_new' => __( 'Add New', 'uwsmedia' ),
@@ -1066,7 +1067,7 @@ function create_projects_post() {
             'not_found_in_trash' => __( 'No projects found in Trash', 'uwsmedia' )
         ),
         'supports' => array( 'title', 'editor', 'excerpt', 'thumbnail' ),
-        'taxonomies' => array( 'category', 'post_tag' ),
+        'taxonomies' => array(),
         'hierarchical' => false,
         'public' => true,
         'show_ui' => true,
@@ -1081,6 +1082,252 @@ function create_projects_post() {
         'delete_with_user' => false,
         'rewrite' => array('slug' => 'showcases')
     ) );
+}
+
+function create_degree_taxonomy() {
+    
+    $labels = array(
+        'name' => __( 'Degree Programs', 'uwsmedia' ),
+        'singular_name' => __( 'Program', 'uwsmedia' ),
+        'all_items' => __( 'All Programs', 'uwsmedia' ),
+        'edit_item' => __( 'Edit Program', 'uwsmedia' ),
+        'view_item' => __( 'View Program', 'uwsmedia' ),
+        'update_item' => __( 'Update Program', 'uwsmedia' ),
+        'new_item_name' => __( 'New Program Name', 'uwsmedia' ),
+        'add_new_item' => __( 'Add New Program', 'uwsmedia' ),
+        'search_items' => __( 'Search Programs', 'uwsmedia' ),
+        'popular_items' => __( 'Popular Programs', 'uwsmedia' ),
+        'add_or_remove_items' => __( 'Add or remove programs', 'uwsmedia' ),
+        'choose_from_most_used' => __( 'Choose from most used programs', 'uwsmedia' ),
+        'separate_items_with_commas' => __( 'Separate programs with commas', 'uwsmedia' ),
+        'parent_item' => null,
+		'parent_item_colon'  => null,
+		'not_found' => __( 'No programs found.', 'uwsmedia' ),
+		'menu_name' => __( 'Degree Programs', 'uwsmedia' ),
+    );
+    
+    $args = array(
+        'hierarchical' => false,
+        'labels' => $labels,
+        'show_ui' => true,
+        'show_admin_column' => true,
+        'update_count_callback' => '_update_post_term_count',
+        'query_var' => true,
+        'meta_box_cb' => 'uws_projects_degree_programs',
+        'rewrite' => array( 'slug' => 'program' )
+    );
+    
+    register_taxonomy( 'degree_programs', 'uws-projects', $args );
+    
+}
+
+function create_use_case_taxonomy() {
+    
+    $labels = array(
+        'name' => __( 'Use Cases', 'uwsmedia' ),
+        'singular_name' => __( 'Cases', 'uwsmedia' ),
+        'all_items' => __( 'All Use Cases', 'uwsmedia' ),
+        'edit_item' => __( 'Edit Use Case', 'uwsmedia' ),
+        'view_item' => __( 'View Use Case', 'uwsmedia' ),
+        'update_item' => __( 'Update Use Case', 'uwsmedia' ),
+        'new_item_name' => __( 'New Use Case Name', 'uwsmedia' ),
+        'add_new_item' => __( 'Add New Use Case', 'uwsmedia' ),
+        'search_items' => __( 'Search Use Cases', 'uwsmedia' ),
+        'popular_items' => __( 'Popular Use Cases', 'uwsmedia' ),
+        'add_or_remove_items' => __( 'Add or remove use cases', 'uwsmedia' ),
+        'choose_from_most_used' => __( 'Choose from most used use cases', 'uwsmedia' ),
+        'separate_items_with_commas' => __( 'Separate use cases with commas', 'uwsmedia' ),
+        'parent_item' => null,
+		'parent_item_colon'  => null,
+		'not_found' => __( 'No use cases found.', 'uwsmedia' ),
+		'menu_name' => __( 'Use Cases', 'uwsmedia' ),
+    );
+    
+    $args = array(
+        'hierarchical' => false,
+        'labels' => $labels,
+        'show_ui' => true,
+        'show_admin_column' => true,
+        'update_count_callback' => '_update_post_term_count',
+        'query_var' => true,
+        'meta_box_cb' => 'uws_projects_use_cases',
+        'rewrite' => array( 'slug' => 'cases' )
+    );
+    
+    register_taxonomy( 'use_cases', 'uws-projects', $args );
+    
+}
+
+function create_media_type_taxonomy() {
+    
+    $labels = array(
+        'name' => __( 'Media Types', 'uwsmedia' ),
+        'singular_name' => __( 'Type', 'uwsmedia' ),
+        'all_items' => __( 'All Media Types', 'uwsmedia' ),
+        'edit_item' => __( 'Edit Media Type', 'uwsmedia' ),
+        'view_item' => __( 'View Media Type', 'uwsmedia' ),
+        'update_item' => __( 'Update Media Type', 'uwsmedia' ),
+        'new_item_name' => __( 'New Media Type Name', 'uwsmedia' ),
+        'add_new_item' => __( 'Add New Media Type', 'uwsmedia' ),
+        'search_items' => __( 'Search Media Types', 'uwsmedia' ),
+        'popular_items' => __( 'Popular Media Types', 'uwsmedia' ),
+        'add_or_remove_items' => __( 'Add or remove media types', 'uwsmedia' ),
+        'choose_from_most_used' => __( 'Choose from most used media types', 'uwsmedia' ),
+        'separate_items_with_commas' => __( 'Separate media types with commas', 'uwsmedia' ),
+        'parent_item' => null,
+		'parent_item_colon'  => null,
+		'not_found' => __( 'No media types found.', 'uwsmedia' ),
+		'menu_name' => __( 'Media Types', 'uwsmedia' ),
+    );
+    
+    $args = array(
+        'hierarchical' => false,
+        'labels' => $labels,
+        'show_ui' => true,
+        'show_admin_column' => true,
+        'update_count_callback' => '_update_post_term_count',
+        'query_var' => true,
+        'meta_box_cb' => 'uws_projects_media_types',
+        'rewrite' => array( 'slug' => 'types' )
+    );
+    
+    register_taxonomy( 'media_types', 'uws-projects', $args );
+    
+}
+
+function uws_projects_media_types( $post, $box ) {
+    
+    $defaults = array( 'taxonomy' => 'category' );
+    
+    if ( !isset( $box['args'] ) || !is_array( $box['args'] ) ) {
+        
+        $args = array();
+        
+    } else {
+        
+        $args = $box['args'];
+        
+    }
+    
+    extract( wp_parse_args( $args, $defaults ), EXTR_SKIP );
+    
+    $tax = get_taxonomy( $taxonomy );
+    ?>
+    <div id="taxonomy-<?php echo $taxonomy; ?>" class="acf-taxonomy-field categorydiv">
+        <?php
+            $name = ( $taxonomy == 'category' ) ? 'post_category' : 'tax_input[' . $taxonomy . ']';
+        echo "<input type='hidden' name='{$name}[]' value='0' />";
+        
+        ?>
+        
+        <?php
+            $term_obj = wp_get_object_terms( $post->ID, $taxonomy );
+            wp_dropdown_categories( array(
+                'taxonomy' => $taxonomy,
+                'hide_empty' => 0,
+                'name' => "{$name}[]",
+                'selected' => $term_obj[0]->slug,
+                'orderby' => 'name',
+                'hierarchical' => 0,
+                'show_option_none' => '&mdash;',
+                'value_field' => 'slug',
+                )
+            );
+        ?>
+        
+    </div>
+    <?php
+    
+}
+
+function uws_projects_use_cases( $post, $box ) {
+    
+    $defaults = array( 'taxonomy' => 'category' );
+    
+    if ( !isset( $box['args'] ) || !is_array( $box['args'] ) ) {
+        
+        $args = array();
+        
+    } else {
+        
+        $args = $box['args'];
+        
+    }
+    
+    extract( wp_parse_args( $args, $defaults ), EXTR_SKIP );
+    
+    $tax = get_taxonomy( $taxonomy );
+    ?>
+    <div id="taxonomy-<?php echo $taxonomy; ?>" class="acf-taxonomy-field categorydiv">
+        <?php
+            $name = ( $taxonomy == 'category' ) ? 'post_category' : 'tax_input[' . $taxonomy . ']';
+        echo "<input type='hidden' name='{$name}[]' value='0' />";
+        
+        ?>
+        
+        <?php
+            $term_obj = wp_get_object_terms( $post->ID, $taxonomy );
+            wp_dropdown_categories( array(
+                'taxonomy' => $taxonomy,
+                'hide_empty' => 0,
+                'name' => "{$name}[]",
+                'selected' => $term_obj[0]->slug,
+                'orderby' => 'name',
+                'hierarchical' => 0,
+                'show_option_none' => '&mdash;',
+                'value_field' => 'slug',
+                )
+            );
+        ?>
+        
+    </div>
+    <?php
+    
+}
+
+function uws_projects_degree_programs( $post, $box ) {
+    
+    $defaults = array( 'taxonomy' => 'category' );
+    
+    if ( !isset( $box['args'] ) || !is_array( $box['args'] ) ) {
+        
+        $args = array();
+        
+    } else {
+        
+        $args = $box['args'];
+        
+    }
+    
+    extract( wp_parse_args( $args, $defaults ), EXTR_SKIP );
+    
+    $tax = get_taxonomy( $taxonomy );
+    ?>
+    <div id="taxonomy-<?php echo $taxonomy; ?>" class="acf-taxonomy-field categorydiv">
+        <?php
+            $name = ( $taxonomy == 'category' ) ? 'post_category' : 'tax_input[' . $taxonomy . ']';
+        echo "<input type='hidden' name='{$name}[]' value='0' />";
+        
+        ?>
+        
+        <?php
+            $term_obj = wp_get_object_terms( $post->ID, $taxonomy );
+            wp_dropdown_categories( array(
+                'taxonomy' => $taxonomy,
+                'hide_empty' => 0,
+                'name' => "{$name}[]",
+                'selected' => $term_obj[0]->slug,
+                'orderby' => 'name',
+                'hierarchical' => 0,
+                'show_option_none' => '&mdash;',
+                'value_field' => 'slug',
+                )
+            );
+        ?>
+        
+    </div>
+    <?php
+    
 }
 
 function remove_projects_pageparentdiv_metabox() {
