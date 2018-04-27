@@ -19,7 +19,7 @@
     CUSTOM COLUMNS
 \*------------------------------------*/
 .manage-column.column-group {
-    width: 15%;
+    width: 10%;
 }
 
 .manage-column.column-featured {
@@ -31,7 +31,15 @@
 .column-featured .dashicons-star-filled::before {
     color: #990033;
 }
-
+.manage-column.column-media_type {
+    width: 10%;
+}
+.manage-column.column-use_case {
+    width: 10%;
+}
+.manage-column.column-degree_program {
+    width: 10%;
+}
 #toPortfolio {
     display: none;
 }

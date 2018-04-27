@@ -210,21 +210,6 @@ function uwsmediawp_pagination() {
     
 }
 
-// Custom Excerpts - Create 20 Word Callback for Index page Excerpts, call using uwsmediawp_excerpt('uwsmediawp_index');
-function uwsmediawp_index( $length )  {
-    
-    return 20;
-    
-}
-
-// Create 40 Word Callback for Custom Post Excerpts, call using uwsmediawp_excerpt('uwsmediawp_custom_post');
-function uwsmediawp_custom_post( $length ) {
-    
-    return 40;
-    
-}
-
-// Create the Custom Excerpts callback
 function uwsmediawp_excerpt( $length_callback = '', $more_callback = '' ) {
     
     global $post;
@@ -611,9 +596,8 @@ add_action( 'init', 'create_projects_post' );
 add_action( 'init', 'create_degree_taxonomy' );
 add_action( 'init', 'create_use_case_taxonomy' );
 add_action( 'init', 'create_media_type_taxonomy' );
-add_action( 'manage_posts_custom_column', 'add_project_group_column_value', 10, 2 );
-add_action( 'manage_posts_custom_column', 'add_project_featured_column_value', 10, 2 );
-add_action( 'manage_pages_custom_column', 'add_project_group_column_value', 10, 2 );
+add_action( 'manage_posts_custom_column', 'add_project_custom_columns_value', 10, 2 );
+add_action( 'manage_pages_custom_column', 'add_pages_group_column_value', 10, 2 );
 add_action( 'admin_menu', 'remove_projects_pageparentdiv_metabox' );
 add_action( 'add_meta_boxes', 'add_groups_metabox' );
 
@@ -679,23 +663,11 @@ add_filter( 'avatar_defaults', 'uwsmediagravatar' );
 // Add slug to body class (Starkers build)
 add_filter( 'body_class', 'add_slug_to_body_class' );
 
-// Allow shortcodes in Dynamic Sidebar
-add_filter( 'widget_text', 'do_shortcode' );
-
-// Remove <p> tags in Dynamic Sidebars (better!)
-add_filter( 'widget_text', 'shortcode_unautop' );
-
 // Remove surrounding <div> from WP Navigation
 add_filter( 'wp_nav_menu_args', 'my_wp_nav_menu_args' );
 
 // Remove invalid rel attribute
 add_filter( 'the_category', 'remove_category_rel_from_category_list' );
-
- // Remove auto <p> tags in Excerpt (Manual Excerpts only)
-add_filter( 'the_excerpt', 'shortcode_unautop'  );
-
-// Allows Shortcodes to be executed in Excerpt (Manual Excerpts only)
-add_filter( 'the_excerpt', 'do_shortcode' );
 
 // Add 'View Article' button instead of [...] for Excerpts
 add_filter( 'excerpt_more', 'uwsmedia_view_article' );
@@ -717,14 +689,11 @@ add_filter( 'custom_menu_order', 'reorder_admin_menu' );
 add_filter( 'menu_order', 'reorder_admin_menu' );
 
 // Add Group column to UWS Project custom post type and Page
-add_filter( 'manage_uws-projects_posts_columns', 'add_projects_group_column' );
+add_filter( 'manage_uws-projects_posts_columns', 'add_projects_custom_columns' );
 add_filter( 'manage_page_posts_columns', 'add_group_column' );
 add_filter( 'manage_edit-uws-projects_sortable_columns', 'sortable_group_column' );
 add_filter( 'manage_edit-page_sortable_columns', 'sortable_group_column' );
 add_filter( 'parse_query', 'filter_group_query' , 10);
-
-// Add Featured column to UWS Project custom post type
-
 
 /*------------------------------------*\
 	ADD Filters
@@ -854,11 +823,19 @@ function save_post_group_meta( $post_id, $post ) {
             
             update_post_meta( $post_id, 'feature_on_home', sanitize_text_field( $_POST['feature_on_home'] ) );
             
+        } else {
+            
+            delete_post_meta( $post_id, 'feature_on_home' );
+            
         }
         
         if ( isset( $_POST['promote_to_porfolio'] ) ) {
             
             update_post_meta( $post_id, 'promote_to_porfolio', sanitize_text_field( $_POST['promote_to_porfolio'] ) );
+            
+        } else {
+            
+            delete_post_meta( $post_id, 'promote_to_porfolio' );
             
         }
         
@@ -866,13 +843,16 @@ function save_post_group_meta( $post_id, $post ) {
 
 }
 
-function add_projects_group_column( $columns ) {
+function add_projects_custom_columns( $columns ) {
     
     $columns = array(
         'cb' => $columns['cb'],
         'featured' => __( '<span class="screen-reader-text">Featured on Home Page</span>', 'uwsmedia' ),
         'title' => __( 'Title' ),
         'group' => __( 'Group', 'uwsmedia' ),
+        'degree_program' => __( 'Degree Program', 'uwsmedia' ),
+        'use_case' => __( 'Use Case', 'uwsmedia' ),
+        'media_type' => __( 'Media Type', 'uwsmedia' ),
         'date' => __( 'Date' )
     );
     
@@ -901,7 +881,72 @@ function sortable_group_column( $columns ) {
     
 }
 
-function add_project_group_column_value( $column, $post_id ) {
+function add_project_custom_columns_value( $column, $post_id ) {
+    
+    switch ( $column ) {
+        case 'featured':
+            
+            $feature = get_post_meta( $post_id, 'feature_on_home', true );
+
+            if ( $feature == '1' ) {
+                echo '<span class="dashicons dashicons-star-filled"></span> <span class="screen-reader-text">Featured on Home Page</span>';
+            }
+    
+    	break;
+    	case 'group':
+        
+            $groupId = get_post_meta( $post_id, 'post_group_id', true );
+            $portfolioToo = get_post_meta( $post_id, 'promote_to_porfolio', true );
+            
+            if ( $portfolioToo == '1' ) {
+                
+                echo getGroupTitle( $groupId ) . ' <span class="dashicons dashicons-awards"></span> <span class="screen-reader-text">Promoted to Portfolio</span>';
+                
+            } else {
+                
+                echo getGroupTitle( $groupId );
+                
+            }
+            
+    	break;
+    	case 'media_type':
+            
+            $media_type_terms = get_the_terms( $post->ID, 'media_types' );
+            
+            if ( !is_array( $media_type_terms ) || count( $media_type_terms ) <= 0 ) {
+                echo '<span aria-hidden="true">&mdash;</span>';
+            } else {
+                echo $media_type_terms[0]->name;
+            }
+    	    
+    	break;
+    	case 'use_case':
+    	    
+    	    $use_case_terms = get_the_terms( $post->ID, 'use_cases' );
+            
+            if ( !is_array( $use_case_terms ) || count( $use_case_terms ) <= 0 ) {
+                echo '<span aria-hidden="true">&mdash;</span>';
+            } else {
+                echo $use_case_terms[0]->name;
+            }
+    	    
+    	break;
+    	case 'degree_program':
+    	
+    	    $degree_program_terms = get_the_terms( $post->ID, 'degree_programs' );
+            
+            if ( !is_array( $degree_program_terms ) || count( $degree_program_terms ) <= 0 ) {
+                echo '<span aria-hidden="true">&mdash;</span>';
+            } else {
+                echo $degree_program_terms[0]->name;
+            }
+    	    
+    	break;
+	}
+    
+}
+
+function add_pages_group_column_value( $column, $post_id ) {
     
     switch ( $column ) {
         
@@ -926,26 +971,10 @@ function add_project_group_column_value( $column, $post_id ) {
 	
 }
 
-function add_project_featured_column_value ( $column, $post_id ) {
-    
-    switch ( $column ) {
-        case 'featured':
-            
-            $feature = get_post_meta( $post_id, 'feature_on_home', true );
-
-            if ( $feature == '1' ) {
-                echo '<span class="dashicons dashicons-star-filled"></span> <span class="screen-reader-text">Featured on Home Page</span>';
-            }
-    
-    	break;
-	}
-    
-}
-
 function getGroupTitle( $groupId ) {
     
     if ( $groupId == '-1' ) {
-        return '<span aria-hidden="true">—</span>';
+        return '<span aria-hidden="true">&mdash;</span>';
     }
     
     $groupPost = get_post( $groupId );
@@ -1041,8 +1070,6 @@ function filter_group_query( $query ) {
 
 function create_projects_post() {
     
-    unregister_post_type( 'uws-projects' );
-    
     // Register Custom Post Type
     register_post_type( 'uws-projects', 
         array(
@@ -1078,9 +1105,10 @@ function create_projects_post() {
         'has_archive' => true,		
         'exclude_from_search' => false,
         'publicly_queryable' => true,
+        'query_var' => true,
         'capability_type' => 'page',
         'delete_with_user' => false,
-        'rewrite' => array('slug' => 'showcases')
+        'rewrite' => array('slug' => 'showcases', 'with_front' => true)
     ) );
 }
 
@@ -1230,6 +1258,7 @@ function uws_projects_media_types( $post, $box ) {
                 'orderby' => 'name',
                 'hierarchical' => 0,
                 'show_option_none' => '&mdash;',
+                'option_none_value'  => '0',
                 'value_field' => 'slug',
                 )
             );
@@ -1275,6 +1304,7 @@ function uws_projects_use_cases( $post, $box ) {
                 'orderby' => 'name',
                 'hierarchical' => 0,
                 'show_option_none' => '&mdash;',
+                'option_none_value'  => '0',
                 'value_field' => 'slug',
                 )
             );
@@ -1320,6 +1350,7 @@ function uws_projects_degree_programs( $post, $box ) {
                 'orderby' => 'name',
                 'hierarchical' => 0,
                 'show_option_none' => '&mdash;',
+                'option_none_value'  => '0',
                 'value_field' => 'slug',
                 )
             );
