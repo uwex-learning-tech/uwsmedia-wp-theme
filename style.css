@@ -613,6 +613,7 @@ main .page-featured-image img {
     height: 52px;
     margin: 8px 0;
     color: #990033;
+    text-align: center;
 }
 
 .page-template-page-faculty-showcase .sidebar-filter {
@@ -640,9 +641,40 @@ main .page-featured-image img {
     margin: 8px 0;
 }
 
-.search .btn {
+.page-template-page-faculty-showcase .sidebar .search-input {
+    height: 27px;
+    font-size: 14px;
+    line-height: 1;
+}
+
+.page-template-page-faculty-showcase .sidebar .search .btn {
     border-color: #1E252B;
     background-color: #1E252B;
+    height: 27px;
+    padding-top: 0;
+    padding-bottom: 5px;
+}
+.page-template-page-faculty-showcase .projects-pagnigation {
+    margin-top: 5px;
+    margin-bottom: 35px;
+}
+.page-template-page-faculty-showcase .projects-pagnigation ul.page-numbers {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+.page-template-page-faculty-showcase .projects-pagnigation ul.page-numbers li a,
+.page-template-page-faculty-showcase .projects-pagnigation ul.page-numbers li span.page-numbers {
+    display: block;
+    padding: 5px;
+    width: 25px;
+    height: 25px;
+    text-align: center;
+    font-size: 14px;
+    line-height: 1;
 }
 
 
