@@ -22,9 +22,13 @@
                     <div class="row d-flex flex-row">
                     <?php
                         
+                        $paged = ( get_query_var('paged') ) ? get_query_var('paged') : 1;
+                        
                         $query_args = array(
                             'post_type' => 'uws-projects',
                             'post_status' => 'publish',
+                            'posts_per_page' => 9,
+                            'paged' => $paged,
                             'meta_query'  => array(
                                     array(
                                         'key' => 'post_group_id',
@@ -51,24 +55,13 @@
                                 <div class="project-info">
                                 <p class="categories"><?php 
 
-                                $cat_separator = ' | ';
-
-                                $category_counter = count( get_the_terms( $post->ID, 'category' ) );
-                                
-                                $i=0; // counter
-                                
-                                foreach ( (get_the_category()) as $category ) {
-                                    
-                                    $i = $i + 1;
-                                    
-                                    while ( $i < $category_counter ) {
-                                        echo $category->cat_name . $cat_separator;
-                                        break;
-                                    }
-                                    
+                                $media_type_terms = get_the_terms( $post->ID, 'media_types' );
+            
+                                if ( !is_array( $media_type_terms ) || count( $media_type_terms ) <= 0 ) {
+                                    echo '<span aria-hidden="true">&mdash;</span>';
+                                } else {
+                                    echo $media_type_terms[0]->name;
                                 }
-                                
-                                echo $category->cat_name ;
                                 
                             ?></p>
                                 <h2 class="d-flex align-items-center justify-content-center"><?php the_title(); ?></h2>
@@ -80,17 +73,42 @@
                             
                     <?php
                         }
+                        ?>
                         
+                        </div> <!-- end grids -->
+                        
+                        <div class="projects-pagnigation">
+                        <?php
+                            
+                            $total_pages = $facultyProjects->max_num_pages;
+                            $current_page = max( 1, get_query_var( 'paged' ) );
+
+                            echo paginate_links( array(
+                                'base' => get_pagenum_link( 1 ) . '%_%',
+                                'format' => 'page/%#%',
+                                'current' => $current_page,
+                                'total' => $total_pages,
+                                'prev_text'    => __('<span class="fa fa-chevron-left"></span> <span class="screen-reader-text">previous</span>'),
+                                'next_text'    => __('<span class="fa fa-chevron-right"></span> <span class="screen-reader-text">next</span>'),
+                                'show_all' => true,
+                                'type' => 'list'
+                            ) );
+                        ?>
+                        </div>
+
+                        <?php
+                            
                         wp_reset_postdata();
 
                         } else {
                             
                           esc_html_e( 'No projects found!', 'uwsmedia' );
+                          
                         }
                         
                     ?>
                             
-                    </div>
+                    
                     
                 </section>
             
