@@ -562,33 +562,37 @@ main .page-featured-image img {
 /*------------------------------------*\
     PAGES
 \*------------------------------------*/
-.page-template-page-faculty-showcase .project {
+.page-template-page-showcase .badge {
+    font-size: 50%;
+    font-weight: normal;
+}
+.page-template-page-showcase .project {
     position: relative;
     transition: transform .3s;
     margin-bottom: 85px;
 }
-.page-template-page-faculty-showcase .project a {
+.page-template-page-showcase .project a {
     text-decoration: none;
     color: #444;
 }
 
-.page-template-page-faculty-showcase .project:hover {
+.page-template-page-showcase .project:hover {
     transform: scale(1.15);
 }
 
-.page-template-page-faculty-showcase .project .project-bg {
+.page-template-page-showcase .project .project-bg {
     background-color: #ccc;
     width: 100%;
     height: 191.7px;
 }
-.page-template-page-faculty-showcase .project .project-bg img {
+.page-template-page-showcase .project .project-bg img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: center center;
 }
 
-.page-template-page-faculty-showcase .project .project-info {
+.page-template-page-showcase .project .project-info {
     position: absolute;
     background-color: #fff;
     width: 80%;
@@ -599,15 +603,15 @@ main .page-featured-image img {
     z-index: 1;
 }
 
-.page-template-page-faculty-showcase .project .project-info .categories,
-.page-template-page-faculty-showcase .project .project-info .date {
+.page-template-page-showcase .project .project-info .categories,
+.page-template-page-showcase .project .project-info .date {
     font-size: 12px;
     line-height: 1;
     text-align: center;
     margin: 0;
 }
 
-.page-template-page-faculty-showcase .project .project-info h2 {
+.page-template-page-showcase .project .project-info h2 {
     font-size: 18px;
     line-height: 26px;
     height: 52px;
@@ -616,49 +620,50 @@ main .page-featured-image img {
     text-align: center;
 }
 
-.page-template-page-faculty-showcase .sidebar-filter {
+.page-template-page-showcase .sidebar-filter {
     margin-top: 16px;
     background-color: #f2f2f2;
     padding-bottom: 8px;
 }
 
-.page-template-page-faculty-showcase .sidebar-filter h3 {
+.page-template-page-showcase .sidebar-filter h3 {
     font-family: 'Raleway', sans-serif;
     font-size: 20px;
     line-height: 1;
     color: #fff;
     background-color: #1E252B;
     padding: 12px 8px;
-    border-radius: 3px 3px 0px 0px;
+    border-radius: 0.25rem 0.25rem 0px 0px;
 }
 
-.page-template-page-faculty-showcase .sidebar-filter .filter-form {
+.page-template-page-showcase .sidebar-filter .filter-form {
     padding: 0 8px;
 }
 
-.page-template-page-faculty-showcase .sidebar-filter h4 {
+.page-template-page-showcase .sidebar-filter h4 {
     font-size: 18px;
     margin: 8px 0;
 }
 
-.page-template-page-faculty-showcase .sidebar .search-input {
+.page-template-page-showcase .sidebar .ajax-search-input {
     height: 27px;
     font-size: 14px;
     line-height: 1;
+    border-radius: 0.25rem 0px 0px 0.25rem;
 }
 
-.page-template-page-faculty-showcase .sidebar .search .btn {
+.page-template-page-showcase .sidebar .search .btn {
     border-color: #1E252B;
     background-color: #1E252B;
     height: 27px;
     padding-top: 0;
     padding-bottom: 5px;
 }
-.page-template-page-faculty-showcase .projects-pagnigation {
+.page-template-page-showcase .projects-pagnigation {
     margin-top: 5px;
     margin-bottom: 35px;
 }
-.page-template-page-faculty-showcase .projects-pagnigation ul.page-numbers {
+.page-template-page-showcase .projects-pagnigation ul.page-numbers {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -666,8 +671,8 @@ main .page-featured-image img {
     flex-flow: row wrap;
     justify-content: center;
 }
-.page-template-page-faculty-showcase .projects-pagnigation ul.page-numbers li a,
-.page-template-page-faculty-showcase .projects-pagnigation ul.page-numbers li span.page-numbers {
+.page-template-page-showcase .projects-pagnigation ul.page-numbers li a,
+.page-template-page-showcase .projects-pagnigation ul.page-numbers li span.page-numbers {
     display: block;
     padding: 5px;
     width: 25px;

@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Faculty Showcase
+ * Template Name: Showcase
  * Template Post Type: page
  *
  * @package WordPress
@@ -16,12 +16,13 @@
         
             <main class="col-9" role="main">
             
-                <section>
+                <section id="projects-archive">
                 
                     <h1><?php the_title(); ?></h1>
                     <div class="row d-flex flex-row">
                     <?php
                         
+                        $group = get_post_meta( $post->ID, 'post_group_id', true );
                         $paged = ( get_query_var('paged') ) ? get_query_var('paged') : 1;
                         
                         $query_args = array(
@@ -32,7 +33,7 @@
                             'meta_query'  => array(
                                     array(
                                         'key' => 'post_group_id',
-                                        'value' => get_post_meta( $post->ID, 'post_group_id', true )
+                                        'value' => $group
                                     )
                                 )
                         );
@@ -118,16 +119,15 @@
             <aside class="sidebar col-3" role="complementary">
                 
                 <!-- search -->
-                <form class="search" method="get" action="http://localhost/local-wp/uwex" role="search">
-                    
-                    <div class="input-group">
-                        <input class="search-input form-control" name="s" placeholder="Search Faculty Showcase" type="search">
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-secondary search-submit" type="submit"><span class="fa fa-search" aria-hidden="true"></span><span class="screen-reader-text">Search</span></button>
-                        </div>
+                <div class="search" role="search">
+                <div class="input-group">
+                    <input type="hidden" name="post_id" value="<?php echo $post->ID; ?>" />
+                    <input id="ajax-search-input" class="ajax-search-input form-control" placeholder="Search <?php echo get_the_title(); ?>" type="text">
+                    <div class="input-group-append">
+                        <button id="ajax-search-btn" class="btn btn-outline-secondary"><span class="fa fa-search" aria-hidden="true"></span><span class="screen-reader-text">Search</span></button>
                     </div>
-                    
-                </form>
+                </div>
+                </div>
                 
                 <div class="sidebar-filter">
                     <div class="filter">
