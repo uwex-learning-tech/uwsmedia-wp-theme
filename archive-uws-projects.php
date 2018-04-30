@@ -8,7 +8,7 @@
 		<!-- section -->
 		<section id="projects-archive">
 
-			<h1><?php echo sprintf( __( '%s Search Results for ', 'uwsmedia' ), $wp_query->found_posts ); echo get_search_query(); ?></h1>
+			<h1><?php _e( 'All Showcase Projects', 'uwsmedia' ); ?></h1>
             
             <div class="row d-flex flex-row">
 			<?php get_template_part('loop'); ?>

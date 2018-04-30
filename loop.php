@@ -1,33 +1,31 @@
 <?php if (have_posts()): while (have_posts()) : the_post(); ?>
 
 	<!-- article -->
-	<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+	 <div class="col-3 project">
+        <a href="<?php the_permalink(); ?>">
+            
+            <div class="project-bg">
+            <?php the_post_thumbnail(); ?>
+            </div>
+            
+            <div class="project-info">
+            <p class="categories"><?php 
 
-		<!-- post thumbnail -->
-		<?php if ( has_post_thumbnail()) : // Check if thumbnail exists ?>
-			<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
-				<?php the_post_thumbnail(array(120,120)); // Declare pixel size you need inside the array ?>
-			</a>
-		<?php endif; ?>
-		<!-- /post thumbnail -->
+            $media_type_terms = get_the_terms( $post->ID, 'media_types' );
 
-		<!-- post title -->
-		<h2>
-			<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>"><?php the_title(); ?></a>
-		</h2>
-		<!-- /post title -->
-
-		<!-- post details -->
-		<span class="date"><?php the_time('F j, Y'); ?> <?php the_time('g:i a'); ?></span>
-		<span class="author"><?php _e( 'Published by', 'uwsmedia' ); ?> <?php the_author_posts_link(); ?></span>
-		<span class="comments"><?php if (comments_open( get_the_ID() ) ) comments_popup_link( __( 'Leave your thoughts', 'uwsmedia' ), __( '1 Comment', 'uwsmedia' ), __( '% Comments', 'uwsmedia' )); ?></span>
-		<!-- /post details -->
-
-		<?php uwsmediawp_excerpt('uwsmediawp_index'); // Build your custom callback length in functions.php ?>
-
-		<?php edit_post_link(); ?>
-
-	</article>
+            if ( !is_array( $media_type_terms ) || count( $media_type_terms ) <= 0 ) {
+                echo '<span aria-hidden="true">&mdash;</span>';
+            } else {
+                echo $media_type_terms[0]->name;
+            }
+            
+        ?></p>
+            <h2 class="d-flex align-items-center justify-content-center"><?php the_title(); ?></h2>
+            <p class="date"><?php the_time('F j, Y'); ?></p>
+            </div>
+            
+        </a>
+    </div>
 	<!-- /article -->
 
 <?php endwhile; ?>
