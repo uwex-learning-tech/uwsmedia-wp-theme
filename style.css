@@ -145,14 +145,12 @@ h6 {
     text-align: center;
 }
 
-#primaryHeaderNav .active:after {
-    display: block;
-    content: "";
-    width: 100%;
-    height: 0.3125rem;
-    margin: 0 auto;
-    background-color: #fff;
-    border-radius: 0.125rem;
+#primaryHeaderNav li {
+    border-bottom: 2px solid transparent;
+}
+
+#primaryHeaderNav .active {
+    border-bottom-color: #fff;
 }
 
 #primaryHeaderNav .faculty-link-btn {
@@ -163,19 +161,34 @@ h6 {
     height: 1.875rem;
 }
 
+#primaryHeaderNav .faculty-link-btn.active {
+    border-bottom-color: transparent;
+    color: #2A8448;
+    background-color: #fff;
+}
+
+#primaryHeaderNav .faculty-link-btn.active a {
+    color: #2A8448;
+}
+
+#primaryHeaderNav .faculty-link-btn.active a .apple-icon svg {
+    fill: #2A8448;
+}
+
 #primaryHeaderNav .faculty-link-btn a {
+    padding-top: 6px;
     padding-bottom: 0;
 }
 
 #primaryHeaderNav .faculty-link-btn .apple-icon {
     display: inline;
-    width: 1rem;
-    height: 1.188rem;
-    vertical-align: sub;
+    vertical-align: top;
 }
 
-#primaryHeaderNav .faculty-link-btn.active:after {
-    display: none;
+#primaryHeaderNav .faculty-link-btn a .apple-icon svg {
+    width: 14px;
+    height: 16.625px;
+    fill: #fff;
 }
 
 /* header nav logo */
@@ -243,23 +256,6 @@ main .published-date {
 main .page-featured-image img {
     width: 100%;
     padding-top: 1.25rem;
-}
-
-.faculty-group main .page-featured-image {
-    position: relative;
-}
-
-.faculty-group main .page-featured-image:before {
-    position: absolute;
-    top: 40px;
-    left: 20px;
-    content: " ";
-    width: 50px;
-    height: 50px;
-    background-image: url("img/apple_icon.svg");
-    background-repeat: no-repeat;
-    opacity: 0.75;
-    z-index: 1;
 }
 
 /* sidebar */
@@ -562,6 +558,21 @@ main .page-featured-image img {
 /*------------------------------------*\
     PAGES
 \*------------------------------------*/
+
+.portfolio-group #primaryHeaderNav .portfolio-group-item {
+    border-bottom-color: #fff;
+}
+
+.faculty-group #primaryHeaderNav .faculty-group-item {
+    background-color: #fff;
+}
+.faculty-group #primaryHeaderNav .faculty-group-item a {
+    color: #2A8448;
+}
+.faculty-group #primaryHeaderNav .faculty-group-item a .apple-icon svg {
+    fill: #2A8448;
+}
+
 .page-template-page-showcase .badge {
     font-size: 50%;
     font-weight: normal;

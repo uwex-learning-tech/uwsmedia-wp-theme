@@ -1564,7 +1564,11 @@ class Bootstrap_Nav_Walker extends Walker_Nav_Menu {
         } else if( in_array('current-menu-ancestor', $classes) ) {
             $classes[] = 'active';
         }
-
+        
+        if ( !empty( get_post_meta( $item->object_id, 'post_group_id', true ) ) ) {
+            $classes[] = get_post( get_post_meta( $item->object_id, 'post_group_id', true ) )->post_name . '-group-item';
+        }
+        
         $args = apply_filters( 'nav_menu_item_args', $args, $item, $depth );
  
         $class_names = join( ' ', apply_filters( 'nav_menu_css_class', array_filter( $classes ), $item, $args, $depth ) );
@@ -1597,7 +1601,9 @@ class Bootstrap_Nav_Walker extends Walker_Nav_Menu {
         
         $appleIcon = "";
         if( in_array('faculty-link-btn', $classes) ) {
-            $appleIcon =  '<img class="apple-icon" src="' .get_template_directory_uri() . '/img/apple_icon.svg" /> ';
+            
+            $appleIcon =  '<span class="apple-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 19"><path d="M8,5.888c-1.51-1.6-8-2.636-8,4.979,0,4.7,5.733,9.913,8,7.54H8c2.266,2.373,8-2.835,8-7.54C16,3.252,9.51,4.284,8,5.888Zm5.734,6.775a8.256,8.256,0,0,1-3.527,4.454c1.749-2.163,2.826-5.824,1.784-8.663A10.91,10.91,0,0,0,10.937,6.29C12.991,7.005,14.684,8.862,13.734,12.663Zm-6.3-8.877a4.607,4.607,0,0,0,.695-.232A5.881,5.881,0,0,0,8,4.75h.381c.332-1.61,1.578-3.488,3.24-3.488A1.153,1.153,0,0,0,10.394,0,3.928,3.928,0,0,0,8.8,1.7a7.056,7.056,0,0,0-.638,1.7,3.459,3.459,0,0,0-.142-.567A4.614,4.614,0,0,0,2.532.144,4.78,4.78,0,0,0,1.783.4a3.567,3.567,0,0,0,.162.7A4.613,4.613,0,0,0,7.434,3.786Z"/></svg></span> ';
+            
         }
         
         $item_output = $args->before;
@@ -1662,10 +1668,33 @@ function breadcrumb_nav() {
             //echo '<li class="item-current item-archive">' . $custom_tax_name . '</li>';
               
         } else if ( is_single() ) {
-              
-                  
+            
+            if ( $post->post_type == 'uws-projects' ) {
+                
+                $group = get_post_meta( $post->ID, 'post_group_id', true );
+                $title = get_the_title( $group );
+                
+                if ( strpos( strtolower( $title ), 'faculty' ) !== false ) {
+                    
+                    $groupLink = get_site_url() . '/faculty/';
+                    echo '<li class="item-current item-' . $group . '"><a class="bread-parent bread-parent-' . $title . '" href="' . $groupLink . '" title="' . $title . '">' . $title . '</a></li>';
+                    echo '<li class="separator"> ' . $separator . ' </li>';
+                    
+                    $url = get_site_url() . '/faculty/faculty-showcase/';
+                    echo '<li class="item-current"><a class="bread-parent bread-parent-faculty-showcase" href="' . $url . '" title="Faculty Showcase">Faculty Showcase</a></li>';
+                    echo '<li class="separator">' . $separator . ' </li>';
+                    
+                } else if ( strpos( strtolower( $title ), 'portfolio' ) !== false ) {
+                    
+                    $groupLink = get_site_url() . '/portfolio/';
+                    echo '<li class="item-current item-' . $group . '"><a class="bread-parent bread-parent-' . $title . '" href="' . $groupLink . '" title="' . $title . '">' . $title . '</a></li>';
+                    echo '<li class="separator"> ' . $separator . ' </li>';
+                    
+                }
+                
+            }
+            
             echo '<li class="item-current item-' . $post->ID . '">' . get_the_title() . '</li>';
-
               
         } else if ( is_category() ) {
                
