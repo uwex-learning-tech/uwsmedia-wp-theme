@@ -39,7 +39,7 @@
                                 
                                 <div class="login-btn">
                                     
-                                    <?php echo '<a href="' . wp_login_url() . '">Login</a>'; ?>
+                                    <?php echo '<a href="' . wp_login_url( get_permalink() ) . '">Login</a>'; ?>
                                     
                                 </div>
                                 
