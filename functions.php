@@ -706,6 +706,28 @@ add_filter( 'manage_edit-uws-projects_sortable_columns', 'sortable_group_column'
 add_filter( 'manage_edit-page_sortable_columns', 'sortable_group_column' );
 add_filter( 'parse_query', 'filter_group_query' , 10);
 
+function custom_search_query( $query ) {
+    
+    $groupId = get_post_meta( $_REQUEST['post_id'], 'post_group_id', true );
+    
+    if ( $groupId == false ) {
+        $groupId = $_GET['post_group_id'];
+    }
+    
+    if ( $query->is_search ) {
+        $meta_query_args = array(
+            array(
+            'key' => 'post_group_id',
+            'value' =>$groupId,
+            'compare' => 'LIKE',
+            ),
+        );
+        $query->set('meta_query', $meta_query_args);
+    };
+    
+}
+add_filter( 'pre_get_posts', 'custom_search_query');
+
 /*------------------------------------*\
 	ADD Filters
 \*------------------------------------*/
@@ -1410,7 +1432,9 @@ function load_search_results() {
     
     ?>
 
-            <h1>Search Results for: <?php echo $query; ?> <br /><a class="badge badge-pill badge-danger" href="<?php the_permalink(); ?>"><span class="fa fa-times-circle"></span> Clear Search</a></h1>
+            <h1>Search Results for: <?php echo $query; ?><div class="sharings">
+            <a id="shareSearchLink" class="badge badge-pill badge-primary" href="javascript:void(0);"><span class="fa fa-link"></span> <span class="txt">Copy Search Link</span><input type="text" class="hiddenShareLink" name="searchLink" value="<?php echo get_site_url() . '?s='.urlencode($query).'&post_type=uws-projects&post_group_id=' . get_post_meta( $_REQUEST['post_id'], 'post_group_id', true ); ?>" /></a> <a class="badge badge-pill badge-danger" href="<?php the_permalink(); ?>"><span class="fa fa-times-circle"></span> Clear Search</a><div class="msg"></div></div>
+             </h1>
             
             <div class="row d-flex flex-row">
 
@@ -1444,6 +1468,7 @@ function load_search_results() {
 				
 		<?php endwhile; ?>
 		    </div>
+            
 			<div class="projects-pagnigation">
             <?php
                 
@@ -1460,6 +1485,7 @@ function load_search_results() {
                     'show_all' => true,
                     'type' => 'list'
                 ) );
+                
             ?>
             </div>
 <?php	else : ?>

@@ -31,6 +31,27 @@
     		
 		} );
 		
+		jQuery( document ).on( 'click', '#shareSearchLink', function( evt ) {
+    		
+    		var self = this;
+    		
+    		$( self ).find( '.hiddenShareLink' )[0].select();
+    		
+    		document.execCommand( 'Copy' );
+    		$( $( self ).find( '.txt' )[0] ).html( 'Link copied!' );
+    		
+    		$( self ).find( '.hiddenShareLink' )[0].blur();
+    		
+    		setTimeout( function() {
+        		
+        		$($( self ).find( '.txt' )[0]).html( 'Copy Seach Link' );
+        		
+    		}, 3000 );
+    		
+    		evt.preventDefault();
+    		
+		} );
+		
 		// Share On LinkedIn button on Project single page
 		jQuery( '#shareOnLinkedIn' ).on( 'click', function( evt ) {
     		
