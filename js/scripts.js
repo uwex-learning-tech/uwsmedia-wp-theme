@@ -40,6 +40,56 @@
     		
 		} );
 		
+		// live search
+    	jQuery( '#ajax-search-btn' ).on( 'click', function( evt ) {
+        	
+        	var query = jQuery( '#ajax-search-input' ).val();
+        	var postId = jQuery( 'input[name=post_id]' ).val();
+        	var contentArea = jQuery( '#projects-archive' );
+        	
+        	if ( query.length >= 1 ) {
+            	
+            	jQuery.ajax( {
+            	
+                	type: 'post',
+                	url: ajaxSearch.ajaxurl,
+                	data: {
+                    	action: 'load_search_results',
+                    	query: query,
+                    	security: ajaxSearch.ajax_nonce,
+                    	post_id: postId
+                	},
+                	beforeSend: function() {
+                    	
+                	},
+                	success: function( response ) {
+                    	contentArea.html( response );
+                	}
+                	
+            	} );
+            	
+        	}
+            
+        	evt.preventDefault();
+        	
+    	} );
+    	
+    	jQuery( '#ajax-search-input' ).bind( 'enterKey', function() {
+        	
+        	jQuery( '#ajax-search-btn' ).trigger( 'click' );
+        	
+    	} );
+    	
+    	jQuery( '#ajax-search-input' ).keyup( function( evt ) {
+        	
+        	if ( evt.keyCode == 13 ) {
+            	
+            	jQuery( this ).trigger( 'enterKey' );
+            	
+        	}
+        	
+    	} );
+    		
 	});
 	
 })(jQuery, this);

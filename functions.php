@@ -78,8 +78,15 @@ function uwsmedia_header_scripts() {
         wp_register_script( 'bootstrap', get_template_directory_uri() . '/js/lib/bootstrap.min.js', array( 'jquery' ), '4.0.0' ); 
         wp_enqueue_script( 'bootstrap' );
         
-        // UWS Media scripts
+         // UWS Media scripts
         wp_register_script( 'uwsmediascripts', get_template_directory_uri() . '/js/scripts.js', array( 'jquery' ), '1.0.0' ); 
+
+        // Access to the location of admin-ajax.php
+        wp_localize_script( 'uwsmediascripts', 'ajaxSearch', array(
+            'ajaxurl' => admin_url( 'admin-ajax.php' ),
+            'ajax_nonce' => wp_create_nonce( 'ajax_search_nonce' )
+        ) );
+        
         wp_enqueue_script( 'uwsmediascripts' );
         
     }
@@ -618,6 +625,10 @@ add_action( 'restrict_manage_posts', 'add_groups_filter_dropdown' );
 
 // add Open Graph meta data
 add_action('wp_head', 'fb_opengraph', 5);
+
+// add ajax search functionalities
+add_action( 'wp_ajax_load_search_results', 'load_search_results' );
+add_action( 'wp_ajax_nopriv_load_search_results', 'load_search_results' );
 
 /*------------------------------------*\
 	REMOVE Actions
@@ -1368,6 +1379,103 @@ function remove_projects_pageparentdiv_metabox() {
 }
 
 /*------------------------------------*\
+	LOAD SEARCH RESULTS
+\*------------------------------------*/
+
+function load_search_results() {
+    
+    check_ajax_referer( 'ajax_search_nonce', 'security' );
+    
+    $query = $_POST['query'];
+    $paged = ( get_query_var('paged') ) ? get_query_var('paged') : 1;
+    $args = array(
+        'post_type' => 'uws-projects',
+        'post_status' => 'publish',
+        'posts_per_page' => 9,
+        'paged' => $paged,
+        's' => $query,
+        'meta_query' => array(
+            array(
+                'key' => 'post_group_id',
+                'value' => get_post_meta( $_REQUEST['post_id'], 'post_group_id', true )
+            )
+        )
+    );
+    
+    $search = new WP_Query( $args );
+    
+    ob_start();
+    
+    if ( $search->have_posts() ) : 
+    
+    ?>
+
+            <h1>Search Results for: <?php echo $query; ?> <br /><a class="badge badge-pill badge-danger" href="<?php the_permalink(); ?>"><span class="fa fa-times-circle"></span> Clear Search</a></h1>
+            
+            <div class="row d-flex flex-row">
+
+		<?php while ( $search->have_posts() ) : $search->the_post(); ?>
+				
+				<div class="col-4 project">
+                    <a href="<?php the_permalink(); ?>">
+                        
+                        <div class="project-bg">
+                        <?php the_post_thumbnail(); ?>
+                        </div>
+                        
+                        <div class="project-info">
+                        <p class="categories"><?php 
+    
+                        $media_type_terms = get_the_terms( $post->ID, 'media_types' );
+    
+                        if ( !is_array( $media_type_terms ) || count( $media_type_terms ) <= 0 ) {
+                            echo '<span aria-hidden="true">&mdash;</span>';
+                        } else {
+                            echo $media_type_terms[0]->name;
+                        }
+                        
+                    ?></p>
+                        <h2 class="d-flex align-items-center justify-content-center"><?php the_title(); ?></h2>
+                        <p class="date"><?php the_time('F j, Y'); ?></p>
+                        </div>
+                        
+                    </a>
+                </div>
+				
+		<?php endwhile; ?>
+		    </div>
+			<div class="projects-pagnigation">
+            <?php
+                
+                $total_pages = $search->max_num_pages;
+                $current_page = max( 1, get_query_var( 'paged' ) );
+
+                echo paginate_links( array(
+                    'base' => get_pagenum_link( 1 ) . '%_%',
+                    'format' => 'page/%#%',
+                    'current' => $current_page,
+                    'total' => $total_pages,
+                    'prev_text'    => __('<span class="fa fa-chevron-left"></span> <span class="screen-reader-text">previous</span>'),
+                    'next_text'    => __('<span class="fa fa-chevron-right"></span> <span class="screen-reader-text">next</span>'),
+                    'show_all' => true,
+                    'type' => 'list'
+                ) );
+            ?>
+            </div>
+<?php	else : ?>
+
+		<h1>No Search Results Found for: <?php echo $query; ?> <br /><a class="badge badge-pill badge-danger" href="<?php the_permalink(); ?>"><span class="fa fa-times-circle"></span> Clear Search</a></h1>
+		
+	<?php endif;
+	
+	$content = ob_get_clean();
+	
+	echo $content;
+	die();
+			
+}
+
+/*------------------------------------*\
 	OPEN GRAPH META
 \*------------------------------------*/
 
@@ -1393,8 +1501,6 @@ function fb_opengraph() {
             $link = get_bloginfo( 'url' );
             $type = 'website';
         }
-        
-        
         
         if ( has_post_thumbnail( $post->ID ) ) {
             
