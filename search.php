@@ -8,7 +8,59 @@
 		<!-- section -->
 		<section id="projects-archive">
 
-			<h1><?php echo sprintf( __( '%s Search Results for ', 'uwsmedia' ), $wp_query->found_posts ); echo get_search_query(); ?></h1>
+			<h1><?php echo sprintf( __( '%s Search Results ', 'uwsmedia' ), $wp_query->found_posts ); ?></h1>
+			
+			<?php if ( $post->post_type == 'uws-projects' ) : ?>
+            
+            <div class="searchQueries">
+                <p><small>
+                <?php
+                    
+                    if ( isset( $_GET['s'] ) && !empty( $_GET['s'] ) ) {
+                        
+                        echo 'Keyword: <strong>' . $_GET['s'] . '</strong> | ';
+                        
+                    }
+    
+                    $filters = null;
+                    
+                    if ( isset( $_GET['degree_programs'] ) ) {
+                        
+                        $filters = is_array( $filters ) ? array_merge( $filters, explode( ',', $_GET['degree_programs'] ) ) : explode( ',', $_GET['degree_programs'] );
+                        
+                    }
+                    
+                    if ( isset( $_GET['use_cases'] ) ) {
+            
+                        $filters = is_array( $filters ) ? array_merge( $filters, explode( ',', $_GET['use_cases'] ) ) : explode( ',', $_GET['use_cases'] );
+                        
+                    }
+                    
+                    if ( isset( $_GET['media_types'] ) ) {
+            
+                        $filters = is_array( $filters ) ? array_merge( $filters, explode( ',', $_GET['media_types'] ) ) : explode( ',', $_GET['media_types'] );
+                        
+                    }
+                    
+                    if ( is_array( $filters ) && count( $filters ) >= 1 ) {
+                        
+                        echo 'Filters: ';
+                        
+                        foreach ( $filters as $filter ) {
+                        
+                            echo '<span class="badge badge-light">' . $filter . '</span> ';
+                            
+                        }
+                        
+                    }
+                    
+                    unset( $filters );
+                    
+                ?>
+                </small></p>
+            </div>
+                
+            <?php endif; ?>
             
             <div class="row d-flex flex-row">
 			<?php get_template_part('loop'); ?>

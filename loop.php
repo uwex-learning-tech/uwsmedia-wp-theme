@@ -1,5 +1,5 @@
 <?php if (have_posts()): while (have_posts()) : the_post(); ?>
-
+    
 	<!-- article -->
 	 <div class="col-3 project">
         <a href="<?php the_permalink(); ?>">

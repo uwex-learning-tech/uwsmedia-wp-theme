@@ -1477,7 +1477,7 @@ function load_search_results() {
 
             <div class="sharings">
                 <a class="btn btn-link btn-sm" href="<?php the_permalink(); ?>" role="button"><span class="fa fa-times-circle"></span> Clear Search</a>
-                <button id="shareSearchLink" class="btn btn-secondary btn-sm"><span class="fa fa-link"></span> <span class="txt">Copy Search Link</span><input type="text" class="hiddenShareLink" name="searchLink" value="<?php echo get_site_url() . '?s='.urlencode($query).'&post_type=uws-projects&post_group_id=' . get_post_meta( $_REQUEST['post_id'], 'post_group_id', true ); ?>" /></button>
+                <button id="shareSearchLink" class="btn btn-secondary btn-sm"><span class="fa fa-link"></span> <span class="txt">Copy Search Link</span><input type="text" class="hiddenShareLink" name="searchLink" value="<?php echo get_site_url() . '?s='.urlencode($query).'&post_type=uws-projects&post_group_id=' . get_post_meta( $_REQUEST['post_id'], 'post_group_id', true ); ?>&degree_programs=<?php echo $_POST['programTags']; ?>&use_cases=<?php echo $_POST['caseTags']; ?>&media_types=<?php echo $_POST['mediaTags']; ?>" /></button>
             </div>
             
             <div class="row d-flex flex-row">
@@ -1525,11 +1525,7 @@ function load_search_results() {
                     echo '<p>Keyword: <strong>' . $_POST['query'] . '</strong></p>';
                     
                 }
-                
-            ?>
-            <p>Try removing some these filters:<br>
-            <?php 
-                
+
                 $filters = null;
                 
                 if ( isset( $_POST['programTags'] ) ) {
@@ -1550,16 +1546,24 @@ function load_search_results() {
                     
                 }
                 
-                foreach ( $filters as $filter ) {
+                if ( is_array( $filters ) && count( $filters ) >= 1 ) {
                     
-                    echo '<span class="badge badge-light">' . $filter . '</span> ';
+                    echo '<p>Try removing some these filters:<br>';
+                    
+                    foreach ( $filters as $filter ) {
+                    
+                        echo '<span class="badge badge-light">' . $filter . '</span> ';
+                        
+                    }
+                    
+                    echo '</p>';
                     
                 }
                 
                 unset( $filters );
                 
             ?>
-            </p>
+            
             <hr>
             <p class="mb-0 text-center"><a class="btn btn-link" href="<?php the_permalink(); ?>"><span class="fa fa-times-circle"></span> Clear Search</a></p>
         </div>
@@ -1746,24 +1750,9 @@ function breadcrumb_nav() {
               
             echo '<li class="item-current item-archive">' . post_type_archive_title($prefix, false) . '</li>';
               
-        } else if ( is_archive() && is_tax() && !is_category() && !is_tag() ) {
+        } else if ( is_archive() && is_tax() && is_search() && !is_category() && !is_tag() ) {
               
-            // If post is a custom post type
-            //$post_type = get_post_type();
-              
-            // If it is a custom post type display name and link
-            if($post_type != 'post') {
-                  
-                $post_type_object = get_post_type_object($post_type);
-                $post_type_archive = get_post_type_archive_link($post_type);
-              
-                echo '<li class="item-cat item-custom-post-type-' . $post_type . '"><a class="bread-cat bread-custom-post-type-' . $post_type . '" href="' . $post_type_archive . '" title="' . $post_type_object->labels->name . '">' . $post_type_object->labels->name . '</a></li>';
-                echo '<li class="separator"> ' . $separator . ' </li>';
-              
-            }
-              
-            //$custom_tax_name = get_queried_object()->name;
-            //echo '<li class="item-current item-archive">' . $custom_tax_name . '</li>';
+            echo '<li class="item-current item-archive">Search Results</li>';
               
         } else if ( is_single() ) {
             
@@ -1802,7 +1791,7 @@ function breadcrumb_nav() {
         } else if ( is_page() ) {
                
             // Standard page
-            if( $post->post_parent ){
+            if( $post->post_parent ) {
                    
                 // If child page, get parents 
                 $anc = get_post_ancestors( $post->ID );
