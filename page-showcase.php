@@ -15,10 +15,13 @@
         <div class="row">
         
             <main class="col-9" role="main">
-            
-                <section id="projects-archive">
+                
+                <section>
                 
                     <h1><?php the_title(); ?></h1>
+                    
+                    <div id="projects-archive">
+                    
                     <div class="row d-flex flex-row">
                     <?php
                         
@@ -77,7 +80,7 @@
                         ?>
                         
                         </div> <!-- end grids -->
-                        
+
                         <div class="projects-pagnigation">
                         <?php
                             
@@ -95,6 +98,8 @@
                                 'type' => 'list'
                             ) );
                         ?>
+                        </div>
+                        
                         </div>
 
                         <?php
@@ -121,15 +126,15 @@
                 <!-- search -->
                 <div class="search" role="search">
                 <div class="input-group">
-                    <input type="hidden" name="post_id" value="<?php echo $post->ID; ?>" />
-                    <input id="ajax-search-input" class="ajax-search-input form-control" placeholder="Search <?php echo get_the_title(); ?>" type="text">
+                    <input type="hidden" name="postId" value="<?php echo $post->ID; ?>" />
+                    <input id="ajaxSearchInput" class="ajaxSearchInput form-control" placeholder="Search <?php echo get_the_title(); ?>" type="text">
                     <div class="input-group-append">
-                        <button id="ajax-search-btn" class="btn btn-outline-secondary"><span class="fa fa-search" aria-hidden="true"></span><span class="screen-reader-text">Search</span></button>
+                        <button id="ajaxSearchBtn" class="btn btn-outline-secondary"><span class="fa fa-search" aria-hidden="true"></span><span class="screen-reader-text">Search</span></button>
                     </div>
                 </div>
                 </div>
                 
-                <div class="sidebar-filter">
+                <div class="sidebarFilter">
                     <div class="filter">
                         <h3>Filter</h3>			
                         <form class="filter-form">
@@ -141,7 +146,7 @@
                                
                                foreach( $degreePrograms as $program ) {
                                    
-                                   echo '<div class="form-check"><input type="checkbox" class="form-check-input" id="degree_program_' .$program->slug . '" value="' . $program->slug . '"><label class="form-check-label" for="degree_program_' . $program->slug . '">' . $program->name . '</label></div>';
+                                   echo '<div class="form-check"><input type="checkbox" class="form-check-input degree-cb" id="degree_program_' .$program->slug . '" value="' . $program->slug . '"><label class="form-check-label" for="degree_program_' . $program->slug . '">' . $program->name . '</label></div>';
                                    
                                }
                                
@@ -155,7 +160,7 @@
                                
                                foreach( $useCases as $case ) {
                                    
-                                   echo '<div class="form-check"><input type="checkbox" class="form-check-input" id="use_case_' .$case->slug . '" value="' . $case->slug . '"><label class="form-check-label" for="use_case_' . $case->slug . '">' . $case->name . '</label></div>';
+                                   echo '<div class="form-check"><input type="checkbox" class="form-check-input case-cb" id="use_case_' .$case->slug . '" value="' . $case->slug . '"><label class="form-check-label" for="use_case_' . $case->slug . '">' . $case->name . '</label></div>';
                                    
                                }
                                
@@ -168,11 +173,12 @@
                                
                                foreach( $mediaTypes as $type ) {
                                    
-                                   echo '<div class="form-check"><input type="checkbox" class="form-check-input" id="media_type_' .$type->slug . '" value="' . $type->slug . '"><label class="form-check-label" for="media_type_' . $type->slug . '">' . $type->name . '</label></div>';
+                                   echo '<div class="form-check"><input type="checkbox" class="form-check-input media-cb" id="media_type_' .$type->slug . '" value="' . $type->slug . '"><label class="form-check-label" for="media_type_' . $type->slug . '">' . $type->name . '</label></div>';
                                    
                                }
                                
                             ?>
+                            
                         </form>
                     </div>
                 </div>

@@ -573,9 +573,9 @@ main .page-featured-image img {
     fill: #2A8448;
 }
 
-.page-template-page-showcase .badge {
-    font-size: 50%;
-    font-weight: normal;
+.page-template-page-showcase .sharings {
+    margin-bottom: 16px;
+    text-align: right;
 }
 .project {
     position: relative;
@@ -631,13 +631,13 @@ main .page-featured-image img {
     text-align: center;
 }
 
-.page-template-page-showcase .sidebar-filter {
+.page-template-page-showcase .sidebarFilter {
     margin-top: 16px;
     background-color: #f2f2f2;
     padding-bottom: 8px;
 }
 
-.page-template-page-showcase .sidebar-filter h3 {
+.page-template-page-showcase .sidebarFilter h3 {
     font-family: 'Raleway', sans-serif;
     font-size: 20px;
     line-height: 1;
@@ -647,16 +647,16 @@ main .page-featured-image img {
     border-radius: 0.25rem 0.25rem 0px 0px;
 }
 
-.page-template-page-showcase .sidebar-filter .filter-form {
+.page-template-page-showcase .sidebarFilter .filter-form {
     padding: 0 8px;
 }
 
-.page-template-page-showcase .sidebar-filter h4 {
+.page-template-page-showcase .sidebarFilter h4 {
     font-size: 18px;
     margin: 8px 0;
 }
 
-.page-template-page-showcase .sidebar .ajax-search-input {
+.page-template-page-showcase .sidebar .ajaxSearchInput {
     height: 27px;
     font-size: 14px;
     line-height: 1;

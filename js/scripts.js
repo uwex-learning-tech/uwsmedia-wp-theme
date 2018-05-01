@@ -1,116 +1,210 @@
-(function ($, root, undefined) {
+( function( $, root, undefined ) {
 	
-	$(function () {
+	$( function() {
 		
 		'use strict';
 		
-		// Copy Link button on Project single page
-		jQuery( '#copy-share-link' ).on( 'click', function( evt ) {
+		/***********************************************************************
+		 SINGLE UWS PROJECTS FUNCTIONS
+		***********************************************************************/
+		
+		if ( jQuery( 'body ').hasClass( 'single-uws-projects' ) ) {
     		
-    		$( this ).find( '.hiddenShareLink' )[0].select();
-    		
-    		document.execCommand( 'Copy' );
-    		
-    		$( this ).find( '.hiddenShareLink' )[0].blur();
-    		
-    		$( '.sharings .msg' ).html( 'Link copied!' ).fadeIn( function () {
+    		// copy link button
+    		jQuery( '#copy-share-link' ).on( 'click', function( evt ) {
         		
+        		// prevent default link interaction behavior
+        		evt.preventDefault();
+        		
+        		// set variables to DOM elements
+        		var hiddenInput = $( this ).find( '.hiddenShareLink' )[0];
+        		var msgDisplay = $( '.sharings .msg' );
+        		var msg = 'Linked copied!';
+        		
+        		// select the text in the hidden input field
+        		// copy it to the clipboard
+        		// unfocus the hideen input field
+        		hiddenInput.select();
+        		document.execCommand( 'Copy' );
+        		hiddenInput.blur();
+        		
+        		// display message to the DOM; hide message after 3 seconds
+        		msg.html( msg ).fadeIn( function() {
+            		
+            		setTimeout( function() {
+            		
+                		msg.fadeOut( function() {
+                    		
+                    		$( this ).html( '' );
+                    		
+                		} );
+                		
+            		}, 3000 );
+            		
+        		} );
+        		
+    		} ); // end function
+    		
+    		// share on LinkedIn button
+    		jQuery( '#shareOnLinkedIn' ).on( 'click', function( evt ) {
+        		
+        		// prevent default link interaction behavior
+        		evt.preventDefault();
+        		
+        		// set the URL from the button's data-ref attribute
+        		var url = $( this ).data( 'ref' );
+        		
+        		// open the URL in a new browser window with additional specification
+        		window.open( url, '_blank', 'width=500,height=500,menubar=0', false );
+        		
+    		} ); // end function
+    		
+		} // end single uws projects conditional check
+		
+		/***********************************************************************
+		 PAGE SHOWCASE FUNCTIONS
+		***********************************************************************/
+		
+		if ( jQuery( 'body' ).hasClass( 'page-template-page-showcase' ) ) {
+    		
+    		// share search result link button
+    		// filter the selector to the button's ID due to dynamic loading
+    		jQuery( document ).on( 'click', '#shareSearchLink', function( evt ) {
+        		
+        		// prevent default link interaction behavior
+        		evt.preventDefault();
+        		
+        		// set variables to DOM elements
+        		var hiddenInput = $( this ).find( '.hiddenShareLink' )[0];
+        		var textDisplay = $( this ).find( '.txt' )[0];
+        		var msg = 'Copied to Clipboard!';
+        		var originalMsg = 'Share Search Link';
+        		
+        		// select the text in the hidden input field
+        		// copy it to the clipboard
+        		// unfocus the hideen input field
+        		hiddenInput.select();
+        		document.execCommand( 'Copy' );
+        		hiddenInput.blur();
+        		
+        		// display the message
+        		$( textDisplay ).html( msg );
+                
+                // revert the message back to the original after 3 seconds
         		setTimeout( function() {
-        		
-            		$( '.sharings .msg' ).fadeOut( function () {
-                		
-                		$( this ).html( '' );
-                		
-            		} );
+            		
+            		$( textDisplay ).html( originalMsg );
             		
         		}, 3000 );
         		
-    		} );
+    		} ); // end function
     		
-    		evt.preventDefault();
-    		
-		} );
-		
-		jQuery( document ).on( 'click', '#shareSearchLink', function( evt ) {
-    		
-    		var self = this;
-    		
-    		$( self ).find( '.hiddenShareLink' )[0].select();
-    		
-    		document.execCommand( 'Copy' );
-    		$( $( self ).find( '.txt' )[0] ).html( 'Link copied!' );
-    		
-    		$( self ).find( '.hiddenShareLink' )[0].blur();
-    		
-    		setTimeout( function() {
-        		
-        		$($( self ).find( '.txt' )[0]).html( 'Copy Seach Link' );
-        		
-    		}, 3000 );
-    		
-    		evt.preventDefault();
-    		
-		} );
-		
-		// Share On LinkedIn button on Project single page
-		jQuery( '#shareOnLinkedIn' ).on( 'click', function( evt ) {
-    		
-    		window.open( $( this ).data( 'ref' ), '_blank', 'width=500,height=500,menubar=0', false );
-    		
-    		evt.preventDefault();
-    		
-		} );
-		
-		// live search
-    	jQuery( '#ajax-search-btn' ).on( 'click', function( evt ) {
-        	
-        	var query = jQuery( '#ajax-search-input' ).val();
-        	var postId = jQuery( 'input[name=post_id]' ).val();
-        	var contentArea = jQuery( '#projects-archive' );
-        	
-        	if ( query.length >= 1 ) {
+    		// AJAX search
+    		jQuery( '#ajaxSearchBtn, .form-check-input' ).on( 'click', function( evt ) {
+        	    
+        	    // set variable to DOM elements
+            	var searchInput = jQuery( '#ajaxSearchInput' ).val();
+            	var postId = jQuery( 'input[name=postId]' ).val();
+            	var programCBs = jQuery( '.sidebarFilter .degree-cb:checked' );
+            	var caseCBs = jQuery( '.sidebarFilter .case-cb:checked' );
+            	var mediaCBs = jQuery( '.sidebarFilter .media-cb:checked' );
+            	var resultsDisplay = jQuery( '#projects-archive' );
+                
+                // set AJAX request data
+                var args = {
+                    action: 'load_search_results',
+                    security: ajaxSearch.ajax_nonce,
+                    post_id: postId,	
+            	};
             	
-            	jQuery.ajax( {
-            	
-                	type: 'post',
-                	url: ajaxSearch.ajaxurl,
-                	data: {
-                    	action: 'load_search_results',
-                    	query: query,
-                    	security: ajaxSearch.ajax_nonce,
-                    	post_id: postId
-                	},
-                	beforeSend: function() {
+            	// add search input if not empty
+            	if ( searchInput.length ) {
+                	
+                	args.query = searchInput;
+                	
+            	}
+                
+                // add degree program tags if checked
+            	if ( programCBs.length ) {
+                	
+                	var tags = [];
+                    
+                    programCBs.each( function() {
+                	
+                    	tags.push( jQuery( this ).val() )
                     	
-                	},
+                	} );
+    
+                    args.programTags = tags.join( ',' );
+                	
+            	}
+            	
+            	// add use case tags if checked
+            	if ( caseCBs.length ) {
+                	
+                	var tags = [];
+                    
+                    caseCBs.each( function() {
+                	
+                    	tags.push( jQuery( this ).val() )
+                    	
+                	} );
+                    
+                    args.caseTags = tags.join( ',' );
+                	
+            	}
+                
+                // add media type tags if checked
+                if ( mediaCBs.length ) {
+                	
+                	var tags = [];
+                    
+                    mediaCBs.each( function() {
+                	
+                    	tags.push( jQuery( this ).val() )
+                    	
+                	} );
+                    
+                    args.mediaTags = tags.join( ',' );
+                	
+            	}
+            	
+                // execute AJAX
+            	jQuery.ajax( {
+                	
+                	type: 'POST',
+                	url: ajaxSearch.ajaxurl,
+                	data: args,
                 	success: function( response ) {
-                    	contentArea.html( response );
+                    	
+                    	resultsDisplay.html( response );
+                    	
                 	}
                 	
             	} );
             	
-        	}
-            
-        	evt.preventDefault();
+        	} );
         	
-    	} );
-    	
-    	jQuery( '#ajax-search-input' ).bind( 'enterKey', function() {
-        	
-        	jQuery( '#ajax-search-btn' ).trigger( 'click' );
-        	
-    	} );
-    	
-    	jQuery( '#ajax-search-input' ).keyup( function( evt ) {
-        	
-        	if ( evt.keyCode == 13 ) {
+        	// added enter key event to trigger search button click
+        	jQuery( '#ajaxSearchInput' ).bind( 'enterKey', function() {
             	
-            	jQuery( this ).trigger( 'enterKey' );
+            	jQuery( '#ajaxSearchBtn' ).trigger( 'click' );
             	
-        	}
+        	} );
         	
-    	} );
+        	// trigger enterKey event when enter key is pressed
+        	jQuery( '#ajaxSearchInput' ).keyup( function( evt ) {
+            	
+            	if ( evt.keyCode == 13 ) {
+                	
+                	jQuery( this ).trigger( 'enterKey' );
+                	
+            	}
+            	
+        	} );
     		
-	});
+		} // end page showcase conditional check
 	
-})(jQuery, this);
+	} ); // end DOM ready function
+	
+} )( jQuery, this );

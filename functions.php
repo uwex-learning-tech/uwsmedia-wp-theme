@@ -706,26 +706,7 @@ add_filter( 'manage_edit-uws-projects_sortable_columns', 'sortable_group_column'
 add_filter( 'manage_edit-page_sortable_columns', 'sortable_group_column' );
 add_filter( 'parse_query', 'filter_group_query' , 10);
 
-function custom_search_query( $query ) {
-    
-    $groupId = get_post_meta( $_REQUEST['post_id'], 'post_group_id', true );
-    
-    if ( $groupId == false ) {
-        $groupId = $_GET['post_group_id'];
-    }
-    
-    if ( $query->is_search ) {
-        $meta_query_args = array(
-            array(
-            'key' => 'post_group_id',
-            'value' =>$groupId,
-            'compare' => 'LIKE',
-            ),
-        );
-        $query->set('meta_query', $meta_query_args);
-    };
-    
-}
+// custom search query
 add_filter( 'pre_get_posts', 'custom_search_query');
 
 /*------------------------------------*\
@@ -1404,37 +1385,100 @@ function remove_projects_pageparentdiv_metabox() {
 	LOAD SEARCH RESULTS
 \*------------------------------------*/
 
+function custom_search_query( $query ) {
+    
+    $groupId = get_post_meta( $_REQUEST['post_id'], 'post_group_id', true );
+    
+    if ( $groupId == false ) {
+        
+        $groupId = $_GET['post_group_id'];
+        
+    }
+    
+    if ( $query->is_search ) {
+        
+        $meta_query_args = array(
+            array(
+            'key' => 'post_group_id',
+            'value' => $groupId,
+            'compare' => 'LIKE',
+            ),
+        );
+        
+        $query->set( 'meta_query', $meta_query_args );
+        
+    };
+    
+}
+
 function load_search_results() {
     
     check_ajax_referer( 'ajax_search_nonce', 'security' );
     
-    $query = $_POST['query'];
-    $paged = ( get_query_var('paged') ) ? get_query_var('paged') : 1;
+    $postGroupId = get_post_meta( $_REQUEST['post_id'], 'post_group_id', true );
     $args = array(
+        
         'post_type' => 'uws-projects',
         'post_status' => 'publish',
-        'posts_per_page' => 9,
-        'paged' => $paged,
-        's' => $query,
+        's' => '',
         'meta_query' => array(
             array(
                 'key' => 'post_group_id',
-                'value' => get_post_meta( $_REQUEST['post_id'], 'post_group_id', true )
+                'value' => $postGroupId
             )
-        )
+        ),
+        'tax_query' => array()
+        
     );
+    
+    if ( isset( $_POST['query'] ) ) {
+        
+        $args['s'] = $_POST['query'];
+        
+    }
+    
+    if ( isset( $_POST['programTags'] ) ) {
+        
+        array_push( $args['tax_query'], array(
+            'taxonomy' => 'degree_programs',
+            'field' => 'slug',
+            'terms' => explode( ',', $_POST['programTags'] )
+        ) );
+        
+    }
+    
+    if ( isset( $_POST['caseTags'] ) ) {
+        
+        array_push( $args['tax_query'], array(
+            'taxonomy' => 'use_cases',
+            'field' => 'slug',
+            'terms' => explode( ',', $_POST['caseTags'] )
+        ) );
+        
+    }
+    
+    if ( isset( $_POST['mediaTags'] ) ) {
+        
+        array_push( $args['tax_query'], array(
+            'taxonomy' => 'media_types',
+            'field' => 'slug',
+            'terms' => explode( ',', $_POST['mediaTags'] )
+        ) );
+        
+    }
     
     $search = new WP_Query( $args );
     
     ob_start();
     
     if ( $search->have_posts() ) : 
-    
+        
     ?>
 
-            <h1>Search Results for: <?php echo $query; ?><div class="sharings">
-            <a id="shareSearchLink" class="badge badge-pill badge-primary" href="javascript:void(0);"><span class="fa fa-link"></span> <span class="txt">Copy Search Link</span><input type="text" class="hiddenShareLink" name="searchLink" value="<?php echo get_site_url() . '?s='.urlencode($query).'&post_type=uws-projects&post_group_id=' . get_post_meta( $_REQUEST['post_id'], 'post_group_id', true ); ?>" /></a> <a class="badge badge-pill badge-danger" href="<?php the_permalink(); ?>"><span class="fa fa-times-circle"></span> Clear Search</a><div class="msg"></div></div>
-             </h1>
+            <div class="sharings">
+                <a class="btn btn-link btn-sm" href="<?php the_permalink(); ?>" role="button"><span class="fa fa-times-circle"></span> Clear Search</a>
+                <button id="shareSearchLink" class="btn btn-secondary btn-sm"><span class="fa fa-link"></span> <span class="txt">Copy Search Link</span><input type="text" class="hiddenShareLink" name="searchLink" value="<?php echo get_site_url() . '?s='.urlencode($query).'&post_type=uws-projects&post_group_id=' . get_post_meta( $_REQUEST['post_id'], 'post_group_id', true ); ?>" /></button>
+            </div>
             
             <div class="row d-flex flex-row">
 
@@ -1468,29 +1512,57 @@ function load_search_results() {
 				
 		<?php endwhile; ?>
 		    </div>
+<?php	else : ?>
             
-			<div class="projects-pagnigation">
+        <div class="alert alert-info" role="alert">
+            <h4 class="alert-heading">No Search Results Found!</h4>
+            <p>We couldn't find results with the following keyword or filters applied.</p>
+            
             <?php
-                
-                $total_pages = $search->max_num_pages;
-                $current_page = max( 1, get_query_var( 'paged' ) );
-
-                echo paginate_links( array(
-                    'base' => get_pagenum_link( 1 ) . '%_%',
-                    'format' => 'page/%#%',
-                    'current' => $current_page,
-                    'total' => $total_pages,
-                    'prev_text'    => __('<span class="fa fa-chevron-left"></span> <span class="screen-reader-text">previous</span>'),
-                    'next_text'    => __('<span class="fa fa-chevron-right"></span> <span class="screen-reader-text">next</span>'),
-                    'show_all' => true,
-                    'type' => 'list'
-                ) );
+                    
+                if ( isset( $_POST['query'] ) ) {
+    
+                    echo '<p>Keyword: <strong>' . $_POST['query'] . '</strong></p>';
+                    
+                }
                 
             ?>
-            </div>
-<?php	else : ?>
-
-		<h1>No Search Results Found for: <?php echo $query; ?> <br /><a class="badge badge-pill badge-danger" href="<?php the_permalink(); ?>"><span class="fa fa-times-circle"></span> Clear Search</a></h1>
+            <p>Try removing some these filters:<br>
+            <?php 
+                
+                $filters = null;
+                
+                if ( isset( $_POST['programTags'] ) ) {
+                    
+                    $filters = is_array( $filters ) ? array_merge( $filters, explode( ',', $_POST['programTags'] ) ) : explode( ',', $_POST['programTags'] );
+                    
+                }
+                
+                if ( isset( $_POST['caseTags'] ) ) {
+        
+                    $filters = is_array( $filters ) ? array_merge( $filters, explode( ',', $_POST['caseTags'] ) ) : explode( ',', $_POST['caseTags'] );
+                    
+                }
+                
+                if ( isset( $_POST['mediaTags'] ) ) {
+        
+                    $filters = is_array( $filters ) ? array_merge( $filters, explode( ',', $_POST['mediaTags'] ) ) : explode( ',', $_POST['mediaTags'] );
+                    
+                }
+                
+                foreach ( $filters as $filter ) {
+                    
+                    echo '<span class="badge badge-light">' . $filter . '</span> ';
+                    
+                }
+                
+                unset( $filters );
+                
+            ?>
+            </p>
+            <hr>
+            <p class="mb-0 text-center"><a class="btn btn-link" href="<?php the_permalink(); ?>"><span class="fa fa-times-circle"></span> Clear Search</a></p>
+        </div>
 		
 	<?php endif;
 	
