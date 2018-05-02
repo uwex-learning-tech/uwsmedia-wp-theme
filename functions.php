@@ -535,6 +535,7 @@ function reorder_admin_menu( $__return_true ) {
          'index.php', // Dashboard
          'edit.php?post_type=page', // Pages 
          'edit.php?post_type=uws-projects', // Showcase Projects
+         'edit.php?post_type=uws-team-members', // Team Members 
          'upload.php', // Media
          'edit.php?post_type=uws-groups', // Groups 
          'separator1', // --Space--
@@ -598,6 +599,7 @@ add_action( 'admin_enqueue_scripts', 'uwsmedia_admin_scripts' );
 add_action( 'admin_init', 'uwsmedia_theme_settings' );
 
 // Add UWS Media custom post (Groups and Projects/Showcases)
+add_action( 'init', 'create_team_members_post' );
 add_action( 'init', 'create_post_groups' );
 add_action( 'init', 'create_projects_post' );
 add_action( 'init', 'create_degree_taxonomy' );
@@ -709,6 +711,9 @@ add_filter( 'parse_query', 'filter_group_query' , 10);
 // custom search query
 add_filter( 'pre_get_posts', 'custom_search_query');
 
+// change title place holder for team member post
+add_filter( 'enter_title_here', 'team_members_change_title_placeholder' );
+
 /*------------------------------------*\
 	ADD Filters
 \*------------------------------------*/
@@ -726,7 +731,7 @@ function create_post_groups() {
     register_post_type( 'uws-groups', 
         array(
         'label' => 'Groups',
-        'menu_icon' => 'dashicons-groups',
+        'menu_icon' => 'dashicons-nametag',
         'labels' => array(
             'name' => __( 'Groups', 'uwsmedia' ),
             'singular_name' => __( 'Group', 'uwsmedia' ),
@@ -763,6 +768,7 @@ function add_groups_metabox() {
     
     $post_types = get_post_types( array( 'public' => true , '_builtin' => false ) );
     array_push( $post_types, 'page' );
+    unset( $post_types['uws-team-members'] );
     
     foreach( $post_types as $type ) {
     
@@ -1379,6 +1385,65 @@ function remove_projects_pageparentdiv_metabox() {
     
     remove_meta_box('pageparentdiv', 'uws-projects', 'normal');
     
+}
+
+/*------------------------------------*\
+	CUSTOM POST TYPE: TEAM MEMBERS
+\*------------------------------------*/
+
+function create_team_members_post() {
+    
+    // Register Custom Post Type
+    register_post_type( 'uws-team-members', 
+        array(
+        'label' => 'Team Members',
+        'menu_icon' => 'dashicons-groups',
+        'labels' => array(
+            'name' => __( 'Team Members', 'uwsmedia' ),
+            'singular_name' => __( 'Team Member', 'uwsmedia' ),
+            'all_items' => __( 'All Memebers', 'uwsmedia' ),
+            'menu_name' => __( 'Team Members', 'uwsmedia' ),
+            'name_admin_bar' => __('Member', 'uwsmedia' ),
+            'add_new' => __( 'Add Member', 'uwsmedia' ),
+            'add_new_item' => __( 'Add New Member', 'uwsmedia' ),
+            'edit' => __( 'Edit', 'uwsmedia' ),
+            'edit_item' => __( 'Edit Member', 'uwsmedia' ),
+            'new_item' => __( 'New Member', 'uwsmedia' ),
+            'view' => __( 'View Member', 'uwsmedia' ),
+            'view_item' => __( 'View Member', 'uwsmedia' ),
+            'view_items' => __( 'View Members', 'uwsmedia' ),
+            'search_items' => __( 'Search members', 'uwsmedia' ),
+            'not_found' => __( 'No members found.', 'uwsmedia' ),
+            'not_found_in_trash' => __( 'No members found in Trash', 'uwsmedia' )
+        ),
+        'supports' => array( 'title', 'editor', 'thumbnail' ),
+        'taxonomies' => array(),
+        'hierarchical' => false,
+        'public' => true,
+        'show_ui' => true,
+        'show_in_menu' => true,
+        'show_in_admin_bar' => true,
+        'show_in_nav_menus' => true,
+        'can_export' => true,
+        'has_archive' => true,		
+        'exclude_from_search' => false,
+        'publicly_queryable' => true,
+        'query_var' => true,
+        'capability_type' => 'page',
+        'delete_with_user' => false,
+        'rewrite' => array('slug' => 'team-members', 'with_front' => true)
+    ) );
+}
+
+function team_members_change_title_placeholder( $title ){
+    
+     $screen = get_current_screen();
+  
+     if  ( 'uws-team-members' == $screen->post_type ) {
+          $title = 'Enter full name here';
+     }
+  
+     return $title;
 }
 
 /*------------------------------------*\
