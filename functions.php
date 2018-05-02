@@ -75,7 +75,7 @@ function uwsmedia_header_scripts() {
         wp_enqueue_script( 'modernizr' );
         
         // Bootstrap
-        wp_register_script( 'bootstrap', get_template_directory_uri() . '/js/lib/bootstrap.min.js', array( 'jquery' ), '4.0.0' ); 
+        wp_register_script( 'bootstrap', get_template_directory_uri() . '/js/lib/bootstrap.min.js', array( 'jquery' ), '4.1.1' ); 
         wp_enqueue_script( 'bootstrap' );
         
          // UWS Media scripts
@@ -97,7 +97,7 @@ function uwsmedia_header_scripts() {
 function uwsmedia_styles() {
     
     // Bootstrap
-    wp_register_style( 'bootstrap', get_template_directory_uri() . '/css/bootstrap.min.css', array(), '4.0.0', 'all' );
+    wp_register_style( 'bootstrap', get_template_directory_uri() . '/css/bootstrap.min.css', array(), '4.1.1', 'all' );
     wp_enqueue_style( 'bootstrap' );
     
     // Dashicons

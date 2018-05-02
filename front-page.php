@@ -2,18 +2,6 @@
 
 <main role="main">
 	
-	<!-- section -->
-	<section style="background-color: red; min-height: 250px;">
-    	
-        <div class="container">
-            
-            <div id="hero">Hero Carousel</div>
-            
-        </div>
-
-	</section>
-	<!-- /section -->
-	
 	<?php
     	
     	$sectionsArray = json_decode( get_option( 'homepage_sections_option' ) );
