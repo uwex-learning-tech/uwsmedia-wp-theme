@@ -16,7 +16,7 @@
 	</head>
 	
 	<body <?php !is_front_page() ? body_class( get_post( get_post_meta($post->ID, 'post_group_id', true ) )->post_name . '-group' ) : body_class(); ?>>
-
+        
 		<!-- wrapper -->
 		<div class="wrapper">
             

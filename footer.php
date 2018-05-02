@@ -39,7 +39,17 @@
                                 
                                 <div class="login-btn">
                                     
-                                    <?php echo '<a href="' . wp_login_url( get_permalink() ) . '">Login</a>'; ?>
+                                    <?php
+                                        
+                                        $redirectLink = get_permalink();
+                                        
+                                        if ( is_front_page() ) {
+                                            $redirectLink = get_site_url();
+                                        }
+                                        
+                                        echo '<a href="' . wp_login_url( $redirectLink ) . '">Login</a>';
+                                        
+                                        ?>
                                     
                                 </div>
                                 
