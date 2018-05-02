@@ -18,25 +18,25 @@
                     
                     if ( isset( $_GET['s'] ) && !empty( $_GET['s'] ) ) {
                         
-                        echo 'Keyword: <strong>' . $_GET['s'] . '</strong> | ';
+                        echo 'Keyword: <strong>' . $_GET['s'] . '</strong><br>';
                         
                     }
     
                     $filters = null;
                     
-                    if ( isset( $_GET['degree_programs'] ) ) {
+                    if ( isset( $_GET['degree_programs'] ) && !empty( $_GET['degree_programs'] ) ) {
                         
                         $filters = is_array( $filters ) ? array_merge( $filters, explode( ',', $_GET['degree_programs'] ) ) : explode( ',', $_GET['degree_programs'] );
                         
                     }
                     
-                    if ( isset( $_GET['use_cases'] ) ) {
+                    if ( isset( $_GET['use_cases'] ) && !empty( $_GET['use_cases'] ) ) {
             
                         $filters = is_array( $filters ) ? array_merge( $filters, explode( ',', $_GET['use_cases'] ) ) : explode( ',', $_GET['use_cases'] );
                         
                     }
                     
-                    if ( isset( $_GET['media_types'] ) ) {
+                    if ( isset( $_GET['media_types'] ) && !empty( $_GET['media_types'] ) ) {
             
                         $filters = is_array( $filters ) ? array_merge( $filters, explode( ',', $_GET['media_types'] ) ) : explode( ',', $_GET['media_types'] );
                         

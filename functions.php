@@ -1471,13 +1471,22 @@ function load_search_results() {
     
     ob_start();
     
-    if ( $search->have_posts() ) : 
+    if ( $search->have_posts() ) :
+        
+        $keyword = '';
+        
+        if ( isset( $_POST['query'] ) ) {
+    
+            $keyword = urlencode( $_POST['query'] );
+            
+        }
         
     ?>
 
             <div class="sharings">
+                
                 <a class="btn btn-link btn-sm" href="<?php the_permalink(); ?>" role="button"><span class="fa fa-times-circle"></span> Clear Search</a>
-                <button id="shareSearchLink" class="btn btn-secondary btn-sm"><span class="fa fa-link"></span> <span class="txt">Copy Search Link</span><input type="text" class="hiddenShareLink" name="searchLink" value="<?php echo get_site_url() . '?s='.urlencode($query).'&post_type=uws-projects&post_group_id=' . get_post_meta( $_REQUEST['post_id'], 'post_group_id', true ); ?>&degree_programs=<?php echo $_POST['programTags']; ?>&use_cases=<?php echo $_POST['caseTags']; ?>&media_types=<?php echo $_POST['mediaTags']; ?>" /></button>
+                <button id="shareSearchLink" class="btn btn-secondary btn-sm"><span class="fa fa-link"></span> <span class="txt">Copy Search Link</span><input type="text" class="hiddenShareLink" name="searchLink" value="<?php echo get_site_url() . '?s=' . $keyword . '&post_type=uws-projects&post_group_id=' . get_post_meta( $_REQUEST['post_id'], 'post_group_id', true ); ?>&degree_programs=<?php echo $_POST['programTags']; ?>&use_cases=<?php echo $_POST['caseTags']; ?>&media_types=<?php echo $_POST['mediaTags']; ?>" /></button>
             </div>
             
             <div class="row d-flex flex-row">

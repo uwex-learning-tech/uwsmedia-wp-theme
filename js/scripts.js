@@ -103,7 +103,7 @@
     		jQuery( '#ajaxSearchBtn, .form-check-input' ).on( 'click', function( evt ) {
         	    
         	    // set variable to DOM elements
-            	var searchInput = jQuery( '#ajaxSearchInput' ).val();
+            	var searchInput = jQuery( '#ajaxSearchInput' ).val().trim();
             	var postId = jQuery( 'input[name=postId]' ).val();
             	var programCBs = jQuery( '.sidebarFilter .degree-cb:checked' );
             	var caseCBs = jQuery( '.sidebarFilter .case-cb:checked' );
@@ -169,19 +169,28 @@
                 	
             	}
             	
-                // execute AJAX
-            	jQuery.ajax( {
+            	if ( mediaCBs.length || mediaCBs.length 
+            	|| programCBs.length || searchInput.length ) {
                 	
-                	type: 'POST',
-                	url: ajaxSearch.ajaxurl,
-                	data: args,
-                	success: function( response ) {
+                	// execute AJAX
+                	jQuery.ajax( {
                     	
-                    	resultsDisplay.html( response );
+                    	type: 'POST',
+                    	url: ajaxSearch.ajaxurl,
+                    	data: args,
+                    	success: function( response ) {
+                        	
+                        	resultsDisplay.html( response );
+                        	
+                    	}
                     	
-                	}
+                	} );
                 	
-            	} );
+            	} else {
+                	
+                	window.location.reload();
+                	
+            	}
             	
         	} );
         	

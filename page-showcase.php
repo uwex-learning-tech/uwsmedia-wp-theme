@@ -137,7 +137,7 @@
                 <div class="sidebarFilter">
                     <div class="filter">
                         <h3>Filter</h3>			
-                        <form class="filter-form">
+                        <div class="filter-form">
                             
                             <h4>Degree Programs</h4>
                             <?php
@@ -179,7 +179,7 @@
                                
                             ?>
                             
-                        </form>
+                        </div>
                     </div>
                 </div>
             
