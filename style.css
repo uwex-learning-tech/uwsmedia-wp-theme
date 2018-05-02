@@ -123,7 +123,7 @@ h6 {
 
 .home .header {
     position: relative;
-    padding-bottom: 56.25%;
+    padding-bottom: calc(56.25% - 86px);
 }
 
 .home .header .project-carousel-wrapper {
@@ -147,7 +147,7 @@ h6 {
 
 #project-carousel .carousel-caption {
     width: 400px;
-    bottom: 25%;
+    bottom: 35%;
     right: 10%;
     left: unset;
     background-color: rgba(255,255,255,0.9);
