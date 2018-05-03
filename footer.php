@@ -1,4 +1,3 @@
-
 			
 			<!-- footer -->
 			<footer class="footer d-flex flex-wrap" role="contentinfo">
@@ -66,7 +65,7 @@
 
 		</div>
 		<!-- /wrapper -->
-
+        
 		<?php wp_footer(); ?>
 
 	</body>

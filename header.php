@@ -1,5 +1,5 @@
 <!doctype html>
-<html <?php language_attributes(); ?> class="no-js">
+<html <?php language_attributes(); ?> class="no-js<?php echo is_404() ? ' error404' : '';?>">
 	<head>
 		<meta charset="<?php bloginfo('charset'); ?>">
 		<title><?php wp_title(''); ?><?php if(wp_title('', false)) { echo ' :'; } ?> <?php bloginfo('name'); ?></title>
@@ -45,12 +45,14 @@
             </header>
             
             <?php if ( !is_front_page() ) : ?>
+            <?php if ( !is_404() ) : ?>
             
             <div class="breadcrumb-nav">
                 <div class="container">
                 <?php breadcrumb_nav(); ?>
                 </div>
             </div> <!-- /header -->
-
+            
+            <?php endif; ?>
             <?php endif; ?>
 			

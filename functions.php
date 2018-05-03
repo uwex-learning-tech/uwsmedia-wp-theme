@@ -1807,7 +1807,7 @@ function load_search_results() {
             ?>
             
             <hr>
-            <p class="mb-0 text-center"><a class="btn btn-link" href="<?php the_permalink(); ?>"><span class="fa fa-times-circle"></span> Clear Search</a></p>
+            <p class="mb-0 text-center"><a class="btn btn-link" href="<?php the_permalink(); ?>"><span class="fa fa-home"></span> Clear Search</a></p>
         </div>
 		
 	<?php endif;

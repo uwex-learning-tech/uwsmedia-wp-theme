@@ -33,6 +33,10 @@ html {
     min-height: 100%;
 }
 
+html.error404 {
+    min-height: auto;
+}
+
 body {
 	font-family: 'Quicksand', sans-serif;
 	color: #444444;
@@ -656,6 +660,13 @@ main .page-featured-image img {
 
 .single.single-uws-team-members .social-networks a:hover {
     color: #990033;
+}
+
+.error404 .icon {
+    margin-top: 40px;
+    text-align: center;
+    font-size: 400%;
+    line-height: 1;
 }
 
 /*------------------------------------*\
