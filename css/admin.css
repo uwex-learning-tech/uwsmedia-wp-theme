@@ -25,6 +25,13 @@
 .manage-column.column-featured {
     width: 3%;
 }
+.manage-column.column-avatar {
+    width: 5%;
+}
+.column-avatar .avatar-img {
+    width: 100%;
+    height: auto;
+}
 .column-featured {
     text-align: center;
 }
@@ -47,6 +54,15 @@
 /*------------------------------------*\
     CUSTOM META BOX
 \*------------------------------------*/
-.post-type-uws-projects .postbox select {
+.post-type-uws-projects .postbox select,
+.post-type-uws-team-members .postbox input[type=text] {
     width: 100%;
+}
+.post-type-uws-team-members .postbox .edit-post-social-input {
+    width: 150px !important;
+    border: none;
+    box-shadow: unset;
+    border-bottom: 1px solid #ccc;
+    padding-left: 0;
+    vertical-align: middle;
 }

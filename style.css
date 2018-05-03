@@ -58,20 +58,21 @@ img {
 }
 
 a {
-	
+	color: #990033;
 }
 
 a:hover {
-	
+    color: #990033;
+	text-decoration: underline;
 }
 
 a:focus {
-	
+	color: #990033;
 }
 
 a:hover,
 a:active {
-	
+    color: #990033;
 }
 
 input:focus {
@@ -615,6 +616,46 @@ main .page-featured-image img {
     padding: 0;
     margin: 0;
     border: none;
+}
+
+/* team members */
+.single.single-uws-team-members aside {
+    margin-top: 1rem;
+}
+.single.single-uws-team-members .post-featured-image img {
+    width: 100%;
+    height: auto;
+}
+.single.single-uws-team-members h1 {
+    margin-bottom: 0;
+}
+.single.single-uws-team-members .job-title {
+    font-weight: bold;
+}
+
+.single.single-uws-team-members .interests .badge {
+    font-size: 100%;
+    font-weight: normal;
+}
+
+.single.single-uws-team-members .social-networks {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.single.single-uws-team-members .social-networks .icon {
+    margin-right: 8px;
+}
+
+.single.single-uws-team-members .social-networks a {
+    display: block;
+    font-size: 34px;
+    color: inherit;
+}
+
+.single.single-uws-team-members .social-networks a:hover {
+    color: #990033;
 }
 
 /*------------------------------------*\

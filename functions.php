@@ -505,6 +505,10 @@ function uwsmedia_admin_scripts() {
     wp_register_style( 'uwsmedia_admin_css', get_template_directory_uri() . '/css/admin.css', array(), '1.0.0', 'all' );
     wp_enqueue_style( 'uwsmedia_admin_css' );
     
+    // Font Awesome
+    wp_register_style( 'font-awesome-admin', get_template_directory_uri() . '/css/font-awesome.css', array(), '4.7.0' ); 
+    wp_enqueue_style( 'font-awesome-admin' );
+    
     global $pagenow;
     
     if ($pagenow != 'themes.php') {
@@ -607,11 +611,18 @@ add_action( 'init', 'create_use_case_taxonomy' );
 add_action( 'init', 'create_media_type_taxonomy' );
 add_action( 'manage_posts_custom_column', 'add_project_custom_columns_value', 10, 2 );
 add_action( 'manage_pages_custom_column', 'add_pages_group_column_value', 10, 2 );
+add_action( 'manage_posts_custom_column', 'add_team_members_custom_columns_value', 10, 2 );
 add_action( 'admin_menu', 'remove_projects_pageparentdiv_metabox' );
 add_action( 'add_meta_boxes', 'add_groups_metabox' );
 
+// add job title meta box to team members post type
+add_action( 'add_meta_boxes', 'add_team_members_metabox' );
+
 // save group metadata on save post
 add_action( 'save_post', 'save_post_group_meta', 10, 2 );
+
+// save team members metadata on save post
+add_action( 'save_post', 'save_team_member_meta', 10, 2 );
 
 /* Hide unused page from Dashboard Admin Menu */
 add_action( 'admin_menu', 'hide_menu_page');
@@ -707,6 +718,8 @@ add_filter( 'manage_page_posts_columns', 'add_group_column' );
 add_filter( 'manage_edit-uws-projects_sortable_columns', 'sortable_group_column' );
 add_filter( 'manage_edit-page_sortable_columns', 'sortable_group_column' );
 add_filter( 'parse_query', 'filter_group_query' , 10);
+
+add_filter( 'manage_uws-team-members_posts_columns', 'add_team_members_custom_columns' );
 
 // custom search query
 add_filter( 'pre_get_posts', 'custom_search_query');
@@ -1435,6 +1448,129 @@ function create_team_members_post() {
     ) );
 }
 
+function add_team_members_metabox() {
+    
+    add_meta_box( 'job_title', 'Job Title', 'job_title_meta_box', 'uws-team-members', 'side', 'high' );
+    add_meta_box( 'interests', 'Interests', 'interest_meta_box', 'uws-team-members', 'side', 'default' );
+    add_meta_box( 'social_networks', 'Social Networks', 'social_networks_meta_box', 'uws-team-members', 'normal', 'default' );
+    
+}
+
+function job_title_meta_box( $post ) {
+    
+    wp_nonce_field( 'add_job_title', 'job_title_nonce' );
+    
+    echo '<input type="text" name="job_title" value="' . get_post_meta( $post->ID, 'job_title', true ) . '" placeholder="Enter Job Title" />';
+    
+}
+function interest_meta_box( $post ) {
+    
+    wp_nonce_field( 'add_interests', 'interests_nonce' );
+    
+    echo '<input type="text" name="member_interests" value="' . get_post_meta( $post->ID, 'member_interests', true ) . '" /><p class="howto">Separate interests with commas</p>';
+    
+}
+
+function social_networks_meta_box( $post ) {
+    
+    echo '<p class="howto">Enter social network usernames that you are comfortable sharing.</p>';
+    
+    wp_nonce_field( 'add_linkedin_network', 'linkedin_network_nonce' );
+
+    echo '<p><span class="fa fa-linkedin-square"></span> <strong>LinkedIn</strong><br>https://www.linkedin.com/in/<input class="edit-post-social-input" type="text" name="linkedin_username" value="' . get_post_meta( $post->ID, 'linkedin_username', true ) . '" placeholder="username" /></p>';
+    
+    wp_nonce_field( 'add_twitter_network', 'twitter_network_nonce' );
+
+    echo '<p><span class="fa fa-twitter"></span> <strong>Twitter</strong><br>https://twitter.com/<input class="edit-post-social-input" type="text" name="twitter_username" value="' . get_post_meta( $post->ID, 'twitter_username', true ) . '" placeholder="username" /></p>';
+    
+    wp_nonce_field( 'add_facebook_network', 'facebook_network_nonce' );
+
+    echo '<p><span class="fa fa-facebook-official"></span> <strong>Facebook</strong><br>https://www.facebook.com/<input class="edit-post-social-input" type="text" name="facebook_username" value="' . get_post_meta( $post->ID, 'facebook_username', true ) . '" placeholder="username" /></p>';
+    
+    wp_nonce_field( 'add_youtube_network', 'youtube_network_nonce' );
+
+    echo '<p><span class="fa fa-youtube-play"></span> <strong>YouTube</strong><br>https://www.youtube.com/user/<input class="edit-post-social-input" type="text" name="youtube_username" value="' . get_post_meta( $post->ID, 'youtube_username', true ) . '" placeholder="username" /></p>';
+    
+    wp_nonce_field( 'add_googleplus_network', 'googleplus_network_nonce' );
+
+    echo '<p><span class="fa fa-google-plus-square"></span> <strong>Google+</strong><br>https://plus.google.com/<input class="edit-post-social-input" type="text" name="googleplus_username" value="' . get_post_meta( $post->ID, 'googleplus_username', true ) . '" placeholder="username" /></p>';
+    
+    wp_nonce_field( 'add_behance_network', 'behance_network_nonce' );
+
+    echo '<p><span class="fa fa-behance-square"></span> <strong>Béhance</strong><br>https://www.behance.net/<input class="edit-post-social-input" type="text" name="behance_username" value="' . get_post_meta( $post->ID, 'behance_username', true ) . '" placeholder="username" /></p>';
+    
+    wp_nonce_field( 'add_github_network', 'github_network_nonce' );
+
+    echo '<p><span class="fa fa-github-square"></span> <strong>GitHub</strong><br>https://github.com/<input class="edit-post-social-input" type="text" name="github_username" value="' . get_post_meta( $post->ID, 'github_username', true ) . '" placeholder="username" /></p>';
+    
+}
+
+function save_team_member_meta( $post_id, $post ) {
+    
+    /* Get the post type object. */
+    $post_type = get_post_type_object( $post->post_type );
+    
+    /* Check if the current user has permission to edit the post. */
+    if ( !current_user_can( $post_type->cap->edit_post, $post_id ) ) {
+        return $post_id;
+    }
+    
+    if ( wp_verify_nonce( $_POST['job_title_nonce'], 'add_job_title' ) ) {
+        
+        update_post_meta( $post_id, 'job_title', sanitize_text_field( $_POST['job_title'] ) );
+        
+    }
+    
+    if ( wp_verify_nonce( $_POST['interests_nonce'], 'add_interests' ) ) {
+        
+        update_post_meta( $post_id, 'member_interests', sanitize_text_field( $_POST['member_interests'] ) );
+        
+    }
+    
+    if ( wp_verify_nonce( $_POST['linkedin_network_nonce'], 'add_linkedin_network' ) ) {
+        
+        update_post_meta( $post_id, 'linkedin_username', sanitize_text_field( $_POST['linkedin_username'] ) );
+        
+    }
+    
+    if ( wp_verify_nonce( $_POST['twitter_network_nonce'], 'add_twitter_network' ) ) {
+        
+        update_post_meta( $post_id, 'twitter_username', sanitize_text_field( $_POST['twitter_username'] ) );
+        
+    }
+    
+    if ( wp_verify_nonce( $_POST['facebook_network_nonce'], 'add_facebook_network' ) ) {
+        
+        update_post_meta( $post_id, 'facebook_username', sanitize_text_field( $_POST['facebook_username'] ) );
+        
+    }
+    
+    if ( wp_verify_nonce( $_POST['youtube_network_nonce'], 'add_youtube_network' ) ) {
+        
+        update_post_meta( $post_id, 'youtube_username', sanitize_text_field( $_POST['youtube_username'] ) );
+        
+    }
+    
+    if ( wp_verify_nonce( $_POST['googleplus_network_nonce'], 'add_googleplus_network' ) ) {
+        
+        update_post_meta( $post_id, 'googleplus_username', sanitize_text_field( $_POST['googleplus_username'] ) );
+        
+    }
+    
+    if ( wp_verify_nonce( $_POST['behance_network_nonce'], 'add_behance_network' ) ) {
+        
+        update_post_meta( $post_id, 'behance_username', sanitize_text_field( $_POST['behance_username'] ) );
+        
+    }
+    
+    if ( wp_verify_nonce( $_POST['github_network_nonce'], 'add_github_network' ) ) {
+        
+        update_post_meta( $post_id, 'github_username', sanitize_text_field( $_POST['github_username'] ) );
+        
+    }
+
+}
+
 function team_members_change_title_placeholder( $title ){
     
      $screen = get_current_screen();
@@ -1444,6 +1580,33 @@ function team_members_change_title_placeholder( $title ){
      }
   
      return $title;
+}
+
+function add_team_members_custom_columns( $columns ) {
+    
+    $columns = array(
+        'cb' => $columns['cb'],
+        'avatar' => '',
+        'title' => __( 'Title' ),
+        'date' => __( 'Date' )
+    );
+    
+    return $columns;
+    
+}
+
+function add_team_members_custom_columns_value( $column, $post_id ) {
+    
+    switch ( $column ) {
+        case 'avatar':
+
+            if ( has_post_thumbnail() ) {
+                echo '<img class="avatar-img" src="' . get_the_post_thumbnail_url() .'" />';
+            }
+    
+    	break;
+	}
+    
 }
 
 /*------------------------------------*\
