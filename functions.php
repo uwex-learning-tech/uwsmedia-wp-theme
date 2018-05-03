@@ -246,7 +246,12 @@ function uwsmediawp_excerpt( $length_callback = '', $more_callback = '' ) {
 function uwsmedia_view_article($more) {
     
     global $post;
-    return '... <a class="view-article" href="' . get_permalink( $post->ID ) . '">' . __( 'View Article', 'uwsmedia' ) . '</a>';
+    
+    if ( is_front_page() ) {
+        return ' ...';
+    }
+    
+    return ' ... <a class="view-article" href="' . get_permalink( $post->ID ) . '">' . __( 'Read More', 'uwsmedia' ) . '</a>';
     
 }
 
