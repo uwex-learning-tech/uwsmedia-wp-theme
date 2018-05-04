@@ -78,31 +78,54 @@ jQuery( document ).ready( function( $ ) {
     	
 	}
 	
-	
-	// check if the group box has faculty checked
-	var groupSelect = '#poststuff select#post_group_id';
-	
-	if ( $( groupSelect + ' option:selected' ).text().toLowerCase() === 'faculty' ) {
+	if ( jQuery( 'body' ).hasClass( 'wp-admin')
+	&& jQuery( 'body' ).hasClass( 'post-type-uws-projects' ) ) {
     	
-    	$( '#toPortfolio' ).show();
+    	// check if the group box has faculty checked
+    	var groupSelect = '#poststuff select#post_group_id';
     	
-	}
-	
-	jQuery( groupSelect ).change( function() {
-    	
-    	var target = $(this).find('option:selected').text().toLowerCase();
-    	
-    	if ( target === 'faculty' ) {
+    	if ( $( groupSelect + ' option:selected' ).text().toLowerCase() === 'faculty' ) {
         	
         	$( '#toPortfolio' ).show();
         	
-    	} else {
-        	
-        	$( '#toPortfolio' ).hide();
-        	$( '#promote_to_porfolio' ).prop( 'checked', false );
     	}
     	
-	} );
+    	jQuery( groupSelect ).change( function() {
+        	
+        	var target = $(this).find('option:selected').text().toLowerCase();
+        	
+        	if ( target === 'faculty' ) {
+            	
+            	$( '#toPortfolio' ).show();
+            	
+        	} else {
+            	
+            	$( '#toPortfolio' ).hide();
+            	$( '#promote_to_porfolio' ).prop( 'checked', false );
+        	}
+        	
+    	} );
+    	
+    	var authorsInput = jQuery( 'input[name=project_authors]' );
+    	var authors = authorsInput.val().split( ',' );
+    	
+    	jQuery.each( authors, function( i ) {
+        	
+        	$( 'select[name=project_authors_select] option[value=' + authors[i] + ']' ).prop( 'selected', true );
+        	
+    	} );
+    	
+    	
+    	// get the value of the multiple select input
+    	jQuery( 'select[name=project_authors_select]' ).on( 'change', function() {
+        	
+        	var values = $( this ).val().join( ',' );
+    
+        	authorsInput.val( values );
+        	
+    	} );
+    	
+	}
 
 });
 

@@ -217,6 +217,18 @@ function uwsmediawp_pagination() {
     
 }
 
+// Custom Excerpts
+function uwsmediawp_index($length) // Create 20 Word Callback for Index page Excerpts, call using html5wp_excerpt('uwsmediawp_index');
+{
+    return 30;
+}
+
+// Create 40 Word Callback for Custom Post Excerpts, call using html5wp_excerpt('uwsmediawp_custom_post');
+function uwsmediawp_custom_post($length)
+{
+    return 40;
+}
+
 function uwsmediawp_excerpt( $length_callback = '', $more_callback = '' ) {
     
     global $post;
@@ -623,11 +635,17 @@ add_action( 'add_meta_boxes', 'add_groups_metabox' );
 // add job title meta box to team members post type
 add_action( 'add_meta_boxes', 'add_team_members_metabox' );
 
+// add author meta box to uws-project post
+add_action( 'add_meta_boxes', 'add_author_metabox' );
+
 // save group metadata on save post
 add_action( 'save_post', 'save_post_group_meta', 10, 2 );
 
 // save team members metadata on save post
 add_action( 'save_post', 'save_team_member_meta', 10, 2 );
+
+// save team members metadata on save post
+add_action( 'save_post', 'save_project_authors_meta', 10, 2 );
 
 /* Hide unused page from Dashboard Admin Menu */
 add_action( 'admin_menu', 'hide_menu_page');
@@ -1148,6 +1166,76 @@ function create_projects_post() {
         'delete_with_user' => false,
         'rewrite' => array('slug' => 'showcases', 'with_front' => true)
     ) );
+}
+
+function add_author_metabox() {
+
+    add_meta_box( 'project-author', 'Author(s)', 'project_authors_meta_box', 'uws-projects', 'normal', 'high' );
+    
+}
+
+function project_authors_meta_box( $post ) {
+    
+    echo '<p>Select the author(s) who worked on this project</p>';
+    
+    $query_args = array(
+        'post_type' => 'uws-team-members',
+        'post_status' => 'publish',
+        'order' => 'ASC',
+        'orderby' => 'title'
+    );
+    
+    $authors = new WP_Query( $query_args );
+    
+    if ( $authors->have_posts() ) {
+        
+        echo '<p><select multiple="multiple" name="project_authors_select">';
+        
+        while( $authors->have_posts() ) {
+            
+            $authors->the_post();
+            
+            echo '<option value="' . get_the_ID() . '">' . get_the_title() . '</option>';
+            
+        }
+        
+        echo '</select></p>';
+        echo '<input type="hidden" name="project_authors" value="' . get_post_meta( $post->ID, 'project_authors', true ) . '" />';
+        echo '<p class="howto">Hold down shift key to select multiple authors.</p>';
+        
+        wp_reset_postdata();
+    
+    }
+    
+    echo '<p"><strong>Other Author(s)</strong></p>';
+    wp_nonce_field( 'add_other_project_authors', 'other_project_authors_nonce' );
+    echo '<input type="text" value="' . get_post_meta( $post->ID, 'other_authors', true ) . '" name="other_authors" />';
+    echo '<p class="howto">Separate authors with commas if any</p>';
+    
+}
+
+function save_project_authors_meta( $post_id, $post ) {
+    
+    /* Get the post type object. */
+    $post_type = get_post_type_object( $post->post_type );
+    
+    /* Check if the current user has permission to edit the post. */
+    if ( !current_user_can( $post_type->cap->edit_post, $post_id ) ) {
+        return $post_id;
+    }
+    
+    if ( isset( $_POST['project_authors'] ) ) {
+        
+        update_post_meta( $post_id, 'project_authors', sanitize_text_field( $_POST['project_authors'] ) );
+        
+    }
+    
+    if ( wp_verify_nonce( $_POST['other_project_authors_nonce'], 'add_other_project_authors' ) ) {
+        
+        update_post_meta( $post_id, 'other_authors', sanitize_text_field( $_POST['other_authors'] ) );
+        
+    }
+
 }
 
 function create_degree_taxonomy() {

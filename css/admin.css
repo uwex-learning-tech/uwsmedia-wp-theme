@@ -55,6 +55,7 @@
     CUSTOM META BOX
 \*------------------------------------*/
 .post-type-uws-projects .postbox select,
+.post-type-uws-projects .postbox input[type=text],
 .post-type-uws-team-members .postbox input[type=text] {
     width: 100%;
 }
