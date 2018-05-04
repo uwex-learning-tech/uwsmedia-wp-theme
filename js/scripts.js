@@ -169,8 +169,7 @@
                 	
             	}
             	
-            	if ( mediaCBs.length || mediaCBs.length 
-            	|| programCBs.length || searchInput.length ) {
+            	if ( mediaCBs.length || mediaCBs.length || programCBs.length || searchInput.length ) {
                 	
                 	// execute AJAX
                 	jQuery.ajax( {

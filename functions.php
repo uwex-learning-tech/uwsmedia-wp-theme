@@ -179,9 +179,9 @@ if ( function_exists( 'register_sidebar' ) ) {
     
     // Define Sidebar Widget Area 1
     register_sidebar( array(
-        'name'          => __( 'Widget Area 1', 'uwsmedia' ),
-        'description'   => __( 'Description for this widget-area...', 'uwsmedia' ),
-        'id'            => 'widget-area-1',
+        'name'          => __( 'Sidebar', 'uwsmedia' ),
+        'description'   => __( 'For page templates that have a side bar.', 'uwsmedia' ),
+        'id'            => 'uwsmedia-sidebar',
         'before_widget' => '<div id="%1$s" class="%2$s">',
         'after_widget'  => '</div>',
         'before_title'  => '<h3>',
