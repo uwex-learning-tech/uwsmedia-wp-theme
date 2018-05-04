@@ -1,8 +1,8 @@
 <?php get_header(); ?>
 <!-- body content container -->
 <div class="container">
-    <div class="row">
-	<main class="col-8" role="main">
+    
+	<main role="main">
 		<!-- section -->
 		<section>
             
@@ -54,14 +54,9 @@
 		</section>
 		<!-- /section -->
 	</main>
-	
-
-<?php get_sidebar(); ?>
 
 <?php if ( !is_front_page() ) { ?>
 			    
-    </div>
-    <!-- /body content container row -->
 </div>
 <!-- /body content container -->
 

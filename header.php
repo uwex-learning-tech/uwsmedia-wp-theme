@@ -25,18 +25,19 @@
                 
                     <nav class="navbar navbar-expand-lg navbar-light" role="navigation">
                         <div class="container">
-                        <!-- logo -->
-                        <a class="navbar-brand" href="<?php echo home_url(); ?>">
-            				<img class="logo-img" src="<?php echo get_option('site_logo_option'); ?>" alt="<?php bloginfo('name'); ?>" />
-                        </a>
-                        
-                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#primaryHeaderNav" aria-controls="primaryHeaderNav" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-            			
-                        <div id="primaryHeaderNav" class="collapse navbar-collapse">
-            			<?php uwsmedia_nav(); ?>
-                        </div>
+                            
+                            <!-- logo -->
+                            <a class="navbar-brand" href="<?php echo home_url(); ?>">
+                				<img class="logo-img" src="<?php echo get_option('site_logo_option'); ?>" alt="<?php bloginfo('name'); ?>" />
+                            </a>
+                            
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#primaryHeaderNav" aria-controls="primaryHeaderNav" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                			
+                            <div id="primaryHeaderNav" class="collapse navbar-collapse">
+                			<?php uwsmedia_nav(); ?>
+                            </div>
                         </div>
                     </nav>
                     
@@ -47,7 +48,7 @@
             <?php if ( !is_front_page() ) : ?>
             <?php if ( !is_404() ) : ?>
             
-            <div class="breadcrumb-nav">
+            <div class="breadcrumb-nav d-flex align-items-center">
                 <div class="container">
                 <?php breadcrumb_nav(); ?>
                 </div>

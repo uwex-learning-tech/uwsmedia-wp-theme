@@ -659,9 +659,6 @@ add_action( 'after_switch_theme', 'flush_rewrite_rules' );
 // Add dropdown filter for Groups Custom Post
 add_action( 'restrict_manage_posts', 'add_groups_filter_dropdown' );
 
-// add Open Graph meta data
-add_action('wp_head', 'fb_opengraph', 5);
-
 // add ajax search functionalities
 add_action( 'wp_ajax_load_search_results', 'load_search_results' );
 add_action( 'wp_ajax_nopriv_load_search_results', 'load_search_results' );
@@ -1905,68 +1902,6 @@ function load_search_results() {
 	echo $content;
 	die();
 			
-}
-
-/*------------------------------------*\
-	OPEN GRAPH META
-\*------------------------------------*/
-
-function fb_opengraph() {
-    
-    global $post;
- 
-    if ( is_single() || is_page() || is_front_page() ) {
-        
-        $title = '';
-        $link = '';
-        $type = '';
-        
-        if ( is_single() || is_page()) {
-            
-            $title = the_title( '', '', false );
-            $link = get_permalink();
-            $type = 'article';
-            
-        } else if ( is_front_page() ) {
-            
-            $title = get_bloginfo( 'name' );
-            $link = get_bloginfo( 'url' );
-            $type = 'website';
-        }
-        
-        if ( has_post_thumbnail( $post->ID ) ) {
-            
-            $img_src = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'thumbnail' );
-            
-        } else {
-            
-            $img_src = get_stylesheet_directory_uri() . '/img/uwex_logo.svg';
-            
-        }
-
-        if ( $excerpt = $post->post_excerpt ) {
-            
-            $excerpt = strip_tags( $post->post_excerpt );
-            $excerpt = str_replace( "", "'", $excerpt );
-            
-        } else {
-            
-            $excerpt = get_bloginfo( 'description' );
-            
-        }
-?>
- 
-    <meta property="og:title" content="<?php echo $title; ?>"/>
-    <meta property="og:description" content="<?php echo $excerpt; ?>"/>
-    <meta property="og:type" content="<?php echo $type; ?>"/>
-    <meta property="og:url" content="<?php echo $link; ?>"/>
-    <meta property="og:site_name" content="<?php echo get_bloginfo( 'name' ); ?>"/>
-    <meta property="og:image" content="<?php echo $img_src; ?>"/>
- 
-<?php
-    } else {
-        return;
-    }
 }
 
 /*------------------------------------*\

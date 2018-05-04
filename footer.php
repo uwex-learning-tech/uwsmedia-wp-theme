@@ -6,11 +6,11 @@
                     
                     <div class="row">
                         
-                        <div class="col-1 d-flex align-items-center flex-wrap">
+                        <div class="col-2 col-sm-2 col-md-2 col-lg-1 d-flex align-items-center flex-wrap">
                             <img class="footer-logo" src="<?php echo get_option('footer_logo_option'); ?>" alt="UWEX Media Services" />
                         </div>
                         
-                        <div class="col-9 d-flex align-items-center flex-wrap">
+                        <div class="col-10 col-sm-8 col-md-8 col-lg-9 d-flex align-items-center flex-wrap">
                             
                             <!-- copyright -->
             				<p class="copyright">&copy; <?php echo date('Y'); ?>.  <?php echo get_option('copyright_option'); ?></p>
@@ -18,7 +18,7 @@
                             
                         </div>
                         
-                        <div class="col-2 d-flex align-items-center flex-wrap">
+                        <div class="col-12 col-sm-2 col-md-2 col-lg-2 d-flex align-items-center flex-wrap">
                             
                             <?php if ( is_user_logged_in() ) {
                                 
