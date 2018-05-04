@@ -107,14 +107,18 @@ jQuery( document ).ready( function( $ ) {
     	} );
     	
     	var authorsInput = jQuery( 'input[name=project_authors]' );
-    	var authors = authorsInput.val().split( ',' );
     	
-    	jQuery.each( authors, function( i ) {
+    	if ( authorsInput.val().length ) {
         	
-        	$( 'select[name=project_authors_select] option[value=' + authors[i] + ']' ).prop( 'selected', true );
-        	
-    	} );
+        	var authors = authorsInput.val().split( ',' );
     	
+        	jQuery.each( authors, function( i ) {
+            	
+            	$( 'select[name=project_authors_select] option[value=' + authors[i] + ']' ).prop( 'selected', true );
+            	
+        	} );
+        	
+    	}
     	
     	// get the value of the multiple select input
     	jQuery( 'select[name=project_authors_select]' ).on( 'change', function() {

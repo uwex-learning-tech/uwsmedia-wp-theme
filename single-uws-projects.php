@@ -51,7 +51,62 @@
                             
                         ?></p>
         
-                        <p class="authors"><?php _e( 'By', 'uwsmedia' ); ?> <?php the_author_posts_link(); ?></p>
+                        <?php
+                            
+                            $authors = get_post_meta( $post->ID, 'project_authors', true );
+                            $otherAuthors = trim( get_post_meta( $post->ID, 'other_authors', true ) );
+                            
+                            if ( !empty( $authors ) || !empty( $otherAuthors ) ) {
+                                
+                                echo '<p class="authors">By ';
+                            
+                                if ( !empty( $authors ) ) {
+                                    
+                                    $count = 0;
+                                    $authorIds = explode( ',', get_post_meta( $post->ID, 'project_authors', true ) );
+                                    
+                                    foreach( $authorIds as $id ) {
+                                    
+                                        echo '<a href="' . get_the_permalink( $id ) .'">' . get_the_title( $id ) . '</a>';
+                                        
+                                        $count++;
+                                        
+                                        if ( $count < count( $authorIds ) 
+                                        || !empty( $otherAuthors ) ) {
+                                            echo ', ';
+                                        }
+                                        
+                                    }
+                                    
+                                }
+                                
+                                if ( !empty( $otherAuthors ) ) {
+                                    
+                                    $otherArry = explode( ',', $otherAuthors );
+                                    
+                                    $count = 0;
+                                    
+                                    foreach( $otherArry as $other ) {
+                                    
+                                        echo ucwords( trim( $other ) );
+                                        
+                                        $count++;
+                                        
+                                        if ( $count < count( $otherArry ) ) {
+                                            echo ', ';
+                                        }
+                                        
+                                    }
+                                    
+                                }
+                                
+                                echo '</p>';
+                                
+                            } else {
+                                echo '<p class="authors"></p>';
+                            }
+                            
+                        ?>
                         
                         <?php the_content(); // Dynamic Content ?>
                         <ul class="tag-pills">
