@@ -1131,9 +1131,9 @@ function create_projects_post() {
         'labels' => array(
             'name' => __( 'Projects', 'uwsmedia' ),
             'singular_name' => __( 'Project', 'uwsmedia' ),
-            'all_items' => __( 'All Projects', 'uwsmedia' ),
+            'all_items' => __( 'All Showcases', 'uwsmedia' ),
             'menu_name' => __( 'Showcases', 'uwsmedia' ),
-            'name_admin_bar' => __('Project', 'uwsmedia' ),
+            'name_admin_bar' => __('Showcase Item', 'uwsmedia' ),
             'add_new' => __( 'Add New', 'uwsmedia' ),
             'add_new_item' => __( 'Add New Project', 'uwsmedia' ),
             'edit' => __( 'Edit', 'uwsmedia' ),
