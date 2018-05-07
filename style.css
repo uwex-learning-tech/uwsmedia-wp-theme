@@ -364,6 +364,7 @@ main .page-featured-image img {
 }
 
 .footer .user-info {
+    display: none;
     margin: 0;
 }
 
@@ -848,7 +849,9 @@ main .page-featured-image img {
         height: 6.25rem;
         padding: 0;
     }
-    
+    .footer .user-info {
+        display: block;
+    }
     .footer .login-btn {
         display: block;
     }

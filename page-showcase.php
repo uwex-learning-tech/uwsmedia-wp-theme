@@ -14,7 +14,7 @@
     
         <div class="row">
         
-            <main class="col-9" role="main">
+            <main class="col-12 col-sm-12 col-md-9" role="main">
                 
                 <section>
                 
@@ -49,7 +49,7 @@
                             
                             $facultyProjects->the_post();
                     ?>
-                        <div class="col-4 project">
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-4 project">
                             <a href="<?php the_permalink(); ?>">
                                 
                                 <div class="project-bg">
@@ -121,7 +121,7 @@
             </main>
             
             <!-- sidebar -->
-            <aside class="sidebar col-3" role="complementary">
+            <aside class="sidebar col-12 col-sm-12 col-md-3" role="complementary">
                 
                 <!-- search -->
                 <div class="search" role="search">
