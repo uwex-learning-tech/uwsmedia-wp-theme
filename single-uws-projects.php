@@ -41,15 +41,15 @@
                         
                         <p class="categories"><?php 
 
-                            $media_type_terms = get_the_terms( $post->ID, 'media_types' );
+                                $classification_terms = get_the_terms( $post->ID, 'classifications' );
             
-                            if ( !is_array( $media_type_terms ) || count( $media_type_terms ) <= 0 ) {
-                                echo '<span aria-hidden="true">&mdash;</span>';
-                            } else {
-                                echo $media_type_terms[0]->name;
-                            }
-                            
-                        ?></p>
+                                if ( !is_array( $classification_terms ) || count( $classification_terms ) <= 0 ) {
+                                    echo '<span aria-hidden="true">&nbsp;</span>';
+                                } else {
+                                    echo $classification_terms[0]->name;
+                                }
+                                
+                            ?></p>
         
                         <?php
                             
@@ -113,8 +113,8 @@
                         <?php 
 
                         $tag_terms = null;
-                        $use_case_terms = get_the_terms( $post->ID, 'use_cases' );
-                        $degree_program_terms = get_the_terms( $post->ID, 'degree_programs' );
+                        $use_case_terms = get_the_terms( $post->ID, 'media_types' );
+                        $degree_program_terms = get_the_terms( $post->ID, 'programs' );
                         
                         if ( is_array( $use_case_terms )
                         && is_array( $degree_program_terms ) ) {
