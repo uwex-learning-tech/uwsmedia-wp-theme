@@ -637,6 +637,9 @@ main .page-featured-image img {
     margin: 0;
     border: none;
 }
+.single.single-uws-projects .embed-responsive {
+    margin-bottom: 16px;
+}
 
 /* team members */
 .single.single-uws-team-members aside {

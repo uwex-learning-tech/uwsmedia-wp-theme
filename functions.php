@@ -635,8 +635,8 @@ add_action( 'add_meta_boxes', 'add_groups_metabox' );
 // add job title meta box to team members post type
 add_action( 'add_meta_boxes', 'add_team_members_metabox' );
 
-// add author meta box to uws-project post
-add_action( 'add_meta_boxes', 'add_author_metabox' );
+// add meta boxes to uws-project post
+add_action( 'add_meta_boxes', 'add_project_metabox' );
 
 // save group metadata on save post
 add_action( 'save_post', 'save_post_group_meta', 10, 2 );
@@ -644,8 +644,8 @@ add_action( 'save_post', 'save_post_group_meta', 10, 2 );
 // save team members metadata on save post
 add_action( 'save_post', 'save_team_member_meta', 10, 2 );
 
-// save team members metadata on save post
-add_action( 'save_post', 'save_project_authors_meta', 10, 2 );
+// save metadata on project save post
+add_action( 'save_post', 'save_project_meta', 10, 2 );
 
 /* Hide unused page from Dashboard Admin Menu */
 add_action( 'admin_menu', 'hide_menu_page');
@@ -1165,9 +1165,11 @@ function create_projects_post() {
     ) );
 }
 
-function add_author_metabox() {
+function add_project_metabox() {
 
     add_meta_box( 'project-author', 'Author(s)', 'project_authors_meta_box', 'uws-projects', 'normal', 'high' );
+    
+    add_meta_box( 'project-media-embed', 'Media Embed', 'project_media_ebmed_meta_box', 'uws-projects', 'normal', 'default' );
     
 }
 
@@ -1211,7 +1213,18 @@ function project_authors_meta_box( $post ) {
     
 }
 
-function save_project_authors_meta( $post_id, $post ) {
+function project_media_ebmed_meta_box( $post ) {
+    
+    echo '<p>Enter the URL of the media to embed and show on the page.</p>';
+    wp_nonce_field( 'add_media_embed', 'media_embed_nonce' );
+    
+    echo '<input class="code" name="media_embed_code" type="url" value="' . get_post_meta( $post->ID, 'media_embed_code', true ) . '" />';
+    
+    echo '<p><label><input value="1" name="hide_thumbnail" type="checkbox" ' . ( get_post_meta( $post->ID, 'hide_thumbnail' )[0] == '1' ? ' checked="checked"' : '' ) . '> Hide Featured Image</label></p>';
+    
+}
+
+function save_project_meta( $post_id, $post ) {
     
     /* Get the post type object. */
     $post_type = get_post_type_object( $post->post_type );
@@ -1230,6 +1243,18 @@ function save_project_authors_meta( $post_id, $post ) {
     if ( wp_verify_nonce( $_POST['other_project_authors_nonce'], 'add_other_project_authors' ) ) {
         
         update_post_meta( $post_id, 'other_authors', sanitize_text_field( $_POST['other_authors'] ) );
+        
+    }
+    
+    if ( wp_verify_nonce( $_POST['media_embed_nonce'], 'add_media_embed' ) ) {
+        
+        update_post_meta( $post_id, 'media_embed_code', sanitize_text_field( $_POST['media_embed_code'] ) );
+        
+    }
+    
+    if ( isset( $_POST['hide_thumbnail'] ) ) {
+        
+        update_post_meta( $post_id, 'hide_thumbnail', sanitize_text_field( $_POST['hide_thumbnail'] ) );
         
     }
 

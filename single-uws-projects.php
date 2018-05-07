@@ -1,12 +1,16 @@
 <?php get_header(); ?>
     <?php if (have_posts()): while (have_posts()) : the_post(); ?>
-    <!-- post thumbnail -->
-    		<?php if ( has_post_thumbnail()) : // Check if Thumbnail exists ?>
+    
+            <!-- post thumbnail -->
+            <?php if ( get_post_meta( $post->ID, 'hide_thumbnail' )[0] != '1' ) : // Check if Thumbnail exists ?>
+    		<?php if ( has_post_thumbnail() ) : // Check if Thumbnail exists ?>
     		<div class="post-featured-image">
     			<?php the_post_thumbnail(); ?>
             </div>
     		<?php endif; ?>
+    		<?php endif; ?>
     		<!-- /post thumbnail -->
+    		
     <div class="container">
         <div class="row">
             <main class="col-10 offset-1" role="main">
@@ -104,6 +108,19 @@
                                 
                             } else {
                                 echo '<p class="authors"></p>';
+                            }
+                            
+                        ?>
+                        
+                        <?php 
+                            
+                            // get embedded element if any
+                            $embedLink = get_post_meta( $post->ID, 'media_embed_code', true );
+                            
+                            if ( !empty( trim( $embedLink ) ) ) {
+                                
+                             echo '<div class="embed-responsive embed-responsive-16by9"><iframe class="embed-responsive-item" src="' . $embedLink . '?rel=0" allowfullscreen></iframe></div>';
+                                
                             }
                             
                         ?>
