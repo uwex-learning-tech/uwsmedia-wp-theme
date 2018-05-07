@@ -24,15 +24,15 @@
     
                     $filters = null;
                     
-                    if ( isset( $_GET['degree_programs'] ) && !empty( $_GET['degree_programs'] ) ) {
+                    if ( isset( $_GET['programs'] ) && !empty( $_GET['programs'] ) ) {
                         
-                        $filters = is_array( $filters ) ? array_merge( $filters, explode( ',', $_GET['degree_programs'] ) ) : explode( ',', $_GET['degree_programs'] );
+                        $filters = is_array( $filters ) ? array_merge( $filters, explode( ',', $_GET['programs'] ) ) : explode( ',', $_GET['programs'] );
                         
                     }
                     
-                    if ( isset( $_GET['use_cases'] ) && !empty( $_GET['use_cases'] ) ) {
+                    if ( isset( $_GET['classifications'] ) && !empty( $_GET['classifications'] ) ) {
             
-                        $filters = is_array( $filters ) ? array_merge( $filters, explode( ',', $_GET['use_cases'] ) ) : explode( ',', $_GET['use_cases'] );
+                        $filters = is_array( $filters ) ? array_merge( $filters, explode( ',', $_GET['classifications'] ) ) : explode( ',', $_GET['classifications'] );
                         
                     }
                     
