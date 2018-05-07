@@ -124,7 +124,7 @@
                           <div class="col-12">
 
                     <div class="alert alert-light" role="alert">
-                        <h2 class="text-center">💔<br>No Projects Found</h2>
+                        <h2 class="text-center">💔<br>No Projects To Show</h2>
                         <hr>
                         <p class="text-center">Projects will show up here after projects are added.</p>
                     </div>
