@@ -969,7 +969,7 @@ function add_project_custom_columns_value( $column, $post_id ) {
             if ( !is_array( $media_type_terms ) || count( $media_type_terms ) <= 0 ) {
                 echo '<span aria-hidden="true">&mdash;</span>';
             } else {
-                echo $media_type_terms[0]->name;
+                echo strip_tags( get_the_term_list( $post->ID, 'media_types', '', ', ', '' ) );
             }
     	    
     	break;
@@ -1332,63 +1332,16 @@ function create_media_type_taxonomy() {
     );
     
     $args = array(
-        'hierarchical' => false,
+        'hierarchical' => true,
         'labels' => $labels,
         'show_ui' => true,
         'show_admin_column' => true,
         'update_count_callback' => '_update_post_term_count',
         'query_var' => true,
-        'meta_box_cb' => 'uws_projects_media_types',
         'rewrite' => array( 'slug' => 'types' )
     );
     
     register_taxonomy( 'media_types', 'uws-projects', $args );
-    
-}
-
-function uws_projects_media_types( $post, $box ) {
-    
-    $defaults = array( 'taxonomy' => 'category' );
-    
-    if ( !isset( $box['args'] ) || !is_array( $box['args'] ) ) {
-        
-        $args = array();
-        
-    } else {
-        
-        $args = $box['args'];
-        
-    }
-    
-    extract( wp_parse_args( $args, $defaults ), EXTR_SKIP );
-    
-    $tax = get_taxonomy( $taxonomy );
-    ?>
-    <div id="taxonomy-<?php echo $taxonomy; ?>" class="acf-taxonomy-field categorydiv">
-        <?php
-            $name = ( $taxonomy == 'category' ) ? 'post_category' : 'tax_input[' . $taxonomy . ']';
-        echo "<input type='hidden' name='{$name}[]' value='0' />";
-        
-        ?>
-        
-        <?php
-            $term_obj = wp_get_object_terms( $post->ID, $taxonomy );
-            wp_dropdown_categories( array(
-                'taxonomy' => $taxonomy,
-                'hide_empty' => 0,
-                'name' => "{$name}[]",
-                'selected' => $term_obj[0]->slug,
-                'orderby' => 'name',
-                'hierarchical' => 0,
-                'show_option_none' => '&mdash;',
-                'option_none_value'  => '0',
-                'value_field' => 'slug',
-                )
-            );
-        ?>
-        
-    </div>
-    <?php
     
 }
 
