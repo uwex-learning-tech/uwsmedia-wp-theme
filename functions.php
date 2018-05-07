@@ -1716,6 +1716,7 @@ function load_search_results() {
         
         'post_type' => 'uws-projects',
         'post_status' => 'publish',
+        'posts_per_page' => -1,
         's' => '',
         'meta_query' => array(
             array(
