@@ -624,7 +624,7 @@ add_action( 'init', 'create_team_members_post' );
 add_action( 'init', 'create_post_groups' );
 add_action( 'init', 'create_projects_post' );
 add_action( 'init', 'create_programs_taxonomy' );
-add_action( 'init', 'create_use_case_taxonomy' );
+add_action( 'init', 'create_classifications_taxonomy' );
 add_action( 'init', 'create_media_type_taxonomy' );
 add_action( 'manage_posts_custom_column', 'add_project_custom_columns_value', 10, 2 );
 add_action( 'manage_pages_custom_column', 'add_pages_group_column_value', 10, 2 );
@@ -904,7 +904,7 @@ function add_projects_custom_columns( $columns ) {
         'title' => __( 'Title' ),
         'group' => __( 'Group', 'uwsmedia' ),
         'program' => __( 'Program', 'uwsmedia' ),
-        'use_case' => __( 'Use Case', 'uwsmedia' ),
+        'classification' => __( 'Classification', 'uwsmedia' ),
         'media_type' => __( 'Media Type', 'uwsmedia' ),
         'date' => __( 'Date' )
     );
@@ -973,14 +973,14 @@ function add_project_custom_columns_value( $column, $post_id ) {
             }
     	    
     	break;
-    	case 'use_case':
+    	case 'classification':
     	    
-    	    $use_case_terms = get_the_terms( $post->ID, 'use_cases' );
+    	    $classification_terms = get_the_terms( $post->ID, 'classifications' );
             
-            if ( !is_array( $use_case_terms ) || count( $use_case_terms ) <= 0 ) {
+            if ( !is_array( $classification_terms ) || count( $classification_terms ) <= 0 ) {
                 echo '<span aria-hidden="true">&mdash;</span>';
             } else {
-                echo $use_case_terms[0]->name;
+                echo $classification_terms[0]->name;
             }
     	    
     	break;
@@ -1272,26 +1272,26 @@ function create_programs_taxonomy() {
     
 }
 
-function create_use_case_taxonomy() {
+function create_classifications_taxonomy() {
     
     $labels = array(
-        'name' => __( 'Use Cases', 'uwsmedia' ),
-        'singular_name' => __( 'Cases', 'uwsmedia' ),
-        'all_items' => __( 'All Use Cases', 'uwsmedia' ),
-        'edit_item' => __( 'Edit Use Case', 'uwsmedia' ),
-        'view_item' => __( 'View Use Case', 'uwsmedia' ),
-        'update_item' => __( 'Update Use Case', 'uwsmedia' ),
-        'new_item_name' => __( 'New Use Case Name', 'uwsmedia' ),
-        'add_new_item' => __( 'Add New Use Case', 'uwsmedia' ),
-        'search_items' => __( 'Search Use Cases', 'uwsmedia' ),
-        'popular_items' => __( 'Popular Use Cases', 'uwsmedia' ),
-        'add_or_remove_items' => __( 'Add or remove use cases', 'uwsmedia' ),
-        'choose_from_most_used' => __( 'Choose from most used use cases', 'uwsmedia' ),
-        'separate_items_with_commas' => __( 'Separate use cases with commas', 'uwsmedia' ),
+        'name' => __( 'Classifications', 'uwsmedia' ),
+        'singular_name' => __( 'Classification', 'uwsmedia' ),
+        'all_items' => __( 'All Classification', 'uwsmedia' ),
+        'edit_item' => __( 'Edit Classification', 'uwsmedia' ),
+        'view_item' => __( 'View Classification', 'uwsmedia' ),
+        'update_item' => __( 'Update Classification', 'uwsmedia' ),
+        'new_item_name' => __( 'New Classification Name', 'uwsmedia' ),
+        'add_new_item' => __( 'Add New Classification', 'uwsmedia' ),
+        'search_items' => __( 'Search Classifications', 'uwsmedia' ),
+        'popular_items' => __( 'Popular Classifications', 'uwsmedia' ),
+        'add_or_remove_items' => __( 'Add or remove classifications', 'uwsmedia' ),
+        'choose_from_most_used' => __( 'Choose from most used classifications', 'uwsmedia' ),
+        'separate_items_with_commas' => __( 'Separate classifications with commas', 'uwsmedia' ),
         'parent_item' => null,
 		'parent_item_colon'  => null,
-		'not_found' => __( 'No use cases found.', 'uwsmedia' ),
-		'menu_name' => __( 'Use Cases', 'uwsmedia' ),
+		'not_found' => __( 'No classifications found.', 'uwsmedia' ),
+		'menu_name' => __( 'Classifications', 'uwsmedia' ),
     );
     
     $args = array(
@@ -1301,11 +1301,11 @@ function create_use_case_taxonomy() {
         'show_admin_column' => true,
         'update_count_callback' => '_update_post_term_count',
         'query_var' => true,
-        'meta_box_cb' => 'uws_projects_use_cases',
-        'rewrite' => array( 'slug' => 'cases' )
+        'meta_box_cb' => 'uws_projects_classifications',
+        'rewrite' => array( 'slug' => 'classification' )
     );
     
-    register_taxonomy( 'use_cases', 'uws-projects', $args );
+    register_taxonomy( 'classifications', 'uws-projects', $args );
     
 }
 
@@ -1392,7 +1392,7 @@ function uws_projects_media_types( $post, $box ) {
     
 }
 
-function uws_projects_use_cases( $post, $box ) {
+function uws_projects_classifications( $post, $box ) {
     
     $defaults = array( 'taxonomy' => 'category' );
     
@@ -1765,12 +1765,12 @@ function load_search_results() {
         
     }
     
-    if ( isset( $_POST['caseTags'] ) ) {
+    if ( isset( $_POST['classTags'] ) ) {
         
         array_push( $args['tax_query'], array(
-            'taxonomy' => 'use_cases',
+            'taxonomy' => 'classifications',
             'field' => 'slug',
-            'terms' => explode( ',', $_POST['caseTags'] )
+            'terms' => explode( ',', $_POST['classTags'] )
         ) );
         
     }
@@ -1804,7 +1804,7 @@ function load_search_results() {
             <div class="sharings">
                 
                 <a class="btn btn-link btn-sm" href="<?php the_permalink(); ?>" role="button"><span class="fa fa-times-circle"></span> Clear Search</a>
-                <button id="shareSearchLink" class="btn btn-secondary btn-sm"><span class="fa fa-link"></span> <span class="txt">Copy Search Link</span><input type="text" class="hiddenShareLink" name="searchLink" value="<?php echo get_site_url() . '?s=' . $keyword . '&post_type=uws-projects&post_group_id=' . get_post_meta( $_REQUEST['post_id'], 'post_group_id', true ); ?>&programs=<?php echo $_POST['programTags']; ?>&use_cases=<?php echo $_POST['caseTags']; ?>&media_types=<?php echo $_POST['mediaTags']; ?>" /></button>
+                <button id="shareSearchLink" class="btn btn-secondary btn-sm"><span class="fa fa-link"></span> <span class="txt">Copy Search Link</span><input type="text" class="hiddenShareLink" name="searchLink" value="<?php echo get_site_url() . '?s=' . $keyword . '&post_type=uws-projects&post_group_id=' . get_post_meta( $_REQUEST['post_id'], 'post_group_id', true ); ?>&programs=<?php echo $_POST['programTags']; ?>&classifications=<?php echo $_POST['classTags']; ?>&media_types=<?php echo $_POST['mediaTags']; ?>" /></button>
             </div>
             
             <div class="row d-flex flex-row">
@@ -1861,9 +1861,9 @@ function load_search_results() {
                     
                 }
                 
-                if ( isset( $_POST['caseTags'] ) ) {
-        
-                    $filters = is_array( $filters ) ? array_merge( $filters, explode( ',', $_POST['caseTags'] ) ) : explode( ',', $_POST['caseTags'] );
+                if ( isset( $_POST['classTags'] ) ) {
+                
+                    $filters = is_array( $filters ) ? array_merge( $filters, explode( ',', $_POST['classTags'] ) ) : explode( ',', $_POST['classTags'] );
                     
                 }
                 

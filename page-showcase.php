@@ -146,21 +146,21 @@
                                
                                foreach( $programs as $program ) {
                                    
-                                   echo '<div class="form-check"><input type="checkbox" class="form-check-input degree-cb" id="degree_program_' .$program->slug . '" value="' . $program->slug . '"><label class="form-check-label" for="degree_program_' . $program->slug . '">' . $program->name . '</label></div>';
+                                   echo '<div class="form-check"><input type="checkbox" class="form-check-input program-cb" id="program_' .$program->slug . '" value="' . $program->slug . '"><label class="form-check-label" for="program_' . $program->slug . '">' . $program->name . '</label></div>';
                                    
                                }
                                
                             ?>
                             
-                            <h4>Use Cases</h4>
+                            <h4>Classifications</h4>
                             
                             <?php
                                        
-                               $useCases = get_terms(array( 'taxonomy' => 'use_cases', 'hide_empty' => false ));
+                               $classifications = get_terms(array( 'taxonomy' => 'classifications', 'hide_empty' => false ));
                                
-                               foreach( $useCases as $case ) {
+                               foreach( $classifications as $classification ) {
                                    
-                                   echo '<div class="form-check"><input type="checkbox" class="form-check-input case-cb" id="use_case_' .$case->slug . '" value="' . $case->slug . '"><label class="form-check-label" for="use_case_' . $case->slug . '">' . $case->name . '</label></div>';
+                                   echo '<div class="form-check"><input type="checkbox" class="form-check-input classification-cb" id="classification_' .$classification->slug . '" value="' . $classification->slug . '"><label class="form-check-label" for="classification_' . $classification->slug . '">' . $classification->name . '</label></div>';
                                    
                                }
                                

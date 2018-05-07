@@ -105,8 +105,8 @@
         	    // set variable to DOM elements
             	var searchInput = jQuery( '#ajaxSearchInput' ).val().trim();
             	var postId = jQuery( 'input[name=postId]' ).val();
-            	var programCBs = jQuery( '.sidebarFilter .degree-cb:checked' );
-            	var caseCBs = jQuery( '.sidebarFilter .case-cb:checked' );
+            	var programCBs = jQuery( '.sidebarFilter .program-cb:checked' );
+            	var classCBs = jQuery( '.sidebarFilter .classification-cb:checked' );
             	var mediaCBs = jQuery( '.sidebarFilter .media-cb:checked' );
             	var resultsDisplay = jQuery( '#projects-archive' );
                 
@@ -124,7 +124,7 @@
                 	
             	}
                 
-                // add degree program tags if checked
+                // add program tags if checked
             	if ( programCBs.length ) {
                 	
                 	var tags = [];
@@ -139,18 +139,18 @@
                 	
             	}
             	
-            	// add use case tags if checked
-            	if ( caseCBs.length ) {
+            	// add classification tags if checked
+            	if ( classCBs.length ) {
                 	
                 	var tags = [];
                     
-                    caseCBs.each( function() {
+                    classCBs.each( function() {
                 	
                     	tags.push( jQuery( this ).val() )
                     	
                 	} );
                     
-                    args.caseTags = tags.join( ',' );
+                    args.classTags = tags.join( ',' );
                 	
             	}
                 
@@ -169,7 +169,7 @@
                 	
             	}
             	
-            	if ( mediaCBs.length || mediaCBs.length || programCBs.length || searchInput.length ) {
+            	if ( mediaCBs.length || classCBs.length || programCBs.length || searchInput.length ) {
                 	
                 	// execute AJAX
                 	jQuery.ajax( {
