@@ -42,7 +42,7 @@
                     ?>
                 
                 </ol>
-                <div class="carousel-overlay"></div>
+                
                 <div class="carousel-inner h-100">
                 
                 <?php
@@ -52,6 +52,7 @@
                     
                 ?>
                     <div class="carousel-item<?php  echo $count == 0 ? ' active' : ''; ?>">
+                        <div class="carousel-overlay"></div>
                         <img class="d-block w-100" src="<?php the_post_thumbnail_url( 'full' ); ?>" alt="<?php the_title(); ?>">
                         <div class="carousel-caption d-none d-md-block">
                             <h5><?php the_title(); ?></h5>

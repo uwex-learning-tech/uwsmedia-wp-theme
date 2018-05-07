@@ -177,6 +177,7 @@ h6 {
     font-size: 14px;
     text-align: left;
     box-shadow: 0 0 8px #000;
+    z-index: 12;
 }
 
 #project-carousel .carousel-caption .btn {
