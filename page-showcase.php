@@ -139,12 +139,12 @@
                         <h3>Filter</h3>			
                         <div class="filter-form">
                             
-                            <h4>Degree Programs</h4>
+                            <h4>Programs</h4>
                             <?php
                                        
-                               $degreePrograms = get_terms(array( 'taxonomy' => 'degree_programs', 'hide_empty' => false ));
+                               $programs = get_terms(array( 'taxonomy' => 'programs', 'hide_empty' => false ));
                                
-                               foreach( $degreePrograms as $program ) {
+                               foreach( $programs as $program ) {
                                    
                                    echo '<div class="form-check"><input type="checkbox" class="form-check-input degree-cb" id="degree_program_' .$program->slug . '" value="' . $program->slug . '"><label class="form-check-label" for="degree_program_' . $program->slug . '">' . $program->name . '</label></div>';
                                    
