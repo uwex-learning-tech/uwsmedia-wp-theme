@@ -243,7 +243,8 @@ h6 {
     border-bottom: 2px solid transparent;
 }
 
-#primaryHeaderNav .active {
+#primaryHeaderNav .active,
+#primaryHeaderNav .current-page-ancestor {
     border-bottom-color: #fff;
 }
 
