@@ -26,18 +26,18 @@
                     <!-- article -->
                     <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
-                        <p class="date">
-                        <?php
+                        <?php 
                             
-                            the_time('F j, Y');
-
-                            if ( strcmp( get_the_time( 'F j, Y' ), get_the_modified_date( 'F j, Y' ) ) !== 0 ) {
+                            // get embedded element if any
+                            $embedMedia = get_post_meta( $post->ID, 'media_embed_code', true );
+                            
+                            if ( !empty( trim( $embedMedia ) ) ) {
                                 
-                                echo ' | Updated on ' . get_the_modified_date( 'F j, Y' );
+                             echo '<div class="top-embed">' . $embedMedia . '</div>';
                                 
                             }
                             
-                        ?></p>
+                        ?>
                         
                         <!-- post title -->
                         <h1><?php the_title(); ?></h1>
@@ -108,19 +108,6 @@
                                 
                             } else {
                                 echo '<p class="authors"></p>';
-                            }
-                            
-                        ?>
-                        
-                        <?php 
-                            
-                            // get embedded element if any
-                            $embedLink = get_post_meta( $post->ID, 'media_embed_code', true );
-                            
-                            if ( !empty( trim( $embedLink ) ) ) {
-                                
-                             echo '<div class="embed-responsive embed-responsive-16by9"><iframe class="embed-responsive-item" src="' . $embedLink . '?rel=0" allowfullscreen></iframe></div>';
-                                
                             }
                             
                         ?>

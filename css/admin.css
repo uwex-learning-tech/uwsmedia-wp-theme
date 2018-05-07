@@ -56,7 +56,7 @@
 \*------------------------------------*/
 .post-type-uws-projects .postbox select,
 .post-type-uws-projects .postbox input[type=text],
-.post-type-uws-projects .postbox input[type=url],
+.post-type-uws-projects .postbox textarea,
 .post-type-uws-team-members .postbox input[type=text] {
     width: 100%;
 }

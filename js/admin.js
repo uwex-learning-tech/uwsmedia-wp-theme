@@ -79,7 +79,7 @@ jQuery( document ).ready( function( $ ) {
 	}
 	
 	if ( jQuery( 'body' ).hasClass( 'wp-admin')
-	&& jQuery( 'body' ).hasClass( 'post-type-uws-projects' ) && !jQuery( 'body' ).hasClass( 'edit-php' ) ) {
+	&& jQuery( 'body' ).hasClass( 'post-type-uws-projects' ) && !jQuery( 'body' ).hasClass( 'post-php' ) && !jQuery( 'body' ).hasClass( 'edit-php' ) ) {
     	
     	// check if the group box has faculty checked
     	var groupSelect = '#poststuff select#post_group_id';

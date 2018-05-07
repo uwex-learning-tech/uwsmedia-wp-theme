@@ -1215,10 +1215,10 @@ function project_authors_meta_box( $post ) {
 
 function project_media_ebmed_meta_box( $post ) {
     
-    echo '<p>Enter the URL of the media to embed and show on the page.</p>';
+    echo '<p>Enter media to embed and show on the page right after the title but before the content.</p>';
     wp_nonce_field( 'add_media_embed', 'media_embed_nonce' );
     
-    echo '<input class="code" name="media_embed_code" type="url" value="' . get_post_meta( $post->ID, 'media_embed_code', true ) . '" />';
+    echo '<textarea class="code" name="media_embed_code">' . get_post_meta( $post->ID, 'media_embed_code', true ) . '</textarea>';
     
     echo '<p><label><input value="1" name="hide_thumbnail" type="checkbox" ' . ( get_post_meta( $post->ID, 'hide_thumbnail' )[0] == '1' ? ' checked="checked"' : '' ) . '> Hide Featured Image</label></p>';
     
@@ -1248,7 +1248,7 @@ function save_project_meta( $post_id, $post ) {
     
     if ( wp_verify_nonce( $_POST['media_embed_nonce'], 'add_media_embed' ) ) {
         
-        update_post_meta( $post_id, 'media_embed_code', sanitize_text_field( $_POST['media_embed_code'] ) );
+        update_post_meta( $post_id, 'media_embed_code', $_POST['media_embed_code'] );
         
     }
     
@@ -1798,19 +1798,28 @@ function load_search_results() {
                         
                         <div class="project-info">
                         <p class="categories"><?php 
-    
-                        $media_type_terms = get_the_terms( $post->ID, 'media_types' );
-    
-                        if ( !is_array( $media_type_terms ) || count( $media_type_terms ) <= 0 ) {
-                            echo '<span aria-hidden="true">&mdash;</span>';
-                        } else {
-                            echo $media_type_terms[0]->name;
-                        }
-                        
-                    ?></p>
+
+                                $classification_terms = get_the_terms( $post->ID, 'classifications' );
+            
+                                if ( !is_array( $classification_terms ) || count( $classification_terms ) <= 0 ) {
+                                    echo '<span aria-hidden="true">&nbsp;</span>';
+                                } else {
+                                    echo $classification_terms[0]->name;
+                                }
+                                
+                            ?></p>
                         <h2 class="d-flex align-items-center justify-content-center"><?php the_title(); ?></h2>
-                        <p class="date"><?php the_time('F j, Y'); ?></p>
-                        </div>
+                        <p class="categories"><?php 
+
+                $media_type_terms = get_the_terms( $post->ID, 'media_types' );
+
+                if ( !is_array( $media_type_terms ) || count( $media_type_terms ) <= 0 ) {
+                    echo '<span aria-hidden="true">&mdash;</span>';
+                } else {
+                    echo strip_tags( get_the_term_list( $post->ID, 'media_types', '', ', ', '' ) );
+                }
+                
+            ?></p>                        </div>
                         
                     </a>
                 </div>
