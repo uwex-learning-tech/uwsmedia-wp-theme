@@ -460,6 +460,9 @@ main .page-featured-image img {
 
 .section-wrapper .section-banner .btn-action {
     margin-bottom: 8px;
+    font-family: 'Raleway', sans-serif;
+    text-transform: uppercase;
+    font-weight: 700;
 }
 
 .section-wrapper .section-bg img {
