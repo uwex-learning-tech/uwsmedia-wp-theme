@@ -601,49 +601,25 @@ main .page-featured-image img {
     text-align: center;
     margin-right: 8px;
 }
-
+.single.single-uws-projects .shareHeading {
+    font-size: 12px;
+    margin-bottom: 0;
+}
 .single.single-uws-projects .sharings {
-    position: absolute;
     padding: 0;
-    margin: 0;
-    list-style: none;
-    top: 0;
-    right: 0;
-    background-color: #f8f8f8;
-    box-shadow: 0 4px 3px rgba(0,0,0,0.16);
-    border-radius: 0px 0px 5px 5px;
+    margin: 0 0 16px;
 }
 
-.single.single-uws-projects .sharings li {
-    display: inline-block;
-}
-
-.single.single-uws-projects .sharings .separator {
-    background-color: #e0e0e0;
-    width: 1px;
-    height: 15px;
-    margin-top: 10px;
-}
-
-.single.single-uws-projects .sharings .msg {
+.single.single-uws-projects .share.msg {
     display: none;
     position: absolute;
     font-size: 10px;
-    width: 100%;
     background-color: rgba( 0,0,0,0.6);
     color: #fff;
     border-radius: 3px;
     padding: 3px;
     line-height: 1;
-    margin-top: 10px;
-}
-
-.single.single-uws-projects .sharings li a {
-   display: block;
-   padding: 8px;
-   color: #444;
-   font-size: 16px;
-   line-height: 1;
+    margin-top: -14px;
 }
 
 .single.single-uws-projects .sharings .hiddenShareLink {
@@ -654,7 +630,14 @@ main .page-featured-image img {
     border: none;
 }
 .single.single-uws-projects .top-embed {
-    margin: 46px 0 0;
+    background-image: url('img/funky-lines.png');
+    background-color: #000;
+    padding: 20px 0;
+}
+
+.single.single-uws-projects .top-embed iframe {
+    display: block;
+    margin: 0 auto;
 }
 
 /* team members */
@@ -763,8 +746,7 @@ main .page-featured-image img {
     z-index: 1;
 }
 
-.project .project-info .categories,
-.project .project-info .date {
+.project .project-info .categories {
     font-size: 12px;
     line-height: 1;
     text-align: center;
@@ -772,8 +754,8 @@ main .page-featured-image img {
 }
 
 .project .project-info h2 {
-    font-size: 18px;
-    line-height: 26px;
+    font-size: 16px;
+    line-height: 20px;
     height: 52px;
     margin: 8px 0;
     color: #990033;

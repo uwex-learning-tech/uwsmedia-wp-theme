@@ -10,34 +10,33 @@
     		<?php endif; ?>
     		<?php endif; ?>
     		<!-- /post thumbnail -->
-    		
+            
+            
+            <?php 
+                            
+                // get embedded element if any
+                $embedMedia = get_post_meta( $post->ID, 'media_embed_code', true );
+                
+                if ( !empty( trim( $embedMedia ) ) ) : ?>
+                
+                <div class="top-embed">
+                    <div class="container">
+                         <?php echo $embedMedia; ?>
+                    </div>
+                </div>
+                    
+                <?php endif; ?>
+
+            
     <div class="container">
         <div class="row">
             <main class="col-12 col-sm-12 col-md-10 offset-md-1" role="main">
-                
-                <ul class="sharings">
-                    <li><a id="copy-share-link" href="javascript:void(0);" title="Copy Link"><span class="fa fa-link" aria-hidden="true" aria-hidden="true"></span><input class="hiddenShareLink" type="text" value="<?php the_permalink(); ?>" /></a></li><li class="separator"></li><li><a id="shareOnLinkedIn" href="javascript:void(0);" data-ref="http://www.linkedin.com/shareArticle?mini=true&amp;title=<?php echo urlencode(get_the_title()); ?>&amp;summary=<?php echo urlencode(get_the_excerpt()); ?>&amp;url=<?php the_permalink(); ?>&amp;source=<?php echo urlencode( get_blogInfo( 'name' ) ); ?>" title="Share on LinkedIn"><span class="fa fa-linkedin-square" aria-hidden="true"></span></a></li>
-                    <li class="msg"></li>
-                </ul>
                 
                 <!-- section -->
                 <section>
 <!--                     https://pippinsplugins.com/create-live-search-wordpress-jquery-ajax/ -->
                     <!-- article -->
                     <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-
-                        <?php 
-                            
-                            // get embedded element if any
-                            $embedMedia = get_post_meta( $post->ID, 'media_embed_code', true );
-                            
-                            if ( !empty( trim( $embedMedia ) ) ) {
-                                
-                             echo '<div class="top-embed">' . $embedMedia . '</div>';
-                                
-                            }
-                            
-                        ?>
                         
                         <!-- post title -->
                         <h1><?php the_title(); ?></h1>
@@ -54,6 +53,8 @@
                                 }
                                 
                             ?></p>
+                            
+                            <!-- author -->
         
                         <?php
                             
@@ -149,6 +150,18 @@
 
                         ?>
                         </ul>
+                        
+                        <!-- share -->
+                            
+                            <p class="shareHeading">Share:</p>
+                            <div class="sharings btn-group" role="group" aria-label="Share">
+                                
+                                <a id="copy-share-link" class="btn btn-outline-secondary" href="javascript:void(0);" title="Copy Link"><span class="fa fa-link" aria-hidden="true" aria-hidden="true"></span><input class="hiddenShareLink" type="text" value="<?php the_permalink(); ?>" /></a>
+                                
+                                <a id="shareOnLinkedIn" class="btn btn-outline-secondary" href="javascript:void(0);" data-ref="http://www.linkedin.com/shareArticle?mini=true&amp;title=<?php echo urlencode(get_the_title()); ?>&amp;summary=<?php echo urlencode(get_the_excerpt()); ?>&amp;url=<?php the_permalink(); ?>&amp;source=<?php echo urlencode( get_blogInfo( 'name' ) ); ?>" title="Share on LinkedIn"><span class="fa fa-linkedin-square" aria-hidden="true"></span></a>
+                            
+                            </div>
+                            <div class="share msg"></div>
                         
                         <?php edit_post_link( __( 'Edit Project', 'uwsmedia' ), '<p>', '</p>', null ); ?>
                     

@@ -18,7 +18,7 @@
         		
         		// set variables to DOM elements
         		var hiddenInput = $( this ).find( '.hiddenShareLink' )[0];
-        		var msgDisplay = $( '.sharings .msg' );
+        		var msgDisplay = $( '.share.msg' );
         		var msg = 'Linked copied!';
         		
         		// select the text in the hidden input field
@@ -29,11 +29,11 @@
         		hiddenInput.blur();
         		
         		// display message to the DOM; hide message after 3 seconds
-        		msg.html( msg ).fadeIn( function() {
+        		msgDisplay.html( msg ).fadeIn( function() {
             		
             		setTimeout( function() {
             		
-                		msg.fadeOut( function() {
+                		msgDisplay.fadeOut( function() {
                     		
                     		$( this ).html( '' );
                     		

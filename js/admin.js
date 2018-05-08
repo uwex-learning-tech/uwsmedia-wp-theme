@@ -83,7 +83,7 @@ jQuery( document ).ready( function( $ ) {
 	}
 	
 	if ( jQuery( 'body' ).hasClass( 'wp-admin')
-	&& jQuery( 'body' ).hasClass( 'post-type-uws-projects' ) && !jQuery( 'body' ).hasClass( 'post-php' ) && !jQuery( 'body' ).hasClass( 'edit-php' ) && !jQuery( 'body' ).hasClass( 'post-new-php' ) ) {
+	&& jQuery( 'body' ).hasClass( 'post-type-uws-projects' ) ) {
     	
     	// check if the group box has faculty checked
     	var groupSelect = '#poststuff select#post_group_id';
@@ -112,26 +112,30 @@ jQuery( document ).ready( function( $ ) {
     	
     	var authorsInput = jQuery( 'input[name=project_authors]' );
     	
-    	if ( authorsInput.val().length ) {
+    	if ( authorsInput.length ) {
         	
-        	var authors = authorsInput.val().split( ',' );
-    	
-        	jQuery.each( authors, function( i ) {
+        	if ( authorsInput.val().length ) {
+        	
+            	var authors = authorsInput.val().split( ',' );
+        	
+            	jQuery.each( authors, function( i ) {
+                	
+                	$( 'select[name=project_authors_select] option[value=' + authors[i] + ']' ).prop( 'selected', true );
+                	
+            	} );
             	
-            	$( 'select[name=project_authors_select] option[value=' + authors[i] + ']' ).prop( 'selected', true );
+        	}
+        	
+        	// get the value of the multiple select input
+        	jQuery( 'select[name=project_authors_select]' ).on( 'change', function() {
+            	
+            	var values = $( this ).val().join( ',' );
+        
+            	authorsInput.val( values );
             	
         	} );
         	
     	}
-    	
-    	// get the value of the multiple select input
-    	jQuery( 'select[name=project_authors_select]' ).on( 'change', function() {
-        	
-        	var values = $( this ).val().join( ',' );
-    
-        	authorsInput.val( values );
-        	
-    	} );
     	
 	}
 
