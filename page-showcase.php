@@ -68,7 +68,22 @@
                                 }
                                 
                             ?></p>
-                                <h2 class="d-flex align-items-center justify-content-center"><?php the_title(); ?></h2>
+                                <h2 class="d-flex align-items-center justify-content-center"><?php 
+            
+            $title = get_the_title();
+                        
+            $maxPos = 70;
+            
+            if ( strlen( $title ) > $maxPos ) {
+                
+                $lastPos = ( $maxPos - 3 ) - strlen( $title );
+                $title = substr( $title, 0, strrpos( $title, ' ', $lastPos ) ) . '...';
+                
+            }
+            
+            echo $title;
+        
+         ?></h2>
                                 
                                 <p class="categories"><?php 
 
