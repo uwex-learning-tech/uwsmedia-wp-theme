@@ -802,6 +802,7 @@ function add_groups_metabox() {
     $post_types = get_post_types( array( 'public' => true , '_builtin' => false ) );
     array_push( $post_types, 'page' );
     unset( $post_types['uws-team-members'] );
+    unset( $post_types['uws-groups'] );
     
     foreach( $post_types as $type ) {
     
