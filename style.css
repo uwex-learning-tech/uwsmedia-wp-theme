@@ -456,25 +456,8 @@ main .page-featured-image img {
     font-weight: 300;
 }
 
-.section-wrapper .section-banner .buttons {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: center;
-}
-
-.section-wrapper .section-banner .buttons .btn {
-    display: block;
-    width: 200px;
-    border: 1px solid #000;
-    text-transform: uppercase;
-    color: #000;
-    font-weight: 700;
-    margin-right: 12px;
-}
-
-.section-wrapper.dark .section-banner .buttons .btn {
-    color: #fff;
-    border-color: #fff;
+.section-wrapper .section-banner .btn-action {
+    margin-bottom: 8px;
 }
 
 .section-wrapper .section-bg img {
@@ -844,6 +827,10 @@ main .page-featured-image img {
     
     .home .header {
         padding-bottom: calc(56.25% - 86px);
+    }
+    
+    .section-wrapper .section-banner .btn-action {
+        margin-bottom: 0;
     }
     
     .footer {
