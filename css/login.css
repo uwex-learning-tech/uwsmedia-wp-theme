@@ -1,0 +1,61 @@
+body.login {
+    background-color: #990033;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: center;
+}
+body.login div#login {
+    width: 100%;
+    background-color: #eee;
+    padding: 20px 0;
+    margin: 0;
+    background-image: url('../img/funky-lines.png');
+}
+body.login div#login h1 {}
+body.login div#login h1 a {
+    
+    background-image: url('../img/icons/touch.png');
+    background-position: center center;
+    
+}
+body.login div#login p.message{
+    width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+}
+body.login div#login form#loginform,
+body.login div#login form#lostpasswordform {
+    width: 320px;
+    margin: 0 auto;
+    background-color: rgba(255,255,255,0.75);
+    border-radius: 5px;
+}
+body.login div#login form#loginform p {}
+body.login div#login form#loginform p label {}
+body.login div#login form#loginform input {}
+body.login div#login form#loginform input#user_login {}
+body.login div#login form#loginform input#user_pass {}
+body.login div#login form#loginform p.forgetmenot {}
+body.login div#login form#loginform p.forgetmenot input#rememberme {}
+body.login div#login form#loginform p.submit {}
+body.login div#login form#loginform p.submit input#wp-submit,
+body.login div#login form#lostpasswordform p.submit input#wp-submit {
+    background-color: #990033;
+    border-color: #59001f;
+    box-shadow: 0 1px 0 #59001f;
+    text-shadow: 0 -1px 1px #59001f, 0 1px #59001f, 1px 1px #59001f, -1px 0 1px #59001f;
+}
+body.login div#login p#nav {
+    text-align: center;
+}
+body.login div#login p#nav a {
+    color: #990033;
+}
+body.login div#login p#backtoblog {
+    display: none;
+    text-align: center;
+}
+body.login div#login p#backtoblog a {
+    color: #990033;
+}

@@ -113,6 +113,22 @@ function uwsmedia_styles() {
     
 }
 
+// Load login style
+function uws_login_stylesheet() {
+    
+    wp_register_style( 'uwsmedia-login', get_template_directory_uri() . '/css/login.css', array(), '1.0', 'all' );
+    wp_enqueue_style( 'uwsmedia-login' );
+    
+}
+
+function uwsmedia_login_logo_url() {
+    return home_url();
+}
+
+function uwsmedia_login_logo_url_title() {
+    return get_bloginfo( 'name' );
+}
+
 // Register uwsmedia Navigation
 function register_uwsmedia_menu() {
     
@@ -663,6 +679,9 @@ add_action( 'restrict_manage_posts', 'add_groups_filter_dropdown' );
 add_action( 'wp_ajax_load_search_results', 'load_search_results' );
 add_action( 'wp_ajax_nopriv_load_search_results', 'load_search_results' );
 
+// add custom sytle to login page
+add_action( 'login_enqueue_scripts', 'uws_login_stylesheet' );
+
 /*------------------------------------*\
 	REMOVE Actions
 \*------------------------------------*/
@@ -746,6 +765,10 @@ add_filter( 'pre_get_posts', 'custom_search_query');
 
 // change title place holder for team member post
 add_filter( 'enter_title_here', 'team_members_change_title_placeholder' );
+
+// change logo link and text on login page
+add_filter( 'login_headertitle', 'uwsmedia_login_logo_url_title' );
+add_filter( 'login_headerurl', 'uwsmedia_login_logo_url' );
 
 /*------------------------------------*\
 	ADD Filters
@@ -1127,10 +1150,10 @@ function create_projects_post() {
     // Register Custom Post Type
     register_post_type( 'uws-projects', 
         array(
-        'label' => 'Projects',
+        'label' => 'Showcases',
         'menu_icon' => 'dashicons-portfolio',
         'labels' => array(
-            'name' => __( 'Projects', 'uwsmedia' ),
+            'name' => __( 'Showcases', 'uwsmedia' ),
             'singular_name' => __( 'Project', 'uwsmedia' ),
             'all_items' => __( 'All Showcases', 'uwsmedia' ),
             'menu_name' => __( 'Showcases', 'uwsmedia' ),
@@ -1142,7 +1165,7 @@ function create_projects_post() {
             'new_item' => __( 'New Project', 'uwsmedia' ),
             'view' => __( 'View Project', 'uwsmedia' ),
             'view_item' => __( 'View Project', 'uwsmedia' ),
-            'view_items' => __( 'View Projects', 'uwsmedia' ),
+            'view_items' => __( 'View Showcases', 'uwsmedia' ),
             'search_items' => __( 'Search projects', 'uwsmedia' ),
             'not_found' => __( 'No projects found.', 'uwsmedia' ),
             'not_found_in_trash' => __( 'No projects found in Trash', 'uwsmedia' )

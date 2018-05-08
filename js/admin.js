@@ -88,7 +88,7 @@ jQuery( document ).ready( function( $ ) {
     	// check if the group box has faculty checked
     	var groupSelect = '#poststuff select#post_group_id';
     	
-    	if ( $( groupSelect + ' option:selected' ).text().toLowerCase() === 'faculty' ) {
+    	if ( $( groupSelect + ' option:selected' ).text().toLowerCase() === 'faculty showcase' ) {
         	
         	$( '#toPortfolio' ).show();
         	
