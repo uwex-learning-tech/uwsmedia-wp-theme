@@ -293,12 +293,14 @@ h6 {
 }
 
 /* breadcrumbs */
-.faculty-group .breadcrumb-nav {
+[class^="faculty-"] .breadcrumb-nav,
+[class*=" faculty-"] .breadcrumb-nav{
     background-color: #2A8448;
     color: #fff;
 }
 
-.faculty-group .breadcrumb-nav .breadcrumbs li a {
+[class^="faculty-"] .breadcrumb-nav .breadcrumbs li a,
+[class*=" faculty-"] .breadcrumb-nav .breadcrumbs li a {
     color: #fff;
 }
 
@@ -678,13 +680,16 @@ main .page-featured-image img {
     border-bottom-color: #fff;
 }
 
-.faculty-group #primaryHeaderNav .faculty-group-item {
+[class^="faculty-"] #primaryHeaderNav .faculty-group-item,
+[class*=" faculty-"] #primaryHeaderNav .faculty-group-item {
     background-color: #fff;
 }
-.faculty-group #primaryHeaderNav .faculty-group-item a {
+[class^="faculty-"] #primaryHeaderNav .faculty-group-item a,
+[class*=" faculty-"] #primaryHeaderNav .faculty-group-item a {
     color: #2A8448;
 }
-.faculty-group #primaryHeaderNav .faculty-group-item a .apple-icon svg {
+[class^="faculty-"] #primaryHeaderNav .faculty-group-item a .apple-icon svg,
+[class*=" faculty-"] #primaryHeaderNav .faculty-group-item a .apple-icon svg {
     fill: #2A8448;
 }
 
