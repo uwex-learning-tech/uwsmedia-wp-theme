@@ -21,6 +21,8 @@
             
             if ( $carousel->have_posts() ) {
                 
+                shuffle( $carousel->posts );
+                
                 $count = 0;
         ?>
             
