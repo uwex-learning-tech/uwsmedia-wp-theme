@@ -1521,7 +1521,7 @@ function create_team_members_post() {
             'not_found' => __( 'No members found.', 'uwsmedia' ),
             'not_found_in_trash' => __( 'No members found in Trash', 'uwsmedia' )
         ),
-        'supports' => array( 'title', 'editor', 'thumbnail' ),
+        'supports' => array( 'title', 'editor', 'excerpt', 'thumbnail' ),
         'taxonomies' => array(),
         'hierarchical' => false,
         'public' => true,
@@ -1814,7 +1814,7 @@ function load_search_results() {
 
 		<?php while ( $search->have_posts() ) : $search->the_post(); ?>
 				
-				<div class="col-4 project">
+				<div class="col-12 col-sm-12 col-md-6 col-lg-4 project">
                     <a href="<?php the_permalink(); ?>">
                         
                         <div class="project-bg">

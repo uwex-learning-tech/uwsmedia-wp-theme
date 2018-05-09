@@ -88,30 +88,6 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 800;
 }
 
-h1 {
-    font-size: 1.625rem;
-}
-
-h2 {
-    font-size: 1.5rem;
-}
-
-h3 {
-    font-size: 1.375rem;
-}
-
-h4 {
-    font-size: 1.25rem;
-}
-
-h5 {
-    font-size: 1.125rem;
-}
-
-h6 {
-    font-size: 1rem;
-}
-
 /*------------------------------------*\
     STRUCTURE
 \*------------------------------------*/
@@ -820,6 +796,35 @@ main .page-featured-image img {
     padding: 0;
     margin: 0;
     border: none;
+}
+
+
+/* members page */
+.page-template-page-members #member-archive .member {
+    margin-bottom: 30px;
+}
+.page-template-page-members #member-archive .card .card-img-top {
+    width: 100%;
+    height: 348px;
+    object-fit: cover;
+}
+.page-template-page-members #member-archive .card .no-pic {
+    width: 100%;
+    height: 348px;
+    background-color: #eee;
+    font-size: 1000%;
+    line-height: 1;
+}
+
+.page-template-page-members #member-archive .card .no-pic:after {
+    display: block;
+    content: "😎";
+    opacity: 0.75;
+}
+
+.page-template-page-members #member-archive .card .social-icons .btn {
+    font-size: 22px;
+    line-height: 1;
 }
 
 
