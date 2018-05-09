@@ -530,7 +530,7 @@ main .page-featured-image img {
 .single.single-uws-projects p.classification {
     margin-bottom: 40px;
 }
-.single.single-uws-projects p.members {
+.single.single-uws-projects p.instructor {
     margin-bottom: 0;
 }
 .single.single-uws-projects .members,
@@ -774,11 +774,11 @@ main .page-featured-image img {
     padding-top: 0;
     padding-bottom: 5px;
 }
-.page-template-page-showcase .projects-pagnigation {
+.projects-pagnigation {
     margin-top: 5px;
     margin-bottom: 35px;
 }
-.page-template-page-showcase .projects-pagnigation ul.page-numbers {
+.projects-pagnigation ul.page-numbers {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -786,8 +786,8 @@ main .page-featured-image img {
     flex-flow: row wrap;
     justify-content: center;
 }
-.page-template-page-showcase .projects-pagnigation ul.page-numbers li a,
-.page-template-page-showcase .projects-pagnigation ul.page-numbers li span.page-numbers {
+.projects-pagnigation ul.page-numbers li a,
+.projects-pagnigation ul.page-numbers li span.page-numbers {
     display: block;
     padding: 5px;
     width: 25px;

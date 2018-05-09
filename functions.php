@@ -228,7 +228,11 @@ function uwsmediawp_pagination() {
         'base'    => str_replace( $big, '%#%', get_pagenum_link( $big ) ),
         'format'  => '?paged=%#%',
         'current' => max( 1, get_query_var( 'paged' ) ),
-        'total'   => $wp_query->max_num_pages
+        'total'   => $wp_query->max_num_pages,
+        'prev_text'    => __('<span class="fa fa-chevron-left"></span> <span class="screen-reader-text">previous</span>'),
+        'next_text'    => __('<span class="fa fa-chevron-right"></span> <span class="screen-reader-text">next</span>'),
+        'show_all' => true,
+        'type' => 'list'
     ) );
     
 }
@@ -2039,10 +2043,6 @@ function breadcrumb_nav() {
                 $title = get_the_title( $group );
                 
                 if ( strpos( strtolower( $title ), 'faculty' ) !== false ) {
-                    
-                    $groupLink = get_site_url() . '/faculty/';
-                    echo '<li class="item-current item-' . $group . '"><a class="bread-parent bread-parent-' . $title . '" href="' . $groupLink . '" title="' . $title . '">' . $title . '</a></li>';
-                    echo '<li class="separator"> ' . $separator . ' </li>';
                     
                     $url = get_site_url() . '/faculty/faculty-showcase/';
                     echo '<li class="item-current"><a class="bread-parent bread-parent-faculty-showcase" href="' . $url . '" title="Faculty Showcase">Faculty Showcase</a></li>';
