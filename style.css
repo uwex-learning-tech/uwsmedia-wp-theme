@@ -527,18 +527,24 @@ main .page-featured-image img {
 .single.single-uws-projects .categories a {
     color: #444;
 }
-
-.single.single-uws-projects .authors {
-    margin: 40px 0;
+.single.single-uws-projects p.classification {
+    margin-bottom: 40px;
+}
+.single.single-uws-projects p.members {
+    margin-bottom: 0;
+}
+.single.single-uws-projects .members,
+.single.single-uws-projects .instructor {
     font-style: italic;
+    font-size: 14px;
 }
 
-.single.single-uws-projects .authors a {
+.single.single-uws-projects .members a {
     color: #444;
     text-decoration: underline;
 }
 
-.single.single-uws-projects .authors a:hover {
+.single.single-uws-projects .members a:hover {
     text-decoration: none;
 }
 

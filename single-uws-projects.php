@@ -1,6 +1,8 @@
 <?php get_header(); ?>
     <?php if (have_posts()): while (have_posts()) : the_post(); ?>
-    
+            
+           <?php $postID = $post->ID; ?>
+            
             <!-- post thumbnail -->
             <?php if ( get_post_meta( $post->ID, 'hide_thumbnail' )[0] != '1' ) : // Check if Thumbnail exists ?>
     		<?php if ( has_post_thumbnail() ) : // Check if Thumbnail exists ?>
@@ -42,7 +44,7 @@
                         <h1><?php the_title(); ?></h1>
                         <!-- /post title -->
                         
-                        <p class="categories"><?php 
+                        <p class="classification"><strong><?php 
 
                                 $classification_terms = get_the_terms( $post->ID, 'classifications' );
             
@@ -52,38 +54,49 @@
                                     echo $classification_terms[0]->name;
                                 }
                                 
-                            ?></p>
-                            
-                            <!-- author -->
-        
+                            ?></strong></p>
+                        
+                        <?php the_content(); // Dynamic Content ?>
+                        
                         <?php
                             
                             $authors = get_post_meta( $post->ID, 'project_authors', true );
-                            $otherAuthors = trim( get_post_meta( $post->ID, 'other_authors', true ) );
                             
-                            if ( !empty( $authors ) || !empty( $otherAuthors ) ) {
+                            if ( !empty( $authors ) ) {
                                 
-                                echo '<p class="authors">By ';
+                                echo '<p class="members"><strong>Team Member(s):</strong> ';
                             
-                                if ( !empty( $authors ) ) {
+                                $count = 0;
+                                $authorIds = explode( ',', get_post_meta( $post->ID, 'project_authors', true ) );
+                                
+                                foreach( $authorIds as $id ) {
+                                
+                                    echo '<a href="' . get_the_permalink( $id ) .'">' . get_the_title( $id ) . '</a>';
                                     
-                                    $count = 0;
-                                    $authorIds = explode( ',', get_post_meta( $post->ID, 'project_authors', true ) );
+                                    $count++;
                                     
-                                    foreach( $authorIds as $id ) {
-                                    
-                                        echo '<a href="' . get_the_permalink( $id ) .'">' . get_the_title( $id ) . '</a>';
-                                        
-                                        $count++;
-                                        
-                                        if ( $count < count( $authorIds ) 
-                                        || !empty( $otherAuthors ) ) {
-                                            echo ', ';
-                                        }
-                                        
+                                    if ( $count < count( $authorIds ) 
+                                    || !empty( $otherAuthors ) ) {
+                                        echo ', ';
                                     }
                                     
                                 }
+                                
+                                echo '</p>';
+                                
+                            }
+                            
+                        ?>
+                        
+                        <!-- instructor -->
+        
+                        <?php
+                            
+                            $otherAuthors = trim( get_post_meta( $post->ID, 'other_authors', true ) );
+                            
+                            if ( !empty( $otherAuthors ) ) {
+                                
+                                echo '<p class="instructor"><strong>Instructor:</strong> ';
                                 
                                 if ( !empty( $otherAuthors ) ) {
                                     
@@ -107,13 +120,10 @@
                                 
                                 echo '</p>';
                                 
-                            } else {
-                                echo '<p class="authors"></p>';
                             }
                             
                         ?>
                         
-                        <?php the_content(); // Dynamic Content ?>
                         <ul class="tag-pills">
                         <?php 
 
@@ -163,7 +173,7 @@
                             </div>
                             <div class="share msg"></div>
                         
-                        <?php edit_post_link( __( 'Edit Project', 'uwsmedia' ), '<p>', '</p>', null ); ?>
+                        <?php edit_post_link( __( 'Edit Project', 'uwsmedia' ), '<p>', '</p>', $postID ); ?>
                     
                     </article>
                     <!-- /article -->
