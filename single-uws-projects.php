@@ -58,36 +58,6 @@
                         
                         <?php the_content(); // Dynamic Content ?>
                         
-                        <?php
-                            
-                            $authors = get_post_meta( $post->ID, 'project_authors', true );
-                            
-                            if ( !empty( $authors ) ) {
-                                
-                                echo '<p class="members"><strong>Team Member(s):</strong> ';
-                            
-                                $count = 0;
-                                $authorIds = explode( ',', get_post_meta( $post->ID, 'project_authors', true ) );
-                                
-                                foreach( $authorIds as $id ) {
-                                
-                                    echo '<a href="' . get_the_permalink( $id ) .'">' . get_the_title( $id ) . '</a>';
-                                    
-                                    $count++;
-                                    
-                                    if ( $count < count( $authorIds ) 
-                                    || !empty( $otherAuthors ) ) {
-                                        echo ', ';
-                                    }
-                                    
-                                }
-                                
-                                echo '</p>';
-                                
-                            }
-                            
-                        ?>
-                        
                         <!-- instructor -->
         
                         <?php
@@ -123,6 +93,39 @@
                             }
                             
                         ?>
+                        
+                        <!-- members -->
+                        
+                        <?php
+                            
+                            $authors = get_post_meta( $post->ID, 'project_authors', true );
+                            
+                            if ( !empty( $authors ) ) {
+                                
+                                echo '<p class="members"><strong>Team Member(s):</strong> ';
+                            
+                                $count = 0;
+                                $authorIds = explode( ',', get_post_meta( $post->ID, 'project_authors', true ) );
+                                
+                                foreach( $authorIds as $id ) {
+                                
+                                    echo '<a href="' . get_the_permalink( $id ) .'">' . get_the_title( $id ) . '</a>';
+                                    
+                                    $count++;
+                                    
+                                    if ( $count < count( $authorIds ) ) {
+                                        echo ', ';
+                                    }
+                                    
+                                }
+                                
+                                echo '</p>';
+                                
+                            }
+                            
+                        ?>
+                        
+                        
                         
                         <ul class="tag-pills">
                         <?php 
