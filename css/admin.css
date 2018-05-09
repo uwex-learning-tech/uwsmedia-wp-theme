@@ -54,6 +54,10 @@
 /*------------------------------------*\
     CUSTOM META BOX
 \*------------------------------------*/
+
+.post-type-uws-projects .postbox select[name=project_authors_select] {
+    height: 215px;
+}
 .post-type-uws-projects .postbox select,
 .post-type-uws-projects .postbox input[type=text],
 .post-type-uws-projects .postbox textarea,
