@@ -1191,7 +1191,7 @@ function create_projects_post() {
 
 function add_project_metabox() {
 
-    add_meta_box( 'project-author', 'Author(s)', 'project_authors_meta_box', 'uws-projects', 'normal', 'high' );
+    add_meta_box( 'project-author', 'Members', 'project_authors_meta_box', 'uws-projects', 'normal', 'high' );
     
     add_meta_box( 'project-media-embed', 'Media Embed', 'project_media_ebmed_meta_box', 'uws-projects', 'normal', 'default' );
     
@@ -1199,7 +1199,7 @@ function add_project_metabox() {
 
 function project_authors_meta_box( $post ) {
     
-    echo '<p>Select the author(s) who worked on this project</p>';
+    echo '<p>Select the team members who worked on this project</p>';
     
     $query_args = array(
         'post_type' => 'uws-team-members',
@@ -1230,10 +1230,10 @@ function project_authors_meta_box( $post ) {
     
     }
     
-    echo '<p"><strong>Other Author(s)</strong></p>';
+    echo '<p"><strong>Instructors(s)</strong></p>';
     wp_nonce_field( 'add_other_project_authors', 'other_project_authors_nonce' );
     echo '<input type="text" value="' . get_post_meta( $post->ID, 'other_authors', true ) . '" name="other_authors" />';
-    echo '<p class="howto">Separate authors with commas if any</p>';
+    echo '<p class="howto">Separate instructors with commas if any</p>';
     
 }
 
@@ -1506,7 +1506,7 @@ function create_team_members_post() {
         'labels' => array(
             'name' => __( 'Team Members', 'uwsmedia' ),
             'singular_name' => __( 'Team Member', 'uwsmedia' ),
-            'all_items' => __( 'All Memebers', 'uwsmedia' ),
+            'all_items' => __( 'All Members', 'uwsmedia' ),
             'menu_name' => __( 'Team Members', 'uwsmedia' ),
             'name_admin_bar' => __('Member', 'uwsmedia' ),
             'add_new' => __( 'Add Member', 'uwsmedia' ),
