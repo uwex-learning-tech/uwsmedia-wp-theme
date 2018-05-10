@@ -4,12 +4,17 @@
             
             <?php if (have_posts()): while (have_posts()) : the_post(); ?>
     <!-- post thumbnail -->
-    		<?php if ( has_post_thumbnail()) : // Check if Thumbnail exists ?>
-    		<aside class="col-3">
+    		
+    		<aside class="col-12 col-sm-12 col-md-3">
+        		
+        		<?php if ( has_post_thumbnail()) : // Check if Thumbnail exists ?>
         		
         		<div class="post-featured-image">
     			    <?php the_post_thumbnail(); ?>
         		</div>
+        		
+        		<?php endif; ?>
+    		<!-- /post thumbnail -->
         		
         		<ul class="social-networks d-flex">
     			    
@@ -62,10 +67,8 @@
         		</ul>
         		
             </aside>
-    		<?php endif; ?>
-    		<!-- /post thumbnail -->
             
-            <main class="col-9" role="main">
+            <main class="col-12 col-sm-12 col-md-9" role="main">
                 
                 <!-- section -->
                 <section>
