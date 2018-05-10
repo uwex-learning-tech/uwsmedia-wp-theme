@@ -19,6 +19,11 @@ body.login div#login h1 a {
     background-position: center center;
     
 }
+body.login div#login #login_error {
+    width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+}
 body.login div#login p.message{
     width: 320px;
     margin-left: auto;
