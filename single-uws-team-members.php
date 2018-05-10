@@ -5,13 +5,17 @@
             <?php if (have_posts()): while (have_posts()) : the_post(); ?>
     <!-- post thumbnail -->
     		
-    		<aside class="col-12 col-sm-12 col-md-3">
+    		<aside class="col-12 col-sm-12 col-md-12 col-lg-4">
         		
         		<?php if ( has_post_thumbnail()) : // Check if Thumbnail exists ?>
         		
         		<div class="post-featured-image">
     			    <?php the_post_thumbnail(); ?>
         		</div>
+        		
+        		<?php else: ?>
+        		
+        		<div class="no-pic d-flex align-items-center justify-content-center"></div>
         		
         		<?php endif; ?>
     		<!-- /post thumbnail -->
@@ -68,7 +72,7 @@
         		
             </aside>
             
-            <main class="col-12 col-sm-12 col-md-9" role="main">
+            <main class="col-12 col-sm-12 col-md-12 col-lg-8" role="main">
                 
                 <!-- section -->
                 <section>
