@@ -221,7 +221,13 @@ h1, h2, h3, h4, h5, h6 {
 
 #primaryHeaderNav .active,
 #primaryHeaderNav .current-page-ancestor {
-    border-bottom-color: #fff;
+    background-color: #fff;
+    border-radius: 1.563rem;
+}
+
+#primaryHeaderNav .active a,
+#primaryHeaderNav .current-page-ancestor a{
+    color: #000;
 }
 
 #primaryHeaderNav .faculty-link-btn {
@@ -807,6 +813,13 @@ main .page-featured-image img {
 
 
 /* members page */
+.single-uws-team-members  #primaryHeaderNav .member-archive-page {
+    background-color: #fff;
+    border-radius: 1.563rem;
+}
+.single-uws-team-members  #primaryHeaderNav .member-archive-page a {
+    color: #000;
+}
 .page-template-page-members #member-archive .member {
     margin-bottom: 30px;
 }
@@ -815,7 +828,11 @@ main .page-featured-image img {
     height: 348px;
     object-fit: cover;
 }
-.page-template-page-members #member-archive .card .no-pic {
+.page-template-page-members #member-archive .card .card-title {
+    margin-bottom: 0;
+}
+.page-template-page-members #member-archive .card .no-pic,
+.single-uws-team-members .no-pic {
     width: 100%;
     height: 348px;
     background-color: #eee;
@@ -823,7 +840,8 @@ main .page-featured-image img {
     line-height: 1;
 }
 
-.page-template-page-members #member-archive .card .no-pic:after {
+.page-template-page-members #member-archive .card .no-pic:after,
+.single-uws-team-members .no-pic:after {
     display: block;
     content: "😎";
     opacity: 0.75;
@@ -842,6 +860,24 @@ main .page-featured-image img {
 /*------------------------------------*\
     RESPONSIVE
 \*------------------------------------*/
+@media only screen and (min-width:991.98px) {
+    
+    #primaryHeaderNav .active,
+    #primaryHeaderNav .current-page-ancestor,
+    .single-uws-team-members  #primaryHeaderNav .member-archive-page {
+        background-color: transparent;
+        border-bottom-color: #fff;
+        border-radius: 0;
+    }
+    
+    #primaryHeaderNav .active a,
+    #primaryHeaderNav .current-page-ancestor a,
+    .single-uws-team-members  #primaryHeaderNav .member-archive-page a {
+        color: #fff;
+    }
+    
+}
+
 
 @media only screen and (min-width:576px) {
     
