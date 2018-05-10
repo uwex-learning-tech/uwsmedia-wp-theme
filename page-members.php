@@ -72,6 +72,7 @@
                         
                         <div class="card-body">
                             <h5 class="card-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h5>
+                             <p class="card-text"><small class="text-muted"><?php echo get_post_meta( get_the_ID(), 'job_title', true ); ?></small></p>
                             <p class="card-text"><?php the_excerpt(); ?></p>
                             
                             <?php
