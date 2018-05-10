@@ -563,7 +563,7 @@ main .page-featured-image img {
 .single.single-uws-projects .tag-pills {
     list-style: none;
     padding: 0;
-    margin-top: 40px;
+    margin-top: 20px;
     margin-left: 0;
 }
 
@@ -585,18 +585,28 @@ main .page-featured-image img {
 .single.single-uws-projects .sharings {
     padding: 0;
     margin: 0 0 16px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-bottom: 2px solid #eee;
 }
-
+.single.single-uws-projects .sharings .btn {
+    line-height: 1;
+    color: #444;
+    padding: 5px;
+}
+.single.single-uws-projects .sharings .btn:hover {
+    color: #990033;
+}
 .single.single-uws-projects .share.msg {
     display: none;
     position: absolute;
-    font-size: 10px;
-    background-color: rgba( 0,0,0,0.6);
-    color: #fff;
-    border-radius: 3px;
+    width: 100%;
+    font-size: 12px;
+    background-color: #eee;
+    color: #444;
     padding: 3px;
     line-height: 1;
-    margin-top: -14px;
 }
 
 .single.single-uws-projects .sharings .hiddenShareLink {
