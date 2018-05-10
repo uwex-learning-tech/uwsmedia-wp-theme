@@ -931,6 +931,10 @@ main .page-featured-image img {
         color: #fff;
     }
     
+    #primaryHeaderNav .faculty-link-btn {
+        border-radius: 1.563rem;
+    }
+    
     .page-template-default.page .card-columns {
         webkit-column-count: 2;
         -moz-column-count: 2;

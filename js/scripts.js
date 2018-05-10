@@ -67,6 +67,8 @@
 		
 		if ( jQuery( 'body' ).hasClass( 'page-template-page-showcase' ) ) {
     		
+    		runSearch();
+    		
     		// share search result link button
     		// filter the selector to the button's ID due to dynamic loading
     		jQuery( document ).on( 'click', '#shareSearchLink', function( evt ) {
@@ -100,9 +102,35 @@
     		} ); // end function
     		
     		// AJAX search
-    		jQuery( '#ajaxSearchBtn, .form-check-input' ).on( 'click', function( evt ) {
-        	    
-        	    // set variable to DOM elements
+    		jQuery( '#ajaxSearchBtn, .form-check-input' ).on( 'click', function() {
+        		
+        	    if ( !runSearch() ) {
+            	    window.location.reload();
+        	    }
+            	
+        	} );
+        	
+        	// added enter key event to trigger search button click
+        	jQuery( '#ajaxSearchInput' ).bind( 'enterKey', function() {
+            	
+            	jQuery( '#ajaxSearchBtn' ).trigger( 'click' );
+            	
+        	} );
+        	
+        	// trigger enterKey event when enter key is pressed
+        	jQuery( '#ajaxSearchInput' ).keyup( function( evt ) {
+            	
+            	if ( evt.keyCode == 13 ) {
+                	
+                	jQuery( this ).trigger( 'enterKey' );
+                	
+            	}
+            	
+        	} );
+        	
+        	function runSearch() {
+    		
+        		// set variable to DOM elements
             	var searchInput = jQuery( '#ajaxSearchInput' ).val().trim();
             	var postId = jQuery( 'input[name=postId]' ).val();
             	var programCBs = jQuery( '.sidebarFilter .program-cb:checked' );
@@ -185,31 +213,13 @@
                     	
                 	} );
                 	
-            	} else {
-                	
-                	window.location.reload();
+                	return true;
                 	
             	}
             	
-        	} );
-        	
-        	// added enter key event to trigger search button click
-        	jQuery( '#ajaxSearchInput' ).bind( 'enterKey', function() {
+            	return false;
             	
-            	jQuery( '#ajaxSearchBtn' ).trigger( 'click' );
-            	
-        	} );
-        	
-        	// trigger enterKey event when enter key is pressed
-        	jQuery( '#ajaxSearchInput' ).keyup( function( evt ) {
-            	
-            	if ( evt.keyCode == 13 ) {
-                	
-                	jQuery( this ).trigger( 'enterKey' );
-                	
-            	}
-            	
-        	} );
+    		}
     		
 		} // end page showcase conditional check
 	
