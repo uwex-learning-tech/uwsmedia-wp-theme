@@ -866,6 +866,22 @@ main .page-featured-image img {
 }
 
 
+/* other pages */
+.page-template-default.page .resource-card {
+    margin-bottom: 30px;
+}
+
+.page-template-default.page .adjust-padding {
+    padding: 0 1.25rem;
+    margin-bottom: 0;
+}
+
+.page-template-default.page .card-columns {
+    webkit-column-count: 1;
+    -moz-column-count: 1;
+    column-count: 1;
+}
+
 /*------------------------------------*\
     IMAGES
 \*------------------------------------*/
@@ -873,26 +889,8 @@ main .page-featured-image img {
 /*------------------------------------*\
     RESPONSIVE
 \*------------------------------------*/
-@media only screen and (min-width:991.98px) {
-    
-    #primaryHeaderNav .active,
-    #primaryHeaderNav .current-page-ancestor,
-    .single-uws-team-members  #primaryHeaderNav .member-archive-page {
-        background-color: transparent;
-        border-bottom-color: #fff;
-        border-radius: 0;
-    }
-    
-    #primaryHeaderNav .active a,
-    #primaryHeaderNav .current-page-ancestor a,
-    .single-uws-team-members  #primaryHeaderNav .member-archive-page a {
-        color: #fff;
-    }
-    
-}
 
-
-@media only screen and (min-width:576px) {
+@media only screen and (min-width: 575.98px) {
     
     .home .header {
         padding-bottom: calc(56.25% - 86px);
@@ -911,6 +909,42 @@ main .page-featured-image img {
     }
     .footer .login-btn {
         display: block;
+    }
+    
+}
+
+@media only screen and (min-width: 767.98px) {}
+
+@media only screen and (min-width: 991.98px) {
+    
+    #primaryHeaderNav .active,
+    #primaryHeaderNav .current-page-ancestor,
+    .single-uws-team-members  #primaryHeaderNav .member-archive-page {
+        background-color: transparent;
+        border-bottom-color: #fff;
+        border-radius: 0;
+    }
+    
+    #primaryHeaderNav .active a,
+    #primaryHeaderNav .current-page-ancestor a,
+    .single-uws-team-members  #primaryHeaderNav .member-archive-page a {
+        color: #fff;
+    }
+    
+    .page-template-default.page .card-columns {
+        webkit-column-count: 2;
+        -moz-column-count: 2;
+        column-count: 2;
+    }
+    
+}
+
+@media only screen and (min-width: 1199.98px) {
+    
+    .page-template-default.page .card-columns {
+        webkit-column-count: 3;
+        -moz-column-count: 3;
+        column-count: 3;
     }
     
 }
