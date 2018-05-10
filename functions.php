@@ -1540,7 +1540,7 @@ function create_team_members_post() {
         'query_var' => true,
         'capability_type' => 'page',
         'delete_with_user' => false,
-        'rewrite' => array('slug' => 'team-members', 'with_front' => true)
+        'rewrite' => array('slug' => 'team-members', 'with_front' => false )
     ) );
 }
 
@@ -2058,13 +2058,15 @@ function breadcrumb_nav() {
                 
             }
             
+            if ( $post->post_type == 'uws-team-members' ) {
+                
+                echo '<li class="item-current"><a class="bread-parent bread-parent-about" href="/about" title="About">About</a></li>';
+                 echo '<li class="separator"> ' . $separator . ' </li>';
+                
+            }
+            
             echo '<li class="item-current item-' . $post->ID . '">' . get_the_title() . '</li>';
               
-        } else if ( is_category() ) {
-               
-            // Category page
-            echo '<li class="item-current item-cat">' . single_cat_title('', false) . '</li>';
-               
         } else if ( is_page() ) {
                
             // Standard page
@@ -2096,64 +2098,6 @@ function breadcrumb_nav() {
                    
             }
                
-        } else if ( is_tag() ) {
-               
-            // Tag page
-               
-            // Get tag information
-            $term_id        = get_query_var('tag_id');
-            $taxonomy       = 'post_tag';
-            $args           = 'include=' . $term_id;
-            $terms          = get_terms( $taxonomy, $args );
-            $get_term_id    = $terms[0]->term_id;
-            $get_term_slug  = $terms[0]->slug;
-            $get_term_name  = $terms[0]->name;
-               
-            // Display the tag name
-            echo '<li class="item-current item-tag-' . $get_term_id . ' item-tag-' . $get_term_slug . '">' . $get_term_name . '</li>';
-           
-        } elseif ( is_day() ) {
-               
-            // Day archive
-               
-            // Year link
-            echo '<li class="item-year item-year-' . get_the_time('Y') . '"><a class="bread-year bread-year-' . get_the_time('Y') . '" href="' . get_year_link( get_the_time('Y') ) . '" title="' . get_the_time('Y') . '">' . get_the_time('Y') . ' Archives</a></li>';
-            echo '<li class="separator separator-' . get_the_time('Y') . '"> ' . $separator . ' </li>';
-               
-            // Month link
-            echo '<li class="item-month item-month-' . get_the_time('m') . '"><a class="bread-month bread-month-' . get_the_time('m') . '" href="' . get_month_link( get_the_time('Y'), get_the_time('m') ) . '" title="' . get_the_time('M') . '">' . get_the_time('M') . ' Archives</a></li>';
-            echo '<li class="separator separator-' . get_the_time('m') . '"> ' . $separator . ' </li>';
-               
-            // Day display
-            echo '<li class="item-current item-' . get_the_time('j') . '">' . get_the_time('jS') . ' ' . get_the_time('M') . ' Archives</li>';
-               
-        } else if ( is_month() ) {
-               
-            // Month Archive
-               
-            // Year link
-            echo '<li class="item-year item-year-' . get_the_time('Y') . '"><a class="bread-year bread-year-' . get_the_time('Y') . '" href="' . get_year_link( get_the_time('Y') ) . '" title="' . get_the_time('Y') . '">' . get_the_time('Y') . ' Archives</a></li>';
-            echo '<li class="separator separator-' . get_the_time('Y') . '"> ' . $separator . ' </li>';
-               
-            // Month display
-            echo '<li class="item-month item-month-' . get_the_time('m') . '">' . get_the_time('M') . ' Archives</li>';
-               
-        } else if ( is_year() ) {
-               
-            // Display year archive
-            echo '<li class="item-current item-current-' . get_the_time('Y') . '">' . get_the_time('Y') . ' Archives</li>';
-               
-        } else if ( is_author() ) {
-               
-            // Author archive
-               
-            // Get the author information
-            global $author;
-            $userdata = get_userdata( $author );
-               
-            // Display author name
-            echo '<li class="item-current item-current-' . $userdata->user_nicename . '">' . 'Author: ' . $userdata->display_name . '</li>';
-           
         } else if ( get_query_var('paged') ) {
                
             // Paginated archives
