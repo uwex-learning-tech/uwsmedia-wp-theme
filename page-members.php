@@ -9,25 +9,46 @@
  */
  
  get_header(); ?>
-        
+<?php while ( have_posts() ) : the_post(); ?>
+<div class="header-banner">
+    <div class="container">
+        <h1 class="banner-title"><?php
+            
+            $pageTitle = get_post_meta( get_the_ID(), 'banner_title' , true );
+            
+            if ( empty( $pageTitle ) ) {
+                the_title();
+            } else {
+                echo $pageTitle;
+            }
+            
+            ?></h1>
+        <div class="banner-content"><?php echo html_entity_decode( get_post_meta( get_the_ID(), 'banner_content' , true ) ); ?></div>
+        <?php if ( has_post_thumbnail() ) : ?>
+        <div class="banner-image"><img src="<?php the_post_thumbnail_url(); ?>" alt=""/></div>
+        <?php else: ?>
+        <div class="banner-buffer"></div>
+        <?php endif; ?>
+        <div class="banner-border"></div>
+    </div>
+</div>
+
 <main class="container" role="main">
     
     <section>
-        <h1><?php the_title(); ?></h1>
         <div class="entry-content-page">
-            <?php
-                
-                while ( have_posts() ) : the_post();
-                    the_content();
-                endwhile;
-                
-                wp_reset_query();
-                
-            ?>
+            <?php the_content(); ?>
         </div>
     </section>
+    
+<?php
+    endwhile;
+    wp_reset_query();
+?>
             
     <section id="member-archive">
+        
+        <h5 class="member-archive-title"><span aria-hidden="true">&mdash; </span>Meet the Team<span aria-hidden="true"> &mdash;</span></h5>
         
         <div class="row d-flex">
         <?php

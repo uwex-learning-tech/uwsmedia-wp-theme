@@ -658,6 +658,9 @@ add_action( 'add_meta_boxes', 'add_team_members_metabox' );
 // add meta boxes to uws-project post
 add_action( 'add_meta_boxes', 'add_project_metabox' );
 
+// add sub landing meta box to page with sub landing page template
+add_action( 'add_meta_boxes', 'add_sublanding_header_metabox' );
+
 // save group metadata on save post
 add_action( 'save_post', 'save_post_group_meta', 10, 2 );
 
@@ -666,6 +669,9 @@ add_action( 'save_post', 'save_team_member_meta', 10, 2 );
 
 // save metadata on project save post
 add_action( 'save_post', 'save_project_meta', 10, 2 );
+
+// save sublanding metadata on page save post
+add_action( 'save_post', 'save_sublanding_meta', 10, 2 );
 
 /* Hide unused page from Dashboard Admin Menu */
 add_action( 'admin_menu', 'hide_menu_page');
@@ -1702,6 +1708,60 @@ function add_team_members_custom_columns_value( $column, $post_id ) {
     
     	break;
 	}
+    
+}
+
+/*------------------------------------*\
+	SUB-LANDING HEADER META BOX
+\*------------------------------------*/
+function add_sublanding_header_metabox() {
+    
+    global $post;
+    
+    $currentTemplate = get_post_meta( $post->ID, '_wp_page_template', true );
+    
+    if ( 'page-members.php' == $currentTemplate 
+    || 'page-sublanding.php' == $currentTemplate ) {
+        
+       add_meta_box( 'sublanding-header', 'Head Banner', 'sublanding_header_meta_box', 'page', 'normal', 'high' );
+       
+    }
+    
+}
+
+function sublanding_header_meta_box( $post ) {
+    
+    wp_nonce_field( 'add_head_banner_title', 'head_banner_title_nonce' );
+    echo '<p>Enter a title to be displayed on the banner.</p>';
+    echo '<input type="text" name="banner_title" value="' . get_post_meta( $post->ID, 'banner_title', true ) .'" />';
+    
+    wp_nonce_field( 'add_head_banner_content', 'head_banner_content_nonce' );
+    echo '<p>Enter a short content to be displayed on the banner. HTML is supported.</p>';
+    echo '<textarea name="banner_content">' . html_entity_decode( get_post_meta( $post->ID, 'banner_content', true ) ) .'</textarea>';
+    
+}
+
+function save_sublanding_meta( $post_id, $post ) {
+    
+    /* Get the post type object. */
+    $post_type = get_post_type_object( $post->post_type );
+    
+    /* Check if the current user has permission to edit the post. */
+    if ( !current_user_can( $post_type->cap->edit_post, $post_id ) ) {
+        return $post_id;
+    }
+    
+    if ( wp_verify_nonce( $_POST['head_banner_title_nonce'], 'add_head_banner_title' ) && isset( $_POST['banner_title'] ) ) {
+        
+        update_post_meta( $post_id, 'banner_title', sanitize_text_field( $_POST['banner_title'] ) );
+        
+    }
+    
+    if ( wp_verify_nonce( $_POST['head_banner_content_nonce'], 'add_head_banner_content' ) && isset( $_POST['banner_content'] ) ) {
+        
+        update_post_meta( $post_id, 'banner_content', sanitize_text_field( htmlentities( $_POST['banner_content'] ) ) );
+        
+    }
     
 }
 
