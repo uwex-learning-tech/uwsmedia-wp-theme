@@ -754,13 +754,28 @@ main .page-featured-image img {
     text-align: center;
 }
 
-.page-template-page-showcase .sidebarFilter {
+.page-template-page-showcase .sidebarFilter,
+.page-template-default .sidebar .toc_widget_list {
     margin-top: 16px;
     background-color: #f2f2f2;
     padding-bottom: 8px;
 }
 
-.page-template-page-showcase .sidebarFilter h3 {
+.page-template-default .sidebar .toc_widget_list {
+    margin-top: 0;
+    padding: 8px;
+    list-style: none;
+}
+.page-template-default .sidebar .toc_widget_list li ul {
+    padding-left: 20px;
+    list-style: disc;
+}
+.page-template-default .sidebar .toc_widget_list li ul li ul {
+    list-style: circle;
+    padding-left: 20px;
+}
+.page-template-page-showcase .sidebarFilter h3,
+.page-template-default .sidebar h3 {
     font-family: 'Raleway', sans-serif;
     font-size: 20px;
     line-height: 1;
@@ -768,6 +783,7 @@ main .page-featured-image img {
     background-color: #1E252B;
     padding: 12px 8px;
     border-radius: 0.25rem 0.25rem 0px 0px;
+    margin-bottom: 0;
 }
 
 .page-template-page-showcase .sidebarFilter .filter-form {
