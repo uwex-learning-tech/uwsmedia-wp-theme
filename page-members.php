@@ -57,8 +57,19 @@
                 'post_type' => 'uws-team-members',
                 'post_status' => 'publish',
                 'posts_per_page' => -1,
+                'meta_query' => array(
+                    'show_first' => array(
+                        'key' => 'show_first',
+                        'value' => array( 0, 1 ),
+                        'compare' => 'IN'
+                    )
+                    
+                ),
                 'order' => 'ASC',
-                'orderby' => 'title'
+                'orderby' => array(
+                    'show_first' => 'DESC',
+                    'title' => 'ASC'
+                )
             );
             
             $members = new WP_Query( $query_args );
