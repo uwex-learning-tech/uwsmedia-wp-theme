@@ -25,7 +25,7 @@
         		// copy it to the clipboard
         		// unfocus the hideen input field
         		hiddenInput.select();
-        		document.execCommand( 'Copy' );
+        		document.execCommand( 'copy' );
         		hiddenInput.blur();
         		
         		// display message to the DOM; hide message after 3 seconds
@@ -77,7 +77,7 @@
         		evt.preventDefault();
         		
         		// set variables to DOM elements
-        		var hiddenInput = $( this ).find( '.hiddenShareLink' )[0];
+        		var hiddenInput = $( this ).find( '#hiddenSearchLink' )[0];
         		var textDisplay = $( this ).find( '.txt' )[0];
         		var msg = 'Copied to Clipboard!';
         		var originalMsg = 'Share Search Link';
