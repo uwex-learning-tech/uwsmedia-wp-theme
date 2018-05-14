@@ -1,14 +1,8 @@
 <!-- sidebar -->
-<aside class="sidebar col-4" role="complementary">
-
-	<?php get_template_part('searchform'); ?>
+<aside class="col-12 col-sm-12 col-md-4 sidebar" role="complementary">
 
 	<div class="sidebar-widget">
-		<?php if(!function_exists('dynamic_sidebar') || !dynamic_sidebar('widget-area-1')) ?>
-	</div>
-
-	<div class="sidebar-widget">
-		<?php if(!function_exists('dynamic_sidebar') || !dynamic_sidebar('widget-area-2')) ?>
+		<?php if(!function_exists('dynamic_sidebar') || !dynamic_sidebar('uwsmedia-sidebar')) ?>
 	</div>
 
 </aside>

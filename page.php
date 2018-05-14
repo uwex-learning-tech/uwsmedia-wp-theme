@@ -2,7 +2,9 @@
 <!-- body content container -->
 <div class="container">
     
-	<main role="main">
+    <div class="row">
+    
+	<main class="col-12 col-sm-12 col-md-8" role="main">
 		<!-- section -->
 		<section>
             
@@ -56,7 +58,9 @@
 	</main>
 
 <?php if ( !is_front_page() ) { ?>
-			    
+
+    <?php get_sidebar(); ?>
+    </div>
 </div>
 <!-- /body content container -->
 

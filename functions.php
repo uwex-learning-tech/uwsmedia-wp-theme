@@ -193,7 +193,6 @@ function add_slug_to_body_class( $classes ) {
 // If Dynamic Sidebar Exists
 if ( function_exists( 'register_sidebar' ) ) {
     
-    // Define Sidebar Widget Area 1
     register_sidebar( array(
         'name'          => __( 'Sidebar', 'uwsmedia' ),
         'description'   => __( 'For page templates that have a side bar.', 'uwsmedia' ),
@@ -1885,7 +1884,7 @@ function load_search_results() {
             <div class="sharings">
                 
                 <a class="btn btn-link btn-sm" href="<?php the_permalink(); ?>" role="button"><span class="fa fa-times-circle"></span> Clear Search</a>
-                <button id="shareSearchLink" class="btn btn-secondary btn-sm"><span class="fa fa-link"></span> <span class="txt">Copy Search Link</span><input type="text" class="hiddenShareLink" name="searchLink" value="<?php echo get_site_url() . '?s=' . $keyword . '&post_type=uws-projects&post_group_id=' . get_post_meta( $_REQUEST['post_id'], 'post_group_id', true ); ?>&programs=<?php echo $_POST['programTags']; ?>&classifications=<?php echo $_POST['classTags']; ?>&media_types=<?php echo $_POST['mediaTags']; ?>" /></button>
+                <button id="shareSearchLink" class="btn btn-secondary btn-sm"><span class="fa fa-link"></span> <span class="txt">Copy Search Link</span><input type="text" id="hiddenSearchLink" name="searchLink" value="<?php echo get_site_url() . '?s=' . $keyword . '&post_type=uws-projects&post_group_id=' . get_post_meta( $_REQUEST['post_id'], 'post_group_id', true ); ?>&programs=<?php echo $_POST['programTags']; ?>&classifications=<?php echo $_POST['classTags']; ?>&media_types=<?php echo $_POST['mediaTags']; ?>" /></button>
             </div>
             
             <div class="row d-flex flex-row">
