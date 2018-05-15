@@ -222,6 +222,79 @@
     		}
     		
 		} // end page showcase conditional check
+		
+		
+		/***********************************************************************
+		 MEMBER PROJECT AJAX SEARCH
+		***********************************************************************/
+		
+		if ( jQuery( 'body' ).hasClass( 'single-uws-team-members' ) ) {
+    		
+    		getProjects();
+    		
+        	function toPage( page ) {
+            	
+            	getProjects( page );
+            	
+        	}
+        	
+        	function getProjects( page ) {
+            	
+            	page = (typeof page !== 'undefined') ?  page : null;
+            	
+            	var resultsDisplay = jQuery( '#member-projects' );
+        		var postId = jQuery( 'input[name=post_id]' ).val();
+        		var args = {
+                    action: 'load_member_projects',
+                    security: ajaxSearch.ajax_nonce,
+                    post_id: postId,	
+            	};
+            	
+            	if ( page ) {
+                	
+                	args.page_num = page;
+                	
+            	}
+            	
+            	jQuery.ajax( {
+                        	
+                	type: 'POST',
+                	url: ajaxSearch.ajaxurl,
+                	data: args,
+                	success: function( response ) {
+                    	
+                    	resultsDisplay.html( response );
+                    	
+                    	var paginateLinks = jQuery( 'a.page-numbers' );
+            	
+                        if ( paginateLinks.length ) {
+                            
+                            jQuery.each( paginateLinks, function( i ) {
+                                
+                                var href = jQuery( paginateLinks[i] ).attr( 'href' );
+                                var startPos = href.indexOf( '=' ) + 1;
+                                var num = href.substr( startPos );
+                                
+                                jQuery( paginateLinks[i] ).attr( 'data-page', num );
+                                
+                            } );
+                            
+                        }
+                        
+                        paginateLinks.on( 'click', function( evt ) {
+                            
+                            toPage( $( evt.currentTarget ).data( 'page' ) );
+                            evt.preventDefault();
+                            
+                        } );
+                    	
+                	}
+                	
+            	} );
+            	
+        	}
+
+		}
 	
 	} ); // end DOM ready function
 	

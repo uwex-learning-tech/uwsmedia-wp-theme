@@ -622,9 +622,14 @@ main .page-featured-image img {
     padding: 20px 0;
 }
 
-.single.single-uws-projects .top-embed iframe {
+.single.single-uws-projects .top-embed iframe,
+.single.single-uws-projects .top-embed img {
     display: block;
     margin: 0 auto;
+}
+
+.single.single-uws-projects .top-embed img {
+    width: 100%;
 }
 
 /* team members */
@@ -901,10 +906,14 @@ main .page-featured-image img {
 .single-uws-team-members  #primaryHeaderNav .member-archive-page a {
     color: #000;
 }
-.page-template-page-members #member-archive .member-archive-title {
+.page-template-page-members #member-archive .member-archive-title,
+.single-uws-team-members .archive-title {
     text-align: center;
     font-weight: 300;
     margin-bottom: 20px;
+}
+.single-uws-team-members .archive-title {
+    margin-top: 40px;
 }
 .page-template-page-members #member-archive .member {
     margin-bottom: 30px;

@@ -134,9 +134,15 @@
                 
                 </section>
                 <!-- /section -->
+                
             </main>
 			    
         </div>
+        
+        <!-- projects -->
+        <input name="post_id" type="hidden" value="<?php echo $post->ID; ?>"/>
+        <section id="member-projects"></section>
+
 	</div>
 	<!-- /body content container -->
 

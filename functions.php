@@ -688,6 +688,10 @@ add_action( 'restrict_manage_posts', 'add_groups_filter_dropdown' );
 add_action( 'wp_ajax_load_search_results', 'load_search_results' );
 add_action( 'wp_ajax_nopriv_load_search_results', 'load_search_results' );
 
+// add ajax project search in member page
+add_action( 'wp_ajax_load_member_projects', 'load_member_projects' );
+add_action( 'wp_ajax_nopriv_load_member_projects', 'load_member_projects' );
+
 // add custom sytle to login page
 add_action( 'login_enqueue_scripts', 'uws_login_stylesheet' );
 
@@ -1991,6 +1995,140 @@ function load_search_results() {
 	echo $content;
 	die();
 			
+}
+
+function load_member_projects() {
+    
+    check_ajax_referer( 'ajax_search_nonce', 'security' );
+    
+    $memberId = $_REQUEST['post_id'];
+    $paged = ( $_REQUEST['page_num'] ) ? $_REQUEST['page_num'] : 1;
+    $query_args = array(
+        'post_type' => 'uws-projects',
+        'post_status' => 'publish',
+        'posts_per_page' => 8,
+        'paged' => $paged,
+        'meta_query' => array(
+            
+            array(
+                'key' => 'project_authors',
+                'value' => $memberId,
+                'compare' => 'LIKE'
+            )
+            
+        )
+    );
+    
+    $projects = new WP_Query( $query_args );
+    
+    ob_start();
+    
+    if ( $projects->have_posts() ) : ?>
+                
+        <div id="projects-archive">
+            
+            <h5 class="archive-title"><span aria-hidden="true">&mdash; </span>Projects<span aria-hidden="true"> &mdash;</span></h5>
+            
+            <div class="row d-flex flex-row">
+                
+            <?php while( $projects->have_posts() ) : $projects ->the_post(); ?>
+            
+            <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 project">
+                
+                <a href="<?php the_permalink(); ?>">
+                    
+                    <div class="project-bg">
+                    <?php the_post_thumbnail(); ?>
+                    </div>
+                    <div class="project-info">
+                        
+                    <?php
+                    
+                    $class = '<span aria-hidden="true">&nbsp;</span>';
+                    $class_terms = get_the_terms( $post->ID, 'classifications' );
+
+                    if ( is_array( $class_terms ) 
+                    && count( $class_terms ) >= 1 ) {
+                        $class = $class_terms[0]->name;
+                        
+                    }
+                        
+                    ?>
+                    
+                    <p class="categories"><?php echo $class; ?></p>
+                    
+                    <?php
+                        
+                        $title = get_the_title();
+                        $maxPos = 70;
+                    
+                        if ( strlen( $title ) > $maxPos ) {
+                        
+                            $lastPos = ( $maxPos - 3 ) - strlen( $title );
+                            $title = substr( $title, 0, strrpos( $title, ' ', $lastPos ) ) . '...';
+                        
+                        }
+                        
+                    ?>
+                    
+                    <h2 class="d-flex align-items-center justify-content-center"><?php echo $title ?></h2>
+                    
+                    <?php
+                        
+                        $terms = '<span aria-hidden="true">&nbsp;</span>';
+                        $media_terms = get_the_terms( $post->ID, 'media_types' );
+    
+                        if ( is_array( $media_terms ) 
+                        && count( $media_terms ) >= 1 ) {
+                            
+                            $terms = strip_tags( get_the_term_list( $post->ID, 'media_types', '', ', ', '' ) );
+                            
+                        }
+                        
+                    ?>
+                    
+                    <p class="categories"><?php echo $terms; ?></p>
+                    
+                    </div>
+                    
+                </a>
+                
+            </div>
+            
+            <?php endwhile; ?>
+                
+            </div> <!-- end row -->
+            
+            <div class="projects-pagnigation">
+            <?php
+                
+                $total_pages = $projects->max_num_pages;
+                $current_page = max( 1, $paged );
+
+                echo paginate_links( array(
+                    'base' => '%_%',
+                    'format' => '?page=%#%',
+                    'current' => $current_page,
+                    'total' => $total_pages,
+                    'prev_text'    => __('<span class="fa fa-chevron-left"></span> <span class="screen-reader-text">previous</span>'),
+                    'next_text'    => __('<span class="fa fa-chevron-right"></span> <span class="screen-reader-text">next</span>'),
+                    'show_all' => true,
+                    'type' => 'list'
+                ) );
+            ?>
+            </div>
+            
+        </div> <!-- end projects -->
+                
+        <?php 
+                wp_reset_postdata();
+            endif;
+            
+    $content = ob_get_clean();
+	
+	echo $content;
+	die();
+    
 }
 
 /*------------------------------------*\
