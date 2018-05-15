@@ -632,6 +632,10 @@ main .page-featured-image img {
     width: 100%;
 }
 
+.single.single-uws-projects .embed-responsive-sb::before {
+    padding-top: 65.11%;
+}
+
 /* team members */
 .single.single-uws-team-members aside {
     margin-top: 1rem;

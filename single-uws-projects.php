@@ -30,12 +30,26 @@
             
             if ( !empty( trim( $embedMedia ) ) ) :
             
+                $responsive = get_post_meta( $post->ID, 'responsive_choice', true );
+            
 ?>
     		
     		<div class="top-embed">
         		
                 <div class="container">
-                     <?php echo $embedMedia; ?>
+                    <?php
+                        
+                        if ( !empty( $responsive ) ) {
+                            
+                            echo '<div class="embed-responsive embed-responsive-' . $responsive . '">' . $embedMedia . '</div>';
+                            
+                        } else {
+                            
+                            echo $embedMedia;
+                            
+                        }
+
+                    ?>
                 </div>
                 
             </div>
