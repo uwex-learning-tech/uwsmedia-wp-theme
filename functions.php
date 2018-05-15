@@ -1264,7 +1264,7 @@ function project_media_ebmed_meta_box( $post ) {
     echo '<label for="16b9"><input id="16b9" type="radio" name="responsive_choice" value="16by9" ' . checked( $responsive, '16by9', false ) . '/>16:9</label>&nbsp;&nbsp;&nbsp;&nbsp;';
     echo '<label for="4b3"><input id="4b3" type="radio" name="responsive_choice" value="4by3"   ' . checked( $responsive, '4by3', false ) . '/>4:3</label>&nbsp;&nbsp;&nbsp;&nbsp;';
     echo '<label for="1b1"><input id="1b1" type="radio" name="responsive_choice" value="1by1"   ' . checked( $responsive, '1by1', false ) . '/>1:1</label>&nbsp;&nbsp;&nbsp;&nbsp;';
-    echo '<label for="sb"><input id="sb" type="radio" name="responsive_choice" value="sb" ' . checked( $responsive, 'sb', false ) . ' />Storybook</label>&nbsp;&nbsp;&nbsp;&nbsp;';
+    echo '<label for="sb"><input id="sb" type="radio" name="responsive_choice" value="sb" ' . checked( $responsive, 'sb', false ) . ' />Storybook+ 3</label>&nbsp;&nbsp;&nbsp;&nbsp;';
     echo '<label for="none"><input id="none" type="radio" name="responsive_choice" value="-1"  ' . checked( $responsive, '-1', false ) . '/>None</label></p>';
     
     $hideThumb = get_post_meta( $post->ID, 'hide_thumbnail' )[0];
