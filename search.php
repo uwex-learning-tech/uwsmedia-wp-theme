@@ -13,7 +13,7 @@
 			<?php if ( $post->post_type == 'uws-projects' ) : ?>
             
             <div class="searchQueries">
-                <p><small>
+                <p>
                 <?php
                     
                     if ( isset( $_GET['s'] ) && !empty( $_GET['s'] ) ) {
@@ -47,8 +47,10 @@
                         echo 'Filters: ';
                         
                         foreach ( $filters as $filter ) {
-                        
-                            echo '<span class="badge badge-light">' . $filter . '</span> ';
+                            
+                            $term = get_term_by( 'name', $filter, 'classifications' );
+                            
+                            echo '<span class="badge badge-light">' . $term->name . '</span> ';
                             
                         }
                         
@@ -57,7 +59,7 @@
                     unset( $filters );
                     
                 ?>
-                </small></p>
+                </p>
             </div>
                 
             <?php endif; ?>
