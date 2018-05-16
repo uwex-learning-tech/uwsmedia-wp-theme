@@ -57,13 +57,19 @@
 		<!-- /section -->
 	</main>
 
-<?php if ( !is_front_page() ) { ?>
-
-    <?php get_sidebar(); ?>
+    <?php
+        
+        if ( !is_front_page() ) :
+            
+            get_sidebar();
+            
+        endif;
+        
+    ?>
+    
+    
     </div>
 </div>
 <!-- /body content container -->
-
-<?php } ?>
 
 <?php get_footer(); ?>

@@ -784,7 +784,7 @@ add_filter( 'login_headertitle', 'uwsmedia_login_logo_url_title' );
 add_filter( 'login_headerurl', 'uwsmedia_login_logo_url' );
 
 /*------------------------------------*\
-	ADD Filters
+	REMOVE Filters
 \*------------------------------------*/
 
 // Remove <p> tags from Excerpt altogether
