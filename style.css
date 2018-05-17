@@ -819,7 +819,7 @@ main .page-featured-image img {
 }
 .projects-pagnigation {
     margin-top: 5px;
-    margin-bottom: 35px;
+    padding-bottom: 30px;
 }
 .projects-pagnigation ul.page-numbers {
     list-style: none;

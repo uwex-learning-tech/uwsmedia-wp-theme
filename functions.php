@@ -262,12 +262,12 @@ function uwsmediawp_pagination() {
 }
 
 // Custom Excerpts
-function uwsmediawp_index($length) // Create 20 Word Callback for Index page Excerpts, call using html5wp_excerpt('uwsmediawp_index');
+function uwsmediawp_index($length) // Create 20 Word Callback for Index page Excerpts, call using uwsmediawp_excerpt('uwsmediawp_index');
 {
     return 30;
 }
 
-// Create 40 Word Callback for Custom Post Excerpts, call using html5wp_excerpt('uwsmediawp_custom_post');
+// Create 40 Word Callback for Custom Post Excerpts, call using uwsmediawp_excerpt('uwsmediawp_custom_post');
 function uwsmediawp_custom_post($length)
 {
     return 40;
