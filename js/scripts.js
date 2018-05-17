@@ -295,6 +295,66 @@
         	}
 
 		}
+		
+		/***********************************************************************
+		 AUTOCOMPLETE SEARCH
+		***********************************************************************/
+		//https://xdsoft.net/jqplugins/autocomplete
+		if ( jQuery( 'body' ).hasClass( 'page-template-page-sublanding' ) ) {
+    		
+            var searchRequest;
+            var postId = jQuery( 'input[name=postId]' ).val();
+            
+            $( '.autocomplete-search' ).autocomplete( {
+
+                minLength: 3,
+                appendMethod:'replace',
+                valid: function () {
+                  return true;
+                },
+                source: [function( term, suggest ) {
+                    
+                    try {
+                        searchRequest.abort();
+                    } catch( e ){}
+                        
+                    searchRequest = jQuery.ajax( {
+                    	
+                    	type: 'POST',
+                    	url: ajaxSearch.ajaxurl,
+                    	data: {
+                        	search: term,
+                        	action: 'autocomplete_search',
+                        	security: ajaxSearch.ajax_nonce,
+                            post_id: postId
+                        },
+                    	success: function( response ) {
+                            
+                            suggest( response.data );
+                        	
+                    	}
+                	
+                	} );
+                	
+                }],
+                
+                getValue: function( item ) {
+                    return item.title;
+                }
+                
+            } ).on('selected.xdsoft',function(e,datum){
+
+                var link = document.createElement( 'a' );
+                
+                link.href = datum.link;
+                link.style.display = 'none'
+                
+                document.getElementsByTagName( 'body' )[0].appendChild( link );
+                link.click();
+                
+            }) ;
+    		
+		}
 	
 	} ); // end DOM ready function
 	

@@ -78,16 +78,16 @@ function uwsmedia_header_scripts() {
         wp_register_script( 'bootstrap', get_template_directory_uri() . '/js/lib/bootstrap.min.js', array( 'jquery' ), '4.1.1' ); 
         wp_enqueue_script( 'bootstrap' );
         
-         // UWS Media scripts
-        wp_register_script( 'uwsmediascripts', get_template_directory_uri() . '/js/scripts.js', array( 'jquery' ), '1.0.0' ); 
-
+        // UWS Media scripts
+        wp_register_script( 'uwsmediascripts', get_template_directory_uri() . '/js/scripts.js', array( 'jquery' ), '1.0.0' );
+        
+        wp_enqueue_script( 'uwsmediascripts' );
+        
         // Access to the location of admin-ajax.php
         wp_localize_script( 'uwsmediascripts', 'ajaxSearch', array(
             'ajaxurl' => admin_url( 'admin-ajax.php' ),
             'ajax_nonce' => wp_create_nonce( 'ajax_search_nonce' )
         ) );
-        
-        wp_enqueue_script( 'uwsmediascripts' );
         
     }
     
@@ -100,9 +100,6 @@ function uwsmedia_styles() {
     wp_register_style( 'bootstrap', get_template_directory_uri() . '/css/bootstrap.min.css', array(), '4.1.1', 'all' );
     wp_enqueue_style( 'bootstrap' );
     
-    // Dashicons
-    //wp_enqueue_style( 'dashicons' );
-    
     // Font Awesome
     wp_register_style( 'font-awesome', get_template_directory_uri() . '/css/font-awesome.css', array(), '4.7.0' ); 
     wp_enqueue_style( 'font-awesome' );
@@ -110,6 +107,34 @@ function uwsmedia_styles() {
     // UWS Media CSS
     wp_register_style( 'uwsmedia', get_template_directory_uri() . '/style.css', array(), '1.0', 'all' );
     wp_enqueue_style( 'uwsmedia' );
+    
+    // autocomplete search
+    global $post;
+
+    $currentPage = get_post_meta( $post->ID, '_wp_page_template', true );
+    
+    if ( 'page-sublanding.php' == $currentPage ) {
+        
+        wp_register_style(
+            'jquery-auto-complete',
+            get_template_directory_uri() . '/css/jquery.autocomplete.css',
+            array(),
+            '1.2.6'
+        );
+        
+        wp_enqueue_style( 'jquery-auto-complete' );
+        
+        wp_register_script(
+            'jquery-auto-complete',
+            get_template_directory_uri() . '/js/lib/jquery.autocomplete.js',
+            array( 'jquery' ),
+            '1.2.6',
+            true
+        );
+        
+        wp_enqueue_script( 'jquery-auto-complete' );
+       
+    }
     
 }
 
@@ -691,6 +716,10 @@ add_action( 'wp_ajax_nopriv_load_search_results', 'load_search_results' );
 // add ajax project search in member page
 add_action( 'wp_ajax_load_member_projects', 'load_member_projects' );
 add_action( 'wp_ajax_nopriv_load_member_projects', 'load_member_projects' );
+
+// add autocomplete search
+add_action( 'wp_ajax_autocomplete_search', 'autocomplete_search' );
+add_action( 'wp_ajax_nopriv_autocomplete_search', 'autocomplete_search' );
 
 // add custom sytle to login page
 add_action( 'login_enqueue_scripts', 'uws_login_stylesheet' );
@@ -2022,6 +2051,73 @@ function load_search_results() {
 	die();
 			
 }
+
+/*------------------------------------*\
+	AUTOCOMPLETE SEARCH
+\*------------------------------------*/
+
+function autocomplete_search() {
+    
+    check_ajax_referer( 'ajax_search_nonce', 'security' );
+    
+    ob_start();
+    
+    $postGroupId = get_post_meta( $_REQUEST['post_id'], 'post_group_id', true );
+    
+    $results = new WP_Query( array(
+        
+        'post_type' => 'page',
+        'post_status' => 'publish',
+        'nopaging' => true,
+        'posts_per_page' => 50,
+        's' => stripslashes( $_POST['search'] ),
+        'meta_query' => array(
+            array(
+                'key' => 'post_group_id',
+                'value' => $postGroupId
+            )
+        ),
+        
+    ) );
+    
+    $items = array();
+    
+	if ( !empty( $results->posts ) ) {
+    	
+		foreach ( $results->posts as $result ) {
+    		
+    		$term = new AutoCompleteTerm($result->post_title);
+    		$term->title = $result->post_title;
+    		$term->link = get_post_permalink($result->ID);
+    		
+			$items[] =  $term;
+			
+		}
+		
+	}
+	
+	wp_send_json_success( $items );
+	ob_get_clean();
+	die();
+    
+}
+
+class AutoCompleteTerm implements JsonSerializable {
+    
+    public $title = '';
+    public $link = '';
+    
+    public function jsonSerialize () {
+        return array(
+            'title'=>$this->title,
+            'link'=>$this->link
+        );
+    }
+}
+
+/*------------------------------------*\
+	LOAD MEMBER PROJECTS
+\*------------------------------------*/
 
 function load_member_projects() {
     

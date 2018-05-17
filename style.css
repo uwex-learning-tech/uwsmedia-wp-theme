@@ -881,6 +881,23 @@ main .page-featured-image img {
     font-size: 21px;
     font-weight: 300;
 }
+.page-template-page-sublanding .header-banner .banner-search {
+    position: relative;
+    margin-top: 16px;
+}
+.page-template-page-sublanding .header-banner .banner-search .autocomplete-search {
+    padding-right: 40px;
+}
+.page-template-page-sublanding .header-banner .banner-search .search-btn {
+    display: block;
+    position: absolute;
+    background-color: transparent;
+    border: none;
+    top: 6px;
+    right: 16px;
+    z-index: 5;
+    cursor: pointer;
+}
 
 .page-template-page-members .header-banner .banner-content .btn-action,
 .page-template-page-sublanding .header-banner .banner-content .btn-action {

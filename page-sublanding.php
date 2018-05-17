@@ -24,6 +24,22 @@
             
             ?></h1>
         <div class="banner-content"><?php echo html_entity_decode( get_post_meta( get_the_ID(), 'banner_content' , true ) ); ?></div>
+        
+            <div class="banner-search">
+                <input type="hidden" name="postId" value="<?php echo $post->ID; ?>" />
+                <form class="row d-flex justify-content-center" role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>">
+                    
+                    <div class="col-12 col-sm-12 col-md-6">
+                    <input type="text" name="s" class="form-control autocomplete-search w-100" placeholder="Search">
+                        
+                    <button type="submit" class="search-btn"><span class="fa fa-search" aria-hidden="true"></span><span class="screen-reader-text">Search</span></button>
+                </div>
+                </form>
+                
+            </div>
+        
+        </div>
+        
         <?php if ( has_post_thumbnail() ) : ?>
         <div class="banner-image"><img src="<?php the_post_thumbnail_url(); ?>" alt=""/></div>
         <?php else: ?>
