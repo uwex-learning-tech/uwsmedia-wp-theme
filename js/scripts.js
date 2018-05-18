@@ -129,7 +129,7 @@
         	} );
         	
         	function runSearch() {
-    		
+    		    
         		// set variable to DOM elements
             	var searchInput = jQuery( '#ajaxSearchInput' ).val().trim();
             	var postId = jQuery( 'input[name=postId]' ).val();
@@ -137,6 +137,7 @@
             	var classCBs = jQuery( '.sidebarFilter .classification-cb:checked' );
             	var mediaCBs = jQuery( '.sidebarFilter .media-cb:checked' );
             	var resultsDisplay = jQuery( '#projects-archive' );
+            	var searchResults;
                 
                 // set AJAX request data
                 var args = {
@@ -199,8 +200,12 @@
             	
             	if ( mediaCBs.length || classCBs.length || programCBs.length || searchInput.length ) {
                 	
+                	try {
+                        searchResults.abort();
+                    } catch( e ){}
+                	
                 	// execute AJAX
-                	jQuery.ajax( {
+                	searchResults = jQuery.ajax( {
                     	
                     	type: 'POST',
                     	url: ajaxSearch.ajaxurl,
