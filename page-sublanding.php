@@ -27,6 +27,7 @@
         
             <div class="banner-search">
                 <input type="hidden" name="postId" value="<?php echo $post->ID; ?>" />
+                <input type="hidden" name="bloginfo" value="<?php echo get_bloginfo( 'url' ); ?>" />
                 <form class="row d-flex justify-content-center" role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>">
                     
                     <div class="col-12 col-sm-12 col-md-6">

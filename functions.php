@@ -717,12 +717,11 @@ add_action( 'wp_ajax_nopriv_load_search_results', 'load_search_results' );
 add_action( 'wp_ajax_load_member_projects', 'load_member_projects' );
 add_action( 'wp_ajax_nopriv_load_member_projects', 'load_member_projects' );
 
-// add autocomplete search
-add_action( 'wp_ajax_autocomplete_search', 'autocomplete_search' );
-add_action( 'wp_ajax_nopriv_autocomplete_search', 'autocomplete_search' );
-
 // add custom sytle to login page
 add_action( 'login_enqueue_scripts', 'uws_login_stylesheet' );
+
+// Register REST route to for autocomplete
+add_action( 'rest_api_init', 'autocomplete_rest_query' );
 
 /*------------------------------------*\
 	REMOVE Actions
@@ -917,6 +916,14 @@ function post_group_attributes_meta_box( $post ) {
             echo  $groupInstruction . $pages . $groupHowTo . $featureOnHomepageCB . $promoteToPortfolioCB;
             
         }
+        
+        register_meta( $post->post_type, 'post_group_id', array(
+            
+            'type' => 'string',
+            'description' => 'The audience group id.',
+            'show_in_rest' => true
+            
+        ) );
         
     }
 
@@ -1227,8 +1234,12 @@ function create_projects_post() {
         'query_var' => true,
         'capability_type' => 'page',
         'delete_with_user' => false,
-        'rewrite' => array('slug' => 'showcases', 'with_front' => true)
+        'rewrite' => array('slug' => 'showcases', 'with_front' => true),
+        'show_in_rest' => true,
+        'rest_base' => 'showcases',
+        'rest_controller_class' => 'WP_REST_Posts_Controller'
     ) );
+    
 }
 
 function add_project_metabox() {
@@ -2056,49 +2067,62 @@ function load_search_results() {
 	AUTOCOMPLETE SEARCH
 \*------------------------------------*/
 
-function autocomplete_search() {
+function autocomplete_rest_query() {
     
-    check_ajax_referer( 'ajax_search_nonce', 'security' );
+    register_rest_route( 'uwsmedia/v2', '/pages/', array(
+        'methods' => 'POST',
+        'callback' => 'autocomplete_query'
+    ) );
     
-    ob_start();
+}
+
+function autocomplete_query() {
     
-    $postGroupId = get_post_meta( $_REQUEST['post_id'], 'post_group_id', true );
-    
-    $results = new WP_Query( array(
+    $args = array(
         
         'post_type' => 'page',
         'post_status' => 'publish',
         'nopaging' => true,
         'posts_per_page' => 50,
-        's' => stripslashes( $_POST['search'] ),
+        's' => '',
         'meta_query' => array(
+            'relation' => 'AND',
             array(
                 'key' => 'post_group_id',
-                'value' => $postGroupId
+                'value' => get_post_meta( $_POST['post_id'], 'post_group_id', true ),
+                'compare' => '='
             )
-        ),
+        )
         
-    ) );
+    );
     
-    $items = array();
+    if ( isset( $_POST['keyword']  ) ) {
+        $args['s'] = stripslashes( $_POST['keyword'] );
+    }
     
-	if ( !empty( $results->posts ) ) {
-    	
-		foreach ( $results->posts as $result ) {
+    ob_start();
+    
+    $query = new WP_Query( $args );
+    $data = array();
+    
+    if ( $query->have_posts() ) {
+
+        while ( $query->have_posts() ) {
+            
+            $query->the_post();
+            $post = new AutoCompleteTerm();
+    		$post->title = get_the_title();
+    		$post->link = get_the_permalink();
     		
-    		$term = new AutoCompleteTerm($result->post_title);
-    		$term->title = $result->post_title;
-    		$term->link = get_post_permalink($result->ID);
-    		
-			$items[] =  $term;
-			
-		}
-		
-	}
-	
-	wp_send_json_success( $items );
-	ob_get_clean();
-	die();
+    		$data[] =  $post;
+            
+        }
+
+    }
+    
+    wp_send_json_success( $data );
+    ob_get_clean();
+    die();
     
 }
 

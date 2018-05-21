@@ -309,6 +309,7 @@
     		
             var searchRequest;
             var postId = jQuery( 'input[name=postId]' ).val();
+            var blogurl = jQuery( 'input[name=bloginfo]' ).val();
             
             $( '.autocomplete-search' ).autocomplete( {
 
@@ -322,17 +323,15 @@
                     try {
                         searchRequest.abort();
                     } catch( e ){}
-                        
-                    searchRequest = jQuery.ajax( {
+                	
+                	searchRequest = jQuery.ajax( {
                     	
                     	type: 'POST',
-                    	url: ajaxSearch.ajaxurl,
+                    	url: blogurl + '/wp-json/uwsmedia/v2/pages/',
                     	data: {
-                        	search: term,
-                        	action: 'autocomplete_search',
-                        	security: ajaxSearch.ajax_nonce,
-                            post_id: postId
-                        },
+                        	keyword: term,
+                        	post_id: postId
+                    	},
                     	success: function( response ) {
                             
                             suggest( response.data );
