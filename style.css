@@ -803,19 +803,26 @@ main .page-featured-image img {
     margin: 8px 0;
 }
 
-.page-template-page-showcase .sidebar .ajaxSearchInput {
-    height: 27px;
-    font-size: 14px;
-    line-height: 1;
-    border-radius: 0.25rem 0px 0px 0.25rem;
+.page-template-page-showcase .sidebar .search {
+    position: relative;
 }
 
-.page-template-page-showcase .sidebar .search .btn {
-    border-color: #1E252B;
-    background-color: #1E252B;
-    height: 27px;
-    padding-top: 0;
-    padding-bottom: 5px;
+.page-template-page-showcase .sidebar .search .ajaxSearchInput {
+    height: 42px;
+    font-size: 14px;
+    line-height: 1;
+    border-radius: 0.25rem;
+    padding-right: 35px;
+}
+
+.page-template-page-showcase .sidebar .search #ajaxSearchBtn {
+    position: absolute;
+    border: none;
+    background-color: transparent;
+    padding: 5px;
+    top: 6px;
+    right: 8px;
+    line-height: 1;
 }
 .projects-pagnigation {
     margin-top: 5px;
