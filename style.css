@@ -977,7 +977,7 @@ main .page-featured-image img {
 
 
 /* other pages */
-.page-template-default.page .resource-card,
+.page-template .resource-card,
 .page-template-page-sublanding .resource-card {
     margin-bottom: 30px;
 }
