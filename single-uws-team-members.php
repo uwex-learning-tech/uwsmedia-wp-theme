@@ -141,6 +141,7 @@
         
         <!-- projects -->
         <input name="post_id" type="hidden" value="<?php echo $post->ID; ?>"/>
+        <input type="hidden" name="bloginfo" value="<?php echo get_bloginfo( 'url' ); ?>" />
         <section id="member-projects"></section>
 
 	</div>

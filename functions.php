@@ -713,15 +713,11 @@ add_action( 'restrict_manage_posts', 'add_groups_filter_dropdown' );
 add_action( 'wp_ajax_load_search_results', 'load_search_results' );
 add_action( 'wp_ajax_nopriv_load_search_results', 'load_search_results' );
 
-// add ajax project search in member page
-add_action( 'wp_ajax_load_member_projects', 'load_member_projects' );
-add_action( 'wp_ajax_nopriv_load_member_projects', 'load_member_projects' );
-
 // add custom sytle to login page
 add_action( 'login_enqueue_scripts', 'uws_login_stylesheet' );
 
-// Register REST route to for autocomplete
-add_action( 'rest_api_init', 'autocomplete_rest_query' );
+// Register REST route to for autocomplete and query
+add_action( 'rest_api_init', 'rest_search_query' );
 
 /*------------------------------------*\
 	REMOVE Actions
@@ -2064,17 +2060,26 @@ function load_search_results() {
 }
 
 /*------------------------------------*\
-	AUTOCOMPLETE SEARCH
+	REST SEARCH QUERY REGISTER
 \*------------------------------------*/
 
-function autocomplete_rest_query() {
+function rest_search_query() {
     
-    register_rest_route( 'uwsmedia/v2', '/pages/', array(
+    register_rest_route( 'uwsmedia/v2', '/autocomplete/', array(
         'methods' => 'POST',
         'callback' => 'autocomplete_query'
     ) );
     
+    register_rest_route( 'uwsmedia/v2', '/member_projects/', array(
+        'methods' => 'POST',
+        'callback' => 'member_projects_query'
+    ) );
+    
 }
+
+/*------------------------------------*\
+	AUTOCOMPLETE SEARCH (VIA REST)
+\*------------------------------------*/
 
 function autocomplete_query() {
     
@@ -2121,6 +2126,7 @@ function autocomplete_query() {
     }
     
     wp_send_json_success( $data );
+    wp_reset_postdata();
     ob_get_clean();
     die();
     
@@ -2142,10 +2148,7 @@ class AutoCompleteTerm implements JsonSerializable {
 /*------------------------------------*\
 	LOAD MEMBER PROJECTS
 \*------------------------------------*/
-
-function load_member_projects() {
-    
-    check_ajax_referer( 'ajax_search_nonce', 'security' );
+function member_projects_query() {
     
     $memberId = $_REQUEST['post_id'];
     $paged = ( $_REQUEST['page_num'] ) ? $_REQUEST['page_num'] : 1;
@@ -2272,7 +2275,7 @@ function load_member_projects() {
             
     $content = ob_get_clean();
 	
-	echo $content;
+	echo json_encode( $content );
 	die();
     
 }

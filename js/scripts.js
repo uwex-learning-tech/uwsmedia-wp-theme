@@ -249,10 +249,9 @@
             	
             	var resultsDisplay = jQuery( '#member-projects' );
         		var postId = jQuery( 'input[name=post_id]' ).val();
+        		var blogurl = jQuery( 'input[name=bloginfo]' ).val();
         		var args = {
-                    action: 'load_member_projects',
-                    security: ajaxSearch.ajax_nonce,
-                    post_id: postId,	
+                    post_id: postId,
             	};
             	
             	if ( page ) {
@@ -264,7 +263,7 @@
             	jQuery.ajax( {
                         	
                 	type: 'POST',
-                	url: ajaxSearch.ajaxurl,
+                	url: blogurl + '/wp-json/uwsmedia/v2/member_projects/',
                 	data: args,
                 	success: function( response ) {
                     	
@@ -327,7 +326,7 @@
                 	searchRequest = jQuery.ajax( {
                     	
                     	type: 'POST',
-                    	url: blogurl + '/wp-json/uwsmedia/v2/pages/',
+                    	url: blogurl + '/wp-json/uwsmedia/v2/autocomplete/',
                     	data: {
                         	keyword: term,
                         	post_id: postId
