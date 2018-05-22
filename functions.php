@@ -83,12 +83,6 @@ function uwsmedia_header_scripts() {
         
         wp_enqueue_script( 'uwsmediascripts' );
         
-        // Access to the location of admin-ajax.php
-        wp_localize_script( 'uwsmediascripts', 'ajaxSearch', array(
-            'ajaxurl' => admin_url( 'admin-ajax.php' ),
-            'ajax_nonce' => wp_create_nonce( 'ajax_search_nonce' )
-        ) );
-        
     }
     
 }
@@ -708,10 +702,6 @@ add_action( 'after_switch_theme', 'flush_rewrite_rules' );
 
 // Add dropdown filter for Groups Custom Post
 add_action( 'restrict_manage_posts', 'add_groups_filter_dropdown' );
-
-// add ajax search functionalities
-add_action( 'wp_ajax_load_search_results', 'load_search_results' );
-add_action( 'wp_ajax_nopriv_load_search_results', 'load_search_results' );
 
 // add custom sytle to login page
 add_action( 'login_enqueue_scripts', 'uws_login_stylesheet' );
@@ -1874,9 +1864,30 @@ function custom_search_query( $query ) {
     
 }
 
-function load_search_results() {
+/*------------------------------------*\
+	REST SEARCH QUERY REGISTER
+\*------------------------------------*/
+
+function rest_search_query() {
     
-    check_ajax_referer( 'ajax_search_nonce', 'security' );
+    register_rest_route( 'uwsmedia/v2', '/autocomplete/', array(
+        'methods' => 'POST',
+        'callback' => 'autocomplete_query'
+    ) );
+    
+    register_rest_route( 'uwsmedia/v2', '/member_projects/', array(
+        'methods' => 'POST',
+        'callback' => 'member_projects_query'
+    ) );
+    
+    register_rest_route( 'uwsmedia/v2', '/showcases/', array(
+        'methods' => 'POST',
+        'callback' => 'showcase_projects_query'
+    ) );
+    
+}
+
+function showcase_projects_query() {
     
     $postGroupId = get_post_meta( $_REQUEST['post_id'], 'post_group_id', true );
     $args = array(
@@ -2054,27 +2065,9 @@ function load_search_results() {
 	
 	$content = ob_get_clean();
 	
-	echo $content;
+	echo json_encode( $content );
 	die();
 			
-}
-
-/*------------------------------------*\
-	REST SEARCH QUERY REGISTER
-\*------------------------------------*/
-
-function rest_search_query() {
-    
-    register_rest_route( 'uwsmedia/v2', '/autocomplete/', array(
-        'methods' => 'POST',
-        'callback' => 'autocomplete_query'
-    ) );
-    
-    register_rest_route( 'uwsmedia/v2', '/member_projects/', array(
-        'methods' => 'POST',
-        'callback' => 'member_projects_query'
-    ) );
-    
 }
 
 /*------------------------------------*\

@@ -133,6 +133,7 @@
         		// set variable to DOM elements
             	var searchInput = jQuery( '#ajaxSearchInput' ).val().trim();
             	var postId = jQuery( 'input[name=postId]' ).val();
+            	var blogurl = jQuery( 'input[name=bloginfo]' ).val();
             	var programCBs = jQuery( '.sidebarFilter .program-cb:checked' );
             	var classCBs = jQuery( '.sidebarFilter .classification-cb:checked' );
             	var mediaCBs = jQuery( '.sidebarFilter .media-cb:checked' );
@@ -141,9 +142,7 @@
                 
                 // set AJAX request data
                 var args = {
-                    action: 'load_search_results',
-                    security: ajaxSearch.ajax_nonce,
-                    post_id: postId,	
+                    post_id: postId
             	};
             	
             	// add search input if not empty
@@ -208,7 +207,7 @@
                 	searchResults = jQuery.ajax( {
                     	
                     	type: 'POST',
-                    	url: ajaxSearch.ajaxurl,
+                    	url: blogurl + '/wp-json/uwsmedia/v2/showcases/',
                     	data: args,
                     	success: function( response ) {
                         	

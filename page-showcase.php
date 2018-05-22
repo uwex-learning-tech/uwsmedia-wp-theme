@@ -165,6 +165,7 @@
                 <div class="search" role="search">
                     <div class="input-group">
                         <input type="hidden" name="postId" value="<?php echo $post->ID; ?>" />
+                        <input type="hidden" name="bloginfo" value="<?php echo get_bloginfo( 'url' ); ?>" />
                         <input id="ajaxSearchInput" class="ajaxSearchInput form-control" placeholder="Search <?php echo get_the_title(); ?>" type="text">
                         <div class="input-group-append">
                             <button id="ajaxSearchBtn" class="btn btn-outline-secondary"><span class="fa fa-search" aria-hidden="true"></span><span class="screen-reader-text">Search</span></button>
