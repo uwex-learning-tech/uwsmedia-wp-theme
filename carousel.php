@@ -59,7 +59,7 @@
                         <div class="carousel-caption d-none d-md-block">
                             <h5><?php the_title(); ?></h5>
                             <p><?php uwsmediawp_excerpt('uwsmediawp_index'); ?></p>
-                            <a href="<?php the_permalink(); ?>" class="btn">VIEW</a>
+                            <a href="<?php the_permalink(); ?>" class="btn btn-primary">VIEW</a>
                         </div>
                     </div>
                     
