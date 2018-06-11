@@ -1617,11 +1617,11 @@ function job_title_meta_box( $post ) {
     
     wp_nonce_field( 'add_job_title', 'job_title_nonce' );
     
-    echo '<input type="text" name="job_title" value="' . get_post_meta( $post->ID, 'job_title', true ) . '" placeholder="Enter Job Title" />';
+    echo '<p><input type="text" name="job_title" value="' . get_post_meta( $post->ID, 'job_title', true ) . '" placeholder="Enter Job Title" /></p>';
     
     $atTop = get_post_meta( $post->ID, 'show_first', true );
     
-    echo '<p><label for="showFirstCb"><input id="showFirstCb" name="show_first" type="checkbox" value="1" '. checked( $atTop, true, false ) .' /> Place at the top</label></p>';
+    echo '<hr><p><label for="showFirstCb"><input id="showFirstCb" name="show_first" type="checkbox" value="1" '. checked( $atTop, true, false ) .' /> Place profile at the beginning</label></p>';
     
 }
 function interest_meta_box( $post ) {
