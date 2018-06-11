@@ -776,7 +776,7 @@ main .page-featured-image img {
 
 .page-template-default .sidebar .toc_widget_list {
     margin-top: 0;
-    padding: 8px;
+    padding: 8px 16px;
     list-style: none;
 }
 .page-template-default .sidebar .toc_widget_list li ul {
