@@ -62,21 +62,20 @@ img {
 }
 
 a {
-	color: #990033;
+	color: #0366d6;
 }
 
 a:hover {
-    color: #990033;
 	text-decoration: underline;
 }
 
 a:focus {
-	color: #990033;
+	color: #0366d6;
 }
 
 a:hover,
 a:active {
-    color: #990033;
+    color: #0366d6;
 }
 
 input:focus {
@@ -86,6 +85,13 @@ input:focus {
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Raleway', sans-serif;
     font-weight: 800;
+}
+
+code {
+    background-color: #f9f2f4;
+    padding: 2px 4px;
+    border-radius: 4px;
+    white-space: nowrap;
 }
 
 /*------------------------------------*\
@@ -159,10 +165,9 @@ h1, h2, h3, h4, h5, h6 {
 #project-carousel .carousel-caption .btn {
     display: block;
     width: 150px;
-    border: 1px solid #990033;
-    text-transform: uppercase;
-    color: #990033;
+    font-family: 'Raleway', sans-serif;
     font-weight: 700;
+    text-transform: uppercase;
 }
 
 #project-carousel .carousel-control-prev,
@@ -389,8 +394,8 @@ main .page-featured-image img {
 }
 
 .footer .login-btn a:hover {
-    border-color: #990033;
-    background-color: #990033;
+    border-color: #0366d6;
+    background-color: #0366d6;
 }
 
 /*------------------------------------*\
@@ -596,7 +601,7 @@ main .page-featured-image img {
     padding: 5px;
 }
 .single.single-uws-projects .sharings .btn:hover {
-    color: #990033;
+    color: #0366d6;
 }
 .single.single-uws-projects .share.msg {
     display: none;
@@ -674,7 +679,7 @@ main .page-featured-image img {
 }
 
 .single.single-uws-team-members .social-networks a:hover {
-    color: #990033;
+    color: #0366d6;
 }
 
 .error404 .icon {
@@ -758,7 +763,7 @@ main .page-featured-image img {
     line-height: 20px;
     height: 52px;
     margin: 8px 0;
-    color: #990033;
+    color: #0366d6;
     text-align: center;
 }
 
