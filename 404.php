@@ -1,7 +1,7 @@
 <?php get_header(); ?>
 <div class="container">
     <div class="row">
-    	<main class="col-8 offset-2" role="main">
+    	<main class="col-lg-8 offset-lg-2" role="main">
     		<!-- section -->
     		<section>
     
