@@ -2363,6 +2363,10 @@ function breadcrumb_nav() {
     $separator          = '/';
     $breadcrums_class   = 'breadcrumbs';
     $home_title         = 'Home';
+    
+    // Livestream post type
+    $livestreamPostType = 'tribe_events';
+    $livestreamOptions = get_option(Tribe__Events__Main::OPTIONNAME, array());
       
     // If you have any custom post types with custom taxonomies, put the taxonomy name below (e.g. product_cat)
     // $custom_taxonomy    = 'product_cat';
@@ -2381,8 +2385,14 @@ function breadcrumb_nav() {
         echo '<li class="separator separator-home"> ' . $separator . ' </li>';
            
         if ( is_archive() && !is_tax() && !is_category() && !is_tag() ) {
-              
-            echo '<li class="item-current item-archive">' . post_type_archive_title($prefix, false) . '</li>';
+            
+            if ( $post->post_type == $livestreamPostType ) {
+                
+                echo '<li class="item-current item-archive">' . ucfirst($livestreamOptions['eventsSlug']) .'</li>';
+                
+            } else {
+                echo '<li class="item-current item-archive">' . post_type_archive_title($prefix, false) . '</li>';
+            }
               
         } else if ( is_archive() && is_tax() && is_search() && !is_category() && !is_tag() ) {
               
@@ -2415,6 +2425,14 @@ function breadcrumb_nav() {
                 
                 echo '<li class="item-current"><a class="bread-parent bread-parent-about" href="/about" title="About">About</a></li>';
                  echo '<li class="separator"> ' . $separator . ' </li>';
+                
+            }
+            
+            if ( $post->post_type == $livestreamPostType ) {
+                
+                $lsTitle = ucfirst($livestreamOptions['eventsSlug']);
+                echo '<li class="item-current"><a class="bread-parent bread-parent-about" href="' . get_post_type_archive_link($post->post_type) . '" title="'.$lsTitle.'">' . $lsTitle .'</a></li>';
+                echo '<li class="separator"> ' . $separator . ' </li>';
                 
             }
             
@@ -2461,7 +2479,7 @@ function breadcrumb_nav() {
             // Search results page
             echo '<li class="item-current item-current-' . get_search_query() . '">Search results for: ' . get_search_query() . '</li>';
            
-        } elseif ( is_404() ) {
+        } else if ( is_404() ) {
                
             // 404 page
             echo '<li>' . 'Error 404' . '</li>';

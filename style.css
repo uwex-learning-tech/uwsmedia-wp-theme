@@ -275,8 +275,8 @@ code {
 
 /* header nav logo */
 .logo-img {
-    width: 3.75rem;
-    height: 3.75rem;
+    width: 10.75rem;
+    height: auto;
 }
 
 /* breadcrumbs */
@@ -635,7 +635,9 @@ main .page-featured-image img {
 .single.single-uws-projects .top-embed img {
     width: 100%;
 }
-
+.single.single-uws-projects .embed-responsive-sb {
+    max-width: 900px;
+}
 .single.single-uws-projects .embed-responsive-sb::before {
     padding-top: 65.11%;
 }
@@ -1354,4 +1356,34 @@ a img.aligncenter {
         display: block;
     }
 	
+}
+
+/** WISE CHAT PLUGIN **/
+.wcContainer .wcWindowTitle{
+position: relative;
+}
+.wcContainer .wcWindowTitle:before {
+	position: absolute;
+top: 0;
+left: 0;
+padding: 10px 8px 0;
+width: 100%;
+height: 100%;
+content: "Chat";
+background-color: inherit;
+}
+.wcContainer.wcWindowTitleIncluded .wcWindowContent .wcUserNameHint {
+	position: relative;
+}
+.wcContainer.wcWindowTitleIncluded .wcWindowContent .wcUserNameHint:after {
+	position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+content: "Please enter a name";
+background-color: #f3f6f7;
+}
+.wcContainer.wcWindowTitleIncluded .wcWindowContent .wcUserNameHint:before {
+	display: none;
 }
