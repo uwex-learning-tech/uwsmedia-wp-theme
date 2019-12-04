@@ -1418,3 +1418,56 @@ a img.aligncenter {
 .wcContainer.wcWindowTitleIncluded .wcWindowContent .wcUserNameHint:before {
 	display: none;
 }
+
+/** THE EVENT CALENDAR REGISTRATIONS PLUGIN */
+#rtec .rtec-form-wrapper {
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.tribe-events-notices {
+    margin-top: 0;
+}
+
+#rtec .rtec-form-field {
+    margin-bottom: 10px;
+}
+
+#rtec input[type="text"],
+#rtec input[type="email"],
+#rtec input[type="tel"],
+#rtec input[type="number"],
+#rtec textarea {
+    font-size: 16px;
+}
+
+.single-tribe_events .tribe-events-event-meta {
+    margin: 0 0 10px 0;
+}
+
+#rtec input[type="submit"],
+.rtec-submit-button {
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: 6px 12px !important;
+    font-size: 16px;
+    line-height: 1.5;
+    border-radius: .25rem;
+    color: #fff;
+    background-color: #28a745;
+    border-color: #28a745;
+}
+#rtec input[type="submit"]:hover,
+.rtec-submit-button:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+}
+
