@@ -348,6 +348,9 @@ main .page-featured-image img {
 .sidebar {
     padding: 1.25rem 1rem;
 }
+.sidebar .sidebar-widget.sticky-top {
+    top: 20px;
+}
 /* footer */
 .footer {
     background-color: #3A3A3A;
@@ -466,10 +469,28 @@ main .page-featured-image img {
     SINGLE
 \*------------------------------------*/
 
-.single.single-uws-projects main {
+.single main {
     position: relative;
 }
 
+.single main img {
+    max-width: 100%;
+    height: auto;
+}
+
+.single .post-featured-image {
+    background-image: url('img/funky-lines.png');
+    background-color: #d9d9d9;
+}
+
+.single .post-featured-image img {
+    width: 100%;
+    height: 400px;
+    object-fit: contain;
+    object-position: top center;
+}
+
+/* showcases */
 .single.single-uws-projects .post-featured-image img {
     width: 100%;
     height: 400px;
@@ -645,6 +666,11 @@ main .page-featured-image img {
 /* team members */
 .single.single-uws-team-members aside {
     margin-top: 1rem;
+}
+.single.single-uws-team-members .post-featured-image {
+    background-image: none;
+    background-color: transparent;
+    padding: 0;
 }
 .single.single-uws-team-members .post-featured-image img {
     width: 100%;
@@ -1359,31 +1385,36 @@ a img.aligncenter {
 }
 
 /** WISE CHAT PLUGIN **/
+
 .wcContainer .wcWindowTitle{
-position: relative;
+    position: relative;
 }
+
 .wcContainer .wcWindowTitle:before {
 	position: absolute;
-top: 0;
-left: 0;
-padding: 10px 8px 0;
-width: 100%;
-height: 100%;
-content: "Chat";
-background-color: inherit;
+    top: 0;
+    left: 0;
+    padding: 10px 8px 0;
+    width: 100%;
+    height: 100%;
+    content: "Chat";
+    background-color: inherit;
 }
+
 .wcContainer.wcWindowTitleIncluded .wcWindowContent .wcUserNameHint {
 	position: relative;
 }
+
 .wcContainer.wcWindowTitleIncluded .wcWindowContent .wcUserNameHint:after {
 	position: absolute;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-content: "Please enter a name";
-background-color: #f3f6f7;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    content: "Please enter a name";
+    background-color: #f3f6f7;
 }
+
 .wcContainer.wcWindowTitleIncluded .wcWindowContent .wcUserNameHint:before {
 	display: none;
 }

@@ -2367,6 +2367,10 @@ function breadcrumb_nav() {
     // Livestream post type
     $livestreamPostType = 'tribe_events';
     $livestreamOptions = get_option(Tribe__Events__Main::OPTIONNAME, array());
+    
+    // Podcast post type
+    $podcastPostType = 'podcast';
+
       
     // If you have any custom post types with custom taxonomies, put the taxonomy name below (e.g. product_cat)
     // $custom_taxonomy    = 'product_cat';
@@ -2432,6 +2436,16 @@ function breadcrumb_nav() {
                 
                 $lsTitle = ucfirst($livestreamOptions['eventsSlug']);
                 echo '<li class="item-current"><a class="bread-parent bread-parent-about" href="' . get_post_type_archive_link($post->post_type) . '" title="'.$lsTitle.'">' . $lsTitle .'</a></li>';
+                echo '<li class="separator"> ' . $separator . ' </li>';
+                
+            }
+            
+            if ( $post->post_type == $podcastPostType ) {
+                
+                $postType = get_post_type_object(get_post_type($post));
+                $postTypeName = $postType->labels->name;
+                
+                echo '<li class="item-current"><a class="bread-parent bread-parent-about" href="' . get_post_type_archive_link($post->post_type) . '" title="'.$postTypeName.'">' . $postTypeName .'</a></li>';
                 echo '<li class="separator"> ' . $separator . ' </li>';
                 
             }

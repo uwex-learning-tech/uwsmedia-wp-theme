@@ -1,12 +1,12 @@
 <?php get_header(); ?>
     <?php if (have_posts()): while (have_posts()) : the_post(); ?>
     <!-- post thumbnail -->
-    		<?php if ( has_post_thumbnail()) : // Check if Thumbnail exists ?>
-    		<div class="post-featured-image">
-    			<?php the_post_thumbnail(); ?>
-            </div>
-    		<?php endif; ?>
-    		<!-- /post thumbnail -->
+	<?php if ( has_post_thumbnail()) : // Check if Thumbnail exists ?>
+	<div class="post-featured-image">
+		<?php the_post_thumbnail(); ?>
+    </div>
+	<?php endif; ?>
+	<!-- /post thumbnail -->
     <div class="container">
         <div class="row">
             <main class="col-10 offset-1" role="main">
@@ -17,7 +17,11 @@
                     <!-- article -->
                     <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
-                        <p class="date">
+                        <!-- post title -->
+                        <h1><?php the_title(); ?></h1>
+                        <!-- /post title -->
+        
+                        <p class="date text-muted mb-0"><small>
                         <?php
                             
                             the_time('F j, Y');
@@ -28,17 +32,12 @@
                                 
                             }
                             
-                        ?></p>
-                        
-                        <!-- post title -->
-                        <h1><?php the_title(); ?></h1>
-                        <!-- /post title -->
-        
-                        <p class="authors"><?php _e( 'By', 'uwsmedia' ); ?> <?php the_author_posts_link(); ?></p>
+                        ?></small></p>
+                        <p class="authors"><?php _e( 'By', 'uwsmedia' ); ?> <strong><?php echo get_the_author(); ?></strong></p>
                         
                         <?php the_content(); // Dynamic Content ?>
                         
-                        <?php edit_post_link( __( 'Edit Project', 'uwsmedia' ), '<p>', '</p>', null ); ?>
+                        <?php edit_post_link( __( 'Edit', 'uwsmedia' ), '<p>', '</p>', null ); ?>
                     
                     </article>
                     <!-- /article -->

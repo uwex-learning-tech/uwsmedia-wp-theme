@@ -1,26 +1,15 @@
-<?php get_header(); ?>
+<?php 
+    get_header();
+    $postType = get_queried_object();
+ ?>
     
 <div class="container">
-    
-        <div class="row">    
-    
-	<main class="col-12" role="main">
-		<!-- section -->
-		<section id="projects-archive">
+      
+    <main role="main">
+        <h1><?php echo $postType->labels->name; ?></h1>
+        <?php get_template_part('loop'); ?>
+    </main>
 
-			<h1><?php _e( 'Archives', 'uwsmedia' ); ?></h1>
-            
-            <div class="row d-flex flex-row">
-			<?php get_template_part('loop'); ?>
-            </div> <!-- end grids -->
-            
-			<?php get_template_part('pagination'); ?>
-
-		</section>
-		<!-- /section -->
-	</main>
-
-    </div>
     
 </div>
 
