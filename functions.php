@@ -98,6 +98,19 @@ function uwsmedia_styles() {
     wp_register_style( 'font-awesome', get_template_directory_uri() . '/css/font-awesome.css', array(), '4.7.0' ); 
     wp_enqueue_style( 'font-awesome' );
     
+    // PRISMJS
+    wp_register_style( 'prism', get_template_directory_uri() . '/css/prism.css', array(), '1.17.1', 'all' );
+    wp_enqueue_style( 'prism' );
+
+    wp_register_script(
+        'prismjs',
+        get_template_directory_uri() . '/js/lib/prism.js',
+        array(),
+        '1.17.1',
+        true
+    );
+    wp_enqueue_script( 'prismjs' );
+
     // UWS Media CSS
     wp_register_style( 'uwsmedia', get_template_directory_uri() . '/style.css', array(), '1.0', 'all' );
     wp_enqueue_style( 'uwsmedia' );
