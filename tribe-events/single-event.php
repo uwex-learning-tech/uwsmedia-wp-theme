@@ -24,10 +24,6 @@ $event_id = get_the_ID();
 
 <div class="container">
 
-<!-- 	<p class="tribe-events-back"> -->
-		<a class="btn btn-light btn-sm mt-3" href="<?php echo esc_url( tribe_get_events_link() ); ?>"> <?php printf( '<span class="dashicons dashicons-arrow-left-alt2"></span> ' . esc_html_x( 'All %s', '%s Events plural label', 'the-events-calendar' ), $events_label_plural ); ?></a>
-<!-- 	</p> -->
-
 	<!-- Notices -->
 	<?php tribe_the_notices() ?>
 
@@ -62,7 +58,7 @@ $event_id = get_the_ID();
 			<?php do_action( 'tribe_events_single_event_before_the_content' ) ?>
 			<?php the_content(); ?>
 			<!-- .tribe-events-single-event-description -->
-			<?php do_action( 'tribe_events_single_event_after_the_content' ) ?>
+			
 
 			<!-- Event meta -->
 			<?php do_action( 'tribe_events_single_event_before_the_meta' ) ?>

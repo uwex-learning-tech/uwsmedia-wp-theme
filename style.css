@@ -1445,6 +1445,7 @@ a img.aligncenter {
     margin: 0 0 10px 0;
 }
 
+#rtec-form-toggle-button,
 #rtec input[type="submit"],
 .rtec-submit-button {
     display: inline-block;
@@ -1465,10 +1466,20 @@ a img.aligncenter {
     background-color: #28a745;
     border-color: #28a745;
 }
+
+#rtec-form-toggle-button,
 #rtec input[type="submit"]:hover,
 .rtec-submit-button:hover {
     background-color: #218838;
     border-color: #1e7e34;
+}
+
+#rtec .tribe-bar-toggle-arrow {
+    top: 6px;
+}
+
+.tribe-events-event-meta .column, .tribe-events-event-meta .tribe-events-meta-group {
+    padding: 0 2%;
 }
 
 /** PRISMJS **/
