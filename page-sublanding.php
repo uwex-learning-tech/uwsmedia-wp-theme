@@ -26,12 +26,12 @@
         <div class="banner-content"><?php echo html_entity_decode( get_post_meta( get_the_ID(), 'banner_content' , true ) ); ?></div>
         
             <div class="banner-search">
-                <input type="hidden" name="postId" value="<?php echo $post->ID; ?>" />
+                <input type="hidden" name="postGroupId" value="<?php echo get_post_meta( get_the_ID(), 'post_group_id' , true ) ?>" />
                 <input type="hidden" name="bloginfo" value="<?php echo get_bloginfo( 'url' ); ?>" />
                 <form class="row d-flex justify-content-center" role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>">
                     
-                    <div class="col-12 col-sm-12 col-md-6">
-                    <input type="text" name="s" class="form-control autocomplete-search w-100" placeholder="Search">
+                    <div class="col-12 col-sm-12 col-md-6 autocomplete-search-wrapper">
+                    <input type="text" name="s" id="autoComplete" class="form-control autocomplete-search w-100" placeholder="Search" autocomplete="off">
                         
                     <button type="submit" class="search-btn"><span class="fa fa-search" aria-hidden="true"></span><span class="screen-reader-text">Search</span></button>
                 </div>

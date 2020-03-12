@@ -1481,6 +1481,22 @@ a img.aligncenter {
 .tribe-events-event-meta .column, .tribe-events-event-meta .tribe-events-meta-group {
     padding: 0 2%;
 }
+.tribe-events-meta-group .tribe-events-single-section-title {
+    font-size: 1.4em;
+}
+.tribe-events-meta-group.tribe-events-meta-group-organizer {
+    display: block;
+    float: none;
+    clear: both;
+    width: 100%;
+}
+.tribe-events-meta-group.tribe-events-meta-group-organizer .tribe-organizer {
+    font-size: 1.3em;
+    margin: 24px 0 8px;
+}
+.tribe-events-meta-group.tribe-events-meta-group-organizer .organizer-contacts p {
+    margin: 0;
+}
 
 /** PRISMJS **/
 pre, pre code {

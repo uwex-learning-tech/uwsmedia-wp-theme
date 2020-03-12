@@ -26,6 +26,11 @@ $set_venue_apart = apply_filters( 'tribe_events_single_event_the_meta_group_venu
 <?php
 do_action( 'tribe_events_single_event_meta_primary_section_start' );
 
+// Include organizer meta if appropriate
+if ( tribe_has_organizer() ) {
+	tribe_get_template_part( 'modules/meta/organizer' );
+}
+
 // Always include the main event details in this first section
 tribe_get_template_part( 'modules/meta/details' );
 
@@ -46,10 +51,7 @@ if ( tribe_get_venue_id() ) {
 	}
 }
 
-// Include organizer meta if appropriate
-if ( tribe_has_organizer() ) {
-	tribe_get_template_part( 'modules/meta/organizer' );
-}
+
 
 do_action( 'tribe_events_single_event_meta_primary_section_end' );
 ?>

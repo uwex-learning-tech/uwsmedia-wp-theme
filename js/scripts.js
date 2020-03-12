@@ -302,62 +302,78 @@
 		/***********************************************************************
 		 AUTOCOMPLETE SEARCH
 		***********************************************************************/
-		//https://xdsoft.net/jqplugins/autocomplete
 		if ( jQuery( 'body' ).hasClass( 'page-template-page-sublanding' ) ) {
     		
-            var searchRequest;
-            var postId = jQuery( 'input[name=postId]' ).val();
-            var blogurl = jQuery( 'input[name=bloginfo]' ).val();
-            
-            $( '.autocomplete-search' ).autocomplete( {
+            var postId = jQuery( 'input[name=postGroupId]' ).val();
+			var blogurl = jQuery( 'input[name=bloginfo]' ).val();
+			
+            new autoComplete( {
 
-                minLength: 3,
-                appendMethod:'replace',
-                valid: function () {
-                  return true;
-                },
-                source: [function( term, suggest ) {
-                    
-                    try {
-                        searchRequest.abort();
-                    } catch( e ){}
-                	
-                	searchRequest = jQuery.ajax( {
-                    	
-                    	type: 'POST',
-                    	url: blogurl + '/wp-json/uwsmedia/v2/autocomplete/',
-                    	data: {
-                        	keyword: term,
-                        	post_id: postId
-                    	},
-                    	success: function( response ) {
-                            
-                            suggest( response.data );
-                        	
-                    	}
-                	
-                	} );
-                	
-                }],
-                
-                getValue: function( item ) {
-                    return item.title;
-                }
-                
-            } ).on('selected.xdsoft',function(e,datum){
+				data: {
 
-                var link = document.createElement( 'a' );
+					src: async () => {
+
+						const query = document.querySelector( '#autoComplete' ).value;
+						
+						if ( query.trim().length === 0 ) {
+							return [];
+						}
+
+						const source = await fetch( blogurl + '/wp-json/wp/v2/pages?search=' + query + '&post_group_id=' + postId  );
+						const data = await source.json();
+						const filteredData = await filterResults( data );
+						return filteredData;
+
+					},
+					key: ['title'],
+					cache: false
+
+				},
+				placeholder: 'Search',
+				threshold: 3,
+				maxResults: 25,
+				highlight: true,
+				resultsList: {
+					render: true
+				},
+				onSelection: feedback => {
+					
+					var link = document.createElement( 'a' );
                 
-                link.href = datum.link;
-                link.style.display = 'none'
-                
-                document.getElementsByTagName( 'body' )[0].appendChild( link );
-                link.click();
-                
-            }) ;
+					link.href = feedback.selection.value.link;
+					link.style.display = 'none'
+					
+					document.getElementsByTagName( 'body' )[0].appendChild( link );
+					link.click();
+
+				}
+
+			} );
     		
 		}
 	
 	} ); // end DOM ready function
+
+	function filterResults( obj ) {
+
+		return new Promise( resolve => {
+
+			let filterData = [];
+
+			obj.forEach( element => {
+				filterData.push( {'title': element.title.rendered, 'link': element.link } );
+			});
+
+			resolve( filterData );
+
+		});
+ 
+	}
+
+	var decodeHTML = function (html) {
+		var txt = document.createElement('textarea');
+		txt.innerHTML = html;
+		return txt.value;
+	};
 	
 } )( jQuery, this );

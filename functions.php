@@ -123,23 +123,23 @@ function uwsmedia_styles() {
     if ( 'page-sublanding.php' == $currentPage ) {
         
         wp_register_style(
-            'jquery-auto-complete',
-            get_template_directory_uri() . '/css/jquery.autocomplete.css',
+            'tarekraafat-autocomplete',
+            get_template_directory_uri() . '/css/autocomplete.css',
             array(),
-            '1.2.6'
+            '4.2.1'
         );
         
-        wp_enqueue_style( 'jquery-auto-complete' );
+        wp_enqueue_style( 'tarekraafat-autocomplete' );
         
         wp_register_script(
-            'jquery-auto-complete',
-            get_template_directory_uri() . '/js/lib/jquery.autocomplete.js',
-            array( 'jquery' ),
-            '1.2.6',
+            'tarekraafat-autocomplete',
+            get_template_directory_uri() . '/js/lib/autocomplete.js',
+            array(),
+            '4.2.1',
             true
         );
         
-        wp_enqueue_script( 'jquery-auto-complete' );
+        wp_enqueue_script( 'tarekraafat-autocomplete' );
        
     }
     
