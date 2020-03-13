@@ -24,7 +24,7 @@
     <header>
         <nav class="navbar navbar-dark" style="background-color: #990033;">
             <div class="container">
-                <a class="navbar-brand" href="."><img src="https://media.uwex.edu/app/tools/uwex-branding-utilities/images/uwex_logo_v2.png" width="auto" height="30px" class="d-inline-block align-top mr-3" alt="University of Wisconsin Extended Campus">
+                <a class="navbar-brand" href="https://media.uwex.edu/keepteaching"><img src="https://media.uwex.edu/app/tools/uwex-branding-utilities/images/uwex_logo_v2.png" width="auto" height="30px" class="d-inline-block align-top mr-3" alt="University of Wisconsin Extended Campus">
                     <strong>Keep Teaching</strong></a>
             </div>
         </nav>
@@ -47,15 +47,19 @@
                 
                 <!-- section -->
                 <section>
-
+                    
                     <!-- article -->
                     <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-
+                        
+                        <p class="mt-3">
+                            <a class="btn btn-outline-secondary btn-sm" href="https://media.uwex.edu/keepteaching"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</a>
+                        </p>
+                        
                         <!-- post title -->
                         <h1><?php the_title(); ?></h1>
                         <!-- /post title -->
         
-                        <p class="date text-muted mb-0"><small>
+                        <p class="date text-muted"><small>
                         <?php
                             
                             the_time('F j, Y');
