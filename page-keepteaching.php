@@ -43,7 +43,7 @@
         		
         		<section>
                     
-                    <h1 class="display-3"><?php the_title(); ?></h1>
+                    <h1 class="display-4"><?php the_title(); ?></h1>
                     
                     <!-- post thumbnail -->
             		<?php if ( has_post_thumbnail()) : // Check if Thumbnail exists ?>

@@ -1550,3 +1550,50 @@ pre, pre code {
     border-color: #007bff;
     cursor: pointer;
 }
+
+/** DISPLAY POST **/
+.display-posts-listing {
+    display: block;
+    padding: 0;
+    margin: 0 0 1rem 0;
+    list-style: none;
+}
+.display-posts-listing .listing-item {
+    position: relative;
+    padding: .75rem 1.25rem;
+    padding-top: 0.75rem;
+    padding-right: 1.25rem;
+    padding-bottom: 0.75rem;
+    padding-left: 1.25rem;
+    margin-bottom: 0.5rem;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    list-style: none;
+}
+
+.display-posts-listing .listing-item .title {
+    display: inline-block;
+    font-weight: bold;
+    font-size: 22px;
+    color: #155724;
+    margin-bottom: 0.5rem;
+    text-decoration: none;
+}
+.display-posts-listing .listing-item .title:hover {
+    text-decoration: underline;
+}
+.display-posts-listing .listing-item .date {
+    display: block;
+    position:  absolute;
+    top: 1.2rem;
+    right: 1.25rem;
+}
+.display-posts-listing .listing-item .excerpt-dash {
+    display: none;
+}
+.display-posts-listing .listing-item .excerpt {
+    display: block;
+}
