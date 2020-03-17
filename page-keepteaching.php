@@ -24,12 +24,12 @@
 	<?php wp_head(); ?>
 
 </head>
-<body style="margin-bottom: 0 !important">
+<body style="margin-bottom: 0 !important" class="keep-teaching">
     
     <header>
         <nav class="navbar navbar-dark" style="background-color: #990033;">
             <div class="container">
-                <a class="navbar-brand" href="."><img src="https://media.uwex.edu/app/tools/uwex-branding-utilities/images/uwex_logo_v2.png" width="auto" height="30px" class="d-inline-block align-top mr-3" alt="University of Wisconsin Extended Campus">
+                <a class="navbar-brand" href="https://media.uwex.edu/keepteaching/"><img src="https://media.uwex.edu/app/tools/uwex-branding-utilities/images/uwex_logo_v2.png" width="auto" height="30px" class="d-inline-block align-top mr-3" alt="University of Wisconsin Extended Campus">
                     <strong>Keep Teaching</strong></a>
             </div>
         </nav>
