@@ -2535,7 +2535,7 @@ function keepteaching_nav() {
     		'container'       => 'div',
     		'container_class' => 'menu-{menu slug}-container',
     		'container_id'    => '',
-    		'menu_class'      => 'navbar-nav ml-auto',
+    		'menu_class'      => 'navbar-nav',
     		'menu_id'         => '',
     		'echo'            => true,
     		'fallback_cb'     => 'wp_page_menu',
