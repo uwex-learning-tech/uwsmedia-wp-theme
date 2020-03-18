@@ -166,7 +166,9 @@
     </div>
     
     <footer class="mt-3">
-        <p class="text-muted"><small>&copy; 2020 Board of Regents and University of Wisconsin System. All rights reserved.</small></p>
+        <div class="container">
+            <p class="text-muted"><small>&copy; 2020 Board of Regents and University of Wisconsin System. All rights reserved.</small></p>
+        </div>
     </footer>
     
 </body>

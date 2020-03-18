@@ -24,8 +24,7 @@
     <header>
         <nav class="navbar navbar-dark" style="background-color: #990033;">
             <div class="container">
-                <a class="navbar-brand" href="https://media.uwex.edu/keepteaching"><img src="https://media.uwex.edu/app/tools/uwex-branding-utilities/images/uwex_logo_v2.png" width="auto" height="30px" class="d-inline-block align-top mr-3" alt="University of Wisconsin Extended Campus">
-                    <strong>Keep Teaching</strong></a>
+                <a class="navbar-brand" href="https://media.uwex.edu/keepteaching"><img src="https://media.uwex.edu/app/tools/uwex-branding-utilities/images/uwex_logo_v2.png" width="auto" height="30px" class="d-inline-block align-top mr-3" alt="University of Wisconsin Extended Campus"></a>
             </div>
         </nav>
     </header>
@@ -103,7 +102,9 @@
 	<!-- /body content container -->
 	
 	<footer class="mt-3">
-        <p class="text-muted text-center"><small>&copy; 2020 Board of Regents and University of Wisconsin System. All rights reserved.</small></p>
+        <div class="container">
+            <p class="text-muted"><small>&copy; 2020 Board of Regents and University of Wisconsin System. All rights reserved.</small></p>
+        </div>
     </footer>
     
 </body>
