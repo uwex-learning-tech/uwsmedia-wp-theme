@@ -1608,13 +1608,12 @@ pre, pre code {
 }
 
 /* KEEP TEACHING TEMPLATE */
-/*
 .keep-teaching .sidebar-widget.sticky-top {
     position: static;
     top: unset;
-    z-index: auto;
+    z-index: 1050;
 }
-*/.keep-teaching header {
+.keep-teaching header {
     display: contents;
 }
 
@@ -1644,7 +1643,7 @@ pre, pre code {
     position: -webkit-sticky;
     position: sticky;
     top: 0;
-    z-index: 9999;
+    z-index: 1025;
 }
 .keep-teaching .navbar-dark .navbar-toggler {
     color: rgba(255,255,255,1);
@@ -1733,7 +1732,6 @@ pre, pre code {
     height: 100%;
     object-fit: cover;
 }
-
 
 .keep-teaching .btn-kt-light {
     color: #141414; 
