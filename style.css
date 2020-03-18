@@ -1609,8 +1609,6 @@ pre, pre code {
 
 /* KEEP TEACHING TEMPLATE */
 .keep-teaching .sidebar-widget.sticky-top {
-    position: static;
-    top: unset;
     z-index: 1050;
 }
 .keep-teaching header {
@@ -1753,4 +1751,10 @@ pre, pre code {
     position: relative;
     top: -50px;
     visibility: hidden;
+}
+.keep-teaching .modal {
+    background-color: rgba(0,0,0,0.5);
+}
+.keep-teaching .modal-backdrop.show {
+    opacity: 0;
 }
