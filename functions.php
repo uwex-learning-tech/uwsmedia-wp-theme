@@ -2518,4 +2518,37 @@ function breadcrumb_nav() {
        
 }
 
+/***********
+    KEEP TEACHING
+    ***********/
+function uws_keep_teaching_menu() {
+    register_nav_menu('keep-teaching-menu',__( 'Keep Teaching Menu' ));
+}
+add_action( 'init', 'uws_keep_teaching_menu' );
+
+function keepteaching_nav() {
+    
+	wp_nav_menu(
+    	array(
+    		'theme_location'  => 'keep-teaching-menu',
+    		'menu'            => '',
+    		'container'       => 'div',
+    		'container_class' => 'menu-{menu slug}-container',
+    		'container_id'    => '',
+    		'menu_class'      => 'navbar-nav ml-auto',
+    		'menu_id'         => '',
+    		'echo'            => true,
+    		'fallback_cb'     => 'wp_page_menu',
+    		'before'          => '',
+    		'after'           => '',
+    		'link_before'     => '',
+    		'link_after'      => '',
+    		'items_wrap'      => '<ul class="%2$s">%3$s</ul>',
+    		'depth'           => 0,
+    		'walker'          => new Bootstrap_Nav_Walker()
+        )
+	);
+	
+}
+
 ?>

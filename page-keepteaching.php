@@ -24,35 +24,93 @@
 	<?php wp_head(); ?>
 
 </head>
-<body style="margin-bottom: 0 !important" class="keep-teaching">
+<body style="margin-bottom: 0 !important" class="keep-teaching" data-spy="scroll">
     
     <header>
-        <nav class="navbar navbar-dark" style="background-color: #990033;">
+        
+        <div class="navbar navbar-dark" style="background-color: #990033;">
             <div class="container">
-                <a class="navbar-brand" href="https://media.uwex.edu/keepteaching/"><img src="https://media.uwex.edu/app/tools/uwex-branding-utilities/images/uwex_logo_v2.png" width="auto" height="30px" class="d-inline-block align-top mr-3" alt="University of Wisconsin Extended Campus">
-                    <strong>Keep Teaching</strong></a>
+                <a class="navbar-brand" href="https://media.uwex.edu/keepteaching/"><img src="https://media.uwex.edu/app/tools/uwex-branding-utilities/images/uwex_logo_v2.png" width="auto" height="30px" class="d-inline-block align-top mr-3" alt="University of Wisconsin Extended Campus"></a>
+            </div>
+        </div>
+        
+        <div class="banner-container d-flex justify-content-center">
+             <!-- post thumbnail -->
+                <?php if ( has_post_thumbnail() ) : // Check if Thumbnail exists ?>
+                <div class="page-featured-image">
+                <?php the_post_thumbnail(); ?>
+                </div>
+                
+                <div class="container page-title-container d-flex flex-row align-items-center">
+                     <h1 class="display-4 page-title"><?php the_title(); ?>
+                     <span class="subline">COVID-19 RESOURCE</span></h1>
+                     
+                 </div>
+    		<!-- /post thumbnail -->
+    		<?php endif; ?>
+    		
+        </div>
+        
+        <?php if ( has_post_thumbnail() ) : ?>
+        <nav class="navbar navbar-expand-lg navbar-dark primary-nav sticky" style="background-color: #444444;">
+            <div class="container">
+                <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                
+                <div class="collapse navbar-collapse mr-auto" id="navbarSupportedContent">
+                    <?php
+/*
+                    wp_nav_menu( array( 
+                        'theme_location' => 'keep-teaching-menu', 
+                        'menu_class' => 'navbar-nav mr-autos' )
+                    );
+*/
+                    keepteaching_nav();
+                    
+                    ?>
+<!--
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#nav-teaching-online">Getting Started</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#nav-canvas">Canvas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#nav-online-meetings">Online Meetings</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#nav-instructional-content">Instructional Content</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#nav-accessibility">Accessibility</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#nav-support">Support</a>
+                        </li>
+                    </ul>
+-->
+                </div>
             </div>
         </nav>
+        <?php endif; ?>
+		
+		
     </header>
     
-    <div class="container">
+    <div class="container mt-3">
     
         <div class="row">
             
-            <main class="col-12 col-sm-12 col-md-8" role="main">
+            <main class="col-12 col-sm-12 col-md-8 mt-3" role="main">
         		
         		<section>
                     
-                    <h1 class="display-4"><?php the_title(); ?></h1>
+                    <?php if ( !has_post_thumbnail() ) : ?>
+                     <h1 class="display-4 pt-0"><?php the_title(); ?></h1>
+                    <?php endif; ?>
                     
-                    <!-- post thumbnail -->
-            		<?php if ( has_post_thumbnail()) : // Check if Thumbnail exists ?>
-            		<div class="page-featured-image">
-            			<?php the_post_thumbnail(); ?>
-                    </div>
-            		<?php endif; ?>
-            		<!-- /post thumbnail -->
-        
                     <?php if (have_posts()): while (have_posts()) : the_post(); ?>
         
         			<!-- article -->
@@ -108,7 +166,7 @@
     </div>
     
     <footer class="mt-3">
-        <p class="text-muted text-center"><small>&copy; 2020 Board of Regents and University of Wisconsin System. All rights reserved.</small></p>
+        <p class="text-muted"><small>&copy; 2020 Board of Regents and University of Wisconsin System. All rights reserved.</small></p>
     </footer>
     
 </body>
