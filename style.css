@@ -1560,12 +1560,8 @@ pre, pre code {
 }
 .display-posts-listing .listing-item {
     position: relative;
-    padding: .75rem 1.25rem;
-    padding-top: 0.75rem;
-    padding-right: 1.25rem;
-    padding-bottom: 0.75rem;
-    padding-left: 1.25rem;
-    margin-bottom: 0.5rem;
+    padding: .3rem .6rem;
+    margin-bottom: 0.25rem;
     border: 1px solid transparent;
     border-radius: .25rem;
     color: #155724;
@@ -1577,7 +1573,7 @@ pre, pre code {
 .display-posts-listing .listing-item .title {
     display: inline-block;
     font-weight: bold;
-    font-size: 18px;
+    font-size: 16px;
     line-height: 1;
     color: #155724;
     margin-bottom: 0;
@@ -1589,7 +1585,7 @@ pre, pre code {
 .display-posts-listing .listing-item .date {
     display: block;
     position: static;
-    font-size: 14px;
+    font-size: 12px;
 }
 /*
 @media (min-width: 992px) {
