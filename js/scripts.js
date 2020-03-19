@@ -367,6 +367,15 @@
     		var navBarPos = navBar.offset().top;
     		var bodyContent = $('.kt-main-body');
     		
+    		$('#subscribeToFeed').on('show.bs.modal', function () {
+              navBar.removeClass('zindex-fix');
+            });
+            
+            $('#subscribeToFeed').on('hide.bs.modal', function () {
+              navBar.addClass('zindex-fix');
+            });
+            
+    		
     		$(window).scroll( function() {
         		
         		if ( $(window).scrollTop() > navBarPos ) {
