@@ -52,45 +52,16 @@
         </div>
         
         <?php if ( has_post_thumbnail() ) : ?>
-        <nav class="navbar navbar-expand-lg navbar-dark primary-nav sticky" style="background-color: #444444;">
+        <nav class="navbar navbar-expand-lg navbar-dark primary-nav zindex-fix" style="background-color: #444444;">
             <div class="container">
-                <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler ml-auto collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 
                 <div class="collapse navbar-collapse mr-auto" id="navbarSupportedContent">
                     <?php
-/*
-                    wp_nav_menu( array( 
-                        'theme_location' => 'keep-teaching-menu', 
-                        'menu_class' => 'navbar-nav mr-autos' )
-                    );
-*/
                     keepteaching_nav();
-                    
                     ?>
-<!--
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#nav-teaching-online">Getting Started</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#nav-canvas">Canvas</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#nav-online-meetings">Online Meetings</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#nav-instructional-content">Instructional Content</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#nav-accessibility">Accessibility</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#nav-support">Support</a>
-                        </li>
-                    </ul>
--->
                 </div>
             </div>
         </nav>
@@ -99,7 +70,7 @@
 		
     </header>
     
-    <div class="container mt-3">
+    <div class="container mt-3 kt-main-body">
     
         <div class="row">
             

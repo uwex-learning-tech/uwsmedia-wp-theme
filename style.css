@@ -1633,11 +1633,11 @@ pre, pre code {
     padding-top: 0;
     top: 72px !important;
 }
-.keep-teaching .navbar-dark.sticky {
-    position: -webkit-sticky;
-    position: sticky;
-    top: 0;
-    z-index: 1025;
+.keep-teaching .navbar-dark.zindex-fix {
+    z-index: 1090;
+}
+.keep-teaching .kt-main-body.topPadding-fix {
+    padding-top: 60px;
 }
 .keep-teaching .navbar-dark .navbar-toggler {
     color: rgba(255,255,255,1);
@@ -1720,9 +1720,26 @@ pre, pre code {
 .keep-teaching .card-link .card {
     overflow: hidden;
 }
+
+.keep-teaching .card-link .card .card-body {
+    padding: 0.7rem;
+    
+}
+
+.keep-teaching .card-link .card .card-title {
+    margin-bottom: 0;
+    font-size: 1rem;
+}
+
+.keep-teaching .card-link .card .card-text {
+    font-size: 0.8rem;
+    margin-bottom: 0;
+    line-height: 1.1;
+}
+
 .keep-teaching .card-link .card .img > img {
     display: block;
-    width: 125px;
+    width: 60px;
     height: 100%;
     object-fit: cover;
 }
