@@ -1610,25 +1610,6 @@ pre, pre code {
 .keep-teaching header {
     display: contents;
 }
-
-
-@media (min-width: 576px) {
-        
-    .keep-teaching main {
-        order: 2;
-    }
-    .keep-teaching .sidebar {
-        order: 1;
-    }
-}
-@media (min-width: 768px) {
-    .keep-teaching main {
-        order: 1 !important;
-    }
-    .keep-teaching .sidebar {
-        order: 2 !important;
-    }
-}
 .keep-teaching .sidebar .sidebar-widget.sticky-top {
     padding-top: 0;
     top: 72px !important;

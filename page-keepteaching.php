@@ -72,7 +72,7 @@
     
     <div class="container mt-3 kt-main-body">
     
-        <div class="row">
+        <div class="row flex-md-row flex-column-reverse">
             
             <main class="col-12 col-sm-12 col-md-8 mt-3" role="main">
         		
