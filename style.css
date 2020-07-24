@@ -362,6 +362,15 @@ main .page-featured-image img {
     padding: 16px 0;
 }
 
+.footer a {
+    color: #fff;
+    text-decoration: underline;
+}
+
+.footer a:hover {
+    text-decoration: none;
+}
+
 .footer .footer-logo {
     width: 100%;
     height: auto;
