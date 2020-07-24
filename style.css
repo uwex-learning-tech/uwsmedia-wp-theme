@@ -1699,35 +1699,36 @@ pre, pre code {
     font-style: italic;
     margin-top: 0.75rem;
 }
-.keep-teaching .card-link {
+.keep-teaching .tipsheet {
     display: block;
     text-decoration: none;
     color: #000;
+    margin-bottom: 8px;
 }
-.keep-teaching .card-link:hover {
+.keep-teaching .tipsheet:hover {
     box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
 }
-.keep-teaching .card-link .card {
+.keep-teaching .tipsheet .card {
     overflow: hidden;
 }
 
-.keep-teaching .card-link .card .card-body {
+.keep-teaching .tipsheet .card .card-body {
     padding: 0.7rem;
     
 }
 
-.keep-teaching .card-link .card .card-title {
+.keep-teaching .tipsheet .card .card-title {
     margin-bottom: 0;
     font-size: 1rem;
 }
 
-.keep-teaching .card-link .card .card-text {
+.keep-teaching .tipsheet .card .card-text {
     font-size: 0.8rem;
     margin-bottom: 0;
     line-height: 1.1;
 }
 
-.keep-teaching .card-link .card .img > img {
+.keep-teaching .tipsheet .card .img > img {
     display: block;
     width: 60px;
     height: 100%;
