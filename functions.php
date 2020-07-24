@@ -810,6 +810,18 @@ add_filter( 'enter_title_here', 'team_members_change_title_placeholder' );
 add_filter( 'login_headertitle', 'uwsmedia_login_logo_url_title' );
 add_filter( 'login_headerurl', 'uwsmedia_login_logo_url' );
 
+// disable redirect_canonical
+add_filter( 'redirect_canonical', function( $redirect_url ) {
+	$url = 'http'.((isset($_SERVER['HTTPS']) && $_SERVER['HTTP'] !== 'off') ? 's' : '').'://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+	if ( $redirect_url !== $url ) {
+		global $wp_query;
+		$wp_query->set_404();
+		status_header(404);
+		nocache_headers();
+	}
+	return false;
+} );
+
 /*------------------------------------*\
 	REMOVE Filters
 \*------------------------------------*/
