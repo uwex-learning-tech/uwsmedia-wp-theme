@@ -1,12 +1,9 @@
 /*
 	Theme Name: UWS Media
 	Theme URI: https://media.uwex.com
-	Description: Wordpress Theme for University of Wisconsin System Media Services
-	Version: 1.0.0
+	Description: Wordpress Theme for Learning Technology and Media Services
+	Version: 2.0.0
 	Author: Ethan Lin
-	Author URI: http://ethanslin.com
-	Tags: HTML5, CSS3, Bootstrap4
-
 	License: MIT
 	License URI: http://opensource.org/licenses/mit-license.php
 */
@@ -57,10 +54,6 @@ body {
     *zoom:1;
 }
 
-img {
-	
-}
-
 a {
 	color: #0366d6;
 }
@@ -76,10 +69,6 @@ a:focus {
 a:hover,
 a:active {
     color: #0366d6;
-}
-
-input:focus {
-	
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -98,28 +87,37 @@ code {
     STRUCTURE
 \*------------------------------------*/
 
-/* wrapper */
-.wrapper {
-	
-}
+/* front page */
 
-/* header */
-.header {
-    
-}
-
-.home .header {
+#front-page-banner {
     position: relative;
-    padding-bottom: calc(100% - 86px);
-    
+    margin-top: -82px;
+    height: 500px;
 }
 
-.home .header .project-carousel-wrapper {
-    position: absolute;
-    top: 0;
+#front-page-banner .featured-image {
     width: 100%;
     height: 100%;
-    z-index: 0;
+    opacity: 0.75;
+    mix-blend-mode: multiply;
+}
+
+#front-page-banner .featured-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#front-page-banner .gradient-overlay {
+    position: absolute;
+    top: 82px;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 82px);
+    background-image: url("img/front-page-gradient-overlay.svg");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: center;
 }
 
 #project-carousel {
@@ -1045,10 +1043,6 @@ main .page-featured-image img {
 
 @media only screen and (min-width: 575.98px) {
     
-    .home .header {
-        padding-bottom: calc(56.25% - 86px);
-    }
-    
     .section-wrapper .section-banner .btn-action {
         margin-bottom: 0;
     }
@@ -1310,9 +1304,7 @@ a img.aligncenter {
 	}
 	
 	/* head */
-	.home .header {
-    	padding-bottom: 0;
-	}
+
 	.header *{
     	color: #000;
 	}
@@ -1610,155 +1602,4 @@ pre, pre code {
 }
 .display-posts-listing .listing-item .excerpt {
     display: block;
-}
-
-/* KEEP TEACHING TEMPLATE */
-.keep-teaching .sidebar-widget.sticky-top {
-    z-index: 1050;
-}
-.keep-teaching header {
-    display: contents;
-}
-.keep-teaching .sidebar .sidebar-widget.sticky-top {
-    padding-top: 0;
-    top: 72px !important;
-}
-.keep-teaching .navbar-dark.zindex-fix {
-    z-index: 1090;
-}
-.keep-teaching .kt-main-body.topPadding-fix {
-    padding-top: 60px;
-}
-.keep-teaching .navbar-dark .navbar-toggler {
-    color: rgba(255,255,255,1);
-    border-color: rgba(255,255,255,.75);
-    margin: 10px 0;
-}
-.keep-teaching .navbar-dark.primary-nav {
-    padding-top: 0;
-    padding-bottom: 0;
-    min-height: 56px;
-}
-.keep-teaching .navbar-dark.primary-nav .navbar-nav {
-    min-height: 56px;
-}
-.keep-teaching .navbar-dark.primary-nav .navbar-nav .nav-link {
-    display: flex;
-    height: 100%;
-    align-items: center;
-    color: #fff;
-    font-weight: bold;
-    text-transform: uppercase;
-    padding: 20px;
-    line-height: 1;
-}
-.keep-teaching .navbar-dark.primary-nav .navbar-nav .nav-link.active {
-    background-color: rgba(0, 0 , 0, 0.25);
-}
-
-.keep-teaching .navbar-dark.primary-nav .navbar-nav .nav-link:hover {
-    background-color: rgba(0, 0 , 0, 0.25);
-}
-.keep-teaching .banner-container {
-    position: relative;
-}
-.keep-teaching .banner-container .page-title-container {
-    position: absolute;
-    top: 0;
-    height: 100%;
-    color: #fff;
-}
-.keep-teaching .banner-container .page-title-container .page-title {
-    color: #fff;
-    padding: 20px;
-    background-color: rgba(153,0,51, 0.75);
-}
-.keep-teaching .banner-container .page-title-container .page-title > .subline {
-    display: block;
-    font-size: 25%;
-}
-.keep-teaching .page-featured-image {
-    width: 100%;
-    height: auto;
-}
-.keep-teaching .page-featured-image img {
-    display: block;
-    width: 100%;
-    height: 360px;
-    object-fit: cover;
-}
-.keep-teaching .btn{
-    text-align: left;
-    white-space: pre-line;
-}
-.keep-teaching .btn:focus {
-    color: #fff;
-}
-.keep-teaching figcaption {
-    font-size: 80%;
-    font-style: italic;
-    margin-top: 0.75rem;
-}
-.keep-teaching .tipsheet {
-    display: block;
-    text-decoration: none;
-    color: #000;
-    margin-bottom: 8px;
-}
-.keep-teaching .tipsheet:hover {
-    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
-}
-.keep-teaching .tipsheet .card {
-    overflow: hidden;
-}
-
-.keep-teaching .tipsheet .card .card-body {
-    padding: 0.7rem;
-    
-}
-
-.keep-teaching .tipsheet .card .card-title {
-    margin-bottom: 0;
-    font-size: 1rem;
-}
-
-.keep-teaching .tipsheet .card .card-text {
-    font-size: 0.8rem;
-    margin-bottom: 0;
-    line-height: 1.1;
-}
-
-.keep-teaching .tipsheet .card .img > img {
-    display: block;
-    width: 60px;
-    height: 100%;
-    object-fit: cover;
-}
-
-.keep-teaching .btn-kt-light {
-    color: #141414; 
-    background-color: #E0E0E0; 
-    border: 1px solid #B5B5B5;
-}
-
-.keep-teaching .btn-kt-light:hover, 
-.keep-teaching .btn-kt-light:focus, 
-.keep-teaching .btn-kt-light:active, 
-.keep-teaching .btn-kt-light.active, 
-.keep-teaching .open .dropdown-toggle.btn-kt-light { 
-  color: #141414; 
-  background-color: #C2C2C2; 
-  border-color: #B5B5B5; 
-}
-.keep-teaching a.anchor {
-    display: block;
-    position: relative;
-    top: -50px;
-    visibility: hidden;
-}
-.keep-teaching .modal {
-    background-color: rgba(0,0,0,0.5);
-}
-.keep-teaching .modal-backdrop.show {
-    opacity: 0;
 }

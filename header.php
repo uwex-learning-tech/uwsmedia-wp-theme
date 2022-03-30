@@ -40,8 +40,6 @@
                             </div>
                         </div>
                     </nav>
-                    
-                    <?php get_template_part( 'carousel' ); ?>
 
             </header>
             
