@@ -35,50 +35,6 @@ jQuery( document ).ready( function( $ ) {
     		file_frame.open();
     		
     	});
-    	
-    	jQuery( '#save-section-button' ).on('click', handleSectionObjString);
-    	jQuery( '#homepage-sections input, #homepage-sections textarea' ).on('blur', handleSectionObjString);
-    	
-    	function handleSectionObjString() {
-        	
-        	var sections =  jQuery( '#homepage-sections' ).find( '.section' );
-        	var sectionObjArray = [];
-        	var numbers = ['one', 'two', 'three'];
-        	
-        	jQuery.each( sections, function(i) {
-            	
-            	var self = this;
-            	var obj = {};
-            	
-            	obj.img = $(this).find( '.uwsimgurl' ).val();
-            	obj.text = $(this).find( '.uwstextarea' ).val();
-            	obj.title = $(this).find( '.uwstitle' ).val();
-            	
-            	var buttons = $(this).find( '.uwsbtn' );
-            	var links = $(this).find( '.uwsbtnlink' );
-            	
-            	obj.buttons = [];
-            	
-            	jQuery.each( buttons, function( i ) {
-                	
-                	var btnObj = {};
-                	
-                	btnObj.name = $(this).val();
-                	btnObj.link = $(links[i]).val();
-                	
-                	obj.buttons.push(btnObj);
-                	
-            	} );
-            	
-            	obj.accent = $(this).find('input[name=section-'+numbers[i]+'-accent]:checked').val();
-            	
-            	sectionObjArray.push( obj );
-            	
-        	} );
-        	
-        	$( '#homepage_sections_option' ).val(JSON.stringify(sectionObjArray));
-        	
-    	}
 	
 	}
 	

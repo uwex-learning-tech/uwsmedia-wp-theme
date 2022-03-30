@@ -4,17 +4,6 @@
     height: auto;
 }
 
-#homepage-sections .section {
-    padding: 12px 0;
-    margin-bottom: 12px;
-}
-
-#homepage-sections .section .image-preview {
-    object-fit:cover;
-    width: 250px;
-    height: auto;
-}
-
 /*------------------------------------*\
     CUSTOM COLUMNS
 \*------------------------------------*/

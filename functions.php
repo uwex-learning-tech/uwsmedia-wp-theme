@@ -70,17 +70,12 @@ function uwsmedia_header_scripts() {
     
     if ( $GLOBALS['pagenow'] != 'wp-login.php' && !is_admin() ) {
         
-        // Modernizr
-        wp_register_script( 'modernizr', get_template_directory_uri() . '/js/lib/modernizr-2.7.1.min.js', array(), '2.7.1' ); 
-        wp_enqueue_script( 'modernizr' );
-        
         // Bootstrap
         wp_register_script( 'bootstrap', get_template_directory_uri() . '/js/lib/bootstrap.min.js', array( 'jquery' ), '4.1.1' ); 
         wp_enqueue_script( 'bootstrap' );
         
         // UWS Media scripts
         wp_register_script( 'uwsmediascripts', get_template_directory_uri() . '/js/scripts.js', array( 'jquery' ), '1.0.0' );
-        
         wp_enqueue_script( 'uwsmediascripts' );
         
     }
@@ -431,77 +426,18 @@ function uwsmedia_theme_settings_page() { ?>
 <?php
 }
 
-function homepage_section_description() {
-    
-    echo '<p>Specify the sections on the homepage including its text, buttons, and background.</p>';
-    
-}
-
-function Site_section_description() {
-
+function general_section_description() {
     echo '<p>General settings that will be applied to all pages.</p>';
-    
 }
 
-function homepage_options_callback() {
+function site_logo_options_callback() {
     
-    $sections = get_option( 'homepage_sections_option' );
+    $logo = get_option( 'site_logo_option' );
+    $imgPreview = '<div class="image-preview-wrapper"><img class="image-preview" id="site-logo-preview" src="' . $logo . '" /></div>';
+    $imgTxtField = '<input name="site_logo_option" id="site_logo_option" type="url" class="regular-text code" value="' . $logo . '" />';
+    $imgUploadBtn = '<input id="upload_site_logo_button" data-rel="site_logo_option" data-preview="site-logo-preview" type="button" class="button" value="Select" />';
     
-    if ( empty( $sections ) ) {
-        
-         $sectionHtmls = '<div id="homepage-sections"><div class="section"><div class="image-preview-wrapper"><img class="image-preview" id="section-one-preview" src="" /></div><input type="url" id="section-one-url" class="regular-text code uwsimgurl" value="" /><input id="section-one-img" data-rel="section-one-url" data-preview="section-one-preview" type="button" class="button" value="Select" /><br /><input type="text" class="regular-text uwstitle" value="" placeholder="Title" /><textarea class="large-text uwstextarea" placeholder="Description..." rows="10"></textarea><input type="text" class="regular-text uwsbtn" value="" placeholder="Button 1 Name" /><input type="text" class="regular-text uwsbtnlink" value="" placeholder="Button 1 Link" /><input type="text" class="regular-text uwsbtn" value="" placeholder="Button 2 Name" /><input type="text" class="regular-text uwsbtnlink" value="" placeholder="Button 2 Link" /><br /><label><input name="section-one-accent" type="radio" checked="checked" value="light" />Light</label> <input name="section-one-accent" type="radio" checked="checked" value="gray" />Gray</label> <label><input name="section-one-accent" type="radio" value="dark" />Dark</label><p class="description">Choose a color accent for this section.</p></div><div class="section"><div class="image-preview-wrapper"><img class="image-preview" id="section-two-preview" src="" /></div><input type="url" id="section-two-url" class="regular-text code uwsimgurl" value="" /><input id="section-two-img" data-rel="section-two-url" data-preview="section-two-preview" type="button" class="button" value="Select" /><br /><input type="text" class="regular-text uwstitle" value="" placeholder="Title" /><textarea class="large-text uwstextarea" placeholder="Description..." rows="10"></textarea><input type="text" class="regular-text uwsbtn" value="" placeholder="Button 1 Name" /><input type="text" class="regular-text uwsbtnlink" value="" placeholder="Button 1 Link" /><input type="text" class="regular-text uwsbtn" value="" placeholder="Button 2 Name" /><input type="text" class="regular-text uwsbtnlink" value="" placeholder="Button 2 Link" /><br /><label><input name="section-two-accent" type="radio" checked="checked" value="light" />Light</label> <input name="section-two-accent" type="radio" checked="checked" value="gray" />Gray</label> <label><input name="section-two-accent" type="radio" value="dark" />Dark</label><p class="description">Choose a color accent for this section.</p></div><div class="section"><div class="image-preview-wrapper"><img class="image-preview" id="section-three-preview" src="" /></div><input type="url" id="section-three-url" class="regular-text code uwsimgurl" value="" /><input id="section-three-img" data-rel="section-three-url" data-preview="section-three-preview" type="button" class="button" value="Select" /><br /><input type="text" class="regular-text uwstitle" value="" placeholder="Title" /><textarea class="large-text uwstextarea" placeholder="Description..." rows="10"></textarea><input type="text" class="regular-text uwsbtn" value="" placeholder="Button 1 Name" /><input type="text" class="regular-text uwsbtnlink" value="" placeholder="Button 1 Link" /><input type="text" class="regular-text uwsbtn" value="" placeholder="Button 2 Name" /><input type="text" class="regular-text uwsbtnlink" value="" placeholder="Button 2 Link" /><br /><label><input name="section-three-accent" type="radio" checked="checked" value="light" />Light</label> <input name="section-three-accent" type="radio" checked="checked" value="gray" />Gray</label> <label><input name="section-three-accent" type="radio" value="dark" />Dark</label><p class="description">Choose a color accent for this section.</p></div><input class="button" id="save-section-button" type="button" value="Save Sections" /><p class="description">Do not forget to <strong>Save Sections</strong> first!</p></div>';
-         
-    } else {
-        
-        $sectionsArray = json_decode( $sections );
-        $sectionsIds = ['section-one-url', 'section-two-url', 'section-three-url'];
-        $sectionsPreviews = ['section-one-preview', 'section-two-preview', 'section-three-preview'];
-        $sectionsAccest = ['section-one-accent', 'section-two-accent', 'section-three-accent'];
-        $count = 0;
-        $buttonCount = 0;
-        
-        $sectionHtmls = '<div id="homepage-sections">';
-        
-        foreach ( $sectionsArray as $value ) {
-            
-            $sectionHtmls .= '<div class="section">';
-            
-            $sectionHtmls .= '<div class="image-preview-wrapper"><img class="image-preview" id="'.$sectionsPreviews[$count].'" src="' . $value->{'img'} . '" /></div>';
-            
-            $sectionHtmls .= '<input type="url" id="' . $sectionsIds[$count] . '" class="regular-text code uwsimgurl" value="' . $value->{'img'} . '" /><input id="section-one-img" data-rel="' . $sectionsIds[$count] . '" data-preview="'.$sectionsPreviews[$count] . '" type="button" class="button" value="Select" /><br /><input type="text" class="regular-text uwstitle" value="' . $value->{'title'} . '" placeholder="Title" /><textarea class="large-text uwstextarea" placeholder="Section description..." rows="10">'. $value->{'text'} . '</textarea>';
-            
-            foreach ( $value->{'buttons'} as $button ) {
-                
-                $sectionHtmls .= '<input type="text" class="regular-text uwsbtn" value="'.$button->{'name'}.'" placeholder="Button Name" /><input type="text" class="regular-text uwsbtnlink" value="'.$button->{'link'}.'" placeholder="Button Link" />';
-                
-                if ( $buttonCount != count( $value->{'buttons'} ) ) {
-                    
-                    $sectionHtmls .= '<br />';
-                    $buttonCount += 1;
-                    
-                } else {
-                    
-                    $buttonCount = 0;
-                    
-                }
-                
-            }
-
-            $sectionHtmls .= '<br /><label><input name="' . $sectionsAccest[$count] . '" type="radio" ' . ( $value->{'accent'} == 'light' ? 'checked="checked"' : '' ) . ' value="light" />Light</label> <label><input name="'.$sectionsAccest[$count].'" type="radio" ' . ( $value->{'accent'} == 'gray' ? 'checked="checked"' : '' ) . ' value="gray" />Gray</label> <label><input name="' . $sectionsAccest[$count] . '" type="radio" ' . ( $value->{'accent'} == 'dark' ? 'checked="checked"' : '' ) . ' value="dark" />Dark</label><p class="description">Choose a color accent for this section.</p>';
-            
-            $sectionHtmls .= '</div>';
-            
-            $count += 1;
-            
-        }
-        
-        $sectionHtmls .= '<input class="button" id="save-section-button" type="button" value="Save Sections" /><p class="description">Do not forget to <strong>Save Sections</strong> first!</p></div>';
-
-    }
-    
-    $hiddenInput = '<input name="homepage_sections_option" id="homepage_sections_option" type="hidden" value="" />';
-
-    echo $sectionHtmls . $hiddenInput;
+    echo $imgPreview . $imgTxtField . $imgUploadBtn;
     
 }
 
@@ -525,40 +461,20 @@ function footer_logo_options_callback() {
     
 }
 
-function site_logo_options_callback() {
-    
-    $logo = get_option( 'site_logo_option' );
-    
-    $imgPreview = '<div class="image-preview-wrapper"><img class="image-preview" id="site-logo-preview" src="' . $logo . '" /></div>';
-    $imgTxtField = '<input name="site_logo_option" id="site_logo_option" type="url" class="regular-text code" value="' . $logo . '" />';
-    $imgUploadBtn = '<input id="upload_site_logo_button" data-rel="site_logo_option" data-preview="site-logo-preview" type="button" class="button" value="Select" />';
-    
-    echo $imgPreview . $imgTxtField . $imgUploadBtn;
-    
-}
-
 function uwsmedia_theme_settings() {
     
     // Site
     
     add_option( 'site_logo_option', get_template_directory_uri() . '/img/uwex_logo.svg');
     add_option( 'footer_logo_option', get_template_directory_uri() . '/img/uws_logo.svg');
-    add_option( 'copyright_option', 'UWEX and University of Wisconsin Systems Academic Affairs. All rights reserved. No part of this website may be reproduced and or redistributed through any means without written permission.' );
+    add_option( 'copyright_option', 'Learning Technology and Media Services and University of Wisconsin Extended Campus. All rights reserved. No part of this website may be reproduced and or redistributed through any means without written permission.' );
     
-    add_settings_section( 'site_section', 'Site', 'site_section_description', 'uwsmedia_theme_settings' );
-    add_settings_field( 'site_logo_option', 'Site Logo', 'site_logo_options_callback', 'uwsmedia_theme_settings', 'site_section' );
-    add_settings_field( 'footer_logo_option', 'Footer Logo', 'footer_logo_options_callback', 'uwsmedia_theme_settings', 'site_section' );
-    add_settings_field( 'copyright_option', 'Copyright', 'copyright_options_callback', 'uwsmedia_theme_settings', 'site_section' );
-    
-    // homepage
-    
-    add_option( 'homepage_sections_option', '' );
-    
-    add_settings_section( 'homepage_section', 'Home Page', 'homepage_section_description', 'uwsmedia_theme_settings' );
-    add_settings_field( 'homepage_sections_option', 'Sections', 'homepage_options_callback', 'uwsmedia_theme_settings', 'homepage_section' );
-    
+    add_settings_section( 'general_section', 'General', 'general_section_description', 'uwsmedia_theme_settings' );
+    add_settings_field( 'site_logo_option', 'Website Logo', 'site_logo_options_callback', 'uwsmedia_theme_settings', 'general_section' );
+    add_settings_field( 'footer_logo_option', 'Footer Logo', 'footer_logo_options_callback', 'uwsmedia_theme_settings', 'general_section' );
+    add_settings_field( 'copyright_option', 'Copyright', 'copyright_options_callback', 'uwsmedia_theme_settings', 'general_section' );
+
     // Register all settings
-    register_setting( 'uwsmedia-theme-options-grp', 'homepage_sections_option' );
     register_setting( 'uwsmedia-theme-options-grp', 'site_logo_option' );
     register_setting( 'uwsmedia-theme-options-grp', 'footer_logo_option' );
     register_setting( 'uwsmedia-theme-options-grp', 'copyright_option' );
@@ -2528,39 +2444,6 @@ function breadcrumb_nav() {
            
     }
        
-}
-
-/***********
-    KEEP TEACHING
-    ***********/
-function uws_keep_teaching_menu() {
-    register_nav_menu('keep-teaching-menu',__( 'Keep Teaching Menu' ));
-}
-add_action( 'init', 'uws_keep_teaching_menu' );
-
-function keepteaching_nav() {
-    
-	wp_nav_menu(
-    	array(
-    		'theme_location'  => 'keep-teaching-menu',
-    		'menu'            => '',
-    		'container'       => 'div',
-    		'container_class' => 'menu-{menu slug}-container',
-    		'container_id'    => '',
-    		'menu_class'      => 'navbar-nav',
-    		'menu_id'         => '',
-    		'echo'            => true,
-    		'fallback_cb'     => 'wp_page_menu',
-    		'before'          => '',
-    		'after'           => '',
-    		'link_before'     => '',
-    		'link_after'      => '',
-    		'items_wrap'      => '<ul class="%2$s">%3$s</ul>',
-    		'depth'           => 0,
-    		'walker'          => new Bootstrap_Nav_Walker()
-        )
-	);
-	
 }
 
 ?>
