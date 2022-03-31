@@ -71,7 +71,7 @@ function uwsmedia_header_scripts() {
     if ( $GLOBALS['pagenow'] != 'wp-login.php' && !is_admin() ) {
         
         // Bootstrap
-        wp_register_script( 'bootstrap', get_template_directory_uri() . '/js/lib/bootstrap.min.js', array( 'jquery' ), '4.1.1' ); 
+        wp_register_script( 'bootstrap', get_template_directory_uri() . '/js/lib/bootstrap.min.js', array( 'jquery' ), '5.1.3' ); 
         wp_enqueue_script( 'bootstrap' );
         
         // UWS Media scripts
@@ -86,7 +86,7 @@ function uwsmedia_header_scripts() {
 function uwsmedia_styles() {
     
     // Bootstrap
-    wp_register_style( 'bootstrap', get_template_directory_uri() . '/css/bootstrap.min.css', array(), '4.1.1', 'all' );
+    wp_register_style( 'bootstrap', get_template_directory_uri() . '/css/bootstrap.min.css', array(), '5.1.3', 'all' );
     wp_enqueue_style( 'bootstrap' );
     
     // Font Awesome
@@ -294,7 +294,7 @@ function uwsmediawp_excerpt( $length_callback = '', $more_callback = '' ) {
     $output = get_the_excerpt();
     $output = apply_filters( 'wptexturize', $output );
     $output = apply_filters( 'convert_chars', $output );
-    $output = '<p>' . $output . '</p>';
+    $output = $output;
     
     echo $output;
     
@@ -465,7 +465,7 @@ function uwsmedia_theme_settings() {
     
     // Site
     
-    add_option( 'site_logo_option', get_template_directory_uri() . '/img/uwex_logo.svg');
+    add_option( 'site_logo_option', get_template_directory_uri() . '/img/uwex-media-logo.svg');
     add_option( 'footer_logo_option', get_template_directory_uri() . '/img/uws_logo.svg');
     add_option( 'copyright_option', 'Learning Technology and Media Services and University of Wisconsin Extended Campus. All rights reserved. No part of this website may be reproduced and or redistributed through any means without written permission.' );
     
@@ -606,7 +606,16 @@ add_action( 'add_meta_boxes', 'add_team_members_metabox' );
 add_action( 'add_meta_boxes', 'add_project_metabox' );
 
 // add sub landing meta box to page with sub landing page template
+add_action( 'add_meta_boxes', 'add_homepage_banner_metabox' );
+
+// save sublanding metadata on page save post
+add_action( 'save_post', 'save_homepage_meta', 10, 2 );
+
+// add sub landing meta box to page with sub landing page template
 add_action( 'add_meta_boxes', 'add_sublanding_header_metabox' );
+
+// save sublanding metadata on page save post
+add_action( 'save_post', 'save_sublanding_meta', 10, 2 );
 
 // save group metadata on save post
 add_action( 'save_post', 'save_post_group_meta', 10, 2 );
@@ -616,9 +625,6 @@ add_action( 'save_post', 'save_team_member_meta', 10, 2 );
 
 // save metadata on project save post
 add_action( 'save_post', 'save_project_meta', 10, 2 );
-
-// save sublanding metadata on page save post
-add_action( 'save_post', 'save_sublanding_meta', 10, 2 );
 
 /* Hide unused page from Dashboard Admin Menu */
 add_action( 'admin_menu', 'hide_menu_page');
@@ -1722,12 +1728,68 @@ function add_team_members_custom_columns_value( $column, $post_id ) {
 }
 
 /*------------------------------------*\
+	HOMEPAGE META BOX
+\*------------------------------------*/
+
+function add_homepage_banner_metabox( ) {
+
+    global $post;
+
+    $currentTemplate = get_post_meta( $post->ID, '_wp_page_template', true );
+    
+    if ( 'page-home.php' == $currentTemplate ) {
+        
+       add_meta_box( 'homepage-header', 'Homepage Banner', 'homepage_banner_meta_box', 'page', 'normal', 'high' );
+       
+    }
+
+}
+
+function homepage_banner_meta_box( $post ) {
+    
+    wp_nonce_field( 'add_homepage_banner_title', 'homepage_banner_title_nonce' );
+    echo '<p>Enter a headline to display over the homepage banner.</p>';
+    echo '<input type="text" name="homepage_banner_title" value="' . get_post_meta( $post->ID, 'homepage_banner_title', true ) .'" />';
+    
+    wp_nonce_field( 'add_homepage_banner_content', 'homepage_banner_content_nonce' );
+    echo '<p>Enter a short content to be displayed on the banner.</p>';
+    //echo '<textarea name="homepage_banner_content">' . html_entity_decode( get_post_meta( $post->ID, 'homepage_banner_content', true ) ) .'</textarea>';
+
+    wp_editor( get_post_meta( $post->ID, 'homepage_banner_content', true ), 'metaboxeditor', array( 'textarea_name' => 'homepage_banner_content', 'media_buttons' => false, 'quicktags' => false  ) );
+    
+}
+
+function save_homepage_meta( $post_id, $post ) {
+    
+    /* Get the post type object. */
+    $post_type = get_post_type_object( $post->post_type );
+    
+    /* Check if the current user has permission to edit the post. */
+    if ( !current_user_can( $post_type->cap->edit_post, $post_id ) ) {
+        return $post_id;
+    }
+    
+    if ( wp_verify_nonce( $_POST['homepage_banner_title_nonce'], 'add_homepage_banner_title' ) && isset( $_POST['homepage_banner_title'] ) ) {
+        
+        update_post_meta( $post_id, 'homepage_banner_title', sanitize_text_field( $_POST['homepage_banner_title'] ) );
+        
+    }
+    
+    if ( wp_verify_nonce( $_POST['homepage_banner_content_nonce'], 'add_homepage_banner_content' ) && isset( $_POST['homepage_banner_content'] ) ) {
+        
+        update_post_meta( $post_id, 'homepage_banner_content', $_POST['homepage_banner_content'] );
+        
+    }
+    
+}
+
+/*------------------------------------*\
 	SUB-LANDING HEADER META BOX
 \*------------------------------------*/
 function add_sublanding_header_metabox() {
     
     global $post;
-    
+
     $currentTemplate = get_post_meta( $post->ID, '_wp_page_template', true );
     
     if ( 'page-members.php' == $currentTemplate 
@@ -2306,8 +2368,10 @@ function breadcrumb_nav() {
     $home_title         = 'Home';
     
     // Livestream post type
-    $livestreamPostType = 'tribe_events';
-    $livestreamOptions = get_option(Tribe__Events__Main::OPTIONNAME, array());
+    if ( defined( 'Tribe__Events__Main' ) ) {
+        $livestreamPostType = 'tribe_events';
+        $livestreamOptions = get_option(Tribe__Events__Main::OPTIONNAME, array());
+    }
     
     // Podcast post type
     $podcastPostType = 'podcast';
