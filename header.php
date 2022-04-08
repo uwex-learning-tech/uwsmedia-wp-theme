@@ -21,7 +21,7 @@
 		<div class="wrapper">
             
             <!-- header -->
-            <header class="header" role="banner">
+            <header class="header">
                 
                     <nav class="navbar navbar-expand-lg navbar-light" role="navigation">
                         <div class="container">
@@ -31,7 +31,7 @@
                 				<img class="logo-img" src="<?php echo get_option('site_logo_option'); ?>" alt="<?php bloginfo('name'); ?>" />
                             </a>
                             
-                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#primaryHeaderNav" aria-controls="primaryHeaderNav" aria-expanded="false" aria-label="Toggle navigation">
+                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#primaryHeaderNav" aria-controls="primaryHeaderNav" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>
                             </button>
                 			
@@ -41,6 +41,37 @@
                         </div>
                     </nav>
 
+                    <?php if ( is_front_page() ) : ?>
+                        <div id="front-page-banner">
+
+        <!-- featured image if any -->
+        <?php if ( has_post_thumbnail()) : // Check if Thumbnail exists ?>
+        <div class="featured-image">
+            <?php the_post_thumbnail(); ?>
+        </div>
+        <?php endif; ?>
+        <!-- /featured image -->
+
+        <div class="banner-content-box d-flex flex-column align-items-center justify-content-center">
+            <div class="container">
+                <h1 class="banner-title">
+                    <?php $pageTitle = get_post_meta( get_the_ID(), 'homepage_banner_title' , true );
+            
+                if ( !empty( $pageTitle ) ) {
+                    echo $pageTitle;
+                }
+                
+                ?>
+                </h1>
+                <div class="banner-content">
+                    <?php echo wpautop( get_post_meta( get_the_ID(), 'homepage_banner_content' , true ) ); ?>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+                    <?php endif; ?>
             </header>
             
             <?php if ( !is_front_page() ) : ?>

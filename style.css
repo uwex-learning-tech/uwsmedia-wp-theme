@@ -1,5 +1,5 @@
 /*
-	Theme Name: UWS Media
+	Theme Name: UWEX Learning Technology and Media
 	Theme URI: https://media.uwex.com
 	Description: Wordpress Theme for Learning Technology and Media Services
 	Version: 2.0.0
@@ -95,10 +95,15 @@ code {
 
 /* front page */
 
-#front-page-banner {
+.home .header {
     position: relative;
-    margin-top: -82px;
-    height: 518px;
+    padding-bottom: calc(56.25% - 83px);
+}
+
+#front-page-banner {
+    position: absolute;
+    top: 0;
+    height: 100%;
 }
 
 #front-page-banner .featured-image {
@@ -117,7 +122,7 @@ code {
     top: 82px;
     left: 0;
     width: 100%;
-    height: calc(100% - 82px);
+    height: calc(100% - 83px);
 }
 
 #front-page-banner .banner-content-box .banner-title {
@@ -129,16 +134,21 @@ code {
 }
 
 #front-page-banner .banner-content-box .banner-content {
+    display: none;
     text-align: center;
     background-color: #fff;
     box-shadow: 4px 4px 10px rgba( 0, 0, 0, 0.35 );
-    width: 40%;
+    width: 60%;
     border-radius: 15px;
     padding: 15px;
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-size: 20px;
     line-height: 24px;
     margin: 0 auto;
+}
+
+#front-page-banner .banner-content-box .banner-content p:last-child {
+    margin-bottom: 0;
 }
 
 .home section {
@@ -201,7 +211,7 @@ code {
 }
 
 #project-carousel .carousel-inner .carousel-item img {
-    flex: 1 0 auto;
+    width: 100%;
     height: 300px;
     object-fit: cover;
     object-position: center;
@@ -213,17 +223,15 @@ code {
     display: flex;
     flex-flow: column;
     position: relative;
-    flex: 0 0 35%;
-    width: unset;
+    width: 100%;
     height: 300px;
     bottom: unset;
     right: unset;
     left: unset;
     background-color: rgba(255,255,255,0.9);
+    margin-top: 1rem;;
     padding: 15px;
-    margin-left: 1rem;
     color: unset;
-    font-size: 14px;
     text-align: left;
     box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.16);
     border-radius: 15px;
@@ -231,13 +239,15 @@ code {
 
 #project-carousel .carousel-caption .title {
     flex: 0 0 auto;
+    font-size: 22px;
+    line-height: 26px;
 }
 
 #project-carousel .carousel-caption .excerpt {
     flex: 1 0 auto;
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-    font-size: 20px;
-    line-height: 24px;
+    font-size: 18px;
+    line-height: 22px;
 }
 
 #project-carousel .carousel-caption .btn {
@@ -262,7 +272,7 @@ code {
 #project-carousel .carousel-control-prev,
 #project-carousel .carousel-control-next {
     position: relative;
-    display: flex;
+    display: none;
     flex: 0 0 2%;
     opacity: 1;
 }
@@ -504,70 +514,6 @@ main .page-featured-image img {
     border-color: #0366d6;
     background-color: #0366d6;
 }
-
-/*------------------------------------*\
-    FRONT PAGE
-\*------------------------------------*/
-
-.section-wrapper {
-    background-repeat: no-repeat;
-    background-position: center bottom;
-}
-
-.section-wrapper.dark {
-    color: #fff;
-    background-color: #1E252B;
-}
-
-.section-wrapper.gray {
-    color: #000;
-    background-color: #CBCBCB;
-}
-
-.section-wrapper.light {
-    color: #000;
-    background-color: #F0F0F0;
-}
-
-.section-wrapper .section-banner {
-    max-width: 940px;
-    padding-top: 40px;
-    margin: 0 auto;
-}
-
-.section-wrapper .section-banner .title,
-.section-wrapper .section-banner .description,
-.section-wrapper .section-banner .buttons {
-    text-align: center;
-}
-
-.section-wrapper .section-banner .title {
-    font-weight: 300;
-    font-size: 48px;
-    text-transform: uppercase;
-}
-
-.section-wrapper .section-banner .description {
-    font-size: 21px;
-    font-weight: 300;
-}
-
-.section-wrapper .section-banner .btn-action {
-    margin-bottom: 8px;
-    font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-    text-transform: uppercase;
-    font-weight: 700;
-}
-
-.section-wrapper .section-bg img {
-    display: block;
-    margin: 0 auto;
-    max-width: 940px;
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-}
-
 
 /*------------------------------------*\
     SINGLE
@@ -1140,17 +1086,15 @@ main .page-featured-image img {
 
 @media only screen and (min-width: 575.98px) {
     
-    .section-wrapper .section-banner .btn-action {
-        margin-bottom: 0;
-    }
-    
     .footer {
         height: 6.25rem;
         padding: 0;
     }
+
     .footer .user-info {
         display: block;
     }
+
     .footer .login-btn {
         display: block;
     }
@@ -1162,6 +1106,15 @@ main .page-featured-image img {
 }
 
 @media only screen and (min-width: 767.98px) {
+
+    #front-page-banner .banner-content-box .banner-content {
+        display: block;
+    }
+
+    #project-carousel .carousel-control-prev,
+    #project-carousel .carousel-control-next {
+        display: flex;
+    }
     
     .single.single-uws-projects .embed-responsive-sb {
         height: 900px;
@@ -1171,6 +1124,17 @@ main .page-featured-image img {
 
 @media only screen and (min-width: 991.98px) {
     
+    .home .header {
+        padding-bottom: unset;
+    }
+
+    #front-page-banner {
+        position: relative;
+        top: unset;
+        margin-top: -82px;
+        height: 518px;
+    }
+
     #primaryHeaderNav .active,
     #primaryHeaderNav .current-page-ancestor,
     .single-uws-team-members  #primaryHeaderNav .member-archive-page {
@@ -1187,6 +1151,17 @@ main .page-featured-image img {
     
     #primaryHeaderNav .faculty-link-btn {
         border-radius: 1.563rem;
+    }
+
+    #project-carousel .carousel-inner .carousel-item img {
+        flex: 1 0 auto;
+        width: unset;
+        margin-right: 1rem;
+    }
+    
+    #project-carousel .carousel-caption {
+        flex: 0 0 33%;
+        margin-top: 0;
     }
     
     .page-template-default.page .card-columns {

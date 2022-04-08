@@ -49,7 +49,7 @@ function uwsmedia_nav() {
     		'container'       => 'div',
     		'container_class' => 'menu-{menu slug}-container',
     		'container_id'    => '',
-    		'menu_class'      => 'navbar-nav ml-auto',
+    		'menu_class'      => 'navbar-nav ms-auto',
     		'menu_id'         => '',
     		'echo'            => true,
     		'fallback_cb'     => 'wp_page_menu',
@@ -264,9 +264,9 @@ function uwsmediawp_pagination() {
 }
 
 // Custom Excerpts
-function uwsmediawp_index($length) // Create 20 Word Callback for Index page Excerpts, call using uwsmediawp_excerpt('uwsmediawp_index');
+function uwsmediawp_index($length) // Create 23 Word Callback for Index page Excerpts, call using uwsmediawp_excerpt('uwsmediawp_index');
 {
-    return 30;
+    return 23;
 }
 
 // Create 40 Word Callback for Custom Post Excerpts, call using uwsmediawp_excerpt('uwsmediawp_custom_post');
@@ -731,6 +731,9 @@ add_filter( 'enter_title_here', 'team_members_change_title_placeholder' );
 // change logo link and text on login page
 add_filter( 'login_headertitle', 'uwsmedia_login_logo_url_title' );
 add_filter( 'login_headerurl', 'uwsmedia_login_logo_url' );
+
+// remove language switcher on login page
+add_filter( 'login_display_language_dropdown' , '__return_false' ); 
 
 // disable redirect_canonical
 add_filter( 'redirect_canonical', function( $redirect_url ) {

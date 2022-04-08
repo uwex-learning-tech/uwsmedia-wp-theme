@@ -12,35 +12,7 @@
  get_header(); ?>
 <main role="main">
 
-    <div id="front-page-banner">
-
-        <!-- featured image if any -->
-        <?php if ( has_post_thumbnail()) : // Check if Thumbnail exists ?>
-        <div class="featured-image">
-            <?php the_post_thumbnail(); ?>
-        </div>
-        <?php endif; ?>
-        <!-- /featured image -->
-
-        <div class="banner-content-box d-flex flex-column align-items-center justify-content-center">
-            <div class="container">
-                <h1 class="banner-title">
-                    <?php $pageTitle = get_post_meta( get_the_ID(), 'homepage_banner_title' , true );
-            
-                if ( !empty( $pageTitle ) ) {
-                    echo $pageTitle;
-                }
-                
-                ?>
-                </h1>
-                <div class="banner-content">
-                    <?php echo wpautop( get_post_meta( get_the_ID(), 'homepage_banner_content' , true ) ); ?>
-                </div>
-            </div>
-        </div>
-
-
-    </div>
+    
 
     <section>
 
