@@ -266,6 +266,7 @@
                 	data: args,
                 	success: function( response ) {
                     	
+						console.log(response);
                     	resultsDisplay.html( response );
                     	
                     	var paginateLinks = jQuery( 'a.page-numbers' );

@@ -5,7 +5,7 @@
             <?php if (have_posts()): while (have_posts()) : the_post(); ?>
     <!-- post thumbnail -->
     		
-    		<aside class="col-12 col-sm-12 col-md-12 col-lg-4">
+    		<aside class="col-12 col-sm-12 col-md-12 col-lg-4 p-4">
         		
         		<?php if ( has_post_thumbnail()) : // Check if Thumbnail exists ?>
         		
@@ -46,12 +46,6 @@
                     
                     if ( !empty( $youtube ) ) {
                         echo '<li class="icon"><a href="https://www.youtube.com/user/' . $youtube . '" target="_blank"><span class="fa fa-youtube"><span class="screen-reader-text">YouTube Profile Link</span></span></a></li>';
-                    }
-                    
-                    $google = get_post_meta( get_the_ID(), 'googleplus_username', true );
-                    
-                    if ( !empty( $google ) ) {
-                        echo '<li class="icon"><a href="https://plus.google.com/' . $google . '" target="_blank"><span class="fa fa-google-plus-square"><span class="screen-reader-text">Google+ Profile Link</span></span></a></li>';
                     }
                     
                     $behance = get_post_meta( get_the_ID(), 'behance_username', true );
@@ -105,7 +99,7 @@
                                 
                                 foreach( $interests as $interest ) : ?>
                                     
-                                <span class="badge badge-light"><?php echo ucwords( trim( $interest ) ); ?></span>
+                                <span class="badge rounded-pill bg-light text-dark"><?php echo ucwords( trim( $interest ) ); ?></span>
                                     
                                 <?php endforeach; ?>
                             

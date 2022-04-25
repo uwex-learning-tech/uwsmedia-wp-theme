@@ -613,7 +613,7 @@ add_action( 'save_post', 'save_homepage_meta', 10, 2 );
 
 // add sub landing meta box to page with sub landing page template
 add_action( 'add_meta_boxes', 'add_sublanding_header_metabox' );
-
+ 
 // save sublanding metadata on page save post
 add_action( 'save_post', 'save_sublanding_meta', 10, 2 );
 
@@ -1602,10 +1602,6 @@ function social_networks_meta_box( $post ) {
 
     echo '<p><span class="fa fa-youtube-play"></span> <strong>YouTube</strong><br>https://www.youtube.com/user/<input class="edit-post-social-input" type="text" name="youtube_username" value="' . get_post_meta( $post->ID, 'youtube_username', true ) . '" placeholder="username" /></p>';
     
-    wp_nonce_field( 'add_googleplus_network', 'googleplus_network_nonce' );
-
-    echo '<p><span class="fa fa-google-plus-square"></span> <strong>Google+</strong><br>https://plus.google.com/<input class="edit-post-social-input" type="text" name="googleplus_username" value="' . get_post_meta( $post->ID, 'googleplus_username', true ) . '" placeholder="username" /></p>';
-    
     wp_nonce_field( 'add_behance_network', 'behance_network_nonce' );
 
     echo '<p><span class="fa fa-behance-square"></span> <strong>Béhance</strong><br>https://www.behance.net/<input class="edit-post-social-input" type="text" name="behance_username" value="' . get_post_meta( $post->ID, 'behance_username', true ) . '" placeholder="username" /></p>';
@@ -1669,12 +1665,6 @@ function save_team_member_meta( $post_id, $post ) {
     if ( wp_verify_nonce( $_POST['youtube_network_nonce'], 'add_youtube_network' ) ) {
         
         update_post_meta( $post_id, 'youtube_username', sanitize_text_field( $_POST['youtube_username'] ) );
-        
-    }
-    
-    if ( wp_verify_nonce( $_POST['googleplus_network_nonce'], 'add_googleplus_network' ) ) {
-        
-        update_post_meta( $post_id, 'googleplus_username', sanitize_text_field( $_POST['googleplus_username'] ) );
         
     }
     
@@ -1756,7 +1746,6 @@ function homepage_banner_meta_box( $post ) {
     
     wp_nonce_field( 'add_homepage_banner_content', 'homepage_banner_content_nonce' );
     echo '<p>Enter a short content to be displayed on the banner.</p>';
-    //echo '<textarea name="homepage_banner_content">' . html_entity_decode( get_post_meta( $post->ID, 'homepage_banner_content', true ) ) .'</textarea>';
 
     wp_editor( get_post_meta( $post->ID, 'homepage_banner_content', true ), 'metaboxeditor', array( 'textarea_name' => 'homepage_banner_content', 'media_buttons' => false, 'quicktags' => false  ) );
     
@@ -1805,14 +1794,11 @@ function add_sublanding_header_metabox() {
 }
 
 function sublanding_header_meta_box( $post ) {
-    
-    wp_nonce_field( 'add_head_banner_title', 'head_banner_title_nonce' );
-    echo '<p>Enter a title to be displayed on the banner.</p>';
-    echo '<input type="text" name="banner_title" value="' . get_post_meta( $post->ID, 'banner_title', true ) .'" />';
-    
+
     wp_nonce_field( 'add_head_banner_content', 'head_banner_content_nonce' );
-    echo '<p>Enter a short content to be displayed on the banner. HTML is supported.</p>';
-    echo '<textarea name="banner_content">' . html_entity_decode( get_post_meta( $post->ID, 'banner_content', true ) ) .'</textarea>';
+    echo '<p>Enter a short content to be displayed on the banner.</p>';
+
+    wp_editor( get_post_meta( $post->ID, 'banner_content', true ), 'metaboxeditor', array( 'textarea_name' => 'banner_content', 'media_buttons' => false, 'quicktags' => false, 'tinymce' => array( 'toolbar1' => 'bold, italic', 'toolbar2' => '', 'toolbar3' => '' ) ) );
     
 }
 
@@ -1826,15 +1812,9 @@ function save_sublanding_meta( $post_id, $post ) {
         return $post_id;
     }
     
-    if ( wp_verify_nonce( $_POST['head_banner_title_nonce'], 'add_head_banner_title' ) && isset( $_POST['banner_title'] ) ) {
-        
-        update_post_meta( $post_id, 'banner_title', sanitize_text_field( $_POST['banner_title'] ) );
-        
-    }
-    
     if ( wp_verify_nonce( $_POST['head_banner_content_nonce'], 'add_head_banner_content' ) && isset( $_POST['banner_content'] ) ) {
         
-        update_post_meta( $post_id, 'banner_content', sanitize_text_field( htmlentities( $_POST['banner_content'] ) ) );
+        update_post_meta( $post_id, 'banner_content', $_POST['banner_content'] );
         
     }
     
@@ -2341,16 +2321,9 @@ class Bootstrap_Nav_Walker extends Walker_Nav_Menu {
         $title = apply_filters( 'the_title', $item->title, $item->ID );
         $title = apply_filters( 'nav_menu_item_title', $title, $item, $args, $depth );
         
-        $appleIcon = "";
-        if( in_array('faculty-link-btn', $classes) ) {
-            
-            $appleIcon =  '<span class="apple-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 19"><path d="M8,5.888c-1.51-1.6-8-2.636-8,4.979,0,4.7,5.733,9.913,8,7.54H8c2.266,2.373,8-2.835,8-7.54C16,3.252,9.51,4.284,8,5.888Zm5.734,6.775a8.256,8.256,0,0,1-3.527,4.454c1.749-2.163,2.826-5.824,1.784-8.663A10.91,10.91,0,0,0,10.937,6.29C12.991,7.005,14.684,8.862,13.734,12.663Zm-6.3-8.877a4.607,4.607,0,0,0,.695-.232A5.881,5.881,0,0,0,8,4.75h.381c.332-1.61,1.578-3.488,3.24-3.488A1.153,1.153,0,0,0,10.394,0,3.928,3.928,0,0,0,8.8,1.7a7.056,7.056,0,0,0-.638,1.7,3.459,3.459,0,0,0-.142-.567A4.614,4.614,0,0,0,2.532.144,4.78,4.78,0,0,0,1.783.4a3.567,3.567,0,0,0,.162.7A4.613,4.613,0,0,0,7.434,3.786Z"/></svg></span> ';
-            
-        }
-        
         $item_output = $args->before;
         $item_output .= '<a'. $attributes .'>';
-        $item_output .= $args->link_before . $appleIcon . $title . $args->link_after;
+        $item_output .= $args->link_before . $title . $args->link_after;
         $item_output .= '</a>';
         $item_output .= $args->after;
  
@@ -2435,7 +2408,7 @@ function breadcrumb_nav() {
             
             if ( $post->post_type == 'uws-team-members' ) {
                 
-                echo '<li class="item-current"><a class="bread-parent bread-parent-about" href="/about" title="About">About</a></li>';
+                echo '<li class="item-current"><a class="bread-parent bread-parent-about" href="/team" title="The Team">The Team</a></li>';
                  echo '<li class="separator"> ' . $separator . ' </li>';
                 
             }

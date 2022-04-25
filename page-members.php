@@ -8,7 +8,7 @@
  * @since 1.0.0
  */
  
- get_header(); ?>
+get_header(); ?>
 <?php while ( have_posts() ) : the_post(); ?>
 <div class="header-banner">
     <div class="container">
@@ -16,27 +16,20 @@
             
             $pageTitle = get_post_meta( get_the_ID(), 'banner_title' , true );
             
-            if ( empty( $pageTitle ) ) {
                 the_title();
-            } else {
-                echo $pageTitle;
-            }
             
             ?></h1>
         <div class="banner-content"><?php echo html_entity_decode( get_post_meta( get_the_ID(), 'banner_content' , true ) ); ?></div>
-        <?php if ( has_post_thumbnail() ) : ?>
-        <div class="banner-image"><img src="<?php the_post_thumbnail_url(); ?>" alt=""/></div>
-        <?php else: ?>
-        <div class="banner-buffer"></div>
-        <?php endif; ?>
-        <div class="banner-border"></div>
     </div>
 </div>
 
-<main class="container" role="main">
+<main class="container p-4" role="main">
     
     <section>
         <div class="entry-content-page">
+        <?php if ( has_post_thumbnail() ) : ?>
+        <img src="<?php the_post_thumbnail_url(); ?>" alt="" />
+        <?php endif; ?>
             <?php the_content(); ?>
         </div>
     </section>
@@ -47,8 +40,6 @@
 ?>
             
     <section id="member-archive">
-        
-        <h5 class="member-archive-title"><span aria-hidden="true">&mdash; </span>Meet the Team<span aria-hidden="true"> &mdash;</span></h5>
         
         <div class="row d-flex">
         <?php
@@ -104,7 +95,7 @@
                         
                         <div class="card-body">
                             <h5 class="card-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h5>
-                             <p class="card-text"><small class="text-muted"><?php echo get_post_meta( get_the_ID(), 'job_title', true ); ?></small></p>
+                             <p class="card-text text-muted member-title"><?php echo get_post_meta( get_the_ID(), 'job_title', true ); ?></p>
                             <p class="card-text"><?php the_excerpt(); ?></p>
                             
                             <?php
@@ -115,29 +106,25 @@
                             
                             ?>
                             
-                            <p class="card-text text-center">
-                                <small class="text-muted">
+                            <p class="card-text text-center text-muted member-interests">
                                 
                                 <?php
                                     
-                                    $interests = explode( ',', $interestStr );
+                                    $interests = array_filter( explode( ',', $interestStr ) );
                                     $count = 0;
                                     foreach( $interests as $interest ) :
                                     
-                                        if ( $count < 2 ) :
-                                            echo ucwords( trim( $interest ) ) . ' &bull; ';
-                                        elseif ( $count == 2 ):
-                                            echo ucwords( trim( $interest ) );
-                                            break;
-                                        endif;
-                                        
+                                        echo ucwords( trim( $interest ) );
                                         $count++;
+
+                                        if ( $count < count( $interests ) ) {
+                                            echo ' &bull; ';
+                                        }
                                         
                                     endforeach;
                                 
                                   ?>
-                                    
-                                </small>
+                                
                             </p>
                             
                             <?php endif; ?>
@@ -172,12 +159,6 @@
                                 echo '<a class="btn btn-link" href="https://www.youtube.com/user/' . $youtube . '" target="_blank"><span class="fa fa-youtube"><span class="screen-reader-text">YouTube Profile Link</span></span></a>';
                             }
                             
-                            $google = get_post_meta( get_the_ID(), 'googleplus_username', true );
-                            
-                            if ( !empty( $google ) ) {
-                                echo '<a class="btn btn-link" href="https://plus.google.com/' . $google . '" target="_blank"><span class="fa fa-google-plus-square"><span class="screen-reader-text">Google+ Profile Link</span></span></a>';
-                            }
-                            
                             $behance = get_post_meta( get_the_ID(), 'behance_username', true );
                             
                             if ( !empty( $behance ) ) {
@@ -189,7 +170,7 @@
                             if ( !empty( $github ) ) {
                                 echo '<a class="btn btn-link" href="https://github.com/' . $github . '" target="_blank"><span class="fa fa-github-square"><span class="screen-reader-text">GitHub Profile Link</span></span></a>';
                             }
-                            
+
                             ?>
 
                         </div>

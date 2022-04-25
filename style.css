@@ -316,6 +316,14 @@ code {
     padding-left: 15px;
 }
 
+#primaryHeaderNav li {
+    margin-left: 1rem;
+}
+
+#primaryHeaderNav li:first-child {
+    margin-left: 0;
+}
+
 #primaryHeaderNav li a {
     font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-weight: 800;
@@ -323,6 +331,11 @@ code {
     font-size: 0.875rem;
     padding: .3rem .7rem;
     text-align: center;
+    text-decoration: none;
+}
+
+#primaryHeaderNav li a:hover {
+    text-decoration: none;
 }
 
 #primaryHeaderNav li {
@@ -340,42 +353,22 @@ code {
     color: #000;
 }
 
-#primaryHeaderNav .faculty-link-btn {
+#primaryHeaderNav .highlighted-btn {
     min-width: 9.063rem;
-    background-color: #2A8448;
+    background-color: #CB0B44;
     border-radius: 1.563rem;
-    margin-left: 0.625rem;
-    height: 1.875rem;
+    margin-left: 1rem;
+    margin-bottom: 0.5rem;
 }
 
-#primaryHeaderNav .faculty-link-btn.active {
+#primaryHeaderNav .highlighted-btn.active {
     border-bottom-color: transparent;
-    color: #2A8448;
+    color: #CB0B44;
     background-color: #fff;
 }
 
-#primaryHeaderNav .faculty-link-btn.active a {
-    color: #2A8448;
-}
-
-#primaryHeaderNav .faculty-link-btn.active a .apple-icon svg {
-    fill: #2A8448;
-}
-
-#primaryHeaderNav .faculty-link-btn a {
-    padding-top: 6px;
-    padding-bottom: 0;
-}
-
-#primaryHeaderNav .faculty-link-btn .apple-icon {
-    display: inline;
-    vertical-align: top;
-}
-
-#primaryHeaderNav .faculty-link-btn a .apple-icon svg {
-    width: 14px;
-    height: 16.625px;
-    fill: #fff;
+#primaryHeaderNav .highlighted-btn.active a {
+    color: #CB0B44;
 }
 
 /* header nav logo */
@@ -387,17 +380,16 @@ code {
 /* breadcrumbs */
 [class^="faculty-"] .breadcrumb-nav,
 [class*=" faculty-"] .breadcrumb-nav{
-    background-color: #2A8448;
-    color: #fff;
+    background-color: #407910;
 }
 
-[class^="faculty-"] .breadcrumb-nav .breadcrumbs li a,
-[class*=" faculty-"] .breadcrumb-nav .breadcrumbs li a {
-    color: #fff;
+[class^="learning-tech-"] .breadcrumb-nav,
+[class*=" learning-tech-"] .breadcrumb-nav{
+    background-color: #D85300;
 }
 
 .breadcrumb-nav {
-    background-color: #F5F5F5;
+    background-color: #6A6A6A;
     min-height: 1.875rem;
     line-height: 1.25;
     padding-bottom: 5px;
@@ -414,10 +406,17 @@ code {
     padding: 0;
     margin: 0;
     font-size: 0.6875rem;
+    color: #fff;
 }
 
 .breadcrumb-nav .breadcrumbs li a {
-    color: #337AB7;
+    color: #000;
+    text-decoration: none;
+    color: #fff;
+}
+
+.breadcrumb-nav .breadcrumbs li a:hover {
+    text-decoration: underline;
 }
 
 .breadcrumb-nav .breadcrumbs .separator {
@@ -714,9 +713,6 @@ main .page-featured-image img {
 }
 
 /* team members */
-.single.single-uws-team-members aside {
-    margin-top: 1rem;
-}
 .single.single-uws-team-members .post-featured-image {
     background-image: none;
     background-color: transparent;
@@ -730,9 +726,6 @@ main .page-featured-image img {
 }
 .single.single-uws-team-members h1 {
     margin-bottom: 0;
-}
-.single.single-uws-team-members .job-title {
-    font-weight: bold;
 }
 
 .single.single-uws-team-members .interests .badge {
@@ -760,6 +753,12 @@ main .page-featured-image img {
     color: #0366d6;
 }
 
+.single.single-uws-team-members #projects-archive .archive-title {
+    text-align: center;
+    font-weight: 300;
+    margin-bottom: 20px;
+}
+
 .error404 .icon {
     margin-top: 40px;
     text-align: center;
@@ -782,10 +781,6 @@ main .page-featured-image img {
 [class^="faculty-"] #primaryHeaderNav .faculty-group-item a,
 [class*=" faculty-"] #primaryHeaderNav .faculty-group-item a {
     color: #2A8448;
-}
-[class^="faculty-"] #primaryHeaderNav .faculty-group-item a .apple-icon svg,
-[class*=" faculty-"] #primaryHeaderNav .faculty-group-item a .apple-icon svg {
-    fill: #2A8448;
 }
 
 .page-template-page-showcase .sharings {
@@ -940,36 +935,27 @@ main .page-featured-image img {
 /* sublanding page */
 .page-template-page-members .header-banner,
 .page-template-page-sublanding .header-banner {
-    position: relative;
-    padding-top: 40px;
-    margin-bottom: 20px;
-    background-color: #f0f0f0;
-    background-image: url("img/funky-lines.png");
-    background-repeat: repeat;
+    padding: 20px;
+    background-color: #D9D9D9;
 }
-.page-template-page-members .header-banner .banner-border,
-.page-template-page-sublanding .header-banner .banner-border {
-    position: absolute;
-    bottom: -1px;
-    left: 0;
-    width: 100%;
-    height: 14px;
-    background-image: url("img/triangle_border.png");
-    background-repeat: repeat;
-}
+
 .page-template-page-members .header-banner h1.banner-title,
 .page-template-page-sublanding .header-banner h1.banner-title {
     text-align: center;
-    font-weight: 300;
+    font-weight: 500;
     font-size: 48px;
+    line-height: 56px;
+    color: #4A4A4A;
     text-transform: uppercase;
 }
 
 .page-template-page-members .header-banner .banner-content,
 .page-template-page-sublanding .header-banner .banner-content {
     text-align: center;
-    font-size: 21px;
+    font-size: 25px;
+    line-height: 31px;
     font-weight: 300;
+    color: #4A4A4A;
 }
 .page-template-page-sublanding .header-banner .banner-search {
     position: relative;
@@ -1016,17 +1002,18 @@ main .page-featured-image img {
 .single-uws-team-members  #primaryHeaderNav .member-archive-page a {
     color: #000;
 }
-.page-template-page-members #member-archive .member-archive-title,
-.single-uws-team-members .archive-title {
-    text-align: center;
-    font-weight: 300;
-    margin-bottom: 20px;
-}
-.single-uws-team-members .archive-title {
-    margin-top: 40px;
-}
+
 .page-template-page-members #member-archive .member {
     margin-bottom: 30px;
+}
+.page-template-page-members #member-archive .member .member-title {
+    font-size: 14px;
+}
+.page-template-page-members #member-archive .member a {
+    text-decoration: none;
+}
+.page-template-page-members #member-archive .member a:hover {
+    text-decoration: underline;
 }
 .page-template-page-members #member-archive .card .card-img-top {
     width: 100%;
@@ -1052,10 +1039,17 @@ main .page-featured-image img {
     content: "😎";
     opacity: 0.75;
 }
-
+.page-template-page-members #member-archive .card .social-icons {
+    min-height: 53px;
+}
 .page-template-page-members #member-archive .card .social-icons .btn {
     font-size: 22px;
     line-height: 1;
+}
+
+.page-template-page-members #member-archive .member .member-interests {
+    font-size: 14px;
+    line-height: 18px;
 }
 
 
@@ -1135,6 +1129,10 @@ main .page-featured-image img {
         height: 518px;
     }
 
+    #primaryHeaderNav .highlighted-btn {
+        margin-bottom: 0;
+    }
+
     #primaryHeaderNav .active,
     #primaryHeaderNav .current-page-ancestor,
     .single-uws-team-members  #primaryHeaderNav .member-archive-page {
@@ -1149,7 +1147,7 @@ main .page-featured-image img {
         color: #fff;
     }
     
-    #primaryHeaderNav .faculty-link-btn {
+    #primaryHeaderNav .highlighted-btn {
         border-radius: 1.563rem;
     }
 
