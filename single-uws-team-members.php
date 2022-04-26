@@ -78,7 +78,7 @@
                         <h1><?php the_title(); ?></h1>
                         <!-- /post title -->
                         
-                        <p class="job-title"><?php echo get_post_meta( get_the_ID(), 'job_title', true ); ?></p>
+                        <p class="job-title"><?php echo get_post_meta( get_the_ID(), 'job_title', true ); ?><br><?php echo get_post_meta( get_the_ID(), 'pronouns', true ); ?></p>
                         
                         <?php the_content(); // Dynamic Content ?>
                         

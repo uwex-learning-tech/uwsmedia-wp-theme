@@ -1545,7 +1545,7 @@ function create_team_members_post() {
         'show_in_admin_bar' => true,
         'show_in_nav_menus' => true,
         'can_export' => true,
-        'has_archive' => true,		
+        'has_archive' => false,		
         'exclude_from_search' => false,
         'publicly_queryable' => true,
         'query_var' => true,
@@ -1558,6 +1558,7 @@ function create_team_members_post() {
 function add_team_members_metabox() {
     
     add_meta_box( 'job_title', 'Job Title', 'job_title_meta_box', 'uws-team-members', 'side', 'high' );
+    add_meta_box( 'pronouns', 'Pronouns', 'pronouns_meta_box', 'uws-team-members', 'side', 'high' );
     add_meta_box( 'interests', 'Interests', 'interest_meta_box', 'uws-team-members', 'side', 'default' );
     add_meta_box( 'social_networks', 'Social Networks', 'social_networks_meta_box', 'uws-team-members', 'normal', 'default' );
     
@@ -1574,6 +1575,15 @@ function job_title_meta_box( $post ) {
     echo '<hr><p><label for="showFirstCb"><input id="showFirstCb" name="show_first" type="checkbox" value="1" '. checked( $atTop, true, false ) .' /> Place profile at the beginning</label></p>';
     
 }
+
+function pronouns_meta_box( $post ) {
+    
+    wp_nonce_field( 'add_pronouns', 'pronouns_nonce' );
+    
+    echo '<p><input type="text" name="pronouns" value="' . get_post_meta( $post->ID, 'pronouns', true ) . '" placeholder="She/Her/Hers, He/Him/His, They/Them/Theirs, Ze/Hir/His" /></p>';
+    
+}
+
 function interest_meta_box( $post ) {
     
     wp_nonce_field( 'add_interests', 'interests_nonce' );
@@ -1635,6 +1645,12 @@ function save_team_member_meta( $post_id, $post ) {
     } else {
         
         update_post_meta( $post_id, 'show_first', sanitize_text_field( 0 ) );
+        
+    }
+
+    if ( wp_verify_nonce( $_POST['pronouns_nonce'], 'add_pronouns' ) ) {
+        
+        update_post_meta( $post_id, 'pronouns', sanitize_text_field( $_POST['pronouns'] ) );
         
     }
     

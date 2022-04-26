@@ -34,7 +34,7 @@ html.error404 {
 
 body {
 	font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-	color: #444444;
+	color: #000;
 	margin-bottom: 6.25rem;
 }
 
@@ -70,11 +70,27 @@ a:active {
 }
 
 a.btn {
+    background-color: #1466DE;
+    color: #fff;
     text-decoration: none;
-    font-weight: bold;
+    font-weight: 500;
+    box-shadow: 3px 3px 6px rgba( 0, 0, 0, 0.16 );
 }
-a.btn:hover {
+a.btn:hover,
+a.btn:visited {
     text-decoration: none;
+    color: #fff;
+}
+
+a.btn-link {
+    background-color: transparent;
+    color: #0366d6;
+    box-shadow: none;
+    font-weight: unset;
+}
+a.btn-link:hover,
+a.btn-link:visited {
+    color: #0366d6;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -87,6 +103,40 @@ code {
     padding: 2px 4px;
     border-radius: 4px;
     white-space: nowrap;
+}
+
+/* ----- THEMED ELEMENTS --------*/
+.btn.learning-tech-btn {
+    min-width: 125px;
+    color: #fff;
+    background-color: #D85300;
+}
+
+.btn.learning-tech-btn:hover,
+.btn.learning-tech-btn:visited  {
+    color: #fff;
+}
+
+.btn.instructional-design-btn {
+    min-width: 125px;
+    color: #fff;
+    background-color: #9600D8;
+}
+
+.btn.instructional-design-btn:hover,
+.btn.instructional-design-btn:visited  {
+    color: #fff;
+}
+
+.btn.media-services-btn {
+    min-width: 125px;
+    color: #fff;
+    background-color: #2473BE;
+}
+
+.btn.media-services-btn:hover,
+.btn.media-services-btn:visited {
+    color: #fff;
 }
 
 /*------------------------------------*\
@@ -426,9 +476,6 @@ code {
 }
 
 /* main */
-main {
-    
-}
 
 main h1 {
     padding-top: 1rem;
@@ -1065,8 +1112,6 @@ main .page-featured-image img {
 }
 
 .page-template-default.page .card-columns {
-    webkit-column-count: 1;
-    -moz-column-count: 1;
     column-count: 1;
 }
 
@@ -1163,8 +1208,6 @@ main .page-featured-image img {
     }
     
     .page-template-default.page .card-columns {
-        webkit-column-count: 2;
-        -moz-column-count: 2;
         column-count: 2;
     }
     
@@ -1177,8 +1220,6 @@ main .page-featured-image img {
 @media only screen and (min-width: 1199.98px) {
     
     .page-template-default.page .card-columns {
-        webkit-column-count: 3;
-        -moz-column-count: 3;
         column-count: 3;
     }
     
@@ -1302,13 +1343,6 @@ a img.aligncenter {
 	line-height: 1.063rem;
 	margin: 0;
 	padding: 0 0.25rem 0.3125rem;
-}
-
-.sticky {
-
-}
-.bypostauthor {
-
 }
 
 /*------------------------------------*\
