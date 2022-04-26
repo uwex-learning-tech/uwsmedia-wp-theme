@@ -97,7 +97,7 @@ code {
 
 .home .header {
     position: relative;
-    padding-bottom: calc(56.25% - 83px);
+    padding-bottom: calc(56.25% - 98px);
 }
 
 #front-page-banner {
@@ -119,10 +119,10 @@ code {
 
 #front-page-banner .banner-content-box {
     position: absolute;
-    top: 82px;
+    top: 98px;
     left: 0;
     width: 100%;
-    height: calc(100% - 83px);
+    height: calc(100% - 98px);
 }
 
 #front-page-banner .banner-content-box .banner-title {
@@ -1125,7 +1125,7 @@ main .page-featured-image img {
     #front-page-banner {
         position: relative;
         top: unset;
-        margin-top: -82px;
+        margin-top: -98px;
         height: 518px;
     }
 
