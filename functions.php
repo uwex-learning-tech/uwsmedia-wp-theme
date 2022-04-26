@@ -2408,7 +2408,7 @@ function breadcrumb_nav() {
             
             if ( $post->post_type == 'uws-team-members' ) {
                 
-                echo '<li class="item-current"><a class="bread-parent bread-parent-about" href="/team" title="The Team">The Team</a></li>';
+                echo '<li class="item-current"><a class="bread-parent bread-parent-about" href="'.get_site_url().'/team/" title="The Team">The Team</a></li>';
                  echo '<li class="separator"> ' . $separator . ' </li>';
                 
             }
