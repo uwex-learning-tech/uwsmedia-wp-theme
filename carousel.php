@@ -9,7 +9,7 @@
             <?php
         	
         	$query_args = array(
-                'post_type' => 'uws-projects',
+                'post_type' => array('uws-projects','uws-flex-projects'),
                 'post_status' => 'publish',
                 'meta_query'  => array(
                     array(
