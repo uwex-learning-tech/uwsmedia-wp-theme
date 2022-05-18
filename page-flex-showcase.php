@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Collaborative Showcase
+ * Template Name: Competency-Baded Showcase
  * Template Post Type: page
  *
  * @package WordPress
@@ -30,7 +30,7 @@
                         $paged = ( get_query_var('paged') ) ? get_query_var('paged') : 1;
                         
                         $query_args = array(
-                            'post_type' => 'uws-projects',
+                            'post_type' => 'uws-flex-projects',
                             'post_status' => 'publish',
                             'posts_per_page' => 9,
                             'paged' => $paged,
@@ -60,7 +60,7 @@
                                 <div class="project-info">
                                 <p class="categories"><?php 
 
-                                $classification_terms = get_the_terms( $post->ID, 'classifications' );
+                                $classification_terms = get_the_terms( $post->ID, 'flex_classifications' );
             
                                 if ( !is_array( $classification_terms ) || count( $classification_terms ) <= 0 ) {
                                     echo '<span aria-hidden="true">&nbsp;</span>';
@@ -88,12 +88,12 @@
                                 
                                 <p class="categories"><?php 
 
-                                $media_type_terms = get_the_terms( $post->ID, 'media_types' );
+                                $media_type_terms = get_the_terms( $post->ID, 'flex_media_types' );
             
                                 if ( !is_array( $media_type_terms ) || count( $media_type_terms ) <= 0 ) {
                                     echo '<span aria-hidden="true">&mdash;</span>';
                                 } else {
-                                    echo strip_tags( get_the_term_list( $post->ID, 'media_types', '', ', ', '' ) );
+                                    echo strip_tags( get_the_term_list( $post->ID, 'flex_media_types', '', ', ', '' ) );
                                 }
                                 
                             ?></p>
@@ -177,24 +177,11 @@
                         <h3>Filter</h3>			
                         <div class="filter-form">
                             
-                            <h4>Programs</h4>
-                            <?php
-                                       
-                               $programs = get_terms(array( 'taxonomy' => 'programs', 'hide_empty' => false ));
-                               
-                               foreach( $programs as $program ) {
-                                   
-                                   echo '<div class="form-check"><input type="checkbox" class="form-check-input program-cb" id="program_' .$program->slug . '" value="' . $program->slug . '"><label class="form-check-label" for="program_' . $program->slug . '">' . $program->name . '</label></div>';
-                                   
-                               }
-                               
-                            ?>
-                            
                             <h4>Classifications</h4>
                             
                             <?php
                                        
-                               $classifications = get_terms(array( 'taxonomy' => 'classifications', 'hide_empty' => false ));
+                               $classifications = get_terms(array( 'taxonomy' => 'flex_classifications', 'hide_empty' => false ));
                                
                                foreach( $classifications as $classification ) {
                                    
@@ -207,7 +194,7 @@
                             <h4>Media Types</h4>
                             <?php
                                        
-                               $mediaTypes = get_terms(array( 'taxonomy' => 'media_types', 'hide_empty' => false ));
+                               $mediaTypes = get_terms(array( 'taxonomy' => 'flex_media_types', 'hide_empty' => false ));
                                
                                foreach( $mediaTypes as $type ) {
                                    

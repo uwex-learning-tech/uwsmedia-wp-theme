@@ -39,12 +39,12 @@ jQuery( document ).ready( function( $ ) {
 	}
 	
 	if ( jQuery( 'body' ).hasClass( 'wp-admin')
-	&& jQuery( 'body' ).hasClass( 'post-type-uws-projects' ) ) {
+	&& (jQuery( 'body' ).hasClass( 'post-type-uws-projects' ) || jQuery( 'body' ).hasClass( 'post-type-uws-flex-projects' ) )) {
     	
     	// check if the group box has faculty checked
     	var groupSelect = '#poststuff select#post_group_id';
     	
-    	if ( $( groupSelect + ' option:selected' ).text().toLowerCase() === 'faculty showcase' ) {
+    	if ( $( groupSelect + ' option:selected' ).text().toLowerCase().match( /showcase/gi ) ) {
         	
         	$( '#toPortfolio' ).show();
         	

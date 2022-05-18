@@ -522,7 +522,8 @@ function reorder_admin_menu( $__return_true ) {
     return array(
          'index.php', // Dashboard
          'edit.php?post_type=page', // Pages 
-         'edit.php?post_type=uws-projects', // Showcase Projects
+         'edit.php?post_type=uws-projects', // Media Showcase Projects
+         'edit.php?post_type=uws-flex-projects', // Flex Showcase Projects
          'edit.php?post_type=uws-team-members', // Team Members 
          'upload.php', // Media
          'edit.php?post_type=uws-groups', // Groups 
@@ -589,11 +590,13 @@ add_action( 'admin_init', 'uwsmedia_theme_settings' );
 // Add UWS Media custom post (Groups and Projects/Showcases)
 add_action( 'init', 'create_team_members_post' );
 add_action( 'init', 'create_post_groups' );
-add_action( 'init', 'create_projects_post' );
+add_action( 'init', 'create_media_projects_post' );
+add_action( 'init', 'create_flex_projects_post' );
 add_action( 'init', 'create_programs_taxonomy' );
 add_action( 'init', 'create_classifications_taxonomy' );
 add_action( 'init', 'create_media_type_taxonomy' );
 add_action( 'manage_posts_custom_column', 'add_project_custom_columns_value', 10, 2 );
+add_action( 'manage_posts_custom_column', 'add_flex_project_custom_columns_value', 10, 2 );
 add_action( 'manage_pages_custom_column', 'add_pages_group_column_value', 10, 2 );
 add_action( 'manage_posts_custom_column', 'add_team_members_custom_columns_value', 10, 2 );
 add_action( 'admin_menu', 'remove_projects_pageparentdiv_metabox' );
@@ -715,8 +718,9 @@ add_filter( 'menu_order', 'reorder_admin_menu' );
 
 // Add Group column to UWS Project custom post type and Page
 add_filter( 'manage_uws-projects_posts_columns', 'add_projects_custom_columns' );
+add_filter( 'manage_uws-flex-projects_posts_columns', 'add_flex_projects_custom_columns' );
 add_filter( 'manage_page_posts_columns', 'add_group_column' );
-add_filter( 'manage_edit-uws-projects_sortable_columns', 'sortable_group_column' );
+//add_filter( 'manage_edit-uws-projects_sortable_columns', 'sortable_group_column' );
 add_filter( 'manage_edit-page_sortable_columns', 'sortable_group_column' );
 add_filter( 'parse_query', 'filter_group_query' , 10);
 
@@ -746,6 +750,19 @@ add_filter( 'redirect_canonical', function( $redirect_url ) {
 	}
 	return false;
 } );
+
+add_filter( 'nav_menu_css_class', 'change_page_menu_classes', 10,2 );
+
+function change_page_menu_classes($menu)
+{
+    global $post;
+    if (get_post_type($post) == 'uws-team-members')
+    {
+        $menu = str_replace( 'active', '', $menu ); // remove all current_page_parent classes
+        $menu = str_replace( 'menu-item-13063', 'menu-item-13063 active', $menu ); // add the current_page_parent class to the page you want
+    }
+    return $menu;
+}
 
 /*------------------------------------*\
 	REMOVE Filters
@@ -836,20 +853,21 @@ function post_group_attributes_meta_box( $post ) {
             
             
             $featureOnHomepageCB = '';
-            $promoteToPortfolioCB = '';
+            // $promoteToPortfolioCB = '';
             
-            if ( $post->post_type == 'uws-projects' ) {
+            if ( $post->post_type == 'uws-projects' || $post->post_type == 'uws-flex-projects' ) {
                 
                 $featuredValue = get_post_meta( $post->ID, 'feature_on_home' , true );
-                $toPortfolioValue = get_post_meta( $post->ID, 'promote_to_porfolio' , true );
+                // $toPortfolioValue = get_post_meta( $post->ID, 'promote_to_porfolio' , true );
                 
                 $featureOnHomepageCB = '<hr /><label for="feature_on_home"><input type="checkbox" id="feature_on_home" name="feature_on_home" value="1" '. checked( $featuredValue, true, false ) .' /> Feature on Homepage</label>';
                 
-                $promoteToPortfolioCB = '<br /><label id="toPortfolio" for="promote_to_porfolio"><input type="checkbox" id="promote_to_porfolio" name="promote_to_porfolio" value="1" '. checked( $toPortfolioValue, true, false ) .' /> Show in Portfolio</label>';
+                // $promoteToPortfolioCB = '<br /><label id="toPortfolio" for="promote_to_porfolio"><input type="checkbox" id="promote_to_porfolio" name="promote_to_porfolio" value="1" '. checked( $toPortfolioValue, true, false ) .' /> Show in Portfolio</label>';
                 
             }
             
-            echo  $groupInstruction . $pages . $groupHowTo . $featureOnHomepageCB . $promoteToPortfolioCB;
+            //echo  $groupInstruction . $pages . $groupHowTo . $featureOnHomepageCB . $promoteToPortfolioCB;
+            echo  $groupInstruction . $pages . $groupHowTo . $featureOnHomepageCB;
             
         }
         
@@ -905,23 +923,6 @@ function save_post_group_meta( $post_id, $post ) {
 
 }
 
-function add_projects_custom_columns( $columns ) {
-    
-    $columns = array(
-        'cb' => $columns['cb'],
-        'featured' => __( '<span class="screen-reader-text">Featured on Home Page</span>', 'uwsmedia' ),
-        'title' => __( 'Title' ),
-        'group' => __( 'Group', 'uwsmedia' ),
-        'program' => __( 'Program', 'uwsmedia' ),
-        'classification' => __( 'Classification', 'uwsmedia' ),
-        'media_type' => __( 'Media Type', 'uwsmedia' ),
-        'date' => __( 'Date' )
-    );
-    
-    return $columns;
-    
-}
-
 function add_group_column( $columns ) {
     
     $columns = array(
@@ -943,6 +944,22 @@ function sortable_group_column( $columns ) {
     
 }
 
+function add_projects_custom_columns( $columns ) {
+    
+    $columns = array(
+        'cb' => $columns['cb'],
+        'featured' => __( '<span class="screen-reader-text">Featured on Home Page</span>', 'uwsmedia' ),
+        'title' => __( 'Title' ),
+        'program' => __( 'Program', 'uwsmedia' ),
+        'classification' => __( 'Classification', 'uwsmedia' ),
+        'media_type' => __( 'Media Type', 'uwsmedia' ),
+        'date' => __( 'Date' )
+    );
+    
+    return $columns;
+    
+}
+
 function add_project_custom_columns_value( $column, $post_id ) {
     
     switch ( $column ) {
@@ -955,21 +972,7 @@ function add_project_custom_columns_value( $column, $post_id ) {
             }
     
     	break;
-    	case 'group':
-        
-            $groupId = get_post_meta( $post_id, 'post_group_id', true );
-            $portfolioToo = get_post_meta( $post_id, 'promote_to_porfolio', true );
-            
-            if ( $portfolioToo == '1' ) {
-                
-                echo getGroupTitle( $groupId ) . ' <span class="dashicons dashicons-awards"></span> <span class="screen-reader-text">Promoted to Portfolio</span>';
-                
-            } else {
-                
-                echo getGroupTitle( $groupId );
-                
-            }
-            
+
     	break;
     	case 'media_type':
             
@@ -1001,6 +1004,61 @@ function add_project_custom_columns_value( $column, $post_id ) {
                 echo '<span aria-hidden="true">&mdash;</span>';
             } else {
                 echo $program_terms[0]->name;
+            }
+    	    
+    	break;
+	}
+    
+}
+
+function add_flex_projects_custom_columns( $columns ) {
+    
+    $columns = array(
+        'cb' => $columns['cb'],
+        'featured' => __( '<span class="screen-reader-text">Featured on Home Page</span>', 'uwsmedia' ),
+        'title' => __( 'Title' ),
+        'flex_classification' => __( 'Classification', 'uwsmedia' ),
+        'flex_media_type' => __( 'Media Type', 'uwsmedia' ),
+        'date' => __( 'Date' )
+    );
+    
+    return $columns;
+    
+}
+
+function add_flex_project_custom_columns_value( $column, $post_id ) {
+    
+    switch ( $column ) {
+        case 'featured':
+            
+            $feature = get_post_meta( $post_id, 'feature_on_home', true );
+
+            if ( $feature == '1' ) {
+                echo '<span class="dashicons dashicons-star-filled"></span> <span class="screen-reader-text">Featured on Home Page</span>';
+            }
+    
+    	break;
+
+    	break;
+    	case 'flex_media_type':
+            
+            $media_type_terms = get_the_terms( $post->ID, 'flex_media_types' );
+            
+            if ( !is_array( $media_type_terms ) || count( $media_type_terms ) <= 0 ) {
+                echo '<span aria-hidden="true">&mdash;</span>';
+            } else {
+                echo strip_tags( get_the_term_list( $post->ID, 'flex_media_types', '', ', ', '' ) );
+            }
+    	    
+    	break;
+    	case 'flex_classification':
+    	    
+    	    $classification_terms = get_the_terms( $post->ID, 'flex_classifications' );
+            
+            if ( !is_array( $classification_terms ) || count( $classification_terms ) <= 0 ) {
+                echo '<span aria-hidden="true">&mdash;</span>';
+            } else {
+                echo $classification_terms[0]->name;
             }
     	    
     	break;
@@ -1124,25 +1182,24 @@ function filter_group_query( $query ) {
     
 }
 
-
-
 /*------------------------------------*\
-	CUSTOM POST TYPE: PROJECTS
+	CUSTOM POST TYPE: PROJECTS 
 \*------------------------------------*/
 
-function create_projects_post() {
+// Media Showcase
+function create_media_projects_post() {
     
     // Register Custom Post Type
     register_post_type( 'uws-projects', 
         array(
-        'label' => 'Showcases',
+        'label' => 'Media Showcase',
         'menu_icon' => 'dashicons-portfolio',
         'labels' => array(
-            'name' => __( 'Showcases', 'uwsmedia' ),
+            'name' => __( 'Media Showcase', 'uwsmedia' ),
             'singular_name' => __( 'Project', 'uwsmedia' ),
-            'all_items' => __( 'All Showcases', 'uwsmedia' ),
-            'menu_name' => __( 'Showcases', 'uwsmedia' ),
-            'name_admin_bar' => __('Showcase Item', 'uwsmedia' ),
+            'all_items' => __( 'All Projects', 'uwsmedia' ),
+            'menu_name' => __( 'Media Showcase', 'uwsmedia' ),
+            'name_admin_bar' => __('Media Showcase Item', 'uwsmedia' ),
             'add_new' => __( 'Add New', 'uwsmedia' ),
             'add_new_item' => __( 'Add New Project', 'uwsmedia' ),
             'edit' => __( 'Edit', 'uwsmedia' ),
@@ -1150,7 +1207,7 @@ function create_projects_post() {
             'new_item' => __( 'New Project', 'uwsmedia' ),
             'view' => __( 'View Project', 'uwsmedia' ),
             'view_item' => __( 'View Project', 'uwsmedia' ),
-            'view_items' => __( 'View Showcases', 'uwsmedia' ),
+            'view_items' => __( 'View Media Showcase', 'uwsmedia' ),
             'search_items' => __( 'Search projects', 'uwsmedia' ),
             'not_found' => __( 'No projects found.', 'uwsmedia' ),
             'not_found_in_trash' => __( 'No projects found in Trash', 'uwsmedia' )
@@ -1170,9 +1227,58 @@ function create_projects_post() {
         'query_var' => true,
         'capability_type' => 'page',
         'delete_with_user' => false,
-        'rewrite' => array('slug' => 'showcases', 'with_front' => true),
+        'rewrite' => array('slug' => 'media-showcases', 'with_front' => true),
         'show_in_rest' => true,
-        'rest_base' => 'showcases',
+        'rest_base' => 'media-showcases',
+        'rest_controller_class' => 'WP_REST_Posts_Controller'
+    ) );
+    
+}
+
+// Flex Showcase
+function create_flex_projects_post() {
+    
+    // Register Custom Post Type
+    register_post_type( 'uws-flex-projects', 
+        array(
+        'label' => 'Flex Showcase',
+        'menu_icon' => 'dashicons-portfolio',
+        'labels' => array(
+            'name' => __( 'Flex Showcase', 'uwsmedia' ),
+            'singular_name' => __( 'Project', 'uwsmedia' ),
+            'all_items' => __( 'All Projects', 'uwsmedia' ),
+            'menu_name' => __( 'Flex Showcase', 'uwsmedia' ),
+            'name_admin_bar' => __('Flex Showcase Item', 'uwsmedia' ),
+            'add_new' => __( 'Add New', 'uwsmedia' ),
+            'add_new_item' => __( 'Add New Project', 'uwsmedia' ),
+            'edit' => __( 'Edit', 'uwsmedia' ),
+            'edit_item' => __( 'Edit Project', 'uwsmedia' ),
+            'new_item' => __( 'New Project', 'uwsmedia' ),
+            'view' => __( 'View Project', 'uwsmedia' ),
+            'view_item' => __( 'View Project', 'uwsmedia' ),
+            'view_items' => __( 'View Flex Showcase', 'uwsmedia' ),
+            'search_items' => __( 'Search projects', 'uwsmedia' ),
+            'not_found' => __( 'No projects found.', 'uwsmedia' ),
+            'not_found_in_trash' => __( 'No projects found in Trash', 'uwsmedia' )
+        ),
+        'supports' => array( 'title', 'editor', 'excerpt', 'thumbnail' ),
+        'taxonomies' => array(),
+        'hierarchical' => false,
+        'public' => true,
+        'show_ui' => true,
+        'show_in_menu' => true,
+        'show_in_admin_bar' => true,
+        'show_in_nav_menus' => true,
+        'can_export' => true,
+        'has_archive' => true,		
+        'exclude_from_search' => false,
+        'publicly_queryable' => true,
+        'query_var' => true,
+        'capability_type' => 'page',
+        'delete_with_user' => false,
+        'rewrite' => array('slug' => 'flex-showcases', 'with_front' => true),
+        'show_in_rest' => true,
+        'rest_base' => 'flex-showcases',
         'rest_controller_class' => 'WP_REST_Posts_Controller'
     ) );
     
@@ -1180,9 +1286,13 @@ function create_projects_post() {
 
 function add_project_metabox() {
 
+    //media
     add_meta_box( 'project-author', 'Members', 'project_authors_meta_box', 'uws-projects', 'normal', 'high' );
-    
     add_meta_box( 'project-media-embed', 'Media Embed', 'project_media_ebmed_meta_box', 'uws-projects', 'normal', 'default' );
+
+    //flex
+    add_meta_box( 'project-author', 'Members', 'project_authors_meta_box', 'uws-flex-projects', 'normal', 'high' );
+    add_meta_box( 'project-media-embed', 'Media Embed', 'project_media_ebmed_meta_box', 'uws-flex-projects', 'normal', 'default' );
     
 }
 
@@ -1219,7 +1329,7 @@ function project_authors_meta_box( $post ) {
     
     }
     
-    echo '<p"><strong>Instructors(s)</strong></p>';
+    echo '<p><strong>Instructors(s)</strong></p>';
     wp_nonce_field( 'add_other_project_authors', 'other_project_authors_nonce' );
     echo '<input type="text" value="' . get_post_meta( $post->ID, 'other_authors', true ) . '" name="other_authors" />';
     echo '<p class="howto">Separate instructors with commas if any</p>';
@@ -1370,6 +1480,7 @@ function create_classifications_taxonomy() {
     );
     
     register_taxonomy( 'classifications', 'uws-projects', $args );
+    register_taxonomy( 'flex_classifications', 'uws-flex-projects', $args );
     
 }
 
@@ -1406,6 +1517,7 @@ function create_media_type_taxonomy() {
     );
     
     register_taxonomy( 'media_types', 'uws-projects', $args );
+    register_taxonomy( 'flex_media_types', 'uws-flex-projects', $args );
     
 }
 
@@ -1504,6 +1616,7 @@ function uws_projects_programs( $post, $box ) {
 function remove_projects_pageparentdiv_metabox() {
     
     remove_meta_box('pageparentdiv', 'uws-projects', 'normal');
+    remove_meta_box('pageparentdiv', 'uws-flex-projects', 'normal');
     
 }
 
@@ -1551,7 +1664,7 @@ function create_team_members_post() {
         'query_var' => true,
         'capability_type' => 'page',
         'delete_with_user' => false,
-        'rewrite' => array('slug' => 'team-members', 'with_front' => false )
+        'rewrite' => array('slug' => 'team', 'with_front' => false )
     ) );
 }
 
@@ -1882,14 +1995,19 @@ function rest_search_query() {
         'callback' => 'member_projects_query'
     ) );
     
-    register_rest_route( 'uwsmedia/v2', '/showcases/', array(
+    register_rest_route( 'uwsmedia/v2', '/media-showcases/', array(
         'methods' => 'POST',
-        'callback' => 'showcase_projects_query'
+        'callback' => 'media_showcase_projects_query'
+    ) );
+
+    register_rest_route( 'uwsmedia/v2', '/flex-showcases/', array(
+        'methods' => 'POST',
+        'callback' => 'flex_showcase_projects_query'
     ) );
     
 }
 
-function showcase_projects_query() {
+function media_showcase_projects_query() {
     
     $postGroupId = get_post_meta( $_REQUEST['post_id'], 'post_group_id', true );
     $args = array(
@@ -2028,6 +2146,174 @@ function showcase_projects_query() {
                     $filters = is_array( $filters ) ? array_merge( $filters, explode( ',', $_POST['programTags'] ) ) : explode( ',', $_POST['programTags'] );
                     
                 }
+                
+                if ( isset( $_POST['classTags'] ) ) {
+                
+                    $filters = is_array( $filters ) ? array_merge( $filters, explode( ',', $_POST['classTags'] ) ) : explode( ',', $_POST['classTags'] );
+                    
+                }
+                
+                if ( isset( $_POST['mediaTags'] ) ) {
+        
+                    $filters = is_array( $filters ) ? array_merge( $filters, explode( ',', $_POST['mediaTags'] ) ) : explode( ',', $_POST['mediaTags'] );
+                    
+                }
+                
+                if ( is_array( $filters ) && count( $filters ) >= 1 ) {
+                    
+                    echo '<p>Try removing some these filters:<br>';
+                    
+                    foreach ( $filters as $filter ) {
+                    
+                        echo '<span class="badge badge-light">' . $filter . '</span> ';
+                        
+                    }
+                    
+                    echo '</p>';
+                    
+                }
+                
+                unset( $filters );
+                
+            ?>
+            
+            <hr>
+            <p class="mb-0 text-center"><a class="btn btn-link" href="<?php the_permalink(); ?>"><span class="fa fa-times"></span> Clear Search</a></p>
+        </div>
+		
+	<?php endif;
+	
+	$content = ob_get_clean();
+	
+	echo json_encode( $content );
+	die();
+			
+}
+
+function flex_showcase_projects_query() {
+    
+    $postGroupId = get_post_meta( $_REQUEST['post_id'], 'post_group_id', true );
+    $args = array(
+        
+        'post_type' => 'uws-flex-projects',
+        'post_status' => 'publish',
+        'posts_per_page' => -1,
+        's' => '',
+        'meta_query' => array(
+            array(
+                'key' => 'post_group_id',
+                'value' => $postGroupId
+            )
+        ),
+        'tax_query' => array()
+        
+    );
+    
+    if ( isset( $_POST['query'] ) ) {
+        
+        $args['s'] = $_POST['query'];
+        
+    }
+    
+    
+    if ( isset( $_POST['classTags'] ) ) {
+        
+        array_push( $args['tax_query'], array(
+            'taxonomy' => 'flex_classifications',
+            'field' => 'slug',
+            'terms' => explode( ',', $_POST['classTags'] )
+        ) );
+        
+    }
+    
+    if ( isset( $_POST['mediaTags'] ) ) {
+        
+        array_push( $args['tax_query'], array(
+            'taxonomy' => 'flex_media_types',
+            'field' => 'slug',
+            'terms' => explode( ',', $_POST['mediaTags'] )
+        ) );
+        
+    }
+    
+    $search = new WP_Query( $args );
+    
+    ob_start();
+    
+    if ( $search->have_posts() ) :
+        
+        $keyword = '';
+        
+        if ( isset( $_POST['query'] ) ) {
+    
+            $keyword = urlencode( $_POST['query'] );
+            
+        }
+        
+    ?>
+
+            <div class="sharings">
+                
+                <a class="btn btn-link btn-sm" href="<?php the_permalink(); ?>" role="button"><span class="fa fa-times-circle"></span> Clear Search</a>
+                <button id="shareSearchLink" class="btn btn-secondary btn-sm"><span class="fa fa-link"></span> <span class="txt">Copy Search Link</span><input type="text" id="hiddenSearchLink" name="searchLink" value="<?php echo get_site_url() . '?s=' . $keyword . '&post_type=uws-flex-projects'?>&flex_classifications=<?php echo $_POST['classTags']; ?>&flex_media_types=<?php echo $_POST['mediaTags']; ?>" /></button>
+            </div>
+            
+            <div class="row d-flex flex-row">
+
+		<?php while ( $search->have_posts() ) : $search->the_post(); ?>
+				
+				<div class="col-12 col-sm-12 col-md-6 col-lg-4 project">
+                    <a href="<?php the_permalink(); ?>">
+                        
+                        <div class="project-bg">
+                        <?php the_post_thumbnail(); ?>
+                        </div>
+                        
+                        <div class="project-info">
+                        <p class="categories"><?php 
+
+                                $classification_terms = get_the_terms( $post->ID, 'flex_classifications' );
+            
+                                if ( !is_array( $classification_terms ) || count( $classification_terms ) <= 0 ) {
+                                    echo '<span aria-hidden="true">&nbsp;</span>';
+                                } else {
+                                    echo $classification_terms[0]->name;
+                                }
+                                
+                            ?></p>
+                        <h2 class="d-flex align-items-center justify-content-center"><?php the_title(); ?></h2>
+                        <p class="categories"><?php 
+
+                $media_type_terms = get_the_terms( $post->ID, 'flex_media_types' );
+
+                if ( !is_array( $media_type_terms ) || count( $media_type_terms ) <= 0 ) {
+                    echo '<span aria-hidden="true">&mdash;</span>';
+                } else {
+                    echo strip_tags( get_the_term_list( $post->ID, 'flex_media_types', '', ', ', '' ) );
+                }
+                
+            ?></p>                        </div>
+                        
+                    </a>
+                </div>
+				
+		<?php endwhile; ?>
+		    </div>
+<?php	else : ?>
+            
+        <div class="alert alert-info" role="alert">
+            <h4 class="alert-heading">No Search Results Found!</h4>
+            <p>We couldn't find results with the following keyword or filters applied.</p>
+            
+            <?php
+                    
+                if ( isset( $_POST['query'] ) ) {
+    
+                    echo '<p>Keyword: <strong>' . $_POST['query'] . '</strong></p>';
+                    
+                }
+
+                $filters = null;
                 
                 if ( isset( $_POST['classTags'] ) ) {
                 
@@ -2295,7 +2581,7 @@ class Bootstrap_Nav_Walker extends Walker_Nav_Menu {
         $classes[] = 'nav-item';
         $classes[] = 'menu-item-' . $item->ID;
         
-        if( in_array('current-menu-item', $classes) ) {
+        if ( in_array('current-menu-item', $classes) ) {
             $classes[] = 'active';
         } else if( in_array('current-menu-parent', $classes) ) {
             $classes[] = 'active';
@@ -2303,9 +2589,10 @@ class Bootstrap_Nav_Walker extends Walker_Nav_Menu {
             $classes[] = 'active';
         }
         
-        if ( !empty( get_post_meta( $item->object_id, 'post_group_id', true ) ) ) {
-            $classes[] = get_post( get_post_meta( $item->object_id, 'post_group_id', true ) )->post_name . '-group-item';
-        }
+        // echo 'test: '. get_post_meta( $item->object_id, 'post_group_id', true )->post_name;
+        // if ( !empty( get_post_meta( $item->object_id, 'post_group_id', true ) ) ) {
+        //     $classes[] = get_post( get_post_meta( $item->object_id, 'post_group_id', true ) )->post_name . '-group-item';
+        // }
         
         $args = apply_filters( 'nav_menu_item_args', $args, $item, $depth );
  
@@ -2401,30 +2688,24 @@ function breadcrumb_nav() {
               
         } else if ( is_single() ) {
             
-            if ( $post->post_type == 'uws-projects' ) {
+            // if ( $post->post_type == 'uws-projects' ) {
                 
-                $group = get_post_meta( $post->ID, 'post_group_id', true );
-                $title = get_the_title( $group );
+            //     $group = get_post_meta( $post->ID, 'post_group_id', true );
+            //     $title = get_the_title( $group );
                 
-                if ( strpos( strtolower( $title ), 'faculty' ) !== false ) {
+            //     if ( strpos( strtolower( $title ), 'faculty' ) !== false ) {
                     
-                    $url = get_site_url() . '/faculty/faculty-showcase/';
-                    echo '<li class="item-current"><a class="bread-parent bread-parent-faculty-showcase" href="' . $url . '" title="Faculty Showcase">Faculty Showcase</a></li>';
-                    echo '<li class="separator">' . $separator . ' </li>';
+            //         $url = get_site_url() . '/faculty/faculty-showcase/';
+            //         echo '<li class="item-current"><a class="bread-parent bread-parent-faculty-showcase" href="' . $url . '" title="Faculty Showcase">Faculty Showcase</a></li>';
+            //         echo '<li class="separator">' . $separator . ' </li>';
                     
-                } else if ( strpos( strtolower( $title ), 'portfolio' ) !== false ) {
-                    
-                    $groupLink = get_site_url() . '/portfolio/';
-                    echo '<li class="item-current item-' . $group . '"><a class="bread-parent bread-parent-' . $title . '" href="' . $groupLink . '" title="' . $title . '">' . $title . '</a></li>';
-                    echo '<li class="separator"> ' . $separator . ' </li>';
-                    
-                }
+            //     }
                 
-            }
+            // }
             
             if ( $post->post_type == 'uws-team-members' ) {
                 
-                echo '<li class="item-current"><a class="bread-parent bread-parent-about" href="'.get_site_url().'/team/" title="The Team">The Team</a></li>';
+                echo '<li class="item-current"><a class="bread-parent bread-parent-team" href="'.get_site_url().'/team/" title="The Team">The Team</a></li>';
                  echo '<li class="separator"> ' . $separator . ' </li>';
                 
             }

@@ -8,7 +8,7 @@
 		 SINGLE UWS PROJECTS FUNCTIONS
 		***********************************************************************/
 		
-		if ( jQuery( 'body ').hasClass( 'single-uws-projects' ) ) {
+		if ( jQuery( 'body ').hasClass( 'single-uws-projects' ) || jQuery( 'body ').hasClass( 'single-uws-flex-projects' ) ) {
     		
     		// copy link button
     		jQuery( '#copy-share-link' ).on( 'click', function( evt ) {
@@ -207,7 +207,7 @@
                 	searchResults = jQuery.ajax( {
                     	
                     	type: 'POST',
-                    	url: blogurl + '/wp-json/uwsmedia/v2/showcases/',
+                    	url: blogurl + '/wp-json/uwsmedia/v2/media-showcases/',
                     	data: args,
                     	success: function( response ) {
                         	
@@ -266,7 +266,6 @@
                 	data: args,
                 	success: function( response ) {
                     	
-						console.log(response);
                     	resultsDisplay.html( response );
                     	
                     	var paginateLinks = jQuery( 'a.page-numbers' );

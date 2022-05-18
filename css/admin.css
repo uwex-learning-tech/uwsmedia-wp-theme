@@ -45,12 +45,16 @@
 \*------------------------------------*/
 
 .post-type-uws-projects .postbox select[name=project_authors_select],
+.post-type-uws-flex-projects .postbox select[name=project_authors_select],
 .post-type-page .postbox textarea[name=banner_content] {
     height: 215px;
 }
 .post-type-uws-projects .postbox select,
 .post-type-uws-projects .postbox input[type=text],
 .post-type-uws-projects .postbox textarea,
+.post-type-uws-flex-projects .postbox select,
+.post-type-uws-flex-projects .postbox input[type=text],
+.post-type-uws-flex-projects .postbox textarea,
 .post-type-uws-team-members .postbox input[type=text],
 .post-type-page .postbox textarea,
 .post-type-page .postbox input[type=text] {

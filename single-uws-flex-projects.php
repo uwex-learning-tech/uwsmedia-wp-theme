@@ -39,7 +39,7 @@
     <div class="d-flex align-items-center justify-content-center">
 
         <?php
-                        
+                
         if ( !empty( $responsive ) ) {
             
             echo '<div class="embed-responsive embed-responsive-' . $responsive . '">' . $embedMedia . '</div>';
@@ -50,7 +50,7 @@
             
         }
 
-    ?>
+        ?>
 
     </div>
 
@@ -58,34 +58,34 @@
 
 <?php endif; ?>
 
-    <main role="main" class="container project-content">
+<main class="container project-content" role="main">
 
-        <!-- article -->
-        <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+    <!-- article -->
+    <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
-            <!-- share -->
-            <div class="sharings" role="group" aria-label="Share">
+        <!-- share -->
+        <div class="sharings" role="group" aria-label="Share">
 
-                <button id="copy-share-link" class="btn btn-link" title="Copy Link"><span
-                        class="fa fa-link" aria-hidden="true" aria-hidden="true"></span><input class="hiddenShareLink"
-                        type="text" value="<?php the_permalink(); ?>" /></button>
+            <a id="copy-share-link" class="btn btn-link" href="javascript:void(0);" title="Copy Link"><span
+                    class="fa fa-link" aria-hidden="true" aria-hidden="true"></span><input class="hiddenShareLink"
+                    type="text" value="<?php the_permalink(); ?>" /></a>
 
-                <button id="shareOnLinkedIn" class="btn btn-link"
-                    data-ref="http://www.linkedin.com/shareArticle?mini=true&amp;title=<?php echo urlencode(get_the_title()); ?>&amp;summary=<?php echo urlencode(get_the_excerpt()); ?>&amp;url=<?php the_permalink(); ?>&amp;source=<?php echo urlencode( get_blogInfo( 'name' ) ); ?>"
-                    title="Share on LinkedIn"><span class="fa fa-linkedin-square" aria-hidden="true"></span></button>
+            <a id="shareOnLinkedIn" class="btn btn-link" href="javascript:void(0);"
+                data-ref="http://www.linkedin.com/shareArticle?mini=true&amp;title=<?php echo urlencode(get_the_title()); ?>&amp;summary=<?php echo urlencode(get_the_excerpt()); ?>&amp;url=<?php the_permalink(); ?>&amp;source=<?php echo urlencode( get_blogInfo( 'name' ) ); ?>"
+                title="Share on LinkedIn"><span class="fa fa-linkedin-square" aria-hidden="true"></span></a>
 
-                <div class="share msg"></div>
+            <div class="share msg"></div>
 
-            </div>
-            <!-- /share -->
+        </div>
+        <!-- /share -->
 
-            <!-- post title -->
-            <h1><?php the_title(); ?></h1>
-            <!-- /post title -->
+        <!-- post title -->
+        <h1><?php the_title(); ?></h1>
+        <!-- /post title -->
 
-            <p class="classification"><strong><?php 
+        <p class="classification"><strong><?php 
 
-        $class_terms = get_the_terms( $post->ID, 'classifications' );
+        $class_terms = get_the_terms( $post->ID, 'flex_classifications' );
 
         if ( is_array( $class_terms )
         && count( $class_terms ) >= 1 ) {
@@ -96,12 +96,12 @@
 
         ?></strong></p>
 
-            <!-- post content -->
-            <?php the_content(); // Dynamic Content ?>
-            <!-- /post content -->
+        <!-- post content -->
+        <?php the_content(); // Dynamic Content ?>
+        <!-- /post content -->
 
-            <!-- instructor -->
-            <?php
+        <!-- instructor -->
+        <?php
             
             $instructorStr = trim( get_post_meta( $post->ID, 'other_authors', true ) );
             
@@ -131,10 +131,10 @@
             }
             
         ?>
-            <!-- /instructor -->
+        <!-- /instructor -->
 
-            <!-- members -->
-            <?php
+        <!-- members -->
+        <?php
             
             $memberStr = get_post_meta( $post->ID, 'project_authors', true );
             
@@ -164,29 +164,26 @@
             }
             
         ?>
-            <!-- /members -->
+        <!-- /members -->
 
-            <!-- tags -->
-            <ul class="tag-pills">
-                <?php 
+        <!-- tags -->
+        <ul class="tag-pills">
+            <?php 
 
         $tag_terms = null;
-        $use_case_terms = get_the_terms( $post->ID, 'media_types' );
-        $degree_program_terms = get_the_terms( $post->ID, 'programs' );
+        $use_case_terms = get_the_terms( $post->ID, 'flex_media_types' );
         
-        if ( is_array( $use_case_terms )
-        && is_array( $degree_program_terms ) ) {
+        if ( is_array( $use_case_terms ) ) {
             
             $tag_before = '<li>';
             $tag_separator = '';
             $tag_after = '</li>';
             
-            $tag_terms = array_merge( $use_case_terms, $degree_program_terms );
-            $tag_counter = count( $tag_terms );
+            $tag_counter = count( $use_case_terms );
             
             $i = 0;
             
-            foreach ( $tag_terms as $tags ) {
+            foreach ( $use_case_terms as $tags ) {
             
                 $i = $i + 1;
                 
@@ -202,31 +199,29 @@
         } 
 
         ?>
-            </ul>
-            <!-- /tags -->
+        </ul>
+        <!-- /tags -->
 
-            <?php edit_post_link( __( 'Edit Project', 'uwsmedia' ), '<p>', '</p>', $postID ); ?>
+        <?php edit_post_link( __( 'Edit Project', 'uwsmedia' ), '<p>', '</p>', $postID ); ?>
 
-        </article>
-        <!-- /article -->
+    </article>
+    <!-- /article -->
 
-        <?php endwhile; ?>
+    <?php endwhile; ?>
 
-        <?php else: ?>
+    <?php else: ?>
 
-        <!-- article -->
-        <article>
+    <!-- article -->
+    <article>
 
-            <h1><?php _e( 'Sorry, nothing to display.', 'uwsmedia' ); ?></h1>
+        <h1><?php _e( 'Sorry, nothing to display.', 'uwsmedia' ); ?></h1>
 
-        </article>
-        <!-- /article -->
+    </article>
+    <!-- /article -->
 
-        <?php endif; ?>
+    <?php endif; ?>
 
-    </main>
-
-
+</main>
 <!-- /body content container -->
 
 <?php get_footer(); ?>
