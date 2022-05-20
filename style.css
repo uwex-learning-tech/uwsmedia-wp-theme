@@ -70,6 +70,7 @@ a:active {
 }
 
 a.btn {
+    min-width: 125px;
     background-color: #1466DE;
     color: #fff;
     text-decoration: none;
@@ -107,7 +108,6 @@ code {
 
 /* ----- THEMED ELEMENTS --------*/
 .btn.learning-tech-btn {
-    min-width: 125px;
     color: #fff;
     background-color: #D85300;
 }
@@ -118,7 +118,6 @@ code {
 }
 
 .btn.instructional-design-btn {
-    min-width: 125px;
     color: #fff;
     background-color: #9600D8;
 }
@@ -129,13 +128,32 @@ code {
 }
 
 .btn.media-services-btn {
-    min-width: 125px;
     color: #fff;
     background-color: #2473BE;
 }
 
 .btn.media-services-btn:hover,
 .btn.media-services-btn:visited {
+    color: #fff;
+}
+
+.btn.collab-btn {
+    color: #fff;
+    background-color: #407910;
+}
+
+.btn.collab-btn:hover,
+.btn.collab-btn:visited {
+    color: #fff;
+}
+
+.btn.competency-btn {
+    color: #fff;
+    background-color: #B70050;
+}
+
+.btn.competency-btn:hover,
+.btn.competency-btn:visited {
     color: #fff;
 }
 
@@ -735,12 +753,13 @@ main .page-featured-image img {
     margin: 0 0 16px;
     position: absolute;
     top: -15px;
-    right: 0;
+    right: 12px;
     border-bottom: 2px solid #eee;
 }
 
 .single.single-uws-projects .sharings .btn,
 .single.single-uws-flex-projects .sharings .btn {
+    min-width: unset;
     line-height: 1;
     color: #444;
     padding: 5px;
@@ -763,10 +782,10 @@ main .page-featured-image img {
     line-height: 1;
 }
 
-.single.single-uws-projects .sharings .hiddenShareLink,
-.single.single-uws-flex-projects .sharings .hiddenShareLink {
-    width: 0px;
-    height: 0px;
+.single.single-uws-projects .sharings #hiddenShareLink,
+.single.single-uws-flex-projects .sharings #hiddenShareLink {
+    width: 1px;
+    height: 1px;
     padding: 0;
     margin: 0;
     border: none;
@@ -1150,6 +1169,7 @@ main .page-featured-image img {
     min-height: 53px;
 }
 .page-template-page-members #member-archive .card .social-icons .btn {
+    min-width: unset;
     font-size: 22px;
     line-height: 1;
 }

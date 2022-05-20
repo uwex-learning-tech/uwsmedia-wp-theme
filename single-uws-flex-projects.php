@@ -58,7 +58,7 @@
 
 <?php endif; ?>
 
-<main class="container project-content" role="main">
+<main class="container project-content pb-3" role="main">
 
     <!-- article -->
     <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
@@ -67,7 +67,7 @@
         <div class="sharings" role="group" aria-label="Share">
 
             <a id="copy-share-link" class="btn btn-link" href="javascript:void(0);" title="Copy Link"><span
-                    class="fa fa-link" aria-hidden="true" aria-hidden="true"></span><input class="hiddenShareLink"
+                    class="fa fa-link" aria-hidden="true" aria-hidden="true"></span><input id="hiddenShareLink"
                     type="text" value="<?php the_permalink(); ?>" /></a>
 
             <a id="shareOnLinkedIn" class="btn btn-link" href="javascript:void(0);"

@@ -17,7 +17,7 @@
         		evt.preventDefault();
         		
         		// set variables to DOM elements
-        		var hiddenInput = $( this ).find( '.hiddenShareLink' )[0];
+        		var hiddenInput = $( this ).find( '#hiddenShareLink' )[0];
         		var msgDisplay = $( '.share.msg' );
         		var msg = 'Linked copied!';
         		
@@ -65,7 +65,7 @@
 		 PAGE SHOWCASE FUNCTIONS
 		***********************************************************************/
 		
-		if ( jQuery( 'body' ).hasClass( 'page-template-page-showcase' ) ) {
+		if ( jQuery( 'body' ).hasClass( 'page-template-page-showcase' ) || jQuery( 'body' ).hasClass( 'page-template-page-flex-showcase' )) {
     		
     		runSearch();
     		
@@ -196,6 +196,13 @@
                     args.mediaTags = tags.join( ',' );
                 	
             	}
+
+				var isFlexShowcase = jQuery( 'body' ).hasClass( 'page-template-page-flex-showcase' );
+				var apiUrl = blogurl + '/wp-json/uwsmedia/v2/media-showcases/';
+
+				if ( isFlexShowcase ) {
+					apiUrl = blogurl + '/wp-json/uwsmedia/v2/flex-showcases/';
+				}
             	
             	if ( mediaCBs.length || classCBs.length || programCBs.length || searchInput.length ) {
                 	
@@ -207,7 +214,7 @@
                 	searchResults = jQuery.ajax( {
                     	
                     	type: 'POST',
-                    	url: blogurl + '/wp-json/uwsmedia/v2/media-showcases/',
+                    	url: apiUrl,
                     	data: args,
                     	success: function( response ) {
                         	
@@ -302,7 +309,7 @@
 		/***********************************************************************
 		 AUTOCOMPLETE SEARCH
 		***********************************************************************/
-		if ( jQuery( 'body' ).hasClass( 'page-template-page-sublanding' ) ) {
+		if ( jQuery( 'body' ).hasClass( 'page-template-page-sublanding-themed' ) ) {
     		
             var postId = jQuery( 'input[name=postGroupId]' ).val();
 			var blogurl = jQuery( 'input[name=bloginfo]' ).val();

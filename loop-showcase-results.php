@@ -41,6 +41,20 @@
                 }
                 
             }
+
+            if ( isset( $_GET['flex_classifications'] ) && !empty( $_GET['flex_classifications'] ) ) {
+    
+                $filters = explode( ',', $_GET['flex_classifications'] );
+                
+                foreach ( $filters as $filter ) {
+                    
+                    $term = get_term_by( 'slug', $filter, 'flex_classifications' )->name;
+                    
+                    array_push( $terms, $term );
+                    
+                }
+                
+            }
             
             if ( isset( $_GET['media_types'] ) && !empty( $_GET['media_types'] ) ) {
                 
@@ -49,6 +63,20 @@
                 foreach ( $filters as $filter ) {
                     
                     $term = get_term_by( 'slug', $filter, 'media_types' )->name;
+                    
+                    array_push( $terms, $term );
+                    
+                }
+                
+            }
+
+            if ( isset( $_GET['flex_media_types'] ) && !empty( $_GET['flex_media_types'] ) ) {
+                
+                $filters = explode( ',', $_GET['flex_media_types'] );
+                
+                foreach ( $filters as $filter ) {
+                    
+                    $term = get_term_by( 'slug', $filter, 'flex_media_types' )->name;
                     
                     array_push( $terms, $term );
                     
@@ -90,8 +118,12 @@
                     
                     <p class="categories"><?php 
 
-                    $class_terms = get_the_terms( $post->ID, 'classifications' );
-
+                    if ( isset( $_GET['flex_classifications'] ) ) {
+                        $class_terms = get_the_terms( $post->ID, 'flex_classifications' );
+                    } else if ( $_GET['classifications'] ) {
+                        $class_terms = get_the_terms( $post->ID, 'classifications' );
+                    }
+                    
                     if ( !is_array( $class_terms ) || count( $class_terms ) <= 0 ) {
                         echo '<span aria-hidden="true">&nbsp;</span>';
                     } else {
@@ -104,7 +136,13 @@
                     
                     <p class="categories"><?php 
 
-                    $media_type_terms = get_the_terms( $post->ID, 'media_types' );
+
+                    if ( isset( $_GET['flex_media_types'] ) ) {
+                        $media_type_terms = get_the_terms( $post->ID, 'flex_media_types' );
+                    } else if ( $_GET['media_types'] ) {
+                        $media_type_terms = get_the_terms( $post->ID, 'media_types' );
+                    }
+                    
         
                     if ( !is_array( $media_type_terms ) || count( $media_type_terms ) <= 0 ) {
                         echo '<span aria-hidden="true">&mdash;</span>';
