@@ -9,11 +9,9 @@
 	Theme Support
 \*------------------------------------*/
 
-if ( !isset( $content_width ) ) {
-    
-    $content_width = 900;
-    
-}
+// if ( !isset( $content_width ) ) {
+//     $content_width = 900;
+// }
 
 if ( function_exists( 'add_theme_support' ) ) {
     
@@ -142,10 +140,8 @@ function uwsmedia_styles() {
 
 // Load login style
 function uws_login_stylesheet() {
-    
     wp_register_style( 'uwsmedia-login', get_template_directory_uri() . '/css/login.css', array(), '1.0', 'all' );
     wp_enqueue_style( 'uwsmedia-login' );
-    
 }
 
 function uwsmedia_login_logo_url() {
@@ -176,16 +172,12 @@ function my_wp_nav_menu_args( $args = '' ) {
 
 // Remove Injected classes, ID's and Page ID's from Navigation <li> items
 function my_css_attributes_filter( $var ) {
-    
     return is_array( $var ) ? array() : '';
-    
 }
 
 // Remove invalid rel attribute values in the categorylist
 function remove_category_rel_from_category_list( $thelist ) {
-    
     return str_replace( 'rel="category tag"', 'rel="tag"', $thelist );
-    
 }
 
 // Add page slug to body class, love this - Credit: Starkers Wordpress Theme
@@ -264,20 +256,19 @@ function uwsmediawp_pagination() {
 }
 
 // Custom Excerpts
-function uwsmediawp_index($length) // Create 23 Word Callback for Index page Excerpts, call using uwsmediawp_excerpt('uwsmediawp_index');
-{
+// Create 23 Word Callback for Index page Excerpts, call using uwsmediawp_excerpt('uwsmediawp_index');
+function uwsmediawp_index($length) {
     return 23;
 }
 
 // Create 40 Word Callback for Custom Post Excerpts, call using uwsmediawp_excerpt('uwsmediawp_custom_post');
-function uwsmediawp_custom_post($length)
-{
+function uwsmediawp_custom_post($length) {
     return 40;
 }
 
 function uwsmediawp_excerpt( $length_callback = '', $more_callback = '' ) {
     
-    global $post;
+    // global $post;
     
     if ( function_exists( $length_callback ) ) {
         
@@ -315,17 +306,12 @@ function uwsmedia_view_article($more) {
 
 // Remove 'text/css' from our enqueued stylesheet
 function uwsmedia_style_remove( $tag ) {
-    
     return preg_replace( '~\s+type=["\'][^"\']++["\']~', '', $tag );
-    
 }
 
 // Remove thumbnail width and height dimensions that prevent fluid images in the_thumbnail
 function remove_thumbnail_dimensions( $html ) {
-    
-    $html = preg_replace( '/(width|height)=\"\d*\"\s/', "", $html );
-    return $html;
-    
+    return preg_replace( '/(width|height)=\"\d*\"\s/', "", $html );
 }
 
 // Custom Gravatar in Settings > Discussion
@@ -343,8 +329,7 @@ function enable_threaded_comments() {
     
     if ( !is_admin() ) {
         
-        if ( is_singular() AND comments_open()
-        AND ( get_option( 'thread_comments' ) == 1 ) ) {
+        if ( is_singular() AND comments_open() AND ( get_option( 'thread_comments' ) == 1 ) ) {
                
             wp_enqueue_script('comment-reply');
             
@@ -372,35 +357,38 @@ function uwsmediacomments( $comment, $args, $depth ) {
 		
 	}
 ?>
-    <!-- heads up: starting < for the html tag (li or div) in the next line: -->
-    <<?php echo $tag ?> <?php comment_class( empty( $args['has_children'] ) ? '' : 'parent' ) ?> id="comment-<?php comment_ID() ?>">
-	<?php if ( 'div' != $args['style'] ) : ?>
-	<div id="div-comment-<?php comment_ID() ?>" class="comment-body">
-	<?php endif; ?>
-	<div class="comment-author vcard">
-	<?php if ( $args['avatar_size'] != 0 ) echo get_avatar( $comment, $args['180'] ); ?>
-	<?php printf( __( '<cite class="fn">%s</cite> <span class="says">says:</span>' ), get_comment_author_link() ) ?>
-	</div>
-<?php if ( $comment->comment_approved == '0') : ?>
-	<em class="comment-awaiting-moderation"><?php _e('Your comment is awaiting moderation.') ?></em>
-	<br />
-<?php endif; ?>
 
-	<div class="comment-meta commentmetadata"><a href="<?php echo htmlspecialchars( get_comment_link( $comment->comment_ID ) ) ?>">
-		<?php
+<!-- heads up: starting < for the html tag (li or div) in the next line: -->
+<<?php echo $tag ?> <?php comment_class( empty( $args['has_children'] ) ? '' : 'parent' ) ?>
+    id="comment-<?php comment_ID() ?>">
+    <?php if ( 'div' != $args['style'] ) : ?>
+    <div id="div-comment-<?php comment_ID() ?>" class="comment-body">
+        <?php endif; ?>
+        <div class="comment-author vcard">
+            <?php if ( $args['avatar_size'] != 0 ) echo get_avatar( $comment, $args['180'] ); ?>
+            <?php printf( __( '<cite class="fn">%s</cite> <span class="says">says:</span>' ), get_comment_author_link() ) ?>
+        </div>
+        <?php if ( $comment->comment_approved == '0') : ?>
+        <em class="comment-awaiting-moderation"><?php _e('Your comment is awaiting moderation.') ?></em>
+        <br />
+        <?php endif; ?>
+
+        <div class="comment-meta commentmetadata"><a
+                href="<?php echo htmlspecialchars( get_comment_link( $comment->comment_ID ) ) ?>">
+                <?php
 			printf( __( '%1$s at %2$s' ), get_comment_date(),  get_comment_time()) ?></a><?php edit_comment_link( __( '(Edit)' ),'  ','' );
 		?>
-	</div>
+        </div>
 
-	<?php comment_text() ?>
+        <?php comment_text() ?>
 
-	<div class="reply">
-	<?php comment_reply_link( array_merge( $args, array( 'add_below' => $add_below, 'depth' => $depth, 'max_depth' => $args['max_depth'] ) ) ) ?>
-	</div>
-	<?php if ( 'div' != $args['style'] ) : ?>
-	</div>
-	<?php endif; ?>
-<?php }
+        <div class="reply">
+            <?php comment_reply_link( array_merge( $args, array( 'add_below' => $add_below, 'depth' => $depth, 'max_depth' => $args['max_depth'] ) ) ) ?>
+        </div>
+        <?php if ( 'div' != $args['style'] ) : ?>
+    </div>
+    <?php endif; ?>
+    <?php }
 
 /*------------------------------------*\
 	UWS Theme Settings Page
@@ -413,17 +401,17 @@ function uwsmedia_admin_theme_settings() {
 }
 
 function uwsmedia_theme_settings_page() { ?>
-<div class="wrap">
-<h1>UWS Media Theme Settings</h1>
-<form method="post" action="options.php">
-<?php
+    <div class="wrap">
+        <h1>UWS Media Theme Settings</h1>
+        <form method="post" action="options.php">
+            <?php
     settings_fields( 'uwsmedia-theme-options-grp' );
     do_settings_sections( 'uwsmedia_theme_settings' );
     submit_button();
 ?>
-</form>
-</div>
-<?php
+        </form>
+    </div>
+    <?php
 }
 
 function general_section_description() {
@@ -587,10 +575,13 @@ add_action( 'admin_menu', 'uwsmedia_admin_theme_settings' );
 add_action( 'admin_enqueue_scripts', 'uwsmedia_admin_scripts' );
 add_action( 'admin_init', 'uwsmedia_theme_settings' );
 
+// add Group descriptionto Group custom post type
+add_action( 'manage_pages_custom_column', 'add_group_description_column_value', 10, 2 );
+
 // Add UWS Media custom post (Groups and Projects/Showcases)
 add_action( 'init', 'create_team_members_post' );
 add_action( 'init', 'create_post_groups' );
-add_action( 'init', 'create_media_projects_post' );
+add_action( 'init', 'create_collab_projects_post' );
 add_action( 'init', 'create_flex_projects_post' );
 add_action( 'init', 'create_programs_taxonomy' );
 add_action( 'init', 'create_classifications_taxonomy' );
@@ -716,6 +707,9 @@ add_filter( 'upload_mimes', 'cc_mime_types' );
 add_filter( 'custom_menu_order', 'reorder_admin_menu' );
 add_filter( 'menu_order', 'reorder_admin_menu' );
 
+// add Group descriptionto Group custom post type
+add_filter( 'manage_uws-groups_posts_columns', 'add_group_description' );
+
 // Add Group column to UWS Project custom post type and Page
 add_filter( 'manage_uws-projects_posts_columns', 'add_projects_custom_columns' );
 add_filter( 'manage_uws-flex-projects_posts_columns', 'add_flex_projects_custom_columns' );
@@ -751,17 +745,20 @@ add_filter( 'redirect_canonical', function( $redirect_url ) {
 	return false;
 } );
 
+// hardcode "current page page" for the Team Memebers custom post type
 add_filter( 'nav_menu_css_class', 'change_page_menu_classes', 10,2 );
 
-function change_page_menu_classes($menu)
-{
+function change_page_menu_classes($menu) {
+
     global $post;
-    if (get_post_type($post) == 'uws-team-members')
-    {
+
+    if ( get_post_type($post) == 'uws-team-members' ) {
         $menu = str_replace( 'active', '', $menu ); // remove all current_page_parent classes
         $menu = str_replace( 'menu-item-13063', 'menu-item-13063 active', $menu ); // add the current_page_parent class to the page you want
     }
+
     return $menu;
+
 }
 
 /*------------------------------------*\
@@ -897,7 +894,7 @@ function save_post_group_meta( $post_id, $post ) {
         update_post_meta( $post_id, 'post_group_id', sanitize_text_field( $_POST['post_group_id'] ) );
     }
     
-    if ( $post->post_type == 'uws-projects' ) {
+    if ( $post->post_type == 'uws-projects' || $post->post_type == 'uws-flex-projects' ) {
         
         if ( isset( $_POST['feature_on_home'] ) ) {
             
@@ -909,15 +906,15 @@ function save_post_group_meta( $post_id, $post ) {
             
         }
         
-        if ( isset( $_POST['promote_to_porfolio'] ) ) {
+        // if ( isset( $_POST['promote_to_porfolio'] ) ) {
             
-            update_post_meta( $post_id, 'promote_to_porfolio', sanitize_text_field( $_POST['promote_to_porfolio'] ) );
+        //     update_post_meta( $post_id, 'promote_to_porfolio', sanitize_text_field( $_POST['promote_to_porfolio'] ) );
             
-        } else {
+        // } else {
             
-            delete_post_meta( $post_id, 'promote_to_porfolio' );
+        //     delete_post_meta( $post_id, 'promote_to_porfolio' );
             
-        }
+        // }
         
     }
 
@@ -933,6 +930,33 @@ function add_group_column( $columns ) {
     );
     
     return $columns;
+    
+}
+
+function add_group_description( $columns ) {
+    
+    $columns = array(
+        'cb' => $columns['cb'],
+        'title' => __( 'Title' ),
+        'description' => __( 'Description' ),
+        'date' => __( 'Date' )
+    );
+    
+    return $columns;
+    
+}
+
+function add_group_description_column_value( $column, $post_id ) {
+    
+    switch ( $column ) {
+
+        case 'description':
+            
+            echo get_the_excerpt( $post_id );
+    
+    	break;
+
+	}
     
 }
 
@@ -1187,19 +1211,19 @@ function filter_group_query( $query ) {
 \*------------------------------------*/
 
 // Media Showcase
-function create_media_projects_post() {
+function create_collab_projects_post() {
     
     // Register Custom Post Type
     register_post_type( 'uws-projects', 
         array(
-        'label' => 'Media Showcase',
+        'label' => 'Collaborative Showcase',
         'menu_icon' => 'dashicons-portfolio',
         'labels' => array(
-            'name' => __( 'Media Showcase', 'uwsmedia' ),
+            'name' => __( 'Collaborative Showcase', 'uwsmedia' ),
             'singular_name' => __( 'Project', 'uwsmedia' ),
             'all_items' => __( 'All Projects', 'uwsmedia' ),
-            'menu_name' => __( 'Media Showcase', 'uwsmedia' ),
-            'name_admin_bar' => __('Media Showcase Item', 'uwsmedia' ),
+            'menu_name' => __( 'Collaborative Showcase', 'uwsmedia' ),
+            'name_admin_bar' => __('Collaborative Showcase Item', 'uwsmedia' ),
             'add_new' => __( 'Add New', 'uwsmedia' ),
             'add_new_item' => __( 'Add New Project', 'uwsmedia' ),
             'edit' => __( 'Edit', 'uwsmedia' ),
@@ -1207,7 +1231,7 @@ function create_media_projects_post() {
             'new_item' => __( 'New Project', 'uwsmedia' ),
             'view' => __( 'View Project', 'uwsmedia' ),
             'view_item' => __( 'View Project', 'uwsmedia' ),
-            'view_items' => __( 'View Media Showcase', 'uwsmedia' ),
+            'view_items' => __( 'View Collaborative Showcase', 'uwsmedia' ),
             'search_items' => __( 'Search projects', 'uwsmedia' ),
             'not_found' => __( 'No projects found.', 'uwsmedia' ),
             'not_found_in_trash' => __( 'No projects found in Trash', 'uwsmedia' )
@@ -1221,15 +1245,15 @@ function create_media_projects_post() {
         'show_in_admin_bar' => true,
         'show_in_nav_menus' => true,
         'can_export' => true,
-        'has_archive' => true,		
+        'has_archive' => false,		
         'exclude_from_search' => false,
         'publicly_queryable' => true,
         'query_var' => true,
         'capability_type' => 'page',
         'delete_with_user' => false,
-        'rewrite' => array('slug' => 'media-showcases', 'with_front' => true),
+        'rewrite' => array('slug' => 'collaborative-showcase', 'with_front' => true),
         'show_in_rest' => true,
-        'rest_base' => 'media-showcases',
+        'rest_base' => 'collaborative-showcase',
         'rest_controller_class' => 'WP_REST_Posts_Controller'
     ) );
     
@@ -1241,14 +1265,14 @@ function create_flex_projects_post() {
     // Register Custom Post Type
     register_post_type( 'uws-flex-projects', 
         array(
-        'label' => 'Flex Showcase',
+        'label' => 'Competency-Based Showcase',
         'menu_icon' => 'dashicons-portfolio',
         'labels' => array(
-            'name' => __( 'Flex Showcase', 'uwsmedia' ),
+            'name' => __( 'Competency-Based Showcase', 'uwsmedia' ),
             'singular_name' => __( 'Project', 'uwsmedia' ),
             'all_items' => __( 'All Projects', 'uwsmedia' ),
-            'menu_name' => __( 'Flex Showcase', 'uwsmedia' ),
-            'name_admin_bar' => __('Flex Showcase Item', 'uwsmedia' ),
+            'menu_name' => __( 'Competency-Based Showcase', 'uwsmedia' ),
+            'name_admin_bar' => __('Competency-Based Showcase Item', 'uwsmedia' ),
             'add_new' => __( 'Add New', 'uwsmedia' ),
             'add_new_item' => __( 'Add New Project', 'uwsmedia' ),
             'edit' => __( 'Edit', 'uwsmedia' ),
@@ -1256,7 +1280,7 @@ function create_flex_projects_post() {
             'new_item' => __( 'New Project', 'uwsmedia' ),
             'view' => __( 'View Project', 'uwsmedia' ),
             'view_item' => __( 'View Project', 'uwsmedia' ),
-            'view_items' => __( 'View Flex Showcase', 'uwsmedia' ),
+            'view_items' => __( 'View Competency-Based Showcase', 'uwsmedia' ),
             'search_items' => __( 'Search projects', 'uwsmedia' ),
             'not_found' => __( 'No projects found.', 'uwsmedia' ),
             'not_found_in_trash' => __( 'No projects found in Trash', 'uwsmedia' )
@@ -1270,15 +1294,15 @@ function create_flex_projects_post() {
         'show_in_admin_bar' => true,
         'show_in_nav_menus' => true,
         'can_export' => true,
-        'has_archive' => true,		
+        'has_archive' => false,		
         'exclude_from_search' => false,
         'publicly_queryable' => true,
         'query_var' => true,
         'capability_type' => 'page',
         'delete_with_user' => false,
-        'rewrite' => array('slug' => 'flex-showcases', 'with_front' => true),
+        'rewrite' => array('slug' => 'competency-based-showcases', 'with_front' => true),
         'show_in_rest' => true,
-        'rest_base' => 'flex-showcases',
+        'rest_base' => 'competency-based-showcases',
         'rest_controller_class' => 'WP_REST_Posts_Controller'
     ) );
     
@@ -1341,8 +1365,8 @@ function project_media_ebmed_meta_box( $post ) {
     echo '<p>Enter media to embed and show on the page right after the title but before the content.</p>';
     wp_nonce_field( 'add_media_embed', 'media_embed_nonce' );
     
-    echo '<textarea class="code" name="media_embed_code">' . get_post_meta( $post->ID, 'media_embed_code', true ) . '</textarea>';
-    
+    wp_editor( get_post_meta( $post->ID, 'media_embed_code', true ), 'metaboxeditor', array( 'textarea_name' => 'media_embed_code', 'media_buttons' => false, 'quicktags' => false, 'textarea_rows' => 10, 'tinymce' => false  ) );
+
     $responsive = get_post_meta( $post->ID, 'responsive_choice' )[0];
     
     echo '<p>iFrame Embed Responsiveness:<br>';
@@ -1545,7 +1569,7 @@ function uws_projects_classifications( $post, $box ) {
         echo "<input type='hidden' name='{$name}[]' value='0' />";
         
         ?>
-        
+
         <?php
             $term_obj = wp_get_object_terms( $post->ID, $taxonomy );
             wp_dropdown_categories( array(
@@ -1561,7 +1585,7 @@ function uws_projects_classifications( $post, $box ) {
                 )
             );
         ?>
-        
+
     </div>
     <?php
     
@@ -1591,7 +1615,7 @@ function uws_projects_programs( $post, $box ) {
         echo "<input type='hidden' name='{$name}[]' value='0' />";
         
         ?>
-        
+
         <?php
             $term_obj = wp_get_object_terms( $post->ID, $taxonomy );
             wp_dropdown_categories( array(
@@ -1607,7 +1631,7 @@ function uws_projects_programs( $post, $box ) {
                 )
             );
         ?>
-        
+
     </div>
     <?php
     
@@ -1995,7 +2019,7 @@ function rest_search_query() {
         'callback' => 'member_projects_query'
     ) );
     
-    register_rest_route( 'uwsmedia/v2', '/media-showcases/', array(
+    register_rest_route( 'uwsmedia/v2', '/collaborative-showcase/', array(
         'methods' => 'POST',
         'callback' => 'media_showcase_projects_query'
     ) );
@@ -2078,25 +2102,28 @@ function media_showcase_projects_query() {
         
     ?>
 
-            <div class="sharings">
-                
-                <a class="btn btn-link btn-sm" href="<?php the_permalink(); ?>" role="button"><span class="fa fa-times-circle"></span> Clear Search</a>
-                <button id="shareSearchLink" class="btn btn-secondary btn-sm"><span class="fa fa-link"></span> <span class="txt">Copy Search Link</span><input type="text" id="hiddenSearchLink" name="searchLink" value="<?php echo get_site_url() . '?s=' . $keyword . '&post_type=uws-projects&post_group_id=' . get_post_meta( $_REQUEST['post_id'], 'post_group_id', true ); ?>&programs=<?php echo $_POST['programTags']; ?>&classifications=<?php echo $_POST['classTags']; ?>&media_types=<?php echo $_POST['mediaTags']; ?>" /></button>
-            </div>
-            
-            <div class="row d-flex flex-row">
+    <div class="sharings">
 
-		<?php while ( $search->have_posts() ) : $search->the_post(); ?>
-				
-				<div class="col-12 col-sm-12 col-md-6 col-lg-4 project">
-                    <a href="<?php the_permalink(); ?>">
-                        
-                        <div class="project-bg">
-                        <?php the_post_thumbnail(); ?>
-                        </div>
-                        
-                        <div class="project-info">
-                        <p class="categories"><?php 
+        <a class="btn btn-link btn-sm" href="<?php the_permalink(); ?>" role="button"><span
+                class="fa fa-times-circle"></span> Clear Search</a>
+        <button id="shareSearchLink" class="btn btn-secondary btn-sm"><span class="fa fa-link"></span> <span
+                class="txt">Copy Search Link</span><input type="text" id="hiddenSearchLink" name="searchLink"
+                value="<?php echo get_site_url() . '?s=' . $keyword . '&post_type=uws-projects&post_group_id=' . get_post_meta( $_REQUEST['post_id'], 'post_group_id', true ); ?>&programs=<?php echo $_POST['programTags']; ?>&classifications=<?php echo $_POST['classTags']; ?>&media_types=<?php echo $_POST['mediaTags']; ?>" /></button>
+    </div>
+
+    <div class="row d-flex flex-row">
+
+        <?php while ( $search->have_posts() ) : $search->the_post(); ?>
+
+        <div class="col-12 col-sm-12 col-md-6 col-lg-4 project">
+            <a href="<?php the_permalink(); ?>">
+
+                <div class="project-bg">
+                    <?php the_post_thumbnail(); ?>
+                </div>
+
+                <div class="project-info">
+                    <p class="categories"><?php 
 
                                 $classification_terms = get_the_terms( $post->ID, 'classifications' );
             
@@ -2107,8 +2134,8 @@ function media_showcase_projects_query() {
                                 }
                                 
                             ?></p>
-                        <h2 class="d-flex align-items-center justify-content-center"><?php the_title(); ?></h2>
-                        <p class="categories"><?php 
+                    <h2 class="d-flex align-items-center justify-content-center"><?php the_title(); ?></h2>
+                    <p class="categories"><?php 
 
                 $media_type_terms = get_the_terms( $post->ID, 'media_types' );
 
@@ -2118,20 +2145,21 @@ function media_showcase_projects_query() {
                     echo strip_tags( get_the_term_list( $post->ID, 'media_types', '', ', ', '' ) );
                 }
                 
-            ?></p>                        </div>
-                        
-                    </a>
+            ?></p>
                 </div>
-				
-		<?php endwhile; ?>
-		    </div>
-<?php	else : ?>
-            
-        <div class="alert alert-info" role="alert">
-            <h4 class="alert-heading">No Search Results Found!</h4>
-            <p>We couldn't find results with the following keyword or filters applied.</p>
-            
-            <?php
+
+            </a>
+        </div>
+
+        <?php endwhile; ?>
+    </div>
+    <?php	else : ?>
+
+    <div class="alert alert-info" role="alert">
+        <h4 class="alert-heading">No Search Results Found!</h4>
+        <p>We couldn't find results with the following keyword or filters applied.</p>
+
+        <?php
                     
                 if ( isset( $_POST['query'] ) ) {
     
@@ -2176,12 +2204,13 @@ function media_showcase_projects_query() {
                 unset( $filters );
                 
             ?>
-            
-            <hr>
-            <p class="mb-0 text-center"><a class="btn btn-link" href="<?php the_permalink(); ?>"><span class="fa fa-times"></span> Clear Search</a></p>
-        </div>
-		
-	<?php endif;
+
+        <hr>
+        <p class="mb-0 text-center"><a class="btn btn-link" href="<?php the_permalink(); ?>"><span
+                    class="fa fa-times"></span> Clear Search</a></p>
+    </div>
+
+    <?php endif;
 	
 	$content = ob_get_clean();
 	
@@ -2252,25 +2281,28 @@ function flex_showcase_projects_query() {
         
     ?>
 
-            <div class="sharings">
-                
-                <a class="btn btn-link btn-sm" href="<?php the_permalink(); ?>" role="button"><span class="fa fa-times-circle"></span> Clear Search</a>
-                <button id="shareSearchLink" class="btn btn-secondary btn-sm"><span class="fa fa-link"></span> <span class="txt">Copy Search Link</span><input type="text" id="hiddenSearchLink" name="searchLink" value="<?php echo get_site_url() . '?s=' . $keyword . '&post_type=uws-flex-projects'?>&flex_classifications=<?php echo $_POST['classTags']; ?>&flex_media_types=<?php echo $_POST['mediaTags']; ?>" /></button>
-            </div>
-            
-            <div class="row d-flex flex-row">
+    <div class="sharings">
 
-		<?php while ( $search->have_posts() ) : $search->the_post(); ?>
-				
-				<div class="col-12 col-sm-12 col-md-6 col-lg-4 project">
-                    <a href="<?php the_permalink(); ?>">
-                        
-                        <div class="project-bg">
-                        <?php the_post_thumbnail(); ?>
-                        </div>
-                        
-                        <div class="project-info">
-                        <p class="categories"><?php 
+        <a class="btn btn-link btn-sm" href="<?php the_permalink(); ?>" role="button"><span
+                class="fa fa-times-circle"></span> Clear Search</a>
+        <button id="shareSearchLink" class="btn btn-secondary btn-sm"><span class="fa fa-link"></span> <span
+                class="txt">Copy Search Link</span><input type="text" id="hiddenSearchLink" name="searchLink"
+                value="<?php echo get_site_url() . '?s=' . $keyword . '&post_type=uws-flex-projects'?>&flex_classifications=<?php echo $_POST['classTags']; ?>&flex_media_types=<?php echo $_POST['mediaTags']; ?>" /></button>
+    </div>
+
+    <div class="row d-flex flex-row">
+
+        <?php while ( $search->have_posts() ) : $search->the_post(); ?>
+
+        <div class="col-12 col-sm-12 col-md-6 col-lg-4 project">
+            <a href="<?php the_permalink(); ?>">
+
+                <div class="project-bg">
+                    <?php the_post_thumbnail(); ?>
+                </div>
+
+                <div class="project-info">
+                    <p class="categories"><?php 
 
                                 $classification_terms = get_the_terms( $post->ID, 'flex_classifications' );
             
@@ -2281,8 +2313,8 @@ function flex_showcase_projects_query() {
                                 }
                                 
                             ?></p>
-                        <h2 class="d-flex align-items-center justify-content-center"><?php the_title(); ?></h2>
-                        <p class="categories"><?php 
+                    <h2 class="d-flex align-items-center justify-content-center"><?php the_title(); ?></h2>
+                    <p class="categories"><?php 
 
                 $media_type_terms = get_the_terms( $post->ID, 'flex_media_types' );
 
@@ -2292,20 +2324,21 @@ function flex_showcase_projects_query() {
                     echo strip_tags( get_the_term_list( $post->ID, 'flex_media_types', '', ', ', '' ) );
                 }
                 
-            ?></p>                        </div>
-                        
-                    </a>
+            ?></p>
                 </div>
-				
-		<?php endwhile; ?>
-		    </div>
-<?php	else : ?>
-            
-        <div class="alert alert-info" role="alert">
-            <h4 class="alert-heading">No Search Results Found!</h4>
-            <p>We couldn't find results with the following keyword or filters applied.</p>
-            
-            <?php
+
+            </a>
+        </div>
+
+        <?php endwhile; ?>
+    </div>
+    <?php	else : ?>
+
+    <div class="alert alert-info" role="alert">
+        <h4 class="alert-heading">No Search Results Found!</h4>
+        <p>We couldn't find results with the following keyword or filters applied.</p>
+
+        <?php
                     
                 if ( isset( $_POST['query'] ) ) {
     
@@ -2344,12 +2377,13 @@ function flex_showcase_projects_query() {
                 unset( $filters );
                 
             ?>
-            
-            <hr>
-            <p class="mb-0 text-center"><a class="btn btn-link" href="<?php the_permalink(); ?>"><span class="fa fa-times"></span> Clear Search</a></p>
-        </div>
-		
-	<?php endif;
+
+        <hr>
+        <p class="mb-0 text-center"><a class="btn btn-link" href="<?php the_permalink(); ?>"><span
+                    class="fa fa-times"></span> Clear Search</a></p>
+    </div>
+
+    <?php endif;
 	
 	$content = ob_get_clean();
 	
@@ -2454,25 +2488,26 @@ function member_projects_query() {
     ob_start();
     
     if ( $projects->have_posts() ) : ?>
-                
-        <div id="projects-archive">
-            
-            <h5 class="archive-title"><span aria-hidden="true">&mdash; </span>Projects<span aria-hidden="true"> &mdash;</span></h5>
-            
-            <div class="row d-flex flex-row">
-                
+
+    <div id="projects-archive">
+
+        <h5 class="archive-title"><span aria-hidden="true">&mdash; </span>Projects<span aria-hidden="true">
+                &mdash;</span></h5>
+
+        <div class="row d-flex flex-row">
+
             <?php while( $projects->have_posts() ) : $projects ->the_post(); ?>
-            
+
             <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 project">
-                
+
                 <a href="<?php the_permalink(); ?>">
-                    
+
                     <div class="project-bg">
-                    <?php the_post_thumbnail(); ?>
+                        <?php the_post_thumbnail(); ?>
                     </div>
                     <div class="project-info">
-                        
-                    <?php
+
+                        <?php
                     
                     $class = '<span aria-hidden="true">&nbsp;</span>';
                     $class_terms = get_the_terms( $post->ID, 'classifications' );
@@ -2484,10 +2519,10 @@ function member_projects_query() {
                     }
                         
                     ?>
-                    
-                    <p class="categories"><?php echo $class; ?></p>
-                    
-                    <?php
+
+                        <p class="categories"><?php echo $class; ?></p>
+
+                        <?php
                         
                         $title = get_the_title();
                         $maxPos = 70;
@@ -2500,10 +2535,10 @@ function member_projects_query() {
                         }
                         
                     ?>
-                    
-                    <h2 class="d-flex align-items-center justify-content-center"><?php echo $title ?></h2>
-                    
-                    <?php
+
+                        <h2 class="d-flex align-items-center justify-content-center"><?php echo $title ?></h2>
+
+                        <?php
                         
                         $terms = '<span aria-hidden="true">&nbsp;</span>';
                         $media_terms = get_the_terms( $post->ID, 'media_types' );
@@ -2516,20 +2551,20 @@ function member_projects_query() {
                         }
                         
                     ?>
-                    
-                    <p class="categories"><?php echo $terms; ?></p>
-                    
+
+                        <p class="categories"><?php echo $terms; ?></p>
+
                     </div>
-                    
+
                 </a>
-                
+
             </div>
-            
+
             <?php endwhile; ?>
-                
-            </div> <!-- end row -->
-            
-            <div class="projects-pagnigation">
+
+        </div> <!-- end row -->
+
+        <div class="projects-pagnigation">
             <?php
                 
                 $total_pages = $projects->max_num_pages;
@@ -2546,11 +2581,11 @@ function member_projects_query() {
                     'type' => 'list'
                 ) );
             ?>
-            </div>
-            
-        </div> <!-- end projects -->
-                
-        <?php 
+        </div>
+
+    </div> <!-- end projects -->
+
+    <?php 
                 wp_reset_postdata();
             endif;
             

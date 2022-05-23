@@ -418,7 +418,7 @@ code {
 
 #primaryHeaderNav .active a,
 #primaryHeaderNav .current-page-ancestor a{
-    color: #000;
+    color: #fff;
 }
 
 #primaryHeaderNav .highlighted-btn {
@@ -1121,14 +1121,6 @@ main .page-featured-image img {
 }
 
 /* members page */
-.single-uws-team-members  #primaryHeaderNav .member-archive-page {
-    background-color: #fff;
-    border-radius: 1.563rem;
-}
-.single-uws-team-members  #primaryHeaderNav .member-archive-page a {
-    color: #000;
-}
-
 .page-template-page-members #member-archive .member {
     margin-bottom: 30px;
 }
@@ -1259,16 +1251,23 @@ main .page-featured-image img {
     }
 
     #primaryHeaderNav .active,
-    #primaryHeaderNav .current-page-ancestor,
-    .single-uws-team-members  #primaryHeaderNav .member-archive-page {
+    #primaryHeaderNav .current-page-ancestor {
         background-color: transparent;
         border-bottom-color: #fff;
         border-radius: 0;
     }
+
+    #primaryHeaderNav .highlighted-btn.active,
+    #primaryHeaderNav .highlighted-btn.current-page-ancestor {
+        background-color: #fff;
+    }
+
+    #primaryHeaderNav .highlighted-btn.current-page-ancestor a {
+        color: #CB0B44;
+    }
     
     #primaryHeaderNav .active a,
-    #primaryHeaderNav .current-page-ancestor a,
-    .single-uws-team-members  #primaryHeaderNav .member-archive-page a {
+    #primaryHeaderNav .current-page-ancestor a {
         color: #fff;
     }
     
