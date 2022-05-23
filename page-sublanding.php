@@ -15,10 +15,7 @@ get_header(); ?>
 
     <div class="container">
 
-        <h1 class="banner-title"><?php
-            $pageTitle = get_post_meta( get_the_ID(), 'banner_title' , true );
-            the_title();
-            ?></h1>
+        <h1 class="banner-title"><?php the_title(); ?></h1>
 
         <div class="banner-content">
             <?php

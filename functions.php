@@ -113,7 +113,7 @@ function uwsmedia_styles() {
 
     $currentPage = get_post_meta( $post->ID, '_wp_page_template', true );
     
-    if ( 'page-sublanding.php' == $currentPage ) {
+    if ( 'page-sublanding-themed-simple.php' == $currentPage ) {
         
         wp_register_style(
             'tarekraafat-autocomplete',
@@ -195,11 +195,7 @@ function add_slug_to_body_class( $classes ) {
             
         }
         
-    } elseif ( is_page() ) {
-        
-        $classes[] = sanitize_html_class( $post->post_name );
-        
-    } elseif ( is_singular() ) {
+    } elseif ( is_page() || is_singular() ) {
         
         $classes[] = sanitize_html_class( $post->post_name );
         
@@ -471,7 +467,7 @@ function uwsmedia_theme_settings() {
 
 function uwsmedia_admin_scripts() {
     
-    wp_register_script( 'uwsmedia_admin_script', get_template_directory_uri() . '/js/admin.js', array('jquery'), '1.0.0' );
+    wp_register_script( 'uwsmedia_admin_script', get_template_directory_uri() . '/js/admin.js', array('jquery','wp-color-picker'), '1.0.0' );
     wp_enqueue_script('uwsmedia_admin_script');
     
     wp_register_style( 'uwsmedia_admin_css', get_template_directory_uri() . '/css/admin.css', array(), '1.0.0', 'all' );
@@ -480,13 +476,16 @@ function uwsmedia_admin_scripts() {
     // Font Awesome
     wp_register_style( 'font-awesome-admin', get_template_directory_uri() . '/css/font-awesome.css', array(), '4.7.0' ); 
     wp_enqueue_style( 'font-awesome-admin' );
+
+    // WP Color Picker
+    wp_enqueue_style( 'wp-color-picker' );
     
-    global $pagenow;
+    // global $pagenow;
     
-    if ($pagenow != 'themes.php') {
-        return;
-    }
-    
+    // if ( $pagenow != 'themes.php' ) {
+    //     return;
+    // }
+
     wp_enqueue_media();
 
 }
@@ -596,6 +595,9 @@ add_action( 'add_meta_boxes', 'add_groups_metabox' );
 // add job title meta box to team members post type
 add_action( 'add_meta_boxes', 'add_team_members_metabox' );
 
+// add meta box to uws-group post
+add_action( 'add_meta_boxes', 'add_group_color_picker_metabox' );
+
 // add meta boxes to uws-project post
 add_action( 'add_meta_boxes', 'add_project_metabox' );
 
@@ -613,6 +615,7 @@ add_action( 'save_post', 'save_sublanding_meta', 10, 2 );
 
 // save group metadata on save post
 add_action( 'save_post', 'save_post_group_meta', 10, 2 );
+add_action( 'save_post', 'save_group_meta', 10, 2 );
 
 // save team members metadata on save post
 add_action( 'save_post', 'save_team_member_meta', 10, 2 );
@@ -637,6 +640,9 @@ add_action( 'login_enqueue_scripts', 'uws_login_stylesheet' );
 
 // Register REST route to for autocomplete and query
 add_action( 'rest_api_init', 'rest_search_query' );
+
+// add group color to body as an attribute
+add_action( 'wp_footer', 'set_group_color_attribute' );
 
 /*------------------------------------*\
 	REMOVE Actions
@@ -811,6 +817,52 @@ function create_post_groups() {
     
 }
 
+function add_group_color_picker_metabox() {
+    add_meta_box( 'group-color', 'Group Color', 'add_group_color_picker', 'uws-groups', 'side', 'high' );
+}
+
+
+function add_group_color_picker( $post ) {
+    echo '<p>Choose the color to associate with this group.</p>';
+    echo '<input type="text" name="group_color" value="'.get_post_meta( $post->ID, 'group_color', true ).'" id="group-color-picker" data-default-color="#6a6a6a" />';
+}
+
+function save_group_meta( $post_id, $post ) {
+    
+    /* Get the post type object. */
+    $post_type = get_post_type_object( $post->post_type );
+    
+    /* Check if the current user has permission to edit the post. */
+    if ( !current_user_can( $post_type->cap->edit_post, $post_id ) ) {
+        return $post_id;
+    }
+    
+    if ( isset( $_POST['group_color'] ) ) {
+        
+        update_post_meta( $post_id, 'group_color', $_POST['group_color'] );
+        
+    }
+
+}
+
+function set_group_color_attribute() {
+
+    global $post;
+    $groupId = get_post_meta( $post->ID, 'post_group_id', true );
+    $color = get_post_meta( $groupId, "group_color", true );
+
+    if ( is_page() && isset( $color ) ) { ?>
+    <script>
+        const breadcrumbNav = document.querySelector( ".breadcrumb-nav" );
+        breadcrumbNav.style.backgroundColor = "<?php echo $color ?>";
+        const themedBanner = document.querySelector( ".simple-themed" );
+        if ( themedBanner ){
+            themedBanner.style.backgroundColor = "<?php echo $color ?>";
+        }
+    </script>
+    <?php }
+}
+
 function add_groups_metabox() {
     
     $post_types = get_post_types( array( 'public' => true , '_builtin' => false ) );
@@ -938,6 +990,7 @@ function add_group_description( $columns ) {
     $columns = array(
         'cb' => $columns['cb'],
         'title' => __( 'Title' ),
+        'color' => __( 'Color' ),
         'description' => __( 'Description' ),
         'date' => __( 'Date' )
     );
@@ -951,9 +1004,12 @@ function add_group_description_column_value( $column, $post_id ) {
     switch ( $column ) {
 
         case 'description':
-            
             echo get_the_excerpt( $post_id );
     
+    	break;
+
+        case 'color':
+            echo '<div class="group-colored-box" style="background-color:'.get_post_meta( $post_id, 'group_color', true ).'"></div>';
     	break;
 
 	}
@@ -1938,7 +1994,8 @@ function add_sublanding_header_metabox() {
     $currentTemplate = get_post_meta( $post->ID, '_wp_page_template', true );
     
     if ( 'page-members.php' == $currentTemplate 
-    || 'page-sublanding.php' == $currentTemplate ) {
+    || 'page-sublanding.php' == $currentTemplate
+    || 'page-sublanding-themed-simple.php' == $currentTemplate ) {
         
        add_meta_box( 'sublanding-header', 'Head Banner', 'sublanding_header_meta_box', 'page', 'normal', 'high' );
        
@@ -2624,7 +2681,6 @@ class Bootstrap_Nav_Walker extends Walker_Nav_Menu {
             $classes[] = 'active';
         }
         
-        // echo 'test: '. get_post_meta( $item->object_id, 'post_group_id', true )->post_name;
         // if ( !empty( get_post_meta( $item->object_id, 'post_group_id', true ) ) ) {
         //     $classes[] = get_post( get_post_meta( $item->object_id, 'post_group_id', true ) )->post_name . '-group-item';
         // }

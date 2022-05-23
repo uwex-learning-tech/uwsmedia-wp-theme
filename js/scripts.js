@@ -309,7 +309,7 @@
 		/***********************************************************************
 		 AUTOCOMPLETE SEARCH
 		***********************************************************************/
-		if ( jQuery( 'body' ).hasClass( 'page-template-page-sublanding-themed' ) ) {
+		if ( jQuery( 'body' ).hasClass( 'page-template-page-sublanding-themed-simple' ) ) {
     		
             var postId = jQuery( 'input[name=postGroupId]' ).val();
 			var blogurl = jQuery( 'input[name=bloginfo]' ).val();

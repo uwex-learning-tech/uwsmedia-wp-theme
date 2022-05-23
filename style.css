@@ -446,15 +446,15 @@ code {
 }
 
 /* breadcrumbs */
-[class^="faculty-"] .breadcrumb-nav,
-[class*=" faculty-"] .breadcrumb-nav{
+/* [class^="faculty-"] .breadcrumb-nav,
+[class*=" faculty-s"] .breadcrumb-nav{
     background-color: #407910;
 }
 
 [class^="learning-tech-"] .breadcrumb-nav,
 [class*=" learning-tech-"] .breadcrumb-nav{
     background-color: #D85300;
-}
+} */
 
 .breadcrumb-nav {
     background-color: #6A6A6A;
@@ -887,14 +887,14 @@ main .page-featured-image img {
     border-bottom-color: #fff;
 }
 
-[class^="faculty-"] #primaryHeaderNav .faculty-group-item,
+/* [class^="faculty-"] #primaryHeaderNav .faculty-group-item,
 [class*=" faculty-"] #primaryHeaderNav .faculty-group-item {
     background-color: #fff;
 }
 [class^="faculty-"] #primaryHeaderNav .faculty-group-item a,
 [class*=" faculty-"] #primaryHeaderNav .faculty-group-item a {
     color: #2A8448;
-}
+} */
 
 .page-template-page-showcase .sharings,
 .page-template-page-flex-showcase .sharings {
@@ -1059,14 +1059,25 @@ main .page-featured-image img {
 }
 
 /* sublanding page */
+
+.page-template-page-sublanding-themed-simple .header-banner.simple-themed {
+    background: linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(255,255,255,0) 100%), url("img/banner_bg.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: #fff;
+}
+
 .page-template-page-members .header-banner,
-.page-template-page-sublanding .header-banner {
+.page-template-page-sublanding .header-banner,
+.page-template-page-sublanding-themed-simple .header-banner {
     padding: 20px;
     background-color: #D9D9D9;
 }
 
 .page-template-page-members .header-banner h1.banner-title,
-.page-template-page-sublanding .header-banner h1.banner-title {
+.page-template-page-sublanding .header-banner h1.banner-title,
+.page-template-page-sublanding-themed-simple .header-banner h1.banner-title {
     text-align: center;
     font-weight: 500;
     font-size: 48px;
@@ -1075,22 +1086,40 @@ main .page-featured-image img {
     text-transform: uppercase;
 }
 
+.page-template-page-sublanding-themed-simple .header-banner h1.banner-title {
+    color: #fff;
+}
+
 .page-template-page-members .header-banner .banner-content,
-.page-template-page-sublanding .header-banner .banner-content {
+.page-template-page-sublanding .header-banner .banner-content,
+.page-template-page-sublanding-themed-simple .header-banner .banner-content {
     text-align: center;
     font-size: 25px;
     line-height: 31px;
     font-weight: 300;
     color: #4A4A4A;
 }
-.page-template-page-sublanding .header-banner .banner-search {
+.page-template-page-sublanding-themed-simple .header-banner .banner-content {
+    color: #fff;
+}
+
+
+
+.page-template-page-sublanding-themed-simple .header-banner .banner-search {
     position: relative;
     margin-top: 16px;
 }
-.page-template-page-sublanding .header-banner .banner-search .autocomplete-search {
+.page-template-page-sublanding-themed-simple .header-banner .banner-search .autocomplete-search {
+    border-radius: 25px !important;
     padding-right: 40px;
 }
-.page-template-page-sublanding .header-banner .banner-search .search-btn {
+.page-template-page-sublanding-themed-simple .header-banner .banner-search #autoComplete_list {
+    top: 38px;
+    left: 15px;
+    width: 90%;
+    box-shadow: 0 3px 6px #ccc;
+}
+.page-template-page-sublanding-themed-simple .header-banner .banner-search .search-btn {
     display: block;
     position: absolute;
     background-color: transparent;

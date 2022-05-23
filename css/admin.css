@@ -68,3 +68,13 @@
     padding-left: 0;
     vertical-align: middle;
 }
+
+.post-type-uws-groups .column-color {
+    width: 50px;
+}
+
+.post-type-uws-groups .group-colored-box {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+}

@@ -94,6 +94,10 @@ jQuery( document ).ready( function( $ ) {
     	}
     	
 	}
+	if ( jQuery( 'body' ).hasClass( 'wp-admin') && jQuery( 'body' ).hasClass( 'post-type-uws-groups' ) ) {
+		jQuery('#group-color-picker').wpColorPicker();
+	}
+	
 
 });
 
