@@ -27,6 +27,20 @@
                 }
                 
             }
+
+            if ( isset( $_GET['marketing_programs'] ) && !empty( $_GET['marketing_programs'] ) ) {
+                
+                $filters = explode( ',', $_GET['marketing_programs'] );
+                
+                foreach ( $filters as $filter ) {
+                    
+                    $term = get_term_by( 'slug', $filter, 'marketing_programs' )->name;
+                    
+                    array_push( $terms, $term );
+                    
+                }
+                
+            }
             
             if ( isset( $_GET['classifications'] ) && !empty( $_GET['classifications'] ) ) {
     
@@ -49,6 +63,20 @@
                 foreach ( $filters as $filter ) {
                     
                     $term = get_term_by( 'slug', $filter, 'flex_classifications' )->name;
+                    
+                    array_push( $terms, $term );
+                    
+                }
+                
+            }
+
+            if ( isset( $_GET['marketing_classifications'] ) && !empty( $_GET['marketing_classifications'] ) ) {
+    
+                $filters = explode( ',', $_GET['marketing_classifications'] );
+                
+                foreach ( $filters as $filter ) {
+                    
+                    $term = get_term_by( 'slug', $filter, 'marketing_classifications' )->name;
                     
                     array_push( $terms, $term );
                     
@@ -83,6 +111,20 @@
                 }
                 
             }
+
+            if ( isset( $_GET['marketing_media_types'] ) && !empty( $_GET['marketing_media_types'] ) ) {
+                
+                $filters = explode( ',', $_GET['marketing_media_types'] );
+                
+                foreach ( $filters as $filter ) {
+                    
+                    $term = get_term_by( 'slug', $filter, 'marketing_media_types' )->name;
+                    
+                    array_push( $terms, $term );
+                    
+                }
+                
+            }
             
             if ( is_array( $terms ) && count( $terms ) >= 1 ) {
                 
@@ -90,7 +132,7 @@
                 
                 foreach ( $terms as $term ) {
                     
-                    echo '<span class="badge badge-light">' . $term . '</span> ';
+                    echo '<span class="badge rounded-pill text-bg-light">' . $term . '</span> ';
                     
                 }
                 
@@ -118,9 +160,11 @@
                     
                     <p class="categories"><?php 
 
-                    if ( isset( $_GET['flex_classifications'] ) ) {
+                    if ( $_GET['post_type'] ==  "uws-flex-projects"  ) {
                         $class_terms = get_the_terms( $post->ID, 'flex_classifications' );
-                    } else if ( $_GET['classifications'] ) {
+                    } else if ( $_GET['post_type'] ==  "marketing-projects") {
+                        $class_terms = get_the_terms( $post->ID, 'marketing_classifications' );
+                    } else if ( $_GET['post_type'] ==  "uws-projects" ) {
                         $class_terms = get_the_terms( $post->ID, 'classifications' );
                     }
                     
@@ -137,17 +181,21 @@
                     <p class="categories"><?php 
 
 
-                    if ( isset( $_GET['flex_media_types'] ) ) {
+                    if ( $_GET['post_type'] ==  "uws-flex-projects" ) {
+                        $media_type_group = "flex_media_types";
                         $media_type_terms = get_the_terms( $post->ID, 'flex_media_types' );
-                    } else if ( $_GET['media_types'] ) {
+                    } else if ( $_GET['post_type'] ==  "marketing-projects" ) {
+                        $media_type_group = "marketing_media_types";
+                        $media_type_terms = get_the_terms( $post->ID, 'marketing_media_types' );
+                    } else if ( $_GET['post_type'] ==  "uws-projects" ) {
+                        $media_type_group = "media_types";
                         $media_type_terms = get_the_terms( $post->ID, 'media_types' );
                     }
-                    
-        
+
                     if ( !is_array( $media_type_terms ) || count( $media_type_terms ) <= 0 ) {
                         echo '<span aria-hidden="true">&mdash;</span>';
                     } else {
-                        echo strip_tags( get_the_term_list( $post->ID, 'media_types', '', ', ', '' ) );
+                        echo strip_tags( get_the_term_list( $post->ID, $media_type_group, '', ', ', '' ) );
                     }
                     
                     ?></p>

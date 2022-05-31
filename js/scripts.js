@@ -8,7 +8,7 @@
 		 SINGLE UWS PROJECTS FUNCTIONS
 		***********************************************************************/
 		
-		if ( jQuery( 'body ').hasClass( 'single-uws-projects' ) || jQuery( 'body ').hasClass( 'single-uws-flex-projects' ) ) {
+		if ( jQuery( 'body ').hasClass( 'single-uws-projects' ) || jQuery( 'body ').hasClass( 'single-uws-flex-projects' ) || jQuery( 'body ').hasClass( 'single-marketing-projects' ) ) {
     		
     		// copy link button
     		jQuery( '#copy-share-link' ).on( 'click', function( evt ) {
@@ -65,7 +65,7 @@
 		 PAGE SHOWCASE FUNCTIONS
 		***********************************************************************/
 		
-		if ( jQuery( 'body' ).hasClass( 'page-template-page-showcase' ) || jQuery( 'body' ).hasClass( 'page-template-page-flex-showcase' )) {
+		if ( jQuery( 'body' ).hasClass( 'page-template-page-showcase' ) || jQuery( 'body' ).hasClass( 'page-template-page-flex-showcase') || jQuery( 'body' ).hasClass( 'page-template-page-marketing-showcase' )) {
     		
     		runSearch();
     		
@@ -198,10 +198,15 @@
             	}
 
 				var isFlexShowcase = jQuery( 'body' ).hasClass( 'page-template-page-flex-showcase' );
-				var apiUrl = blogurl + '/wp-json/uwsmedia/v2/media-showcases/';
+				var isMarketingShowcase = jQuery( 'body' ).hasClass( 'page-template-page-marketing-showcase' );
+				var apiUrl = blogurl + '/wp-json/uwsmedia/v2/collaborative-showcases/';
 
 				if ( isFlexShowcase ) {
-					apiUrl = blogurl + '/wp-json/uwsmedia/v2/flex-showcases/';
+					apiUrl = blogurl + '/wp-json/uwsmedia/v2/competency-based-showcases/';
+				}
+
+				if ( isMarketingShowcase ) {
+					apiUrl = blogurl + '/wp-json/uwsmedia/v2/marketing-showcases/';
 				}
             	
             	if ( mediaCBs.length || classCBs.length || programCBs.length || searchInput.length ) {

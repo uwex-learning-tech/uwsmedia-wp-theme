@@ -4,7 +4,7 @@
     
     <?php
         
-        if ( $_GET['post_type'] == 'uws-projects' || $_GET['post_type'] == 'uws-flex-projects' ) :
+        if ( $_GET['post_type'] == 'uws-projects' || $_GET['post_type'] == 'uws-flex-projects' || $_GET['post_type'] == 'marketing-projects' ) :
         
             get_template_part('loop-showcase-results');
 
