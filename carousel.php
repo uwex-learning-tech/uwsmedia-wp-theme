@@ -9,7 +9,7 @@
             <?php
         	
         	$query_args = array(
-                'post_type' => array('uws-projects','uws-flex-projects'),
+                'post_type' => array('uws-projects','uws-flex-projects', 'marketing-projects'),
                 'post_status' => 'publish',
                 'meta_query'  => array(
                     array(
@@ -23,7 +23,7 @@
             
             if ( $carousel->have_posts() ) {
                 
-                shuffle( $carousel->posts );
+                //shuffle( $carousel->posts );
                 
                 $count = 0;
 
