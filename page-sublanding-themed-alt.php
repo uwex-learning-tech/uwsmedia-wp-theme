@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Simple Themed Sub Landing
+ * Template Name: Alternative Themed Sub Landing
  * Template Post Type: page
  *
  * @package WordPress
@@ -10,7 +10,7 @@
  
  get_header(); ?>
 <?php while ( have_posts() ) : the_post(); ?>
-<div class="header-banner simple-themed">
+<div class="header-banner alt-themed">
 
     <div class="container">
 
@@ -44,9 +44,13 @@
 
 </div>
 
-<main class="container" role="main">
 
-    <section>
+</div>
+<main role="main">
+
+    <section class="container call-to-actions shadow ps-2 pe-2 pt-3"><?php echo wpautop( get_post_meta( get_the_ID(), 'cta_banner_content' , true ) ); ?></section>
+
+    <section class="container page-content">
 
         <?php if ( has_post_thumbnail() ) : ?>
         <img src="<?php the_post_thumbnail_url(); ?>" alt="" />

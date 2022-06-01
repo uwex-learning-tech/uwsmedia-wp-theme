@@ -1108,60 +1108,82 @@ main .page-featured-image img {
     background-repeat: no-repeat;
     background-size: cover;
     color: #fff;
+    background-blend-mode: multiply;
+}
+
+.page-template-page-sublanding-themed-alt .header-banner.alt-themed {
+    background: linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(255,255,255,0) 100%), url("img/wave_banner_bg.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: #fff;
+    background-blend-mode: multiply;
+    min-height: 350px;
 }
 
 .page-template-page-members .header-banner,
 .page-template-page-sublanding .header-banner,
-.page-template-page-sublanding-themed-simple .header-banner {
+.page-template-page-sublanding-themed-simple .header-banner,
+.page-template-page-sublanding-themed-alt .header-banner {
     padding: 20px;
     background-color: #D9D9D9;
 }
 
 .page-template-page-members .header-banner h1.banner-title,
 .page-template-page-sublanding .header-banner h1.banner-title,
-.page-template-page-sublanding-themed-simple .header-banner h1.banner-title {
+.page-template-page-sublanding-themed-simple .header-banner h1.banner-title,
+.page-template-page-sublanding-themed-alt .header-banner h1.banner-title {
     text-align: center;
-    font-weight: 500;
+    font-weight: 400;
     font-size: 48px;
     line-height: 56px;
     color: #4A4A4A;
     text-transform: uppercase;
 }
 
-.page-template-page-sublanding-themed-simple .header-banner h1.banner-title {
+.page-template-page-sublanding-themed-simple .header-banner h1.banner-title,
+.page-template-page-sublanding-themed-alt .header-banner h1.banner-title {
     color: #fff;
 }
 
 .page-template-page-members .header-banner .banner-content,
 .page-template-page-sublanding .header-banner .banner-content,
-.page-template-page-sublanding-themed-simple .header-banner .banner-content {
+.page-template-page-sublanding-themed-simple .header-banner .banner-content,
+.page-template-page-sublanding-themed-alt .header-banner .banner-content {
     text-align: center;
     font-size: 25px;
     line-height: 31px;
     font-weight: 300;
     color: #4A4A4A;
 }
-.page-template-page-sublanding-themed-simple .header-banner .banner-content {
+
+.page-template-page-sublanding-themed-simple .header-banner .banner-content,
+.page-template-page-sublanding-themed-alt .header-banner .banner-content {
     color: #fff;
 }
 
-
-
-.page-template-page-sublanding-themed-simple .header-banner .banner-search {
+.page-template-page-sublanding-themed-simple .header-banner .banner-search,
+.page-template-page-sublanding-themed-alt .header-banner .banner-search {
     position: relative;
     margin-top: 16px;
 }
-.page-template-page-sublanding-themed-simple .header-banner .banner-search .autocomplete-search {
+
+.page-template-page-sublanding-themed-simple .header-banner .banner-search .autocomplete-search,
+.page-template-page-sublanding-themed-alt .header-banner .banner-search .autocomplete-search {
     border-radius: 25px !important;
     padding-right: 40px;
 }
-.page-template-page-sublanding-themed-simple .header-banner .banner-search #autoComplete_list {
+
+.page-template-page-sublanding-themed-simple .header-banner .banner-search #autoComplete_list,
+.page-template-page-sublanding-themed-alt .header-banner .banner-search #autoComplete_list {
     top: 38px;
     left: 15px;
     width: 90%;
     box-shadow: 0 3px 6px #ccc;
 }
-.page-template-page-sublanding-themed-simple .header-banner .banner-search .search-btn {
+
+.page-template-page-sublanding-themed-simple .header-banner .banner-search .search-btn,
+.page-template-page-sublanding-themed-alt .header-banner .banner-search .search-btn {
     display: block;
     position: absolute;
     background-color: transparent;
@@ -1180,16 +1202,36 @@ main .page-featured-image img {
     font-weight: 700;
 }
 
-/* .page-template-page-members .header-banner .banner-buffer,
-.page-template-page-sublanding .header-banner .banner-buffer {
-    height: 40px;
-} */
-
 .page-template-page-members .header-banner .banner-image img,
 .page-template-page-sublanding .header-banner .banner-image img {
     width: 100%;
     height: auto;
 }
+
+.page-template-page-sublanding-themed-alt .call-to-actions {
+    margin-top: 25px;
+    margin-bottom: 25px;
+    min-height: 150px;
+    border-radius: 12px;
+    background-color: #fff;
+}
+
+@media (min-width: 992px) {
+
+    .page-template-page-sublanding-themed-alt .call-to-actions {
+        position: relative;
+        top: -100px;
+        margin-top: unset;
+        margin-bottom: unset;
+    }
+    
+    .page-template-page-sublanding-themed-alt .page-content {
+        position: relative;
+        top: -80px;
+    }
+    
+}
+
 
 /* members page */
 .page-template-page-members #member-archive .member {

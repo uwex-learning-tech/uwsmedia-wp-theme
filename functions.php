@@ -113,7 +113,7 @@ function uwsmedia_styles() {
 
     $currentPage = get_post_meta( $post->ID, '_wp_page_template', true );
     
-    if ( 'page-sublanding-themed-simple.php' == $currentPage ) {
+    if ( 'page-sublanding-themed-simple.php' == $currentPage || 'page-sublanding-themed-alt.php' == $currentPage ) {
         
         wp_register_style(
             'tarekraafat-autocomplete',
@@ -612,6 +612,7 @@ add_action( 'save_post', 'save_homepage_meta', 10, 2 );
 
 // add sub landing meta box to page with sub landing page template
 add_action( 'add_meta_boxes', 'add_sublanding_header_metabox' );
+add_action( 'add_meta_boxes', 'add_sublanding_ctas_metabox' );
  
 // save sublanding metadata on page save post
 add_action( 'save_post', 'save_sublanding_meta', 10, 2 );
@@ -755,15 +756,47 @@ add_filter( 'redirect_canonical', function( $redirect_url ) {
 } );
 
 // hardcode "current page page" for the Team Memebers custom post type
-add_filter( 'nav_menu_css_class', 'change_page_menu_classes', 10,2 );
+add_filter( 'nav_menu_css_class', 'change_team_member_page_menu_classes', 10,2 );
 
-function change_page_menu_classes($menu) {
+function change_team_member_page_menu_classes($menu) {
 
     global $post;
 
     if ( get_post_type($post) == 'uws-team-members' ) {
         $menu = str_replace( 'active', '', $menu ); // remove all current_page_parent classes
         $menu = str_replace( 'menu-item-13063', 'menu-item-13063 active', $menu ); // add the current_page_parent class to the page you want
+    }
+
+    return $menu;
+
+}
+
+// hardcode "current page page" for the Showcase custom post type
+add_filter( 'nav_menu_css_class', 'change_showcase_page_menu_classes', 10,2 );
+
+function change_showcase_page_menu_classes($menu) {
+
+    global $post;
+
+    if ( get_post_type($post) == 'uws-projects' || get_post_type($post) == 'uws-flex-projects' ) {
+        $menu = str_replace( 'active', '', $menu ); // remove all current_page_parent classes
+        $menu = str_replace( 'menu-item-13052', 'menu-item-13052 active', $menu ); // add the current_page_parent class to the page you want
+    }
+
+    return $menu;
+
+}
+
+// hardcode "current page page" for the Marketing Showcase custom post type
+add_filter( 'nav_menu_css_class', 'change_marketing_showcase_page_menu_classes', 10,2 );
+
+function change_marketing_showcase_page_menu_classes($menu) {
+
+    global $post;
+
+    if ( get_post_type($post) == 'marketing-projects' ) {
+        $menu = str_replace( 'active', '', $menu ); // remove all current_page_parent classes
+        $menu = str_replace( 'menu-item-12961', 'menu-item-12961 active', $menu ); // add the current_page_parent class to the page you want
     }
 
     return $menu;
@@ -854,13 +887,17 @@ function set_group_color_attribute() {
     $groupId = get_post_meta( $post->ID, 'post_group_id', true );
     $color = get_post_meta( $groupId, "group_color", true );
 
-    if ( is_page() && isset( $color ) ) { ?>
+    if ( ( is_page() || is_single() ) && isset( $color ) ) { ?>
     <script>
         const breadcrumbNav = document.querySelector( ".breadcrumb-nav" );
         breadcrumbNav.style.backgroundColor = "<?php echo $color ?>";
         const themedBanner = document.querySelector( ".simple-themed" );
         if ( themedBanner ){
             themedBanner.style.backgroundColor = "<?php echo $color ?>";
+        }
+        const altThemedBanner = document.querySelector( ".alt-themed" );
+        if ( altThemedBanner ){
+            altThemedBanner.style.backgroundColor = "<?php echo $color ?>";
         }
     </script>
     <?php }
@@ -2106,7 +2143,8 @@ function add_sublanding_header_metabox() {
     
     if ( 'page-members.php' == $currentTemplate 
     || 'page-sublanding.php' == $currentTemplate
-    || 'page-sublanding-themed-simple.php' == $currentTemplate ) {
+    || 'page-sublanding-themed-simple.php' == $currentTemplate
+    || 'page-sublanding-themed-alt.php' == $currentTemplate ) {
         
        add_meta_box( 'sublanding-header', 'Head Banner', 'sublanding_header_meta_box', 'page', 'normal', 'high' );
        
@@ -2123,6 +2161,29 @@ function sublanding_header_meta_box( $post ) {
     
 }
 
+function add_sublanding_ctas_metabox() {
+
+    global $post;
+
+    $currentTemplate = get_post_meta( $post->ID, '_wp_page_template', true );
+    
+    if ( 'page-sublanding-themed-alt.php' == $currentTemplate ) {
+        
+       add_meta_box( 'sublanding-ctas', 'Call to Action Banner', 'sublanding_cta_meta_box', 'page', 'normal', 'high' );
+       
+    }
+
+}
+
+function sublanding_cta_meta_box( $post ) {
+
+    wp_nonce_field( 'add_cta_banner_content', 'cta_banner_content_nonce' );
+    echo '<p>Enter call-to-action items in this banner.</p>';
+
+    wp_editor( get_post_meta( $post->ID, 'cta_banner_content', true ), 'metaboxeditor', array( 'textarea_name' => 'cta_banner_content' ) );
+    
+}
+
 function save_sublanding_meta( $post_id, $post ) {
     
     /* Get the post type object. */
@@ -2136,6 +2197,12 @@ function save_sublanding_meta( $post_id, $post ) {
     if ( wp_verify_nonce( $_POST['head_banner_content_nonce'], 'add_head_banner_content' ) && isset( $_POST['banner_content'] ) ) {
         
         update_post_meta( $post_id, 'banner_content', $_POST['banner_content'] );
+        
+    }
+
+    if ( wp_verify_nonce( $_POST['cta_banner_content_nonce'], 'add_cta_banner_content' ) && isset( $_POST['cta_banner_content'] ) ) {
+        
+        update_post_meta( $post_id, 'cta_banner_content', $_POST['cta_banner_content'] );
         
     }
     
@@ -3050,12 +3117,11 @@ function breadcrumb_nav() {
     // Podcast post type
     $podcastPostType = 'podcast';
 
-      
     // If you have any custom post types with custom taxonomies, put the taxonomy name below (e.g. product_cat)
     // $custom_taxonomy    = 'product_cat';
        
     // Get the query & post information
-    global $post,$wp_query;
+    global $post;
        
     // Do not display on the homepage
     if ( !is_front_page() ) {
@@ -3083,20 +3149,36 @@ function breadcrumb_nav() {
               
         } else if ( is_single() ) {
             
-            // if ( $post->post_type == 'uws-projects' ) {
+            if ( $post->post_type == 'uws-projects' ) {
                 
-            //     $group = get_post_meta( $post->ID, 'post_group_id', true );
-            //     $title = get_the_title( $group );
+                echo '<li class="item-current"><a class="bread-parent" href="' . get_site_url() . '/faculty-resources' . '" title="Faculty">Faculty</a></li>';
+                echo '<li class="separator">' . $separator . ' </li>';
+                echo '<li class="item-current"><a class="bread-parent" href="' . get_site_url() . '/faculty-resources/collaborative' . '" title="Collaborative">Collaborative</a></li>';
+                echo '<li class="separator">' . $separator . ' </li>';
+                echo '<li class="item-current"><a class="bread-parent" href="' . get_site_url() . '/faculty-resources/collaborative/collaborative-media-showcase' . '" title="Collaborative Media Showcase">Collaborative Media Showcase</a></li>';
+                echo '<li class="separator">' . $separator . ' </li>';
                 
-            //     if ( strpos( strtolower( $title ), 'faculty' ) !== false ) {
-                    
-            //         $url = get_site_url() . '/faculty/faculty-showcase/';
-            //         echo '<li class="item-current"><a class="bread-parent bread-parent-faculty-showcase" href="' . $url . '" title="Faculty Showcase">Faculty Showcase</a></li>';
-            //         echo '<li class="separator">' . $separator . ' </li>';
-                    
-            //     }
+            }
+
+            if ( $post->post_type == 'uws-flex-projects' ) {
                 
-            // }
+                echo '<li class="item-current"><a class="bread-parent" href="' . get_site_url() . '/faculty-resources' . '" title="Faculty">Faculty</a></li>';
+                echo '<li class="separator">' . $separator . ' </li>';
+                echo '<li class="item-current"><a class="bread-parent" href="' . get_site_url() . '/faculty-resources/competency' . '" title="Competency-Based">Competency-Based</a></li>';
+                echo '<li class="separator">' . $separator . ' </li>';
+                echo '<li class="item-current"><a class="bread-parent" href="' . get_site_url() . '/faculty-resources/competency-based-degree-faculty-resources/competency-based-media-showcase' . '" title="Competency-Based Media Showcase">Competency-Based Media Showcase</a></li>';
+                echo '<li class="separator">' . $separator . ' </li>';
+                
+            }
+
+            if ( $post->post_type == 'marketing-projects' ) {
+                
+                echo '<li class="item-current"><a class="bread-parent" href="' . get_site_url() . '/our-work' . '" title="Our Work">Our Work</a></li>';
+                echo '<li class="separator">' . $separator . ' </li>';
+                echo '<li class="item-current"><a class="bread-parent" href="' . get_site_url() . '/our-work/marketing-showcase' . '" title="Marketing Media Showcase">Marketing Media Showcase</a></li>';
+                echo '<li class="separator">' . $separator . ' </li>';
+                
+            }
             
             if ( $post->post_type == 'uws-team-members' ) {
                 
