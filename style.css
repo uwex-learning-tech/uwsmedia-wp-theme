@@ -54,6 +54,7 @@ body {
 
 a {
 	color: #0366d6;
+    text-decoration: none;
 }
 
 a:hover {
@@ -991,22 +992,22 @@ main .page-featured-image img {
 .page-template-page-showcase .sidebarFilter,
 .page-template-page-flex-showcase .sidebarFilter,
 .page-template-page-marketing-showcase .sidebarFilter,
-.page-template-default .sidebar .toc_widget_list {
+.page-template-default .sidebar .ez-toc-list {
     margin-top: 16px;
     background-color: #f2f2f2;
     padding-bottom: 8px;
 }
 
-.page-template-default .sidebar .toc_widget_list {
+.page-template-default .sidebar .ez-toc-list {
     margin-top: 0;
     padding: 8px 16px;
     list-style: none;
 }
-.page-template-default .sidebar .toc_widget_list li ul {
+.page-template-default .sidebar .ez-toc-list li ul {
     padding-left: 20px;
     list-style: disc;
 }
-.page-template-default .sidebar .toc_widget_list li ul li ul {
+.page-template-default .sidebar .ez-toc-list li ul li ul {
     list-style: circle;
     padding-left: 20px;
 }
