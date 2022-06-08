@@ -27,37 +27,37 @@
                     $linkedIn = get_post_meta( get_the_ID(), 'linkedin_username', true );
                     
                     if ( !empty( $linkedIn ) ) {
-                        echo '<li class="icon"><a href="https://www.linkedin.com/in/' . $linkedIn . '" target="_blank"><span class="fa fa-linkedin-square"><span class="screen-reader-text">LinkedIn Profile Link</span></span></a></li>';
+                        echo '<li class="icon"><a href="https://www.linkedin.com/in/' . $linkedIn . '" target="_blank"><i class="bi bi-linkedin"><span class="screen-reader-text">LinkedIn Profile Link</span></i></a></li>';
                     }
                     
                     $twitter = get_post_meta( get_the_ID(), 'twitter_username', true );
                     
                     if ( !empty( $twitter ) ) {
-                        echo '<li class="icon"><a href="https://twitter.com/' . $twitter . '" target="_blank"><span class="fa fa-twitter"><span class="screen-reader-text">Twitter Profile Link</span></span></a></li>';
+                        echo '<li class="icon"><a href="https://twitter.com/' . $twitter . '" target="_blank"><i class="bi bi-twitter"><span class="screen-reader-text">Twitter Profile Link</span></i></a></li>';
                     }
                     
                     $facebook = get_post_meta( get_the_ID(), 'facebook_username', true );
                     
                     if ( !empty( $facebook ) ) {
-                        echo '<li class="icon"><a href="https://www.facebook.com/' . $facebook . '" target="_blank"><span class="fa fa-facebook-official"><span class="screen-reader-text">Facebook Profile Link</span></span></a></li>';
+                        echo '<li class="icon"><a href="https://www.facebook.com/' . $facebook . '" target="_blank"><i class="bi bi-facebook"><span class="screen-reader-text">Facebook Profile Link</span></i></a></li>';
                     }
                     
                     $youtube = get_post_meta( get_the_ID(), 'youtube_username', true );
                     
                     if ( !empty( $youtube ) ) {
-                        echo '<li class="icon"><a href="https://www.youtube.com/user/' . $youtube . '" target="_blank"><span class="fa fa-youtube"><span class="screen-reader-text">YouTube Profile Link</span></span></a></li>';
+                        echo '<li class="icon"><a href="https://www.youtube.com/user/' . $youtube . '" target="_blank"><i class="bi bi-youtube"><span class="screen-reader-text">YouTube Profile Link</span></i></a></li>';
                     }
                     
                     $behance = get_post_meta( get_the_ID(), 'behance_username', true );
                     
                     if ( !empty( $behance ) ) {
-                        echo '<li class="icon"><a href="https://www.behance.net/' . $behance . '" target="_blank"><span class="fa fa-behance-square"><span class="screen-reader-text">Béhance Profile Link</span></span></a></li>';
+                        echo '<li class="icon"><a href="https://www.behance.net/' . $behance . '" target="_blank"><i class="bi bi-behance"><span class="screen-reader-text">Béhance Profile Link</span></i></a></li>';
                     }
                     
                     $github = get_post_meta( get_the_ID(), 'github_username', true );
                     
                     if ( !empty( $github ) ) {
-                        echo '<li class="icon"><a href="https://github.com/' . $github . '" target="_blank"><span class="fa fa-github-square"><span class="screen-reader-text">GitHub Profile Link</span></span></a></li>';
+                        echo '<li class="icon"><a href="https://github.com/' . $github . '" target="_blank"><i class="bi bi-github"><span class="screen-reader-text">GitHub Profile Link</span></i></a></li>';
                     }
                     
                     ?>

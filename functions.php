@@ -86,10 +86,10 @@ function uwsmedia_styles() {
     // Bootstrap
     wp_register_style( 'bootstrap', get_template_directory_uri() . '/css/bootstrap.min.css', array(), '5.2.0', 'all' );
     wp_enqueue_style( 'bootstrap' );
-    
-    // Font Awesome
-    wp_register_style( 'font-awesome', get_template_directory_uri() . '/css/font-awesome.css', array(), '4.7.0' ); 
-    wp_enqueue_style( 'font-awesome' );
+
+    // Bootstrap Icons
+    wp_register_style( 'bootstrap-icons', get_template_directory_uri() . '/fonts/bootstrap-icons/bootstrap-icons.css', array(), '1.8.3' ); 
+    wp_enqueue_style( 'bootstrap-icons' );
     
     // PRISMJS
     wp_register_style( 'prism', get_template_directory_uri() . '/css/prism.css', array(), '1.17.1', 'all' );
@@ -473,9 +473,9 @@ function uwsmedia_admin_scripts() {
     wp_register_style( 'uwsmedia_admin_css', get_template_directory_uri() . '/css/admin.css', array(), '1.0.0', 'all' );
     wp_enqueue_style( 'uwsmedia_admin_css' );
     
-    // Font Awesome
-    wp_register_style( 'font-awesome-admin', get_template_directory_uri() . '/css/font-awesome.css', array(), '4.7.0' ); 
-    wp_enqueue_style( 'font-awesome-admin' );
+    // Bootstrap icons
+    wp_register_style( 'bootstrap-icons-admin', get_template_directory_uri() . '/fonts/bootstrap-icons/bootstrap-icons.css', array(), '1.8.3' ); 
+    wp_enqueue_style( 'bootstrap-icons-admin' );
 
     // WP Color Picker
     wp_enqueue_style( 'wp-color-picker' );
@@ -1939,27 +1939,27 @@ function social_networks_meta_box( $post ) {
     
     wp_nonce_field( 'add_linkedin_network', 'linkedin_network_nonce' );
 
-    echo '<p><span class="fa fa-linkedin-square"></span> <strong>LinkedIn</strong><br>https://www.linkedin.com/in/<input class="edit-post-social-input" type="text" name="linkedin_username" value="' . get_post_meta( $post->ID, 'linkedin_username', true ) . '" placeholder="username" /></p>';
+    echo '<p><i class="bi bi-linkedin"></i> <strong>LinkedIn</strong><br>https://www.linkedin.com/in/<input class="edit-post-social-input" type="text" name="linkedin_username" value="' . get_post_meta( $post->ID, 'linkedin_username', true ) . '" placeholder="username" /></p>';
     
     wp_nonce_field( 'add_twitter_network', 'twitter_network_nonce' );
 
-    echo '<p><span class="fa fa-twitter"></span> <strong>Twitter</strong><br>https://twitter.com/<input class="edit-post-social-input" type="text" name="twitter_username" value="' . get_post_meta( $post->ID, 'twitter_username', true ) . '" placeholder="username" /></p>';
+    echo '<p><i class="bi bi-twitter"></i> <strong>Twitter</strong><br>https://twitter.com/<input class="edit-post-social-input" type="text" name="twitter_username" value="' . get_post_meta( $post->ID, 'twitter_username', true ) . '" placeholder="username" /></p>';
     
     wp_nonce_field( 'add_facebook_network', 'facebook_network_nonce' );
 
-    echo '<p><span class="fa fa-facebook-official"></span> <strong>Facebook</strong><br>https://www.facebook.com/<input class="edit-post-social-input" type="text" name="facebook_username" value="' . get_post_meta( $post->ID, 'facebook_username', true ) . '" placeholder="username" /></p>';
+    echo '<p><i class="bi bi-facebook"></i> <strong>Facebook</strong><br>https://www.facebook.com/<input class="edit-post-social-input" type="text" name="facebook_username" value="' . get_post_meta( $post->ID, 'facebook_username', true ) . '" placeholder="username" /></p>';
     
     wp_nonce_field( 'add_youtube_network', 'youtube_network_nonce' );
 
-    echo '<p><span class="fa fa-youtube-play"></span> <strong>YouTube</strong><br>https://www.youtube.com/user/<input class="edit-post-social-input" type="text" name="youtube_username" value="' . get_post_meta( $post->ID, 'youtube_username', true ) . '" placeholder="username" /></p>';
+    echo '<p><i class="bi bi-youtube"></i> <strong>YouTube</strong><br>https://www.youtube.com/user/<input class="edit-post-social-input" type="text" name="youtube_username" value="' . get_post_meta( $post->ID, 'youtube_username', true ) . '" placeholder="username" /></p>';
     
     wp_nonce_field( 'add_behance_network', 'behance_network_nonce' );
 
-    echo '<p><span class="fa fa-behance-square"></span> <strong>Béhance</strong><br>https://www.behance.net/<input class="edit-post-social-input" type="text" name="behance_username" value="' . get_post_meta( $post->ID, 'behance_username', true ) . '" placeholder="username" /></p>';
+    echo '<p><i class="bi bi-behance"></i> <strong>Béhance</strong><br>https://www.behance.net/<input class="edit-post-social-input" type="text" name="behance_username" value="' . get_post_meta( $post->ID, 'behance_username', true ) . '" placeholder="username" /></p>';
     
     wp_nonce_field( 'add_github_network', 'github_network_nonce' );
 
-    echo '<p><span class="fa fa-github-square"></span> <strong>GitHub</strong><br>https://github.com/<input class="edit-post-social-input" type="text" name="github_username" value="' . get_post_meta( $post->ID, 'github_username', true ) . '" placeholder="username" /></p>';
+    echo '<p><i class="bi bi-github"></i> <strong>GitHub</strong><br>https://github.com/<input class="edit-post-social-input" type="text" name="github_username" value="' . get_post_meta( $post->ID, 'github_username', true ) . '" placeholder="username" /></p>';
     
 }
 
