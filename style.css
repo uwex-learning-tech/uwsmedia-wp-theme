@@ -875,6 +875,14 @@ main .page-featured-image img {
     margin-bottom: 0;
 }
 
+.single.single-uws-team-members .job-title a {
+    color: rgba(33, 37, 41, 0.75);
+}
+
+.single.single-uws-team-members .job-title a:hover {
+    color: #0366d6;
+}
+
 .single.single-uws-team-members .interests .badge {
     font-size: 100%;
     font-weight: normal;
@@ -887,12 +895,12 @@ main .page-featured-image img {
 }
 
 .single.single-uws-team-members .social-networks .icon {
-    margin-right: 8px;
+    margin-right: 16px;
 }
 
 .single.single-uws-team-members .social-networks a {
     display: block;
-    font-size: 34px;
+    font-size: 28px;
     color: inherit;
 }
 
@@ -1241,6 +1249,12 @@ main .page-featured-image img {
 .page-template-page-members #member-archive .member .member-title {
     font-size: 14px;
 }
+.page-template-page-members #member-archive .member .member-title a {
+    color: rgba(33, 37, 41, 0.75);
+}
+.page-template-page-members #member-archive .member .member-title a:hover {
+    color: #0366d6;
+}
 .page-template-page-members #member-archive .member a {
     text-decoration: none;
 }
@@ -1255,6 +1269,9 @@ main .page-featured-image img {
 }
 .page-template-page-members #member-archive .card .card-title {
     margin-bottom: 0;
+}
+.page-template-page-members #member-archive .member .member-excerpt {
+    flex: 2 1 auto;
 }
 .page-template-page-members #member-archive .card .no-pic,
 .single-uws-team-members .no-pic {
@@ -1283,6 +1300,7 @@ main .page-featured-image img {
 .page-template-page-members #member-archive .member .member-interests {
     font-size: 14px;
     line-height: 18px;
+    min-height: 36px;
 }
 
 

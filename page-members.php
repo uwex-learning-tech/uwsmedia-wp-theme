@@ -19,30 +19,31 @@ get_header(); ?>
                 the_title();
             
             ?></h1>
-        <div class="banner-content"><?php echo html_entity_decode( get_post_meta( get_the_ID(), 'banner_content' , true ) ); ?></div>
+        <div class="banner-content">
+            <?php echo html_entity_decode( get_post_meta( get_the_ID(), 'banner_content' , true ) ); ?></div>
     </div>
 </div>
 
 <main class="container p-4" role="main">
-    
+
     <section>
         <div class="entry-content-page">
-        <?php if ( has_post_thumbnail() ) : ?>
-        <img src="<?php the_post_thumbnail_url(); ?>" alt="" />
-        <?php endif; ?>
+            <?php if ( has_post_thumbnail() ) : ?>
+            <img src="<?php the_post_thumbnail_url(); ?>" alt="" />
+            <?php endif; ?>
             <?php the_content(); ?>
         </div>
     </section>
-    
-<?php
+
+    <?php
     endwhile;
     wp_reset_query();
 ?>
-            
+
     <section id="member-archive">
-        
+
         <div class="row d-flex">
-        <?php
+            <?php
             
             $query_args = array(
                 'post_type' => 'uws-team-members',
@@ -70,11 +71,11 @@ get_header(); ?>
                 while( $members->have_posts() ) : $members->the_post();
      
         ?>
-                
-                <div class="col-12 col-sm-12 col-md-6 col-lg-4 member">
-                    <div class="card h-100">
-                        
-                        <?php
+
+            <div class="col-12 col-sm-12 col-md-6 col-lg-4 member">
+                <div class="card h-100">
+
+                    <?php
                             
                             if ( has_post_thumbnail() ) : 
                                 
@@ -88,27 +89,31 @@ get_header(); ?>
                             else:
                             
                         ?>
-                                
-                        <div class="no-pic d-flex align-items-center justify-content-center"></div>
-                                
-                        <?php endif; ?>
-                        
-                        <div class="card-body">
-                            <h5 class="card-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h5>
-                             <p class="card-text text-muted member-title"><?php echo get_post_meta( get_the_ID(), 'job_title', true ); ?><br><?php echo get_post_meta( get_the_ID(), 'pronouns', true ); ?></p>
-                            <p class="card-text"><?php the_excerpt(); ?></p>
-                            
-                            <?php
+
+                    <div class="no-pic d-flex align-items-center justify-content-center"></div>
+
+                    <?php endif; ?>
+
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h5>
+                        <p class="card-text text-muted member-title">
+                            <?php echo get_post_meta( get_the_ID(), 'job_title', true ); ?><br>
+                            <a
+                                href="https://media.uwex.edu/content/uwex/resources/pronouns-usage-guide.pdf" target="_blank" referrerpolicy="no-referrer"><?php echo get_post_meta( get_the_ID(), 'pronouns', true ); ?></a>
+                        </p>
+                        <p class="card-text member-excerpt"><?php the_excerpt(); ?></p>
+
+                        <?php
                             
                             $interestStr = get_post_meta( get_the_ID(), 'member_interests' )[0];   
                             
                             if ( !empty( $interestStr ) ) :
                             
                             ?>
-                            
-                            <p class="card-text text-center text-muted member-interests">
-                                
-                                <?php
+
+                        <p class="card-text text-center text-muted member-interests">
+
+                            <?php
                                     
                                     $interests = array_filter( explode( ',', $interestStr ) );
                                     $count = 0;
@@ -124,16 +129,16 @@ get_header(); ?>
                                     endforeach;
                                 
                                   ?>
-                                
-                            </p>
-                            
-                            <?php endif; ?>
-                            
-                        </div>
-                        
-                        <div class="card-footer text-center social-icons">
-    			    
-            			    <?php
+
+                        </p>
+
+                        <?php endif; ?>
+
+                    </div>
+
+                    <div class="card-footer text-center social-icons">
+
+                        <?php
                 			    
                             $linkedIn = get_post_meta( get_the_ID(), 'linkedin_username', true );
                             
@@ -173,33 +178,33 @@ get_header(); ?>
 
                             ?>
 
-                        </div>
-
                     </div>
+
                 </div>
-  
-        <?php
+            </div>
+
+            <?php
                 
                 endwhile;
                 
             wp_reset_postdata();
             
         ?>
-        
+
         </div>
-        
+
         <?php else: ?>
-        
+
         <div class="alert alert-light col-12" role="alert">
             <h2 class="text-center">😱<br>No Members To Show</h2>
             <hr>
             <p class="text-center">Members will show up here after members are added.</p>
         </div>
-        
+
         <?php endif; ?>
 
     </section>
 
 </main>
 
- <?php get_footer(); ?>
+<?php get_footer(); ?>

@@ -78,10 +78,9 @@
                         <h1><?php the_title(); ?></h1>
                         <!-- /post title -->
                         
-                        <p class="job-title"><?php echo get_post_meta( get_the_ID(), 'job_title', true ); ?><br><?php echo get_post_meta( get_the_ID(), 'pronouns', true ); ?></p>
+                        <p class="job-title text-muted"><?php echo get_post_meta( get_the_ID(), 'job_title', true ); ?><br><a href="https://media.uwex.edu/content/uwex/resources/pronouns-usage-guide.pdf" target="_blank" referrerpolicy="no-referrer"><?php echo get_post_meta( get_the_ID(), 'pronouns', true ); ?></a></p>
                         
                         <?php the_content(); // Dynamic Content ?>
-                        
                         
                         <?php 
                             
@@ -90,7 +89,7 @@
                             if ( !empty( $interestStr ) ) :
                         ?>
                         
-                        <h2>Interests</h2>
+                        <h2 class="fs-3 mb-0"><strong>Interests</strong></h2>
                         <p class="interests">
                             
                             <?php 
@@ -99,7 +98,7 @@
                                 
                                 foreach( $interests as $interest ) : ?>
                                     
-                                <span class="badge rounded-pill bg-light text-dark"><?php echo ucwords( trim( $interest ) ); ?></span>
+                                <span class="badge rounded-pill text-bg-light"><?php echo ucwords( trim( $interest ) ); ?></span>
                                     
                                 <?php endforeach; ?>
                             
