@@ -634,7 +634,7 @@ main .page-featured-image img {
 .single.single-uws-flex-projects h1,
 .single.single-marketing-projects h1 {
     padding: 0;
-    margin: 16px 0 4px;
+    margin-top: 16px;
     font-size: 40px;
     line-height: 48px;
 }
@@ -697,7 +697,7 @@ main .page-featured-image img {
     color: #444;
 }
 
-.single.single-uws-projects p.classification,
+/* .single.single-uws-projects p.classification,
 .single.single-uws-flex-projects p.classification,
 .single.single-marketing-projects p.classification {
     margin-bottom: 40px;
@@ -717,9 +717,9 @@ main .page-featured-image img {
 .single.single-marketing-projects .instructor {
     font-style: italic;
     font-size: 14px;
-}
+} */
 
-.single.single-uws-projects .members a,
+/* .single.single-uws-projects .members a,
 .single.single-uws-flex-projects .members a,
 .single.single-marketing-projects .members a {
     color: #444;
@@ -730,7 +730,7 @@ main .page-featured-image img {
 .single.single-uws-flex-projects .members a:hover,
 .single.single-marketing-projects .members a:hover {
     text-decoration: none;
-}
+} */
 
 .single.single-uws-projects .post-edit-link,
 .single.single-uws-flex-projects .post-edit-link,
@@ -739,7 +739,7 @@ main .page-featured-image img {
     line-height: 1;
 }
 
-.single.single-uws-projects .tag-pills,
+/* .single.single-uws-projects .tag-pills,
 .single.single-uws-flex-projects .tag-pills,
 .single.single-marketing-projects .tag-pills {
     list-style: none;
@@ -760,7 +760,7 @@ main .page-featured-image img {
     background-color: #f2f2f2;
     text-align: center;
     margin-right: 8px;
-}
+} */
 
 .single.single-uws-projects .shareHeading,
 .single.single-uws-flex-projects .shareHeading,
@@ -838,18 +838,27 @@ main .page-featured-image img {
 .single.single-uws-projects .top-embed img,
 .single.single-uws-flex-projects .top-embed img,
 .single.single-marketing-projects .top-embed img {
+    margin: 0 auto;
     width: 100%;
+}
+
+.single.single-uws-projects .top-embed div:first-child iframe,
+.single.single-uws-flex-projects .top-embed div:first-child iframe,
+.single.single-marketing-projects .top-embed div:first-child iframe {
+    margin: 0 auto;
 }
 
 .single.single-uws-projects .embed-responsive-sb,
 .single.single-uws-flex-projects .embed-responsive-sb,
 .single.single-marketing-projects .embed-responsive-sb {
+    margin: 0 auto;
     max-width: 900px;
 }
 
 .single.single-uws-projects .project-content,
 .single.single-uws-flex-projects .project-content,
 .single.single-marketing-projects .project-content {
+    margin: 0 auto;
     max-width: 924px;
 }
 

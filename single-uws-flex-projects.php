@@ -36,7 +36,7 @@
 
 <div class="top-embed">
 
-    <div class="d-flex align-items-center justify-content-center">
+    <div class="container">
 
         <?php
                 
@@ -66,13 +66,12 @@
         <!-- share -->
         <div class="sharings" role="group" aria-label="Share">
 
-            <a id="copy-share-link" class="btn btn-link" href="javascript:void(0);" title="Copy Link"><span
-                    class="fa fa-link" aria-hidden="true" aria-hidden="true"></span><input id="hiddenShareLink"
-                    type="text" value="<?php the_permalink(); ?>" /></a>
+            <a id="copy-share-link" class="btn btn-link" title="Copy Link"><i class="bi bi-link-45deg" aria-hidden="true"></i><input id="hiddenShareLink" type="text"
+                    value="<?php the_permalink(); ?>" /></a>
 
-            <a id="shareOnLinkedIn" class="btn btn-link" href="javascript:void(0);"
+            <a id="shareOnLinkedIn" class="btn btn-link"
                 data-ref="http://www.linkedin.com/shareArticle?mini=true&amp;title=<?php echo urlencode(get_the_title()); ?>&amp;summary=<?php echo urlencode(get_the_excerpt()); ?>&amp;url=<?php the_permalink(); ?>&amp;source=<?php echo urlencode( get_blogInfo( 'name' ) ); ?>"
-                title="Share on LinkedIn"><span class="fa fa-linkedin-square" aria-hidden="true"></span></a>
+                title="Share on LinkedIn"><i class="bi bi-linkedin" aria-hidden="true"></i></a>
 
             <div class="share msg"></div>
 
@@ -83,7 +82,7 @@
         <h1><?php the_title(); ?></h1>
         <!-- /post title -->
 
-        <p class="classification"><strong><?php 
+        <p class="classification mb-0"><strong><?php 
 
         $class_terms = get_the_terms( $post->ID, 'flex_classifications' );
 
@@ -96,10 +95,6 @@
 
         ?></strong></p>
 
-        <!-- post content -->
-        <?php the_content(); // Dynamic Content ?>
-        <!-- /post content -->
-
         <!-- instructor -->
         <?php
             
@@ -107,7 +102,7 @@
             
             if ( !empty( $instructorStr ) ) {
                 
-                echo '<p class="instructor"><strong>Instructor:</strong> ';
+                echo '<p class="instructor mb-0"><strong>Instructor:</strong> ';
                 
                 $instructors = explode( ',', $instructorStr );
                 $count = 0;
@@ -139,10 +134,12 @@
             $memberStr = get_post_meta( $post->ID, 'project_authors', true );
             
             if ( !empty( $memberStr ) ) {
-                
-                echo '<p class="members"><strong>Team Member(s):</strong> ';
             
                 $memberIds = explode( ',', $memberStr );
+
+                $plural = count($memberIds) > 1 ? 's' : '';
+                echo '<p class="members"><strong>Team Member' . $plural .':</strong> ';
+
                 $count = 0;
                 
                 foreach( $memberIds as $id ) {
@@ -167,7 +164,7 @@
         <!-- /members -->
 
         <!-- tags -->
-        <ul class="tag-pills">
+        <div class="tag-pills mb-3">
             <?php 
 
         $tag_terms = null;
@@ -175,9 +172,9 @@
         
         if ( is_array( $use_case_terms ) ) {
             
-            $tag_before = '<li>';
+            $tag_before = '<span class="badge text-bg-secondary">';
             $tag_separator = '';
-            $tag_after = '</li>';
+            $tag_after = '</span> ';
             
             $tag_counter = count( $use_case_terms );
             
@@ -199,8 +196,12 @@
         } 
 
         ?>
-        </ul>
+        </div>
         <!-- /tags -->
+
+        <!-- post content -->
+        <?php the_content(); // Dynamic Content ?>
+        <!-- /post content -->
 
         <?php edit_post_link( __( 'Edit Project', 'uwsmedia' ), '<p>', '</p>', $postID ); ?>
 
