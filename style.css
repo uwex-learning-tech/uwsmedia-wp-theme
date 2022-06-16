@@ -1119,6 +1119,49 @@ main .page-featured-image img {
 }
 
 /* sublanding page */
+.page-template-page-sublanding-gallery .gallery .current-gallery-item {
+    height: 430px;
+    border-radius: 25px;
+    overflow: hidden;
+}
+
+.page-template-page-sublanding-gallery .gallery .gallery-item {
+    border-radius: 25px;
+    height: 160px;
+    overflow: hidden;
+}
+
+.page-template-page-sublanding-gallery .gallery .current-gallery-item img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.page-template-page-sublanding-gallery .gallery .gallery-item img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    filter: grayscale(1);
+    cursor: pointer;
+    transition: 750ms filter ease-in;
+}
+
+.page-template-page-sublanding-gallery .gallery .gallery-item.active {
+    border: 5px solid #1466DE;
+    box-sizing: border-box;
+}
+
+.page-template-page-sublanding-gallery .gallery .gallery-item img:hover {
+    filter: grayscale(0);
+}
+
+.page-template-page-sublanding-gallery .gallery .gallery-item.active img {
+    filter: grayscale(0);
+}
 
 .page-template-page-sublanding-themed-simple .header-banner.simple-themed {
     background: linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(255,255,255,0) 100%), url("img/banner_bg.png");
@@ -1142,7 +1185,8 @@ main .page-featured-image img {
 .page-template-page-members .header-banner,
 .page-template-page-sublanding .header-banner,
 .page-template-page-sublanding-themed-simple .header-banner,
-.page-template-page-sublanding-themed-alt .header-banner {
+.page-template-page-sublanding-themed-alt .header-banner,
+.page-template-page-sublanding-gallery .header-banner {
     padding: 20px;
     background-color: #D9D9D9;
 }
@@ -1150,7 +1194,8 @@ main .page-featured-image img {
 .page-template-page-members .header-banner h1.banner-title,
 .page-template-page-sublanding .header-banner h1.banner-title,
 .page-template-page-sublanding-themed-simple .header-banner h1.banner-title,
-.page-template-page-sublanding-themed-alt .header-banner h1.banner-title {
+.page-template-page-sublanding-themed-alt .header-banner h1.banner-title,
+.page-template-page-sublanding-gallery .header-banner h1.banner-title {
     text-align: center;
     font-weight: 400;
     font-size: 48px;
@@ -1167,7 +1212,8 @@ main .page-featured-image img {
 .page-template-page-members .header-banner .banner-content,
 .page-template-page-sublanding .header-banner .banner-content,
 .page-template-page-sublanding-themed-simple .header-banner .banner-content,
-.page-template-page-sublanding-themed-alt .header-banner .banner-content {
+.page-template-page-sublanding-themed-alt .header-banner .banner-content,
+.page-template-page-sublanding-gallery .header-banner .banner-content {
     text-align: center;
     font-size: 25px;
     line-height: 31px;

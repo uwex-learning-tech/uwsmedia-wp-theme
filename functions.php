@@ -613,6 +613,7 @@ add_action( 'save_post', 'save_homepage_meta', 10, 2 );
 // add sub landing meta box to page with sub landing page template
 add_action( 'add_meta_boxes', 'add_sublanding_header_metabox' );
 add_action( 'add_meta_boxes', 'add_sublanding_ctas_metabox' );
+add_action( 'add_meta_boxes', 'add_sublanding_gallery_metabox' );
  
 // save sublanding metadata on page save post
 add_action( 'save_post', 'save_sublanding_meta', 10, 2 );
@@ -2144,7 +2145,8 @@ function add_sublanding_header_metabox() {
     if ( 'page-members.php' == $currentTemplate 
     || 'page-sublanding.php' == $currentTemplate
     || 'page-sublanding-themed-simple.php' == $currentTemplate
-    || 'page-sublanding-themed-alt.php' == $currentTemplate ) {
+    || 'page-sublanding-themed-alt.php' == $currentTemplate
+    || 'page-sublanding-gallery.php' == $currentTemplate ) {
         
        add_meta_box( 'sublanding-header', 'Head Banner', 'sublanding_header_meta_box', 'page', 'normal', 'high' );
        
@@ -2184,6 +2186,29 @@ function sublanding_cta_meta_box( $post ) {
     
 }
 
+function add_sublanding_gallery_metabox() {
+
+    global $post;
+
+    $currentTemplate = get_post_meta( $post->ID, '_wp_page_template', true );
+    
+    if ( 'page-sublanding-gallery.php' == $currentTemplate ) {
+        
+       add_meta_box( 'sublanding-gallery', 'Gallery', 'sublanding_gallery_meta_box', 'page', 'normal', 'high' );
+       
+    }
+
+}
+
+function sublanding_gallery_meta_box( $post ) {
+
+    wp_nonce_field( 'add_gallery_content', 'gallery_content_nonce' );
+    echo '<p>Enter the gallery image URLs delaminated by a comma. <strong>No more than six images will be displayed.</strong> If more than six image URLs are entered, only the last six images will be displayed.</p>';
+
+    wp_editor( get_post_meta( $post->ID, 'gallery_content', true ), 'metaboxeditor', array( 'textarea_name' => 'gallery_content', 'media_buttons' => false, 'quicktags' => false, 'textarea_rows' => 10, 'tinymce' => false  ) );
+    
+}
+
 function save_sublanding_meta( $post_id, $post ) {
     
     /* Get the post type object. */
@@ -2203,6 +2228,12 @@ function save_sublanding_meta( $post_id, $post ) {
     if ( wp_verify_nonce( $_POST['cta_banner_content_nonce'], 'add_cta_banner_content' ) && isset( $_POST['cta_banner_content'] ) ) {
         
         update_post_meta( $post_id, 'cta_banner_content', $_POST['cta_banner_content'] );
+        
+    }
+
+    if ( wp_verify_nonce( $_POST['gallery_content_nonce'], 'add_gallery_content' ) && isset( $_POST['gallery_content'] ) ) {
+        
+        update_post_meta( $post_id, 'gallery_content', $_POST['gallery_content'] );
         
     }
     

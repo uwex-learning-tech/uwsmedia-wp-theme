@@ -310,6 +310,26 @@
         	}
 
 		}
+
+		/***********************************************************************
+		 GALLERY
+		***********************************************************************/
+		if ( jQuery( 'body' ).hasClass( 'page-template-page-sublanding-gallery' ) ) {
+
+			var currentGalleryItem = jQuery( '.gallery .current-gallery-item' );
+			var galleryItems = jQuery( '.gallery .gallery-item' );
+
+			if ( galleryItems.length >= 2 ) {
+
+				galleryItems.on( 'click' , function( evt ) {
+					galleryItems.removeClass( "active" );
+					jQuery(evt.currentTarget).addClass( "active" );
+					jQuery(currentGalleryItem).find( "img" )[0].src = jQuery(evt.currentTarget).find( "img" )[0].src;
+				} );
+
+			}
+
+		}
 		
 		/***********************************************************************
 		 AUTOCOMPLETE SEARCH

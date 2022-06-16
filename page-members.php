@@ -24,7 +24,7 @@ get_header(); ?>
     </div>
 </div>
 
-<main class="container p-4" role="main">
+<main class="container pt-4" role="main">
 
     <section>
         <div class="entry-content-page">

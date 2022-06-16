@@ -27,7 +27,7 @@ get_header(); ?>
 
 </div>
 
-<main class="container p-4" role="main">
+<main class="container pt-4 pb-2" role="main">
 
     <section>
 
