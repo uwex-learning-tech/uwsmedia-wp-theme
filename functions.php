@@ -910,6 +910,7 @@ function add_groups_metabox() {
     array_push( $post_types, 'page' );
     unset( $post_types['uws-team-members'] );
     unset( $post_types['uws-groups'] );
+    unset( $post_types['testimonial'] );
     
     foreach( $post_types as $type ) {
     

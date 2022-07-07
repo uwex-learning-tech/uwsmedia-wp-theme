@@ -1986,3 +1986,73 @@ pre, pre code {
 .display-posts-listing .listing-item .excerpt {
     display: block;
 }
+
+/* TESTIMIONIAL CUSTOM CSS */
+.testimonials {
+    width: 75%;
+    margin: 2em auto;
+}
+
+.testimonials .tss-wrapper .tss-even .tss-grid-item {
+    margin-bottom: 0;
+}
+
+.testimonials .single-item-wrapper {
+    justify-content: center;
+    align-items: center;
+}
+
+.testimonials img.rt-responsive-img.rt-dummy-img {
+    width: 120px;
+}
+
+.testimonials .single-item-wrapper .tss-meta-info.tss-left {
+    flex: unset;
+    margin-right: 1em;
+}
+
+.testimonials .single-item-wrapper .item-content-wrapper {
+    position: unset;
+    background-color: transparent;
+    padding: 0;
+    flex: unset;
+}
+
+.testimonials .single-item-wrapper .item-content-wrapper:before,
+.testimonials .single-item-wrapper .item-content-wrapper:after {
+    display: none;
+}
+
+.testimonials .tss-carousel .swiper-pagination-bullet:hover, .tss-carousel .swiper-pagination-bullet-active {
+    background: #525252;
+}
+
+.testimonials .tss-carousel .swiper-pagination-bullet {
+    background: #525252;
+}
+
+.testimonials .tss-carousel.swiper {
+    display: flex;
+    align-items: center;
+}
+
+.testimonials .tss-carousel .swiper-arrow {
+    background-color: transparent;
+}
+
+.testimonials .tss-carousel .swiper-arrow > i {
+    color: #525252;
+    font-size: 24px;
+}
+
+.testimonials .tss-carousel .swiper-button-prev {
+    left: 0;
+}
+
+.testimonials .tss-carousel .swiper-button-next {
+    right: 0;
+}
+
+.testimonials .swiper-button-next, .testimonials .swiper-button-prev {
+    top: unset;
+}
