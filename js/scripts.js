@@ -334,10 +334,11 @@
 		/***********************************************************************
 		 AUTOCOMPLETE SEARCH
 		***********************************************************************/
-		if ( jQuery( 'body' ).hasClass( 'page-template-page-sublanding-themed-simple' ) ) {
+		if ( jQuery( 'body' ).hasClass( 'page-template-page-sublanding-themed-simple' ) ||
+		jQuery( 'body' ).hasClass( 'page-template-page-sublanding-themed-alt' ) ) {
     		
-            var postId = jQuery( 'input[name=postGroupId]' ).val();
-			var blogurl = jQuery( 'input[name=bloginfo]' ).val();
+            let postGroupId = jQuery( 'input[name=postGroupId]' ).val();
+			let blogurl = jQuery( 'input[name=bloginfo]' ).val();
 			
             new autoComplete( {
 
@@ -351,9 +352,15 @@
 							return [];
 						}
 
-						const source = await fetch( blogurl + '/wp-json/wp/v2/pages?search=' + query + '&post_group_id=' + postId  );
+						const source = await fetch( blogurl + '/wp-json/uwsmedia/v2/autocomplete?search=' + query + '&post_group_id=' + postGroupId  );
 						const data = await source.json();
-						const filteredData = await filterResults( data );
+
+						const shared_source = await fetch( blogurl + '/wp-json/uwsmedia/v2/autocomplete?search=' + query + '&post_group_id=13284'  );
+						const shared_data = await shared_source.json();
+
+						const combined_data = data['data'].concat(shared_data['data']);
+
+						const filteredData = await filterResults( combined_data );
 						return filteredData;
 
 					},
@@ -362,7 +369,8 @@
 
 				},
 				placeholder: 'Search',
-				threshold: 3,
+				debounce: 500,
+				threshold: 5,
 				maxResults: 25,
 				highlight: true,
 				resultsList: {
@@ -393,7 +401,7 @@
 			let filterData = [];
 
 			obj.forEach( element => {
-				filterData.push( {'title': element.title.rendered, 'link': element.link } );
+				filterData.push( {'title': element.title, 'link': element.link } );
 			});
 
 			resolve( filterData );

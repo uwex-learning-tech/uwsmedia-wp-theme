@@ -64,7 +64,11 @@
                             alt="<?php the_title(); ?>">
                         <div class="carousel-caption">
                             <h3 class="title"><?php the_title(); ?></h3>
-                            <p class="excerpt"><?php uwsmediawp_excerpt('uwsmediawp_index'); ?></p>
+
+                            <?php if ( !empty( get_the_content() ) ) { ?>
+                                <p class="excerpt"><?php uwsmediawp_excerpt('uwsmediawp_index'); ?></p>
+                            <?php } ?>
+                            
                             <a href="<?php the_permalink(); ?>" class="btn btn-primary">VIEW</a>
                         </div>
                     </div>

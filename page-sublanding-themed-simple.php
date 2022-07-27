@@ -30,7 +30,7 @@
                     <div class="input-group">
                         <input type="text" name="s" id="autoComplete" class="form-control autocomplete-search" placeholder="What can we help with?" autocomplete="off">
                         <button type="submit" class="search-btn">
-                            <span class="fa fa-search" aria-hidden="true"></span>
+                            <i class="bi bi-search" aria-hidden="true"></i>
                             <span class="screen-reader-text">What can we help with?</span>
                         </button>
                     </div>

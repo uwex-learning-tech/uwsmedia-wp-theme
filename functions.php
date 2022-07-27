@@ -888,7 +888,7 @@ function set_group_color_attribute() {
     $groupId = get_post_meta( $post->ID, 'post_group_id', true );
     $color = get_post_meta( $groupId, "group_color", true );
 
-    if ( ( is_page() || is_single() ) && isset( $color ) ) { ?>
+    if ( ( is_page() || is_single() ) && isset( $color ) && !is_front_page() ) { ?>
     <script>
         const breadcrumbNav = document.querySelector( ".breadcrumb-nav" );
         breadcrumbNav.style.backgroundColor = "<?php echo $color ?>";
@@ -2276,8 +2276,8 @@ function custom_search_query( $query ) {
 
 function rest_search_query() {
     
-    register_rest_route( 'uwsmedia/v2', '/autocomplete/', array(
-        'methods' => 'POST',
+    register_rest_route( 'uwsmedia/v2', '/' . 'autocomplete' . '/', array(
+        'methods' => 'GET',
         'callback' => 'autocomplete_query'
     ) );
     
@@ -2857,28 +2857,23 @@ function marketing_showcase_projects_query() {
 \*------------------------------------*/
 
 function autocomplete_query() {
-    
+
     $args = array(
         
         'post_type' => 'page',
         'post_status' => 'publish',
         'nopaging' => true,
         'posts_per_page' => 50,
-        's' => '',
+        's' => stripslashes( $_GET['search'] ),
         'meta_query' => array(
-            'relation' => 'AND',
             array(
                 'key' => 'post_group_id',
-                'value' => get_post_meta( $_POST['post_id'], 'post_group_id', true ),
-                'compare' => '='
+                'value' => $_GET['post_group_id'],
+                'compare' => 'LIKE'
             )
         )
         
     );
-    
-    if ( isset( $_POST['keyword']  ) ) {
-        $args['s'] = stripslashes( $_POST['keyword'] );
-    }
     
     ob_start();
     
@@ -2899,10 +2894,11 @@ function autocomplete_query() {
         }
 
     }
-    
+
     wp_send_json_success( $data );
     wp_reset_postdata();
     ob_get_clean();
+
     die();
     
 }
@@ -3140,12 +3136,6 @@ function breadcrumb_nav() {
     $breadcrums_class   = 'breadcrumbs';
     $home_title         = 'Home';
     
-    // Livestream post type
-    if ( defined( 'Tribe__Events__Main' ) ) {
-        $livestreamPostType = 'tribe_events';
-        $livestreamOptions = get_option(Tribe__Events__Main::OPTIONNAME, array());
-    }
-    
     // Podcast post type
     $podcastPostType = 'podcast';
 
@@ -3166,14 +3156,6 @@ function breadcrumb_nav() {
         echo '<li class="separator separator-home"> ' . $separator . ' </li>';
            
         if ( is_archive() && !is_tax() && !is_category() && !is_tag() ) {
-            
-            if ( $post->post_type == $livestreamPostType ) {
-                
-                echo '<li class="item-current item-archive">' . ucfirst($livestreamOptions['eventsSlug']) .'</li>';
-                
-            } else {
-                echo '<li class="item-current item-archive">' . post_type_archive_title($prefix, false) . '</li>';
-            }
               
         } else if ( is_archive() && is_tax() && is_search() && !is_category() && !is_tag() ) {
               
@@ -3196,9 +3178,9 @@ function breadcrumb_nav() {
                 
                 echo '<li class="item-current"><a class="bread-parent" href="' . get_site_url() . '/faculty-resources' . '" title="Faculty">Faculty</a></li>';
                 echo '<li class="separator">' . $separator . ' </li>';
-                echo '<li class="item-current"><a class="bread-parent" href="' . get_site_url() . '/faculty-resources/competency' . '" title="Competency-Based">Competency-Based</a></li>';
+                echo '<li class="item-current"><a class="bread-parent" href="' . get_site_url() . '/faculty-resources/competency-based' . '" title="Competency-Based">Competency-Based</a></li>';
                 echo '<li class="separator">' . $separator . ' </li>';
-                echo '<li class="item-current"><a class="bread-parent" href="' . get_site_url() . '/faculty-resources/competency-based-degree-faculty-resources/competency-based-media-showcase' . '" title="Competency-Based Media Showcase">Competency-Based Media Showcase</a></li>';
+                echo '<li class="item-current"><a class="bread-parent" href="' . get_site_url() . '/faculty-resources/competency-based/competency-based-media-showcase' . '" title="Competency-Based Media Showcase">Competency-Based Media Showcase</a></li>';
                 echo '<li class="separator">' . $separator . ' </li>';
                 
             }
@@ -3216,14 +3198,6 @@ function breadcrumb_nav() {
                 
                 echo '<li class="item-current"><a class="bread-parent bread-parent-team" href="'.get_site_url().'/team/" title="The Team">The Team</a></li>';
                  echo '<li class="separator"> ' . $separator . ' </li>';
-                
-            }
-            
-            if ( $post->post_type == $livestreamPostType ) {
-                
-                $lsTitle = ucfirst($livestreamOptions['eventsSlug']);
-                echo '<li class="item-current"><a class="bread-parent bread-parent-about" href="' . get_post_type_archive_link($post->post_type) . '" title="'.$lsTitle.'">' . $lsTitle .'</a></li>';
-                echo '<li class="separator"> ' . $separator . ' </li>';
                 
             }
             
