@@ -51,6 +51,19 @@
                             $facultyProjects->the_post();
                     ?>
                         <div class="col-12 col-sm-12 col-md-6 col-lg-4 project">
+                            <?php
+
+                            $now = new DateTime("NOW");
+                            $postCreationDate = new DateTime(get_the_date( 'Y-m-d' ));
+                            $numOfDays = $postCreationDate->diff($now)->format("%a");
+
+                            if ( $numOfDays <= 30 ) {?>
+
+                                <small
+                                    class="post-date-status d-inline-block px-2 py-1 fw-semibold fs-6 lh-1 text-white bg-success bg-opacity-75 border border-success border-opacity-75 rounded-2">New</small>
+
+                            <?php } ?>
+
                             <a href="<?php the_permalink(); ?>">
                                 
                                 <div class="project-bg">

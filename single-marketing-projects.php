@@ -58,7 +58,7 @@
 
 <?php endif; ?>
 
-<main role="main" class="container project-content pb-3">
+<main role="main" class="container project-content pt-4 pb-3">
 
     <!-- article -->
     <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
@@ -79,8 +79,20 @@
         </div>
         <!-- /share -->
 
+        <?php
+
+            $now = new DateTime("NOW");
+            $postCreationDate = new DateTime(get_the_date( 'Y-m-d' ));
+            $numOfDays = $postCreationDate->diff($now)->format("%a");
+            
+            if ( $numOfDays <= 30 ) {?>
+
+            <small class="d-inline-block mt-3 px-2 py-1 fw-semibold fs-6 lh-1 text-success bg-success bg-opacity-10 border border-success border-opacity-10 rounded-2">New</small>
+
+        <?php } ?>
+
         <!-- post title -->
-        <h1><?php the_title(); ?></h1>
+        <h1 class="mt-0"><?php the_title(); ?></h1>
         <!-- /post title -->
 
         <p class="classification mb-0"><strong><?php 

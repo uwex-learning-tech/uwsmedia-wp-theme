@@ -9,21 +9,21 @@
  */
  
  get_header(); ?>
- 
-    <div class="container">
-    
-        <div class="row">
-        
-            <main class="col-12 col-sm-12 col-md-9" role="main">
-                
-                <section>
-                
-                    <h1><?php the_title(); ?></h1>
-                    
-                    <div id="projects-archive">
-                    
+
+<div class="container">
+
+    <div class="row">
+
+        <main class="col-12 col-sm-12 col-md-9" role="main">
+
+            <section>
+
+                <h1><?php the_title(); ?></h1>
+
+                <div id="projects-archive">
+
                     <div class="row d-flex flex-row">
-                    <?php
+                        <?php
                         
                         $group = get_post_meta( $post->ID, 'post_group_id', true );
 
@@ -51,14 +51,26 @@
                             $facultyProjects->the_post();
                     ?>
                         <div class="col-12 col-sm-12 col-md-6 col-lg-4 project">
+                            <?php
+
+                            $now = new DateTime("NOW");
+                            $postCreationDate = new DateTime(get_the_date( 'Y-m-d' ));
+                            $numOfDays = $postCreationDate->diff($now)->format("%a");
+
+                            if ( $numOfDays <= 30 ) {?>
+
+                                <small
+                                    class="post-date-status d-inline-block px-2 py-1 fw-semibold fs-6 lh-1 text-white bg-success bg-opacity-75 border border-success border-opacity-75 rounded-2">New</small>
+
+                            <?php } ?>
                             <a href="<?php the_permalink(); ?>">
-                                
+
                                 <div class="project-bg">
-                                <?php the_post_thumbnail(); ?>
+                                    <?php the_post_thumbnail(); ?>
                                 </div>
-                                
+
                                 <div class="project-info">
-                                <p class="categories"><?php 
+                                    <p class="categories"><?php 
 
                                 $classification_terms = get_the_terms( $post->ID, 'flex_classifications' );
             
@@ -69,7 +81,7 @@
                                 }
                                 
                             ?></p>
-                                <h2 class="d-flex align-items-center justify-content-center"><?php 
+                                    <h2 class="d-flex align-items-center justify-content-center"><?php 
             
             $title = get_the_title();
                         
@@ -85,8 +97,8 @@
             echo $title;
         
          ?></h2>
-                                
-                                <p class="categories"><?php 
+
+                                    <p class="categories"><?php 
 
                                 $media_type_terms = get_the_terms( $post->ID, 'flex_media_types' );
             
@@ -98,17 +110,17 @@
                                 
                             ?></p>
                                 </div>
-                                
+
                             </a>
                         </div>
-                            
-                    <?php
+
+                        <?php
                         }
                         ?>
-                        
-                        </div> <!-- end grids -->
 
-                        <div class="projects-pagnigation">
+                    </div> <!-- end grids -->
+
+                    <div class="projects-pagnigation">
                         <?php
                             
                             $total_pages = $facultyProjects->max_num_pages;
@@ -125,61 +137,63 @@
                                 'type' => 'list'
                             ) );
                         ?>
-                        </div>
-                        
-                        </div>
+                    </div>
 
-                        <?php
+                </div>
+
+                <?php
                             
                         wp_reset_postdata();
 
                         } else {
                             
                           ?>
-                          
-                          <div class="col-12">
+
+                <div class="col-12">
 
                     <div class="alert alert-light" role="alert">
                         <h2 class="text-center">💔<br>No Projects To Show</h2>
                         <hr>
                         <p class="text-center">Projects will show up here after projects are added.</p>
                     </div>
-                              
-                          </div>
-                          
-                          <?php
+
+                </div>
+
+                <?php
                           
                         }
                         
                     ?>
-                            
-                    
-                    
-                </section>
-            
-            </main>
-            
-            <!-- sidebar -->
-            <aside class="sidebar col-12 col-sm-12 col-md-3" role="complementary">
-                
-                <!-- search -->
-                <div class="search" role="search">
-                        <input type="hidden" name="postId" value="<?php echo $post->ID; ?>" />
-                        <input type="hidden" name="bloginfo" value="<?php echo get_bloginfo( 'url' ); ?>" />
-                        <input id="ajaxSearchInput" class="ajaxSearchInput form-control" placeholder="Search <?php echo get_the_title(); ?>" type="text">
-                        
-                        <button id="ajaxSearchBtn" class="btn"><span class="fa fa-search" aria-hidden="true"></span><span class="screen-reader-text">Search</span></button>
 
-                </div>
-                
-                <div class="sidebarFilter">
-                    <div class="filter">
-                        <h3>Filter</h3>			
-                        <div class="filter-form">
-                            
-                            <h4>Classifications</h4>
-                            
-                            <?php
+
+
+            </section>
+
+        </main>
+
+        <!-- sidebar -->
+        <aside class="sidebar col-12 col-sm-12 col-md-3" role="complementary">
+
+            <!-- search -->
+            <div class="search" role="search">
+                <input type="hidden" name="postId" value="<?php echo $post->ID; ?>" />
+                <input type="hidden" name="bloginfo" value="<?php echo get_bloginfo( 'url' ); ?>" />
+                <input id="ajaxSearchInput" class="ajaxSearchInput form-control"
+                    placeholder="Search <?php echo get_the_title(); ?>" type="text">
+
+                <button id="ajaxSearchBtn" class="btn"><span class="fa fa-search" aria-hidden="true"></span><span
+                        class="screen-reader-text">Search</span></button>
+
+            </div>
+
+            <div class="sidebarFilter">
+                <div class="filter">
+                    <h3>Filter</h3>
+                    <div class="filter-form">
+
+                        <h4>Classifications</h4>
+
+                        <?php
                                        
                                $classifications = get_terms(array( 'taxonomy' => 'flex_classifications', 'hide_empty' => false ));
                                
@@ -190,9 +204,9 @@
                                }
                                
                             ?>
-                            
-                            <h4>Media Types</h4>
-                            <?php
+
+                        <h4>Media Types</h4>
+                        <?php
                                        
                                $mediaTypes = get_terms(array( 'taxonomy' => 'flex_media_types', 'hide_empty' => false ));
                                
@@ -203,16 +217,16 @@
                                }
                                
                             ?>
-                            
-                        </div>
+
                     </div>
                 </div>
-            
-            </aside>
-            <!-- /sidebar -->
-        
-        </div>
-    
+            </div>
+
+        </aside>
+        <!-- /sidebar -->
+
     </div>
 
- <?php get_footer(); ?>
+</div>
+
+<?php get_footer(); ?>
