@@ -94,6 +94,19 @@
         <h1 class="mt-0"><?php the_title(); ?></h1>
         <!-- /post title -->
 
+        <p class="degree mb-0"><strong><?php 
+
+        $degree_terms = get_the_terms( $post->ID, 'flex_degrees' );
+
+        if ( is_array( $degree_terms )
+        && count( $degree_terms ) >= 1 ) {
+            
+            echo $degree_terms[0]->name;
+            
+        }
+
+        ?></strong></p>
+
         <p class="classification mb-0"><strong><?php 
 
         $class_terms = get_the_terms( $post->ID, 'flex_classifications' );

@@ -191,6 +191,19 @@
                     <h3>Filter</h3>
                     <div class="filter-form">
 
+                    <h4>Degrees</h4>
+                        <?php
+                                       
+                               $degrees = get_terms(array( 'taxonomy' => 'flex_degrees', 'hide_empty' => false ));
+                               
+                               foreach( $degrees as $degree ) {
+                                   
+                                   echo '<div class="form-check"><input type="checkbox" class="form-check-input degree-cb" id="degree_' .$degree->slug . '" value="' . $degree->slug . '"><label class="form-check-label" for="degree_' . $degree->slug . '">' . $degree->name . '</label></div>';
+                                   
+                               }
+                               
+                            ?>
+                            
                         <h4>Classifications</h4>
 
                         <?php

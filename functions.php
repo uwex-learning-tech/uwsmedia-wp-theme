@@ -584,6 +584,7 @@ add_action( 'init', 'create_collab_projects_post' );
 add_action( 'init', 'create_flex_projects_post' );
 add_action( 'init', 'create_marketing_projects_post' );
 add_action( 'init', 'create_programs_taxonomy' );
+add_action( 'init', 'create_degrees_taxonomy' );
 add_action( 'init', 'create_classifications_taxonomy' );
 add_action( 'init', 'create_media_type_taxonomy' );
 add_action( 'init', 'create_team_members_post' );
@@ -1191,6 +1192,7 @@ function add_flex_projects_custom_columns( $columns ) {
         'cb' => $columns['cb'],
         'featured' => __( '<span class="screen-reader-text">Featured on Home Page</span>', 'uwsmedia' ),
         'title' => __( 'Title' ),
+        'flex_degree' => __( 'Degree', 'uwsmedia' ),
         'flex_classification' => __( 'Classification', 'uwsmedia' ),
         'flex_media_type' => __( 'Media Type', 'uwsmedia' ),
         'date' => __( 'Date' )
@@ -1233,6 +1235,17 @@ function add_flex_project_custom_columns_value( $column, $post_id ) {
                 echo '<span aria-hidden="true">&mdash;</span>';
             } else {
                 echo $classification_terms[0]->name;
+            }
+    	    
+    	break;
+        case 'flex_degree':
+    	
+    	    $degree_terms = get_the_terms( $post->ID, 'flex_degrees' );
+            
+            if ( !is_array( $degree_terms ) || count( $degree_terms ) <= 0 ) {
+                echo '<span aria-hidden="true">&mdash;</span>';
+            } else {
+                echo $degree_terms[0]->name;
             }
     	    
     	break;
@@ -1673,6 +1686,43 @@ function create_programs_taxonomy() {
     register_taxonomy( 'marketing_programs', 'marketing-projects', $args );
 }
 
+function create_degrees_taxonomy() {
+    
+    $labels = array(
+        'name' => __( 'Degrees', 'uwsmedia' ),
+        'singular_name' => __( 'Degree', 'uwsmedia' ),
+        'all_items' => __( 'All Degrees', 'uwsmedia' ),
+        'edit_item' => __( 'Edit Degree', 'uwsmedia' ),
+        'view_item' => __( 'View Degree', 'uwsmedia' ),
+        'update_item' => __( 'Update Degree', 'uwsmedia' ),
+        'new_item_name' => __( 'New Degree Name', 'uwsmedia' ),
+        'add_new_item' => __( 'Add New Degree', 'uwsmedia' ),
+        'search_items' => __( 'Search Degrees', 'uwsmedia' ),
+        'popular_items' => __( 'Popular Degrees', 'uwsmedia' ),
+        'add_or_remove_items' => __( 'Add or remove degrees', 'uwsmedia' ),
+        'choose_from_most_used' => __( 'Choose from most used degrees', 'uwsmedia' ),
+        'separate_items_with_commas' => __( 'Separate degrees with commas', 'uwsmedia' ),
+        'parent_item' => null,
+		'parent_item_colon'  => null,
+		'not_found' => __( 'No degrees found.', 'uwsmedia' ),
+		'menu_name' => __( 'Degrees', 'uwsmedia' ),
+    );
+    
+    $args = array(
+        'hierarchical' => false,
+        'labels' => $labels,
+        'show_ui' => true,
+        'show_admin_column' => true,
+        'update_count_callback' => '_update_post_term_count',
+        'query_var' => true,
+        'meta_box_cb' => 'uws_projects_degrees',
+        'rewrite' => array( 'slug' => 'degrees' )
+    );
+    
+    register_taxonomy( 'flex_degrees', 'uws-flex-projects', $args );
+
+}
+
 function create_classifications_taxonomy() {
     
     $labels = array(
@@ -1797,6 +1847,52 @@ function uws_projects_classifications( $post, $box ) {
 }
 
 function uws_projects_programs( $post, $box ) {
+    
+    $defaults = array( 'taxonomy' => 'category' );
+    
+    if ( !isset( $box['args'] ) || !is_array( $box['args'] ) ) {
+        
+        $args = array();
+        
+    } else {
+        
+        $args = $box['args'];
+        
+    }
+    
+    extract( wp_parse_args( $args, $defaults ), EXTR_SKIP );
+    
+    $tax = get_taxonomy( $taxonomy );
+    ?>
+    <div id="taxonomy-<?php echo $taxonomy; ?>" class="acf-taxonomy-field categorydiv">
+        <?php
+            $name = ( $taxonomy == 'category' ) ? 'post_category' : 'tax_input[' . $taxonomy . ']';
+        echo "<input type='hidden' name='{$name}[]' value='0' />";
+        
+        ?>
+
+        <?php
+            $term_obj = wp_get_object_terms( $post->ID, $taxonomy );
+            wp_dropdown_categories( array(
+                'taxonomy' => $taxonomy,
+                'hide_empty' => 0,
+                'name' => "{$name}[]",
+                'selected' => $term_obj[0]->slug,
+                'orderby' => 'name',
+                'hierarchical' => 0,
+                'show_option_none' => '&mdash;',
+                'option_none_value'  => '0',
+                'value_field' => 'slug',
+                )
+            );
+        ?>
+
+    </div>
+    <?php
+    
+}
+
+function uws_projects_degrees( $post, $box ) {
     
     $defaults = array( 'taxonomy' => 'category' );
     
@@ -2388,6 +2484,18 @@ function media_showcase_projects_query() {
         <?php while ( $search->have_posts() ) : $search->the_post(); ?>
 
         <div class="col-12 col-sm-12 col-md-6 col-lg-4 project">
+        <?php
+
+        $now = new DateTime("NOW");
+        $postCreationDate = new DateTime(get_the_date( 'Y-m-d' ));
+        $numOfDays = $postCreationDate->diff($now)->format("%a");
+
+        if ( $numOfDays <= 30 ) {?>
+
+            <small
+                class="post-date-status d-inline-block px-2 py-1 fw-semibold fs-6 lh-1 text-white bg-success bg-opacity-75 border border-success border-opacity-75 rounded-2">New</small>
+
+        <?php } ?>
             <a href="<?php the_permalink(); ?>">
 
                 <div class="project-bg">
@@ -2516,6 +2624,15 @@ function flex_showcase_projects_query() {
         
     }
     
+    if ( isset( $_POST['degreeTags'] ) ) {
+        
+        array_push( $args['tax_query'], array(
+            'taxonomy' => 'flex_degrees',
+            'field' => 'slug',
+            'terms' => explode( ',', $_POST['degreeTags'] )
+        ) );
+        
+    }
     
     if ( isset( $_POST['classTags'] ) ) {
         
@@ -2559,7 +2676,7 @@ function flex_showcase_projects_query() {
                 class="fa fa-times-circle"></span> Clear Search</a>
         <button id="shareSearchLink" class="btn btn-secondary btn-sm"><span class="fa fa-link"></span> <span
                 class="txt">Copy Search Link</span><input type="text" id="hiddenSearchLink" name="searchLink"
-                value="<?php echo get_site_url() . '?s=' . $keyword . '&post_type=uws-flex-projects'?>&flex_classifications=<?php echo $_POST['classTags']; ?>&flex_media_types=<?php echo $_POST['mediaTags']; ?>" /></button>
+                value="<?php echo get_site_url() . '?s=' . $keyword . '&post_type=uws-flex-projects'?>&flex_degrees=<?php echo $_POST['degreeTags']; ?>&flex_classifications=<?php echo $_POST['classTags']; ?>&flex_media_types=<?php echo $_POST['mediaTags']; ?>" /></button>
     </div>
 
     <div class="row d-flex flex-row">
@@ -2567,6 +2684,18 @@ function flex_showcase_projects_query() {
         <?php while ( $search->have_posts() ) : $search->the_post(); ?>
 
         <div class="col-12 col-sm-12 col-md-6 col-lg-4 project">
+        <?php
+
+        $now = new DateTime("NOW");
+        $postCreationDate = new DateTime(get_the_date( 'Y-m-d' ));
+        $numOfDays = $postCreationDate->diff($now)->format("%a");
+
+        if ( $numOfDays <= 30 ) {?>
+
+            <small
+                class="post-date-status d-inline-block px-2 py-1 fw-semibold fs-6 lh-1 text-white bg-success bg-opacity-75 border border-success border-opacity-75 rounded-2">New</small>
+
+        <?php } ?>
             <a href="<?php the_permalink(); ?>">
 
                 <div class="project-bg">
@@ -2620,6 +2749,12 @@ function flex_showcase_projects_query() {
 
                 $filters = null;
                 
+                if ( isset( $_POST['degreeTags'] ) ) {
+                    
+                    $filters = is_array( $filters ) ? array_merge( $filters, explode( ',', $_POST['degreeTags'] ) ) : explode( ',', $_POST['degreeTags'] );
+                    
+                }
+
                 if ( isset( $_POST['classTags'] ) ) {
                 
                     $filters = is_array( $filters ) ? array_merge( $filters, explode( ',', $_POST['classTags'] ) ) : explode( ',', $_POST['classTags'] );
@@ -2749,6 +2884,18 @@ function marketing_showcase_projects_query() {
         <?php while ( $search->have_posts() ) : $search->the_post(); ?>
 
         <div class="col-12 col-sm-12 col-md-6 col-lg-4 project">
+        <?php
+
+            $now = new DateTime("NOW");
+            $postCreationDate = new DateTime(get_the_date( 'Y-m-d' ));
+            $numOfDays = $postCreationDate->diff($now)->format("%a");
+
+            if ( $numOfDays <= 30 ) {?>
+
+                <small
+                    class="post-date-status d-inline-block px-2 py-1 fw-semibold fs-6 lh-1 text-white bg-success bg-opacity-75 border border-success border-opacity-75 rounded-2">New</small>
+
+            <?php } ?>
             <a href="<?php the_permalink(); ?>">
 
                 <div class="project-bg">

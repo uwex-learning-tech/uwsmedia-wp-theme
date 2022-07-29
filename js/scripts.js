@@ -135,6 +135,7 @@
             	var postId = jQuery( 'input[name=postId]' ).val();
             	var blogurl = jQuery( 'input[name=bloginfo]' ).val();
             	var programCBs = jQuery( '.sidebarFilter .program-cb:checked' );
+				var degreeCBs = jQuery( '.sidebarFilter .degree-cb:checked' );
             	var classCBs = jQuery( '.sidebarFilter .classification-cb:checked' );
             	var mediaCBs = jQuery( '.sidebarFilter .media-cb:checked' );
             	var resultsDisplay = jQuery( '#projects-archive' );
@@ -164,6 +165,21 @@
                 	} );
     
                     args.programTags = tags.join( ',' );
+                	
+            	}
+
+				// add degree tags if checked
+            	if ( degreeCBs.length ) {
+                	
+                	var tags = [];
+                    
+                    degreeCBs.each( function() {
+                	
+                    	tags.push( jQuery( this ).val() )
+                    	
+                	} );
+    
+                    args.degreeTags = tags.join( ',' );
                 	
             	}
             	
@@ -209,7 +225,7 @@
 					apiUrl = blogurl + '/wp-json/uwsmedia/v2/marketing-showcases/';
 				}
             	
-            	if ( mediaCBs.length || classCBs.length || programCBs.length || searchInput.length ) {
+            	if ( mediaCBs.length || classCBs.length || programCBs.length || degreeCBs.length || searchInput.length ) {
                 	
                 	try {
                         searchResults.abort();
