@@ -3071,7 +3071,7 @@ function member_projects_query() {
     $memberId = $_REQUEST['post_id'];
     $paged = ( $_REQUEST['page_num'] ) ? $_REQUEST['page_num'] : 1;
     $query_args = array(
-        'post_type' => 'uws-projects',
+        'post_type' => ['uws-projects', 'uws-flex-projects', 'marketing-projects'],
         'post_status' => 'publish',
         'posts_per_page' => 8,
         'paged' => $paged,
