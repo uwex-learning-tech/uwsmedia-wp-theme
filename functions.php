@@ -3115,10 +3115,19 @@ function member_projects_query() {
                     $class = '<span aria-hidden="true">&nbsp;</span>';
                     $class_terms = get_the_terms( $post->ID, 'classifications' );
 
+                    $post_type = get_post_type();
+
+                    if ( $post_type == "uws-flex-projects" ) {
+                        $class_terms = get_the_terms( $post->ID, 'flex_classifications' );
+                    } else if ( $post_type == "marketing-projects") {
+                        $class_terms = get_the_terms( $post->ID, 'marketing_classifications' );
+                    } else {
+                        $class_terms = get_the_terms( $post->ID, 'classifications' );
+                    }
+
                     if ( is_array( $class_terms ) 
                     && count( $class_terms ) >= 1 ) {
                         $class = $class_terms[0]->name;
-                        
                     }
                         
                     ?>
@@ -3144,12 +3153,25 @@ function member_projects_query() {
                         <?php
                         
                         $terms = '<span aria-hidden="true">&nbsp;</span>';
-                        $media_terms = get_the_terms( $post->ID, 'media_types' );
+                        
+                        if ( $post_type == "uws-flex-projects" ) {
+                            $media_terms = get_the_terms( $post->ID, 'flex_media_types' );
+                        } else if ( $post_type == "marketing-projects") {
+                            $media_terms = get_the_terms( $post->ID, 'marketing_media_types' );
+                        } else {
+                            $media_terms = get_the_terms( $post->ID, 'media_types' );
+                        }
     
                         if ( is_array( $media_terms ) 
                         && count( $media_terms ) >= 1 ) {
                             
-                            $terms = strip_tags( get_the_term_list( $post->ID, 'media_types', '', ', ', '' ) );
+                            if ( $post_type == "uws-flex-projects" ) {
+                                $terms = strip_tags( get_the_term_list( $post->ID, 'flex_media_types', '', ', ', '' ) );
+                            } else if ( $post_type == "marketing-projects") {
+                                $terms = strip_tags( get_the_term_list( $post->ID, 'marketing_media_types', '', ', ', '' ) );
+                            } else {
+                                $terms = strip_tags( get_the_term_list( $post->ID, 'media_types', '', ', ', '' ) );
+                            }
                             
                         }
                         
