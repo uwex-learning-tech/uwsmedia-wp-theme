@@ -805,6 +805,9 @@ function change_marketing_showcase_page_menu_classes($menu) {
 
 }
 
+// disable auto update notification emails for plugins
+add_filter( 'auto_plugin_update_send_email', '__return_false' );
+
 /*------------------------------------*\
 	REMOVE Filters
 \*------------------------------------*/
