@@ -1021,26 +1021,12 @@ main .page-featured-image img {
 
 .page-template-page-showcase .sidebarFilter,
 .page-template-page-flex-showcase .sidebarFilter,
-.page-template-page-marketing-showcase .sidebarFilter,
-.page-template-default .sidebar .ez-toc-list {
+.page-template-page-marketing-showcase .sidebarFilter {
     margin-top: 16px;
     background-color: #f2f2f2;
     padding-bottom: 8px;
 }
 
-.page-template-default .sidebar .ez-toc-list {
-    margin-top: 0;
-    padding: 8px 16px;
-    list-style: none;
-}
-.page-template-default .sidebar .ez-toc-list li ul {
-    padding-left: 20px;
-    list-style: disc;
-}
-.page-template-default .sidebar .ez-toc-list li ul li ul {
-    list-style: circle;
-    padding-left: 20px;
-}
 .page-template-page-showcase .sidebarFilter h3,
 .page-template-page-flex-showcase .sidebarFilter h3,
 .page-template-page-marketing-showcase .sidebarFilter h3,
@@ -1193,7 +1179,6 @@ main .page-featured-image img {
     background-size: cover;
     color: #fff;
     background-blend-mode: multiply;
-    min-height: 350px;
 }
 
 .page-template-page-members .header-banner,
@@ -1295,6 +1280,10 @@ main .page-featured-image img {
 }
 
 @media (min-width: 992px) {
+
+    .page-template-page-sublanding-themed-alt .header-banner.alt-themed {
+        padding-bottom: 120px;
+    }
 
     .page-template-page-sublanding-themed-alt .call-to-actions {
         position: relative;
@@ -1754,39 +1743,31 @@ a img.aligncenter {
 	
 }
 
-/** WISE CHAT PLUGIN **/
+/** EZ table of contents **/
 
-.wcContainer .wcWindowTitle{
-    position: relative;
+.ez-toc-list {
+    margin-top: 0;
+    padding: 8px 16px !important;
+    list-style: none;
+    background-color: #f2f2f2;
 }
 
-.wcContainer .wcWindowTitle:before {
-	position: absolute;
-    top: 0;
-    left: 0;
-    padding: 10px 8px 0;
-    width: 100%;
-    height: 100%;
-    content: "Chat";
-    background-color: inherit;
+.ez-toc-widget-container ul li a {
+    padding-left: 0;
 }
 
-.wcContainer.wcWindowTitleIncluded .wcWindowContent .wcUserNameHint {
-	position: relative;
+.page-template-default .sidebar .ez-toc-list li ul {
+    padding-left: 30px;
+    list-style: disc;
+    margin-left: 0;
+}
+.ez-toc-list li ul li {
+    list-style: disc;
+    overflow: unset;
 }
 
-.wcContainer.wcWindowTitleIncluded .wcWindowContent .wcUserNameHint:after {
-	position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    content: "Please enter a name";
-    background-color: #f3f6f7;
-}
-
-.wcContainer.wcWindowTitleIncluded .wcWindowContent .wcUserNameHint:before {
-	display: none;
+.ez-toc-list li ul li ul li {
+    list-style: circle;
 }
 
 /** PRISMJS **/
