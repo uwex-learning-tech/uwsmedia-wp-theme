@@ -392,7 +392,7 @@ code {
 }
 
 #primaryHeaderNav li {
-    margin-left: 1rem;
+    margin-left: 0;
 }
 
 #primaryHeaderNav li:first-child {
@@ -419,7 +419,7 @@ code {
 
 #primaryHeaderNav .active,
 #primaryHeaderNav .current-page-ancestor {
-    background-color: #fff;
+    background-color: #333;
     border-radius: 1.563rem;
 }
 
@@ -432,7 +432,7 @@ code {
     min-width: 9.063rem;
     background-color: #CB0B44;
     border-radius: 1.563rem;
-    margin-left: 1rem;
+    margin-left: 0;
     margin-bottom: 0.5rem;
 }
 
@@ -859,6 +859,7 @@ main .page-featured-image img {
 .single.single-marketing-projects .embed-responsive-sb {
     margin: 0 auto;
     max-width: 900px;
+    height: 600px;
 }
 
 .single.single-uws-projects .project-content,
@@ -1197,8 +1198,8 @@ main .page-featured-image img {
 .page-template-page-sublanding-gallery .header-banner h1.banner-title {
     text-align: center;
     font-weight: 400;
-    font-size: 48px;
-    line-height: 56px;
+    font-size: 41px;
+    line-height: 49px;
     color: #4A4A4A;
     text-transform: uppercase;
 }
@@ -1400,13 +1401,18 @@ main .page-featured-image img {
         display: block;
     }
     
-    .single.single-uws-projects .embed-responsive-sb {
-        height: 500px;
-    }
+    /* .single.single-uws-projects .embed-responsive-sb {
+        height: 600px;
+    } */
     
 }
 
 @media only screen and (min-width: 767.98px) {
+
+    .page-template-page-sublanding .header-banner h1.banner-title{
+        font-size: 48px;
+        line-height: 56px;
+    }
 
     #project-carousel .carousel-control-prev,
     #project-carousel .carousel-control-next {
@@ -1414,7 +1420,7 @@ main .page-featured-image img {
     }
     
     .single.single-uws-projects .embed-responsive-sb {
-        height: 900px;
+        height: 800px;
     }
     
 }
@@ -1436,6 +1442,10 @@ main .page-featured-image img {
         margin-bottom: 0;
     }
 
+    #primaryHeaderNav li {
+        margin-left: 1rem;
+    }
+
     #primaryHeaderNav .active,
     #primaryHeaderNav .current-page-ancestor {
         background-color: transparent;
@@ -1446,6 +1456,10 @@ main .page-featured-image img {
     #primaryHeaderNav .highlighted-btn.active,
     #primaryHeaderNav .highlighted-btn.current-page-ancestor {
         background-color: #fff;
+    }
+
+    #primaryHeaderNav .highlighted-btn {
+        margin-left: 1rem;
     }
 
     #primaryHeaderNav .highlighted-btn.current-page-ancestor a {

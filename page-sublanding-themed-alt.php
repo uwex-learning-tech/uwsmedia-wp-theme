@@ -48,7 +48,7 @@
 </div>
 <main role="main">
 
-    <section class="container call-to-actions shadow ps-2 pe-2 pt-3"><?php echo wpautop( get_post_meta( get_the_ID(), 'cta_banner_content' , true ) ); ?></section>
+    <section class="container call-to-actions shadow pt-md-3"><?php echo wpautop( get_post_meta( get_the_ID(), 'cta_banner_content' , true ) ); ?></section>
 
     <section class="container page-content">
 

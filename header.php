@@ -35,7 +35,7 @@
                                 <span class="navbar-toggler-icon"></span>
                             </button>
                 			
-                            <div id="primaryHeaderNav" class="collapse navbar-collapse">
+                            <div id="primaryHeaderNav" class="collapse navbar-collapse mt-3 mt-lg-0">
                 			<?php uwsmedia_nav(); ?>
                             </div>
                         </div>
