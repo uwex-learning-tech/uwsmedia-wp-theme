@@ -101,7 +101,14 @@
             echo $degree_program_terms[0]->name;
             
         }
-        ?> | BUS 123</p>
+
+        $course_info = trim( get_post_meta( $post->ID, 'course_info', true ) );
+
+        if ( !empty( $course_info ) ) { 
+            echo " | " . $course_info;
+        }
+
+        ?></p>
 
         <!-- post title -->
         <h1 class="mt-0"><?php the_title(); ?></h1>

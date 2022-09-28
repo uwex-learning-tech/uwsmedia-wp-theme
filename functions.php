@@ -1528,14 +1528,17 @@ function add_project_metabox() {
     // collaborative
     add_meta_box( 'project-author', 'Members', 'project_authors_meta_box', 'uws-projects', 'normal', 'high' );
     add_meta_box( 'project-media-embed', 'Media Embed', 'project_media_ebmed_meta_box', 'uws-projects', 'normal', 'default' );
+    add_meta_box( 'project-course', 'Course', 'project_course_meta_box', 'uws-projects', 'side', 'default' );
 
     // competency-based
     add_meta_box( 'project-author', 'Members', 'project_authors_meta_box', 'uws-flex-projects', 'normal', 'high' );
     add_meta_box( 'project-media-embed', 'Media Embed', 'project_media_ebmed_meta_box', 'uws-flex-projects', 'normal', 'default' );
+    add_meta_box( 'project-course', 'Course', 'project_course_meta_box', 'uws-flex-projects', 'side', 'default' );
 
     // marketing
     add_meta_box( 'project-author', 'Members', 'project_authors_meta_box', 'marketing-projects', 'normal', 'high' );
     add_meta_box( 'project-media-embed', 'Media Embed', 'project_media_ebmed_meta_box', 'marketing-projects', 'normal', 'default' );
+    add_meta_box( 'project-course', 'Course', 'project_course_meta_box', 'marketing-projects', 'side', 'default' );
     
 }
 
@@ -1572,7 +1575,7 @@ function project_authors_meta_box( $post ) {
     
     }
     
-    echo '<p><strong>Instructors(s)</strong></p>';
+    echo '<p><strong>Instructor(s)</strong></p>';
     wp_nonce_field( 'add_other_project_authors', 'other_project_authors_nonce' );
     echo '<input type="text" value="' . get_post_meta( $post->ID, 'other_authors', true ) . '" name="other_authors" />';
     echo '<p class="howto">Separate instructors with commas if any</p>';
@@ -1602,6 +1605,14 @@ function project_media_ebmed_meta_box( $post ) {
     
 }
 
+function project_course_meta_box( $post ) {
+
+    echo '<p>Enter the course code or name.</p>';
+    wp_nonce_field( 'add_course_info', 'course_info_nonce' );
+    echo '<input type="text" value="' . get_post_meta( $post->ID, 'course_info', true ) . '" name="course_info" />';
+
+}
+
 function save_project_meta( $post_id, $post ) {
     
     /* Get the post type object. */
@@ -1621,6 +1632,12 @@ function save_project_meta( $post_id, $post ) {
     if ( wp_verify_nonce( $_POST['other_project_authors_nonce'], 'add_other_project_authors' ) ) {
         
         update_post_meta( $post_id, 'other_authors', sanitize_text_field( $_POST['other_authors'] ) );
+        
+    }
+
+    if ( wp_verify_nonce( $_POST['course_info_nonce'], 'add_course_info' ) ) {
+        
+        update_post_meta( $post_id, 'course_info', sanitize_text_field( $_POST['course_info'] ) );
         
     }
     
@@ -1677,6 +1694,7 @@ function create_programs_taxonomy() {
     $args = array(
         'hierarchical' => false,
         'labels' => $labels,
+        'public' => true,
         'show_ui' => true,
         'show_admin_column' => true,
         'update_count_callback' => '_update_post_term_count',
@@ -1714,6 +1732,7 @@ function create_degrees_taxonomy() {
     $args = array(
         'hierarchical' => false,
         'labels' => $labels,
+        'public' => true,
         'show_ui' => true,
         'show_admin_column' => true,
         'update_count_callback' => '_update_post_term_count',
