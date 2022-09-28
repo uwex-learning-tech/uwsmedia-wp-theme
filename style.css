@@ -70,14 +70,14 @@ a:active {
     color: #0366d6;
 }
 
-a.btn {
+/* a.btn {
     min-width: 125px;
     background-color: #1466DE;
     color: #fff;
     text-decoration: none;
     font-weight: 500;
     box-shadow: 3px 3px 6px rgba( 0, 0, 0, 0.16 );
-}
+} */
 a.btn:hover,
 a.btn:visited {
     text-decoration: none;
@@ -1244,6 +1244,10 @@ main .page-featured-image img {
     left: 15px;
     width: 90%;
     box-shadow: 0 3px 6px #ccc;
+}
+
+.page-template-page-sublanding-themed-alt .header-banner .banner-search #autoComplete_list .autoComplete_result:hover {
+    background-color: rgba(255, 248, 248, 1);
 }
 
 .page-template-page-sublanding-themed-simple .header-banner .banner-search .search-btn,
