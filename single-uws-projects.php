@@ -87,7 +87,7 @@
             
             if ( $numOfDays <= 30 ) {?>
 
-            <small class="d-inline-block mt-3 px-2 py-1 fw-semibold fs-6 lh-1 text-success bg-success bg-opacity-10 border border-success border-opacity-10 rounded-2">New</small>
+            <small class="d-inline-block mt-3 mb-2 px-2 py-1 fw-semibold fs-6 lh-1 text-success bg-success bg-opacity-10 border border-success border-opacity-10 rounded-2">New</small>
 
         <?php } ?>
 
