@@ -91,11 +91,23 @@
 
         <?php } ?>
 
+        <p class="degree mb-0 fs-6 lh-base"><?php 
+
+        $degree_program_terms = get_the_terms( $post->ID, 'programs' );
+
+        if ( is_array( $degree_program_terms )
+        && count( $degree_program_terms ) >= 1 ) {
+            
+            echo $degree_program_terms[0]->name;
+            
+        }
+        ?> | BUS 123</p>
+
         <!-- post title -->
         <h1 class="mt-0"><?php the_title(); ?></h1>
         <!-- /post title -->
 
-        <p class="classification mb-0"><strong><?php 
+        <p class="classification mb-3"><strong><?php 
  
         $class_terms = get_the_terms( $post->ID, 'classifications' );
 
@@ -151,7 +163,7 @@
                 $memberIds = explode( ',', $memberStr );
 
                 $plural = count($memberIds) > 1 ? 's' : '';
-                echo '<p class="members"><strong>Team Member' . $plural .':</strong> ';
+                echo '<p class="members mb-3"><strong>Team Member' . $plural .':</strong> ';
  
                 $count = 0;
                 
@@ -180,23 +192,19 @@
         <div class="tag-pills mb-3">
             <?php 
 
-        $tag_terms = null;
         $use_case_terms = get_the_terms( $post->ID, 'media_types' );
-        $degree_program_terms = get_the_terms( $post->ID, 'programs' );
         
-        if ( is_array( $use_case_terms )
-        && is_array( $degree_program_terms ) ) {
+        if ( is_array( $use_case_terms ) ) {
             
             $tag_before = '<span class="badge text-bg-secondary">';
             $tag_separator = '';
             $tag_after = '</span> ';
             
-            $tag_terms = array_merge( $use_case_terms, $degree_program_terms );
-            $tag_counter = count( $tag_terms );
+            $tag_counter = count( $use_case_terms );
             
             $i = 0;
             
-            foreach ( $tag_terms as $tags ) {
+            foreach ( $use_case_terms as $tags ) {
             
                 $i = $i + 1;
                 

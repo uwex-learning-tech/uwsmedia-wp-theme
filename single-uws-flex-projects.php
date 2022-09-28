@@ -90,11 +90,7 @@
 
         <?php } ?>
 
-        <!-- post title -->
-        <h1 class="mt-0"><?php the_title(); ?></h1>
-        <!-- /post title -->
-
-        <p class="degree mb-0"><strong><?php 
+        <p class="degree mb-0 fs-6 lh-base"><?php 
 
         $degree_terms = get_the_terms( $post->ID, 'flex_degrees' );
 
@@ -104,10 +100,13 @@
             echo $degree_terms[0]->name;
             
         }
+        ?> | HWM 123</p>
 
-        ?></strong></p>
+        <!-- post title -->
+        <h1 class="mt-0"><?php the_title(); ?></h1>
+        <!-- /post title -->
 
-        <p class="classification mb-0"><strong><?php 
+        <p class="classification mb-3"><strong><?php 
 
         $class_terms = get_the_terms( $post->ID, 'flex_classifications' );
 
@@ -163,7 +162,7 @@
                 $memberIds = explode( ',', $memberStr );
 
                 $plural = count($memberIds) > 1 ? 's' : '';
-                echo '<p class="members"><strong>Team Member' . $plural .':</strong> ';
+                echo '<p class="members mb-3"><strong>Team Member' . $plural .':</strong> ';
 
                 $count = 0;
                 
@@ -192,7 +191,6 @@
         <div class="tag-pills mb-3">
             <?php 
 
-        $tag_terms = null;
         $use_case_terms = get_the_terms( $post->ID, 'flex_media_types' );
         
         if ( is_array( $use_case_terms ) ) {
