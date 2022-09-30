@@ -1159,7 +1159,7 @@ function add_marketing_project_custom_columns_value( $column, $post_id ) {
             if ( !is_array( $media_type_terms ) || count( $media_type_terms ) <= 0 ) {
                 echo '<span aria-hidden="true">&mdash;</span>';
             } else {
-                echo strip_tags( get_the_term_list( $post->ID, 'media_types', '', ', ', '' ) );
+                echo strip_tags( get_the_term_list( $post->ID, 'marketing_media_types', '', ', ', '' ) );
             }
     	    
     	break;
@@ -1402,7 +1402,7 @@ function create_collab_projects_post() {
             'not_found' => __( 'No projects found.', 'uwsmedia' ),
             'not_found_in_trash' => __( 'No projects found in Trash', 'uwsmedia' )
         ),
-        'supports' => array( 'title', 'editor', 'excerpt', 'thumbnail' ),
+        'supports' => array( 'title', 'editor', 'excerpt', 'thumbnail', 'post-formats' ),
         'taxonomies' => array(),
         'hierarchical' => false,
         'public' => true,
@@ -1451,7 +1451,7 @@ function create_flex_projects_post() {
             'not_found' => __( 'No projects found.', 'uwsmedia' ),
             'not_found_in_trash' => __( 'No projects found in Trash', 'uwsmedia' )
         ),
-        'supports' => array( 'title', 'editor', 'excerpt', 'thumbnail' ),
+        'supports' => array( 'title', 'editor', 'excerpt', 'thumbnail', 'post-formats' ),
         'taxonomies' => array(),
         'hierarchical' => false,
         'public' => true,
@@ -1500,7 +1500,7 @@ function create_marketing_projects_post() {
             'not_found' => __( 'No projects found.', 'uwsmedia' ),
             'not_found_in_trash' => __( 'No projects found in Trash', 'uwsmedia' )
         ),
-        'supports' => array( 'title', 'editor', 'excerpt', 'thumbnail' ),
+        'supports' => array( 'title', 'editor', 'excerpt', 'thumbnail', 'post-formats' ),
         'taxonomies' => array(),
         'hierarchical' => false,
         'public' => true,
